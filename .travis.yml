@@ -1,27 +1,12 @@
-matrix: 
-  include: 
-    - language: csharp
-      mono: none
-      dotnet: 2.0.0
+language: csharp
+mono: none
+dotnet: 2.0.0
 
-      install:
-        - cd API
-        - dotnet restore
+install:
+- cd API
+- dotnet restore
 
-      before_script: cd ../API.TESTS/
+before_script: cd ../API.TESTS/
 
-      script:
-      - dotnet test
-
-    - language: node_js
-      node_js: 
-        - '8'
-      dist: trusty
-
-      before_script:
-        - cd angular-unit-testing
-        - npm install -g @angular/cli
-
-      script:
-        - ng build --prod --aot
-        - ng test --watch false -cc
+script:
+ - dotnet test
