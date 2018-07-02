@@ -1,8 +1,11 @@
 language: csharp
 mono: none
-sudo: required
 dotnet: 2.0.0
+
+install:
+- cd api
+- dotnet restore
+
 script:
-  - cd API
-  - dotnet restore
-  - dotnet test ../API.TESTS/
+ - dotnet build
+ - dotnet test ..\API.TESTS\
