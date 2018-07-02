@@ -1,18 +1,5 @@
 matrix: 
   include: 
-    - language: csharp
-      mono: none
-      dotnet: 2.0.0
-
-      install:
-        - cd API
-        - dotnet restore
-
-      before_script: cd ../API.TESTS/
-
-      script:
-      - dotnet test
-
     - language: node_js
       node_js: 
         - "node"
@@ -31,3 +18,16 @@ matrix:
       script:
         - ng build --prod --aot
         - ng test --watch=false
+
+    - language: csharp
+      mono: none
+      dotnet: 2.0.0
+
+      install:
+        - cd API
+        - dotnet restore
+
+      before_script: cd ../API.TESTS/
+
+      script:
+      - dotnet test
