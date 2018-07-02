@@ -5,4 +5,4 @@ dotnet: 2.0.0
 script:
   - cd API
   - dotnet restore
-  - dotnet test ./API.TESTS/
+  - dotnet test ../API.TESTS/
