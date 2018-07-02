@@ -1,0 +1,6 @@
+language: csharp
+solution: APIUnitTest.cs
+
+branches:
+  only:
+    - master
