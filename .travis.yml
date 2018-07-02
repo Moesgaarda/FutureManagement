@@ -1,0 +1,11 @@
+language: csharp
+mono: none
+dotnet: 2.0.0
+
+install:
+- cd API
+- dotnet restore
+
+script:
+ - dotnet build
+ - dotnet test ..\API.TESTS\
