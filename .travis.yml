@@ -1,6 +1,7 @@
 language: csharp
-solution: APIUnitTest.cs
-
-branches:
-  only:
-    - master
+mono: none
+dotnet: 2.0.0
+script:
+  - dotnet restore
+  - dotnet build ./API/
+  - dotnet test ./API.TESTS/
