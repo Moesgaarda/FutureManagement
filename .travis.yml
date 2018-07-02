@@ -4,6 +4,7 @@ matrix:
       node_js: 
         - "node"
       dist: trusty
+      sudo: required
 
       before_install:
         - export CHROME_BIN=chromium-browser
