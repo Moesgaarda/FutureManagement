@@ -6,6 +6,7 @@ install:
 - cd API
 - dotnet restore
 
+before_script: cd ..\API.TESTS\
+
 script:
- - dotnet build
- - dotnet test ..\API.TESTS\
+ - dotnet test
