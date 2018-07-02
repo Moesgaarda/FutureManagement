@@ -21,6 +21,7 @@ matrix:
       before_script:
         - cd angular-unit-testing
         - npm install -g @angular/cli
+        - ng update @angular/cli --migrate--only --from=1.7.4
 
       script:
         - ng build --prod --aot
