@@ -13,7 +13,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Projekter',
-    icon: 'nb-keypad',
+    icon: 'nb-grid-b',
     link: '/pages/ui-features',
     children: [
       {
@@ -91,7 +91,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Bestillinger',
-    icon: 'nb-location',
+    icon: 'fa fa-shopping-cart',
     children: [
       {
         title: 'Google Maps',
@@ -113,7 +113,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Brugere',
-    icon: 'nb-bar-chart',
+    icon: 'fa fa-users',
     children: [
       {
         title: 'Echarts',
