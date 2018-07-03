@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TablesComponent } from './tables.component';
 import { SmartTableComponent } from './smart-table/smart-table.component';
+import { EmployeeTableComponent } from './employee-table/employee-table.component';
+import { ItemTableComponent } from './item-table/item-table.component';
+import { CustomerTableComponent } from './customer-table/customer-table.component';
 
 const routes: Routes = [{
   path: '',
@@ -10,6 +13,15 @@ const routes: Routes = [{
   children: [{
     path: 'smart-table',
     component: SmartTableComponent,
+  }, {
+    path: 'employee-table',
+    component: EmployeeTableComponent,
+  }, {
+    path: 'item-table',
+    component: ItemTableComponent,
+  }, {
+    path: 'customer-table',
+    component: CustomerTableComponent,
   }],
 }];
 
@@ -22,4 +34,7 @@ export class TablesRoutingModule { }
 export const routedComponents = [
   TablesComponent,
   SmartTableComponent,
+  EmployeeTableComponent,
+  ItemTableComponent,
+  CustomerTableComponent,
 ];

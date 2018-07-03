@@ -2,17 +2,17 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'Dashboard',
+    title: 'Forside',
     icon: 'nb-home',
     link: '/pages/dashboard',
     home: true,
   },
   {
-    title: 'FEATURES',
+    title: 'MULIGHEDER',
     group: true,
   },
   {
-    title: 'UI Features',
+    title: 'Projekter',
     icon: 'nb-keypad',
     link: '/pages/ui-features',
     children: [
@@ -51,7 +51,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Forms',
+    title: 'Lagerhåndtering',
     icon: 'nb-compose',
     children: [
       {
@@ -62,10 +62,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Form Layouts',
         link: '/pages/forms/layouts',
       },
+      {
+        title: 'Lagerbeholdning',
+        link: '/pages/tables/item-table',
+      },
     ],
   },
   {
-    title: 'Components',
+    title: 'Kunder',
     icon: 'nb-gear',
     children: [
       {
@@ -75,10 +79,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Notifications',
         link: '/pages/components/notifications',
       },
+      {
+        title: 'Kundetabel',
+        link: '/pages/tables/customer-table',
+      },
     ],
   },
   {
-    title: 'Maps',
+    title: 'Bestillinger',
     icon: 'nb-location',
     children: [
       {
@@ -100,7 +108,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Charts',
+    title: 'Brugere',
     icon: 'nb-bar-chart',
     children: [
       {
@@ -114,6 +122,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'D3',
         link: '/pages/charts/d3',
+      },
+      {
+        title: 'Ansatte',
+        link: '/pages/tables/employee-table',
       },
     ],
   },
@@ -172,5 +184,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/auth/reset-password',
       },
     ],
+  },
+  {
+    title: 'New Page', // menu title
+    icon: 'ion-android-home', // menu icon
+    link: '/pages/new',
   },
 ];
