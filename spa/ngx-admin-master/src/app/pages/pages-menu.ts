@@ -48,6 +48,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Tabs',
         link: '/pages/ui-features/tabs',
       },
+      {
+        title: 'Projekter',
+        link: '/pages/tables/project-table',
+      },
     ],
   },
   {

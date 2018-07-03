@@ -6,6 +6,7 @@ import { SmartTableComponent } from './smart-table/smart-table.component';
 import { EmployeeTableComponent } from './employee-table/employee-table.component';
 import { ItemTableComponent } from './item-table/item-table.component';
 import { CustomerTableComponent } from './customer-table/customer-table.component';
+import { ProjectTableComponent } from './project-table/project-table.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +23,9 @@ const routes: Routes = [{
   }, {
     path: 'customer-table',
     component: CustomerTableComponent,
+  }, {
+    path: 'project-table',
+    component: ProjectTableComponent,
   }],
 }];
 
@@ -37,4 +41,5 @@ export const routedComponents = [
   EmployeeTableComponent,
   ItemTableComponent,
   CustomerTableComponent,
+  ProjectTableComponent,
 ];
