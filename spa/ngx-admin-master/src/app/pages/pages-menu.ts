@@ -70,6 +70,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Skabeloner',
         link: '/pages/tables/item-template-table',
       },
+      {
+        title: 'Tilføj skabelon',
+        link: '/pages/forms/item-template',
+      },
     ],
   },
   {
