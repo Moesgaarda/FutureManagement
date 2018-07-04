@@ -4,15 +4,15 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
 
 @Component({
-  selector: 'ngx-item-table',
-  templateUrl: './item-table.component.html',
+  selector: 'ngx-item-template-table',
+  templateUrl: './item-template-table.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
     }
   `],
 })
-export class ItemTableComponent {
+export class ItemTemplateTableComponent {
 
   settings = {
     add: {
@@ -30,24 +30,20 @@ export class ItemTableComponent {
       confirmDelete: true,
     },
     columns: {
-      id: {
+      templateName: {
         title: 'Navn',
         type: 'string',
       },
-      firstName: {
-        title: 'Placering',
-        type: 'string',
-      },
-      lastName: {
-        title: 'Mængde',
+      amountUnit: {
+        title: 'Mængdeenhed',
         type: 'number',
+      },
+      description: {
+        title: 'Beskrivelse',
+        type: 'string',
       },
       properties: {
         title: 'Egenskaber',
-        type: 'string',
-      },
-      usedInList: {
-        title: 'Genstanden bruges i',
         type: 'string',
       },
     },
@@ -61,7 +57,7 @@ export class ItemTableComponent {
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm('Er du sikker på at du vil slette denne forekomst?')) {
+    if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();

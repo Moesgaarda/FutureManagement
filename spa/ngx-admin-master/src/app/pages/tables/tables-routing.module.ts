@@ -5,6 +5,7 @@ import { TablesComponent } from './tables.component';
 import { SmartTableComponent } from './smart-table/smart-table.component';
 import { EmployeeTableComponent } from './employee-table/employee-table.component';
 import { ItemTableComponent } from './item-table/item-table.component';
+import { ItemTemplateTableComponent } from './item-template-table/item-template-table.component';
 import { CustomerTableComponent } from './customer-table/customer-table.component';
 import { ProjectTableComponent } from './project-table/project-table.component';
 
@@ -20,6 +21,10 @@ const routes: Routes = [{
   }, {
     path: 'item-table',
     component: ItemTableComponent,
+  },
+  {
+    path: 'item-template-table',
+    component: ItemTemplateTableComponent,
   }, {
     path: 'customer-table',
     component: CustomerTableComponent,
@@ -40,6 +45,7 @@ export const routedComponents = [
   SmartTableComponent,
   EmployeeTableComponent,
   ItemTableComponent,
+  ItemTemplateTableComponent,
   CustomerTableComponent,
   ProjectTableComponent,
 ];

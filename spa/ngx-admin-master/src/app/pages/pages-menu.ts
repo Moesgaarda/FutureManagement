@@ -8,10 +8,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'MULIGHEDER',
-    group: true,
-  },
-  {
     title: 'Projekter',
     icon: 'nb-grid-b',
     link: '/pages/ui-features',
@@ -56,7 +52,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Lagerhåndtering',
-    icon: 'nb-compose',
+    icon: 'fa fa-archive',
     children: [
       {
         title: 'Form Inputs',
@@ -70,11 +66,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Lagerbeholdning',
         link: '/pages/tables/item-table',
       },
+      {
+        title: 'Skabeloner',
+        link: '/pages/tables/item-template-table',
+      },
     ],
   },
   {
     title: 'Kunder',
-    icon: 'nb-gear',
+    icon: 'fa fa-user',
     children: [
       {
         title: 'Tree',
@@ -113,7 +113,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Brugere',
-    icon: 'fa fa-users',
+    icon: 'fa fa-id-badge',
     children: [
       {
         title: 'Echarts',
