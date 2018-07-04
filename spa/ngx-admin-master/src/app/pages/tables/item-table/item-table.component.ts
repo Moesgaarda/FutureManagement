@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { ItemTableService } from '../../../@core/data/item-table.service';
 
 @Component({
   selector: 'ngx-item-table',
@@ -30,24 +30,24 @@ export class ItemTableComponent {
       confirmDelete: true,
     },
     columns: {
-      id: {
+      name: {
         title: 'Navn',
         type: 'string',
       },
-      firstName: {
+      placement: {
         title: 'Placering',
         type: 'string',
       },
-      lastName: {
+      amount: {
         title: 'Mængde',
-        type: 'number',
+        type: 'string',
       },
       properties: {
         title: 'Egenskaber',
         type: 'string',
       },
-      usedInList: {
-        title: 'Genstanden bruges i',
+      type: {
+        title: 'Lavet af skabelon',
         type: 'string',
       },
     },
@@ -55,7 +55,7 @@ export class ItemTableComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableService) {
+  constructor(private service: ItemTableService) {
     const data = this.service.getData();
     this.source.load(data);
   }
