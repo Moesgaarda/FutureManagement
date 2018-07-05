@@ -5,6 +5,8 @@ import { FormsComponent } from './forms.component';
 import { FormInputsComponent } from './form-inputs/form-inputs.component';
 import { FormLayoutsComponent } from './form-layouts/form-layouts.component';
 import { ItemTemplateFormComponent } from './item-template-form/item-template-form.component';
+import { NewProjectFormComponent } from './new-project-form/new-project-form.component';
+import { ItemFormComponent } from './item-form/item-form.component';
 
 const routes: Routes = [{
   path: '',
@@ -18,6 +20,12 @@ const routes: Routes = [{
   }, {
     path: 'item-template',
     component: ItemTemplateFormComponent,
+  }, {
+    path: 'item',
+    component: ItemFormComponent,
+  }, {
+    path: 'new-project',
+    component: NewProjectFormComponent,
   }],
 }];
 
@@ -38,4 +46,6 @@ export const routedComponents = [
   FormInputsComponent,
   FormLayoutsComponent,
   ItemTemplateFormComponent,
+  ItemFormComponent,
+  NewProjectFormComponent,
 ];

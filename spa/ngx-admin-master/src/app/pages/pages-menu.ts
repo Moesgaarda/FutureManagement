@@ -48,6 +48,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Projekter',
         link: '/pages/tables/project-table',
       },
+      {
+        title: 'Nyt projekt',
+        link: '/pages/forms/new-project',
+      },
     ],
   },
   {
@@ -65,6 +69,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Lagerbeholdning',
         link: '/pages/tables/item-table',
+      },
+      {
+        title: 'Tilføj ny genstand',
+        link: '/pages/forms/item',
       },
       {
         title: 'Skabeloner',

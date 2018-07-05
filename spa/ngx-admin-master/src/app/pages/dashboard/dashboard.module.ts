@@ -8,6 +8,8 @@ import { StatusCardComponent } from './status-card/status-card.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { TeamComponent } from './team/team.component';
 import { KittenComponent } from './kitten/kitten.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { RoomSelectorComponent } from './rooms/rooms-selector/room-selector.component';
 import { ElectricityComponent } from './electricity/electricity.component';
 import { ElectricityChartComponent } from './electricity/electricity-chart/electricity-chart.component';
 import { WeatherComponent } from './weather/weather.component';
@@ -26,6 +28,8 @@ import { TrafficChartComponent } from './traffic/traffic-chart.component';
     StatusCardComponent,
     ContactsComponent,
     TeamComponent,
+    RoomSelectorComponent,
+    RoomsComponent,
     KittenComponent,
     ElectricityComponent,
     ElectricityChartComponent,

@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
 })
 export class ItemTemplateFormComponent {
 
-  starRate = 2;
-  heartRate = 4;
 }
