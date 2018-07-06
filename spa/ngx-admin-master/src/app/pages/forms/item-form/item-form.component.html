@@ -1,30 +1,25 @@
 <div class="row">
     <div class="col-lg-6">
       <nb-card>
-        <nb-card-header>Ny skabelon</nb-card-header>
+        <nb-card-header>Ny genstand til lageret</nb-card-header>
         <nb-card-body>
           <div class="input-group">
             <input type="text" placeholder="Navn" class="form-control"/>
           </div>
           <div class="form-group">
-            <label><b>Mængdeenhed</b></label>
+            <label><b>Vælg skabelon</b></label>
             <select class="form-control btn btn-success dropdown-toggle">
-              <option>Stk</option>
-              <option>Cm</option>
-              <option>Paller</option>
+              <option>Skabelon 1</option>
+              <option>Skabelon 2</option>
+              <option>Skabelon 3</option>
             </select>
           </div>
-          <div class="input-group">
-            <textarea rows="5" placeholder="Beskrivelse" class="form-control"></textarea>
+          <div class="form-group">
+            <input type="text" placeholder="Placering" class="form-control"/>
           </div>
           <div class="form-group">
             <input type="text" placeholder="Genstandsliste" class="form-control"/>
-            <small class="form-text">En liste af skabeloner for andre genstande der anvender denne.
-            </small>
-          </div>
-          <div class="form-group">
-            <input type="text" placeholder="Skabelonliste" class="form-control"/>
-            <small class="form-text">En liste af skabeloner der anvendes af denne genstand.
+            <small class="form-text">En liste af genstande som denne genstand anvendes i.
             </small>
           </div>
         </nb-card-body>
