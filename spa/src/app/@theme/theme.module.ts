@@ -26,8 +26,6 @@ import {
   HeaderComponent,
   SearchInputComponent,
   ThemeSettingsComponent,
-  SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
   TinyMCEComponent,
 } from './components';
 import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
@@ -61,8 +59,6 @@ const NB_MODULES = [
 ];
 
 const COMPONENTS = [
-  SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
   HeaderComponent,
   FooterComponent,
   SearchInputComponent,
