@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { ItemTableService } from '../../../@core/data/item-table.service';
+import { ButtonViewComponent } from './button-view.component';
 
 @Component({
   selector: 'ngx-item-table',
@@ -50,6 +51,13 @@ export class ItemTableComponent {
         title: 'Lavet af skabelon',
         type: 'string',
       },
+      button: {
+        title: 'My Button',
+        type: 'custom',
+      },
+      editFurther: {
+        title: 'Yderligere ændringer',
+      }
     },
   };
 
@@ -66,5 +74,9 @@ export class ItemTableComponent {
     } else {
       event.confirm.reject();
     }
+  }
+
+  route(event): void{
+    location.href = "http://localhost:4200/#/pages/forms/item-detail";
   }
 }
