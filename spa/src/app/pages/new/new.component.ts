@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'ngx-new',
-  template: `<strong>My page content here</strong>`,
+  templateUrl: './new.component.html',
 })
 
 
