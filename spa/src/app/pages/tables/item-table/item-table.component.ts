@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { ItemTableService } from '../../../@core/data/item-table.service';
-import { ButtonViewComponent } from './button-view.component';
 
 @Component({
   selector: 'ngx-item-table',
@@ -51,13 +50,21 @@ export class ItemTableComponent {
         title: 'Lavet af skabelon',
         type: 'string',
       },
-      button: {
-        title: 'My Button',
-        type: 'custom',
+      RouteToDetails:
+      {
+        title: 'Detaljer',
+        type: 'html',
+        filter: false,
+        editable: false,
+        valuePrepareFunction:(cell,row)=>{ 
+          return `<a title="Se yderligere detaljer" width="10 px" href="/#/pages/forms/item-detail"> <i class="nb-edit"></i></a>`
+        },
+
       },
-      editFurther: {
-        title: 'Yderligere ændringer',
-      }
+      Id: { //this Id to use in ${row.Id}. Indættes efter item-detail.
+        title: 'ID',
+        type: 'number',
+      },
     },
   };
 
@@ -76,7 +83,7 @@ export class ItemTableComponent {
     }
   }
 
-  route(event): void{
+  route(event): void {
     location.href = "http://localhost:4200/#/pages/forms/item-detail";
   }
 }
