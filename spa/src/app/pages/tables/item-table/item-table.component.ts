@@ -56,12 +56,13 @@ export class ItemTableComponent {
         type: 'html',
         filter: false,
         editable: false,
-        valuePrepareFunction:(cell,row)=>{ 
-          return `<a title="Se yderligere detaljer" width="10 px" href="/#/pages/forms/item-detail"> <i class="nb-edit"></i></a>`
+        valuePrepareFunction: (cell, row) => {
+          return `<a title='Se yderligere detaljer' width='10 px'
+          href='/#/pages/forms/item-detail'> <i class="nb-edit"></i></a>`
         },
 
       },
-      Id: { //this Id to use in ${row.Id}. Indættes efter item-detail.
+      Id: { // this Id to use in ${row.Id}. Indættes efter item-detail.
         title: 'ID',
         type: 'number',
       },
@@ -84,6 +85,6 @@ export class ItemTableComponent {
   }
 
   route(event): void {
-    location.href = "http://localhost:4200/#/pages/forms/item-detail";
+    location.href = 'http://localhost:4200/#/pages/forms/item-detail';
   }
 }
