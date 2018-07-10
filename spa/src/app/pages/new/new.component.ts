@@ -10,6 +10,7 @@ import { AuthService } from '../../_services/auth.service';
 
 export class NewComponent implements OnInit {
   model: any = {};
+  registerMode = false;
 
   constructor(private authService: AuthService) {}
 
@@ -33,5 +34,13 @@ export class NewComponent implements OnInit {
   loggedIn() {
     const token = localStorage.getItem('token');
     return !!token;
+  }
+
+  registerToggle() {
+    this.registerMode = true;
+  }
+
+  cancelRegisterMode(registerMode: boolean) {
+    this.registerMode = registerMode;
   }
 }
