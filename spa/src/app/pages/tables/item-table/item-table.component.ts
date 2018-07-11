@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
+
 import { ItemTableService } from '../../../@core/data/item-table.service';
+
 
 @Component({
   selector: 'ngx-item-table',
@@ -15,19 +17,18 @@ import { ItemTableService } from '../../../@core/data/item-table.service';
 export class ItemTableComponent {
 
   settings = {
+    mode: 'external',
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
     add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      addButtonContent: 'Tilføj ny',
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
     },
     columns: {
       name: {
@@ -50,21 +51,6 @@ export class ItemTableComponent {
         title: 'Lavet af skabelon',
         type: 'string',
       },
-      RouteToDetails:
-      {
-        title: 'Detaljer',
-        type: 'html',
-        filter: false,
-        editable: false,
-        valuePrepareFunction:(cell,row)=>{ 
-          return `<a title="Se yderligere detaljer" width="10 px" href="/#/pages/forms/item-detail"> <i class="nb-edit"></i></a>`
-        },
-
-      },
-      Id: { //this Id to use in ${row.Id}. Indættes efter item-detail.
-        title: 'ID',
-        type: 'number',
-      },
     },
   };
 
@@ -83,7 +69,19 @@ export class ItemTableComponent {
     }
   }
 
-  route(event): void {
-    location.href = "http://localhost:4200/#/pages/forms/item-detail";
+  editItem(event): void {
+    location.href = 'http://localhost:4200/#/pages/forms/item-detail';
+  }
+
+  deleteItem(event): void {
+    if (window.confirm('Er du sikker på at du vil slette denne forekomst?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  addNewItem() {
+    location.href = 'http://localhost:4200/#/pages/forms/item';
   }
 }

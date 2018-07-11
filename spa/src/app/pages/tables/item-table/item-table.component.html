@@ -2,13 +2,10 @@
     <nb-card-header>
       Samlet lagerbeholdning
     </nb-card-header>
-  
+
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" (deleteConfirm)="onDeleteConfirm($event)">
+      <ng2-smart-table [settings]="settings" [source]="source" (edit)="editItem($event)" (deleteConfirm)="onDeleteConfirm($event)" (create)="addNewItem()" (delete)="deleteItem($event)">
       </ng2-smart-table>
-    </nb-card-body>
-  </nb-card>
-
-  <button type="button">Item-detail page</button>
-
-  
+    </nb-card-body>        
+</nb-card>
+ 
