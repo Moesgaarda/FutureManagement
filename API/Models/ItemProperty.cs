@@ -1,8 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace API.Models
 {
     public class ItemProperty
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public ItemProperty(int id, string description){
+            Id = id;
+            Description = description;
+        }
+        public ItemProperty(string description){
+            Description = description;
+        }
+        public int Id { get; }
+        [Required]
+        public string Description { get; set; }
     }
 }
