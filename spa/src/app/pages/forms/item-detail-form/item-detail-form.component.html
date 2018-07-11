@@ -6,10 +6,32 @@
           <div class="form-group">
             <label for="templateUsed">Navn på genstanden</label>
             <div class="input-group">
-              <input type="text" placeholder="Navn" class="form-control" [disabled]="nameDisabled"/>
+              <input type="text" placeholder="Skrue" class="form-control" [disabled]="nameDisabled"/>
               <span class="input-group-append">
               <button class="btn btn-success input-group-text" (click)="enableName()">
                 {{ nameDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="templateUsed">Genstandes placering</label>
+            <div class="input-group">
+              <input type="text" placeholder="Hal 3 plads 8" class="form-control"  id="placement" [disabled]="placementDisabled"/>
+              <span class="input-group-append">
+              <button class="btn btn-success input-group-text"  (click)="enablePlacement()">
+                {{ placementDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="templateUsed">Mængde</label>
+            <div class="input-group">
+              <input type="text" placeholder="29" class="form-control"  id="amount" [disabled]="amountDisabled"/>
+              <span class="input-group-append">
+              <button class="btn btn-success input-group-text"  (click)="enableAmount()">
+                {{ amountDisabled ? 'Rediger' : 'Gem' }}
               </button>
               </span>
             </div>
@@ -21,17 +43,6 @@
               <span class="input-group-append">
               <button class="btn btn-success input-group-text" (click)="enableTemplate()">
                 {{ templateDisabled ? 'Rediger' : 'Gem' }}
-              </button>
-              </span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="templateUsed">Genstandes placering</label>
-            <div class="input-group">
-              <input type="text" placeholder="Placering" class="form-control"  id="placement" [disabled]="placementDisabled"/>
-              <span class="input-group-append">
-              <button class="btn btn-success input-group-text"  (click)="enablePlacement()">
-                {{ placementDisabled ? 'Rediger' : 'Gem' }}
               </button>
               </span>
             </div>
