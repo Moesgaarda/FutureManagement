@@ -22,18 +22,14 @@ namespace API.Controllers
         }
 
         public async Task<Order> GetOrder(int orderId){
+            return await _context.Orders.FirstAsync(x => x.Id == orderId);
+        }
+
+        public async Task<Order> CreateOrder(Order order){
             throw new NotImplementedException();
         }
 
-        public async Task<Order> CreateOrder(){
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> GetAllOrders(){
-            throw new NotImplementedException();
-        }
-
-        public async void GetPriceHistory(){
+        public async Task<List<Order>> GetAllOrders(){
             throw new NotImplementedException();
         }
 

@@ -17,7 +17,18 @@ namespace API.Models
             this.SecondaryPhoneNumber = secondaryPhoneNumber;
             this.Company = company;
             this.CustomerType = customerType;
+        }
 
+        public Customer(string city, string country, string email, string name, string primaryPhoneNumber, string secondaryPhoneNumber, string company, CustomerType customerType)
+        {
+            this.City = city;
+            this.Country = country;
+            this.Email = email;
+            this.Name = name;
+            this.PrimaryPhoneNumber = primaryPhoneNumber;
+            this.SecondaryPhoneNumber = secondaryPhoneNumber;
+            this.Company = company;
+            this.CustomerType = customerType;
         }
         
         [Key]

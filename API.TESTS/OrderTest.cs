@@ -59,7 +59,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void ReadOrderShouldReturnAResult(){
+        private async void ReadOrderReturnsCorrectResult(){
             // Arrange
             var controller = new OrderController(_dbContext);
 
@@ -68,6 +68,43 @@ namespace API.TESTS
 
             // Assert
             Assert.True(result.Id == 1);
+        }
+
+        [Fact]
+        private async void ReadOrderReturnsFalseResult(){
+            // Arrange
+            var controller = new OrderController(_dbContext);
+
+            // Act
+            var result = await controller.GetOrder(2);
+
+            // Assert
+            Assert.False(result.Id == 1);
+        }
+
+        [Fact]
+        private async void InsertOrderSuccessfully(){
+            // Arange
+            var controller = new OrderController(_dbContext);
+            var testOrder = new Order();
+
+            // Act
+            var result = await controller.CreateOrder(testOrder);
+
+            // Assert
+            Assert.True(result.Id == 3);
+        }
+
+        [Fact]
+        private async void GetAllOrdersGetsAllOrders(){
+            // Arrange
+            var controller = new OrderController(_dbContext);
+
+            // Act
+            var result = await controller.GetAllOrders();
+
+            // Assert
+            Assert.Equal(result.Count, 2);
         }
 
         public void Dispose(){
