@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using API.Data;
+using API.Enums;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,12 +45,25 @@ namespace API.TESTS
             //Assert.True(false);
         }
         private void Seed(DataContext dbContext){
-            /* var projects = new[]{
-                new Project {Customer = new Customer{Name = "morfar"}}
+                Customer c1 = new Customer();
+                Calculator cal1 = new Calculator();
+                ItemProperty ip1 = new ItemProperty(1,"bla");
+                List<ItemProperty> ipList = new List<ItemProperty>();
+                ipList.Add(ip1);
+                ItemPropertyCategory ipc1 = new ItemPropertyCategory(1,"bla");
+                var ipcList = new List<ItemPropertyCategory>();
+                ipcList.Add(ipc1);
+                ItemTemplate it1 = new ItemTemplate(1,"something", UnitType.mm,"blabla",ipcList,null);
+                User u1 = new User();
+                Order o1 = new Order("morfarCompany",DateTime.Now,DateTime.MaxValue,u1,"invoice",13,12,11,10,UnitType.cm,null);
+                Item i1 = new Item(1,ipList,"2d",3,it1,o1,u1,null);
+
+            var projects = new[]{
+                new Project(1,c1,DateTime.Now,)
 
             };
             dbContext.Projects.AddRange(projects);
-            dbContext.SaveChanges(); */
+            dbContext.SaveChanges(); 
         }
     }
 }
