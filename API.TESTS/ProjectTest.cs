@@ -37,12 +37,12 @@ namespace API.TESTS
         [Fact]
         public void GetCustomerShouldReturnResult()
         {
-           // Assert.True(_dbContext.Projects.Any(x => x.Customer.Name == "morfar"));
+            Assert.True(_dbContext.Projects.Any(x => x.Customer.Name == "morfar"));
         
         }
         [Fact]
         public void GetCustomerShouldFail(){
-            //Assert.True(false);
+            Assert.True(false);
         }
         private void Seed(DataContext dbContext){
                 Customer c1 = new Customer();
@@ -59,7 +59,7 @@ namespace API.TESTS
                 Item i1 = new Item(1,ipList,"2d",3,it1,o1,u1,null);
 
             var projects = new[]{
-                new Project(1,c1,DateTime.Now,)
+                new Project(1,c1,DateTime.Now,DateTime.MaxValue,null, "morfarsCrib","morfar land", "this is a comment",13,cal1, Status.Bestilt,1,2,3,UnitType.cm,"usage",100,"methoddecl")
 
             };
             dbContext.Projects.AddRange(projects);
