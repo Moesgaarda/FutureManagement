@@ -8,6 +8,15 @@ namespace API.Models
     public class ItemTemplate
     {
 
+        public ItemTemplate(int id, string name, UnitType unitType, string description)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.UnitType = unitType;
+            this.Description = description;
+
+        }
+        
         [Key]
         public int Id { get; private set; }
         [Required]

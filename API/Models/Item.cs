@@ -5,6 +5,17 @@ namespace API.Models
 {
     public class Item
     {
+        public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy)
+        {
+            this.Id = id;
+            this.Placement = placement;
+            this.Amount = amount;
+            this.Template = template;
+            this.Order = order;
+            this.CreatedBy = createdBy;
+
+        }
+        
         [Key]
         public int Id { get; private set; }
         public ICollection<ItemProperty> Properties { get; set; }
