@@ -43,8 +43,8 @@ export class ItemTableComponent {
         title: 'Mængde',
         type: 'string',
       },
-      properties: {
-        title: 'Egenskaber',
+      order: {
+        title: 'Ordre',
         type: 'string',
       },
       type: {

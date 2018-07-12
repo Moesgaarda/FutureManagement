@@ -23,7 +23,7 @@ export class ItemDetailFormComponent {
       this.nameDisabled = false;
     }
     else {
-      //indsæt i db
+      // indsæt i db
       this.nameDisabled = true;
     }   
   }
@@ -33,7 +33,7 @@ export class ItemDetailFormComponent {
       this.templateDisabled = false;
     }
     else {
-      //indsæt i db
+      // indsæt i db
       this.templateDisabled = true;
     }
   }
@@ -43,7 +43,7 @@ export class ItemDetailFormComponent {
       this.placementDisabled = false;
     }
     else {
-      //indsæt i db
+      // indsæt i db
       this.placementDisabled = true;
     }
   }
@@ -53,9 +53,13 @@ export class ItemDetailFormComponent {
       this.amountDisabled = false;
     }
     else {
-      //indsæt i db
+      // indsæt i db
       this.amountDisabled = true;
     }
+  }
+
+  routeToOrderDetail() {
+    location.href = 'http://localhost:4200/#/pages/forms/order-detail';
   }
 
 

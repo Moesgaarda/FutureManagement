@@ -8,6 +8,8 @@ import { ItemTemplateFormComponent } from './item-template-form/item-template-fo
 import { NewProjectFormComponent } from './new-project-form/new-project-form.component';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ItemDetailFormComponent } from './item-detail-form/item-detail-form.component';
+import { OrderDetailComponent } from './order-detail-form/order-detail-form.component';
+import { ItemTemplateDetailFormComponent } from './item-template-detail-form/item-template-detail-form.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,6 +32,12 @@ const routes: Routes = [{
   }, {
     path: 'item-detail',
     component: ItemDetailFormComponent,
+  }, {
+    path: 'order-detail',
+    component: OrderDetailComponent,
+  }, {
+    path: 'item-template-detail',
+    component: ItemTemplateDetailFormComponent,
   }],
 }];
 
@@ -53,4 +61,6 @@ export const routedComponents = [
   ItemFormComponent,
   ItemDetailFormComponent,
   NewProjectFormComponent,
+  OrderDetailComponent,
+  ItemTemplateDetailFormComponent,
 ];

@@ -4,53 +4,71 @@
         <nb-card-header>Detaljer omkring genstanden</nb-card-header>
         <nb-card-body>
           <div class="form-group">
-            <label for="templateUsed">Navn på genstanden</label>
+            <label for="name">Navn på genstanden</label>
             <div class="input-group">
-              <input type="text" placeholder="Skrue" class="form-control" [disabled]="nameDisabled"/>
+              <input type="text" placeholder="Navn" class="form-control" id="name" value="Skrue" [disabled]="nameDisabled"/>
               <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="enableName()">
-                {{ nameDisabled ? 'Rediger' : 'Gem' }}
-              </button>
+                <button class="btn btn-success input-group-text" (click)="enableName()">
+                  {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                </button>
               </span>
             </div>
           </div>
           <div class="form-group">
-            <label for="templateUsed">Genstandes placering</label>
+            <label for="placement">Genstandens placering</label>
             <div class="input-group">
-              <input type="text" placeholder="Hal 3 plads 8" class="form-control"  id="placement" [disabled]="placementDisabled"/>
+              <input type="text" placeholder="Genstandens placering" class="form-control" id="placement" value="Hal 3 plads 8" id="placement" [disabled]="placementDisabled"/>
               <span class="input-group-append">
-              <button class="btn btn-success input-group-text"  (click)="enablePlacement()">
-                {{ placementDisabled ? 'Rediger' : 'Gem' }}
-              </button>
+                <button class="btn btn-success input-group-text"  (click)="enablePlacement()">
+                  {{ placementDisabled ? 'Rediger' : 'Gem' }}
+                </button>
               </span>
             </div>
           </div>
           <div class="form-group">
-            <label for="templateUsed">Mængde</label>
+            <label for="amount">Mængde</label>
             <div class="input-group">
-              <input type="text" placeholder="29" class="form-control"  id="amount" [disabled]="amountDisabled"/>
+              <input type="text" placeholder="Mængde" class="form-control"  id="amount" value="29" [disabled]="amountDisabled"/>
               <span class="input-group-append">
-              <button class="btn btn-success input-group-text"  (click)="enableAmount()">
-                {{ amountDisabled ? 'Rediger' : 'Gem' }}
-              </button>
+                <button class="btn btn-success input-group-text"  (click)="enableAmount()">
+                  {{ amountDisabled ? 'Rediger' : 'Gem' }}
+                </button>
               </span>
             </div>
           </div>
           <div class="form-group">
             <label for="templateUsed">Anvendt skabelon</label>
             <div class="input-group">
-              <input type="text" placeholder="Anvendt skabelon" class="form-control" [disabled]="templateDisabled">
+              <input type="text" placeholder="Anvendt skabelon" id="templateUsed" class="form-control" value="Skabelon 1" [disabled]="templateDisabled">
               <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="enableTemplate()">
-                {{ templateDisabled ? 'Rediger' : 'Gem' }}
-              </button>
+                <button class="btn btn-success input-group-text" (click)="enableTemplate()">
+                  {{ templateDisabled ? 'Rediger' : 'Gem' }}
+                </button>
               </span>
             </div>
           </div>
           <div class="form-group">
-            <label for="itemList">Genstandsliste</label>
+            <label for="order">Oprindelsesordre</label>
+            <div class="input-group">
+              <input type="text" placeholder="Oprindelsesordre" id="order" value="Ordre #4" class="form-control" disabled>
+              <span class="input-group-append">
+                <button class="btn btn-success input-group-text" (click)="routeToOrderDetail()">
+                  Detaljer
+                </button>
+                </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="madeBy">Lavet af</label>
+            <div class="input-group">
+              <input type="text" placeholder="Lavet af" id="madeBy" class="form-control" value="Poul" disabled>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="itemList">Liste af dele</label>
             <input type="text" placeholder="Genstandsliste" class="form-control" disabled/>
-            <small class="form-text">En liste af genstande som denne genstand anvendes til at fremstille.</small>
+            <small class="form-text">En liste af genstande der blev anvendt til at fremstille denne genstand </small>
           </div>
         </nb-card-body>
       </nb-card>
@@ -65,6 +83,10 @@
             <div class="demo-checkboxes col-sm-4">
               <nb-checkbox>Malingsfarve</nb-checkbox>
               <nb-checkbox>Behandling</nb-checkbox>
+              <nb-checkbox>Egenskab3</nb-checkbox>
+              <nb-checkbox>Egenskab4</nb-checkbox>
+              <nb-checkbox>Egenskab5</nb-checkbox>
+              <nb-checkbox>Egenskab6</nb-checkbox>
             </div>
            </div>
         </nb-card-body>
