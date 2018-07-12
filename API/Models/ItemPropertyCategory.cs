@@ -4,6 +4,7 @@ namespace API.Models
 {
     public class ItemPropertyCategory
     {
+        public ItemPropertyCategory(){}
         public ItemPropertyCategory(int id, string name)
         {
             this.Id = id;

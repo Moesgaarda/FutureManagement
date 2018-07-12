@@ -4,6 +4,7 @@ namespace API.Models
 {
     public class UserRole
     {
+        public UserRole(){}
         public UserRole(int id, string name)
         {
             this.Id = id;

@@ -41,8 +41,7 @@ namespace API.TESTS
                     123, 
                     456, 
                     789, 
-                    UnitType.cm, 
-                    null),
+                    UnitType.cm),
                 new Order("CompanyB", 
                     DateTime.Today, 
                     DateTime.Now, 
@@ -52,8 +51,7 @@ namespace API.TESTS
                     345, 
                     678, 
                     910, 
-                    UnitType.mm, 
-                    null),
+                    UnitType.mm),
             };
 
             context.Orders.AddRange(orders);

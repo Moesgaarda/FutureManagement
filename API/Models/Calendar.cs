@@ -5,6 +5,7 @@ namespace API.Models
 {
     public class Calendar
     {
+        public Calendar(){}
         public Calendar(int id, string name)
         {
             this.Id = id;

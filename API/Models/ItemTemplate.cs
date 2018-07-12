@@ -7,7 +7,7 @@ namespace API.Models
 {
     public class ItemTemplate
     {
-
+        public ItemTemplate(){}
         public ItemTemplate(int id, string name, UnitType unitType, string description)
         {
             this.Id = id;

@@ -6,6 +6,7 @@ namespace API.Models
 {
     public class EventLog
     {
+        public EventLog(){}
         public EventLog(int id)
         {
             this.Id = id;

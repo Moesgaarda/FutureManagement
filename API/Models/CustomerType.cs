@@ -5,6 +5,7 @@ namespace API.Models
 {
     public class CustomerType
     {
+        public CustomerType(){}
         public CustomerType(int id, string name)
         {
             this.Id = id;

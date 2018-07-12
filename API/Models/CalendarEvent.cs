@@ -8,6 +8,8 @@ namespace API.Models
     public class CalendarEvent
     {
 
+        public CalendarEvent(){}
+
         public CalendarEvent(int id, CalendarEventType eventType, string name, string description, DateTime startTime, DateTime endTime, bool repeats, int repeatedInterval, User createdBy)
         {
             this.Id = id;

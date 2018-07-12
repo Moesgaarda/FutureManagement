@@ -7,6 +7,21 @@ namespace API.Models
 {
     public class Order
     {
+        public Order(){}
+        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber, int width, int height, int length, UnitType unitType)
+        {
+            this.Company = company;
+            this.OrderDate = orderDate;
+            this.DeliveryDate = deliveryDate;
+            this.OrderedBy = orderedBy;
+            this.InvoicePath = invoicePath;
+            this.PurchaseNumber = purchaseNumber;
+            this.Width = width;
+            this.Height = height;
+            this.Length = length;
+            this.UnitType = unitType;
+        }
+
         public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber, int width, int height, int length, UnitType unitType)
         {
             this.Id = id;
@@ -20,7 +35,6 @@ namespace API.Models
             this.Height = height;
             this.Length = length;
             this.UnitType = unitType;
-
         }
 
         [Key]

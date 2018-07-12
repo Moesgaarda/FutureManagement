@@ -4,6 +4,8 @@ namespace API.Models
 {
     public class Calculator
     {
+        public Calculator(){}
+
         public Calculator(int id, string name, int number)
         {
             this.Id = id;

@@ -7,7 +7,7 @@ namespace API.Models
 {
     public class Project
     {
-
+        public Project(){}
         public Project(int id, Customer customer, DateTime startTime, string deliveryAddress, string deliveryCountry, string comment, int invoiceNumber, Calculator calculator, Status status, int width, int height, int length, UnitType unitType, string usage, int orderNumber, string methodOfDecleration)
         {
             this.Id = id;

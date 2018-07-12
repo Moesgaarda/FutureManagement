@@ -5,6 +5,7 @@ namespace API.Models
 {
     public class Item
     {
+        public Item(){}
         public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy)
         {
             this.Id = id;
