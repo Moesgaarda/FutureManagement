@@ -9,10 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using API.Enums;
 using API.Data;
 
-namespace API.TESTS
-{
-    public class CustomerTest : IDisposable
-    {
+namespace API.TESTS{
+    public class CustomerTest : IDisposable{
         private readonly DataContext _dbContext;
 
         public CustomerTest(){
@@ -70,7 +68,6 @@ namespace API.TESTS
             // Assert
             Assert.Equal(result.Count, 2);
         }
-
 
         [Fact]
         private async void AddNewCustomerReturnsTrue(){

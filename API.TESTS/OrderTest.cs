@@ -92,7 +92,31 @@ namespace API.TESTS
             var result = await controller.CreateOrder(testOrder);
 
             // Assert
-            Assert.True(result.Id == 3);
+            Assert.False(result);
+        }
+
+        [Fact]
+        private async void InsertOrderUnsuccessfully(){
+            // Arange
+            var controller = new OrderController(_dbContext);
+            var testOrder = new Order(
+                    "CompanyC", 
+                    DateTime.Today, 
+                    DateTime.Now, 
+                    null, 
+                    "core/pathA.pdf", 
+                    1, 
+                    486, 
+                    153, 
+                    125, 
+                    UnitType.cm
+                );
+
+            // Act
+            var result = await controller.CreateOrder(testOrder);
+
+            // Assert
+            Assert.True(result);
         }
 
         [Fact]

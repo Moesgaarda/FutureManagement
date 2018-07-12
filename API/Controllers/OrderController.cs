@@ -25,7 +25,7 @@ namespace API.Controllers
             return await _context.Orders.FirstAsync(x => x.Id == orderId);
         }
 
-        public async Task<Order> CreateOrder(Order order){
+        public async Task<bool> CreateOrder(Order order){
             throw new NotImplementedException();
         }
 
