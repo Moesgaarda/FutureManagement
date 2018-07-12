@@ -32,8 +32,28 @@ namespace API.TESTS
 
         private void Seed(DataContext context){
             var orders = new[]{
-                new Order { Id = 1, Company = "CompAS", OrderDate = DateTime.Today, DeliveryDate = DateTime.Now, OrderedBy = null, InvoicePath = "core/path.pdf", PurchaseNumber = 1, Width = 123, Height = 312, Length = 213, UnitType = UnitType.cm, Products = null },
-                new Order { Id = 2, Company = "Company", OrderDate = DateTime.Today, DeliveryDate = DateTime.Now, OrderedBy = null, InvoicePath = "core/path2.pdf", PurchaseNumber = 2, Width = 1234, Height = 3152, Length = 2123, UnitType = UnitType.mm, Products = null }
+                new Order("CompanyA", 
+                    DateTime.Today, 
+                    DateTime.Now, 
+                    null, 
+                    "core/pathA.pdf", 
+                    1, 
+                    123, 
+                    456, 
+                    789, 
+                    UnitType.cm, 
+                    null),
+                new Order("CompanyB", 
+                    DateTime.Today, 
+                    DateTime.Now, 
+                    null, 
+                    "core/pathB.pdf", 
+                    2, 
+                    345, 
+                    678, 
+                    910, 
+                    UnitType.mm, 
+                    null),
             };
 
             context.Orders.AddRange(orders);

@@ -9,6 +9,11 @@ namespace API.Models
             Name = name;
         }
 
+        public Calendar(string name, List<CalendarEvent> events){
+            Name = name;
+            Events = events;
+        }
+
         public int Id { get; }
 
         [Required]
