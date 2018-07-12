@@ -44,7 +44,7 @@ namespace API.Models
             }}
         public string DeliveryAddress { get; set; }
         public string DeliveryCountry { get; set; }
-        public string Comments { get; set; }
+        public string Comment { get; set; }
         public int InvoiceNumber { get; set; }
         [Required]
         public Calculator Calculator { get; set; }
