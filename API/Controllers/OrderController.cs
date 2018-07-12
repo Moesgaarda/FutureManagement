@@ -8,16 +8,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers
-{
-    [Authorize]
+namespace API.Controllers{
+
     [Route("api/[controller]")]
-    public class OrderController : Controller
-    {
+    public class OrderController : Controller{
         private readonly DataContext _context;
 
-        public OrderController(DataContext context)
-        {
+        public OrderController(DataContext context){
             _context = context;
         }
 

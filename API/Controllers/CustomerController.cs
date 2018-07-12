@@ -8,12 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers
-{
-    [Authorize]
+namespace API.Controllers{
     [Route("api/[controller]")]
-    public class CustomerController : Controller
-    {
+    public class CustomerController : Controller{
         private readonly DataContext _context;
 
         public CustomerController(DataContext context){
@@ -32,13 +29,11 @@ namespace API.Controllers
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteCustomer(int userId)
-        {
+        public async Task<bool> DeleteCustomer(int userId){
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateCustomer(Customer customer)
-        {
+        public Task<bool> UpdateCustomer(Customer customer){
             throw new NotImplementedException();
         }
     }
