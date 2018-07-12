@@ -63,7 +63,7 @@ namespace API.TESTS
 
             };
             dbContext.Projects.AddRange(projects);
-            dbContext.SaveChanges(); */
+            dbContext.SaveChanges(); 
         }
     }
 }
