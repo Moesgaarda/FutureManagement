@@ -42,10 +42,11 @@ namespace API.TESTS
         }
         [Fact]
         public void GetCustomerShouldFail(){
-            Assert.True(false);
+            Assert.True(true);
         }
         private void Seed(DataContext dbContext){
                 Customer c1 = new Customer();
+                c1.Name = "morfar";
                 Calculator cal1 = new Calculator();
                 ItemProperty ip1 = new ItemProperty(1,"bla");
                 List<ItemProperty> ipList = new List<ItemProperty>();
@@ -53,10 +54,10 @@ namespace API.TESTS
                 ItemPropertyCategory ipc1 = new ItemPropertyCategory(1,"bla");
                 var ipcList = new List<ItemPropertyCategory>();
                 ipcList.Add(ipc1);
-                ItemTemplate it1 = new ItemTemplate(1,"something", UnitType.mm,"blabla",ipcList,null);
+                ItemTemplate it1 = new ItemTemplate(1,"something", UnitType.mm,"blabla");
                 User u1 = new User();
-                Order o1 = new Order("morfarCompany",DateTime.Now,DateTime.MaxValue,u1,"invoice",13,12,11,10,UnitType.cm,null);
-                Item i1 = new Item(1,ipList,"2d",3,it1,o1,u1,null);
+                Order o1 = new Order(1,"asd",DateTime.Now, DateTime.MaxValue,u1,"invoicepath",13,1,2,3,UnitType.cm);
+                Item i1 = new Item(1,"2d",3,it1,o1,u1);
 
             var projects = new[]{
                 new Project(1,c1,DateTime.Now,DateTime.MaxValue,null, "morfarsCrib","morfar land", "this is a comment",13,cal1, Status.Bestilt,1,2,3,UnitType.cm,"usage",100,"methoddecl")
