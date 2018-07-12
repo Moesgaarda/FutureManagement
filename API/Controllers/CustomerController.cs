@@ -16,12 +16,28 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
 
-        public CustomerController(DataContext context)
-        {
+        public CustomerController(DataContext context){
             _context = context;
         }
 
-        public async Task<List<Customer>> GetAllCustomers()
+        public async Task<List<Customer>> GetAllCustomers(){
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> AddNewCustomer(Customer customer){
+            throw new NotImplementedException();
+        }
+
+        public async Task<Customer> GetCustomer(int userId){
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteCustomer(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }

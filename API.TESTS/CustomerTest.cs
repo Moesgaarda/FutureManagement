@@ -32,8 +32,27 @@ namespace API.TESTS
 
         private void Seed(DataContext context){
             var customers = new[]{
-                new Customer("Viborg", "DK", "john@bob.dk", "John Bob", "+4512457845", "+4523451659", "none", new CustomerType("Privat")),
-                new Customer("Gedsted", "DK", "bob@john.dk", "Bob John", "+4512457845", "+4559486573", "Futty", new CustomerType("Privat")),
+                new Customer(
+                    "Viborg", 
+                    "DK", 
+                    "john@bob.dk", 
+                    "John Bob",
+                    "+4512457845", 
+                    "+4523451659", 
+                    "none", 
+                    new CustomerType("Privat")
+                ),
+
+                new Customer(
+                    "Gedsted", 
+                    "DK", 
+                    "bob@john.dk", 
+                    "Bob John", 
+                    "+4511223344", 
+                    "+4555668844", 
+                    "Futty", 
+                    new CustomerType("Erhverv")
+                ),
             };
 
             context.Customers.AddRange(customers);
@@ -50,6 +69,135 @@ namespace API.TESTS
 
             // Assert
             Assert.Equal(result.Count, 2);
+        }
+
+
+        [Fact]
+        private async void AddNewCustomerReturnsTrue(){
+            // Arrange
+            var controller = new CustomerController(_dbContext);
+            var testCustomer = new Customer(
+                    "Nyborg", 
+                    "DK", 
+                    "john@bobby.dk", 
+                    "John Bobsen",
+                    "+4512457345", 
+                    "+4523451659", 
+                    "none", 
+                    new CustomerType("Privat")
+                );
+
+            // Act
+            var result = await controller.AddNewCustomer(testCustomer);
+
+            // Assert 
+            Assert.True(result);
+
+        }
+
+        [Fact]
+        private async void AddNewCustomerAddsUser(){
+            // Arrange
+            var controller = new CustomerController(_dbContext);
+            var testCustomer = new Customer(
+                    "Aalborg", 
+                    "DK", 
+                    "eva@drivehouse.dk", 
+                    "Eva Evansen",
+                    "+4512457845", 
+                    "+4523451659", 
+                    "Drive House", 
+                    new CustomerType("Erhverv")
+                );
+
+            // Act
+            await controller.AddNewCustomer(testCustomer);
+            var result = controller.GetCustomer(3);
+
+            // Assert 
+            Assert.Equal(result.Result, testCustomer);
+        }
+
+        [Fact]
+        private async void DeleteCustomerReturnsTrueIfSuccess(){
+            // Arrange
+            var controller = new CustomerController(_dbContext);
+
+            // Act
+            var result = await controller.DeleteCustomer(2);
+
+            // Assert
+            Assert.Equal(result, true);
+        }
+
+        [Fact]
+        private async void DeleteCustomerReturnsFalseIfUnsuccess(){
+            // Arrange
+            var controller = new CustomerController(_dbContext);
+
+            // Act
+            var result = await controller.DeleteCustomer(5);
+
+            // Assert
+            Assert.Equal(result, false);
+        }
+
+        [Fact]
+        private async void ChangeCustomerInformationSuccess(){
+            // Arrange
+            var controller = new CustomerController(_dbContext);
+            var testCustomer = new Customer(
+                1,
+                "Aalborg", 
+                "DK", 
+                "eva@drivehouse.dk", 
+                "Eva Evansen",
+                "+4512457845", 
+                "+4523451659", 
+                "Drive House", 
+                new CustomerType("Erhverv")
+            );
+
+            // Act
+            var result = await controller.UpdateCustomer(testCustomer);
+
+            // Assert
+            Assert.Equal(result, true);
+        }
+
+        [Fact]
+        private async void ChangeCustomerInformationUnsuccess(){
+            // Arrange
+            var controller = new CustomerController(_dbContext);
+            var testCustomer = new Customer(
+                1,
+                "", 
+                "", 
+                "", 
+                "",
+                "", 
+                "", 
+                "", 
+                new CustomerType("")
+            );
+
+            // Act
+            var result = await controller.UpdateCustomer(testCustomer);
+
+            // Assert
+            Assert.Equal(result, false);
+        }
+
+        [Fact]
+        private async void GetCustomer(){
+            // Arrange
+            var controller = new CustomerController(_dbContext);
+
+            // Act
+            var result = await controller.GetCustomer(1);
+
+            // Assert
+            Assert.Equal(result.Id, 1);
         }
 
         public void Dispose(){
