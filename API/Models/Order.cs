@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using API.Enums;
 
-namespace API.Models
-{
-    public class Order
-    {
+namespace API.Models{
+    public class Order{
         public Order(){}
-        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber, int width, int height, int length, UnitType unitType)
-        {
+        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber, int width, int height, int length, UnitType unitType){
             this.Company = company;
             this.OrderDate = orderDate;
             this.DeliveryDate = deliveryDate;
@@ -22,8 +19,7 @@ namespace API.Models
             this.UnitType = unitType;
         }
 
-        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber, int width, int height, int length, UnitType unitType)
-        {
+        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber, int width, int height, int length, UnitType unitType){
             this.Id = id;
             this.Company = company;
             this.OrderDate = orderDate;

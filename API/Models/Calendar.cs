@@ -10,9 +10,14 @@ namespace API.Models
         {
             this.Id = id;
             this.Name = name;
-
         }
-        
+
+        public Calendar(string name)
+        {
+            this.Name = name;
+        }
+
+
         [Key]
         public int Id { get; private set; }
 

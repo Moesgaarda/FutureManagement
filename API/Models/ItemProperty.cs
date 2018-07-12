@@ -1,15 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
-{
-    public class ItemProperty
-    {
+namespace API.Models{
+    public class ItemProperty{
         public ItemProperty(){}
-        public ItemProperty(int id, string description)
-        {
+        public ItemProperty(int id, string description){
             this.Id = id;
             this.Description = description;
-
         }
         
         [Key]

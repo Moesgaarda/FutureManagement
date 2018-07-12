@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using API.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
-{
-    public class Project
-    {
+namespace API.Models{
+    public class Project{
         public Project(){}
-
-        private Customer _customer;
-        private DateTime _startTime;
-        private DateTime _endTime;
-        private ICollection<Item> _products;
-
-    public Project(Customer customer, DateTime startTime, DateTime endTime, ICollection<Item> products, string deliveryAddress, string deliveryCountry, string comment, int invoiceNumber, Calculator calculator, Status status, int width, int height, int length, UnitType unitType, string usage, int orderNumber, string methodOfDecleration)
-        {
+        public Project(Customer customer, DateTime startTime, DateTime endTime, ICollection<Item> products, string deliveryAddress, string deliveryCountry, string comment, int invoiceNumber, Calculator calculator, Status status, int width, int height, int length, UnitType unitType, string usage, int orderNumber, string methodOfDecleration){
             this.Customer = customer;
             this.StartTime = startTime;
             this.EndTime = endTime;
@@ -57,6 +48,12 @@ namespace API.Models
             this.MethodOfDecleration = methodOfDecleration;
 
         }
+
+        private Customer _customer;
+        private DateTime _startTime;
+        private DateTime _endTime;
+        private ICollection<Item> _products;
+
         [Key]
         public int Id { get; private set; }
 

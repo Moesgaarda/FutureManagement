@@ -2,13 +2,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using API.Enums;
 
-namespace API.Models
-{
-    public class EventLog
-    {
+namespace API.Models{
+    public class EventLog{
         public EventLog(){}
-        public EventLog(int id)
-        {
+        public EventLog(int id){
             this.Id = id;
 
         }

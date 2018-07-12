@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
-{
-    public class Item
-    {
+namespace API.Models{
+    public class Item{
         public Item(){}
-        public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy)
-        {
+        public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy){
             this.Id = id;
             this.Placement = placement;
             this.Amount = amount;

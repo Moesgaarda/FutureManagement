@@ -1,17 +1,18 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
-{
-    public class Calculator
-    {
+namespace API.Models{
+    public class Calculator{
         public Calculator(){}
 
-        public Calculator(int id, string name, int number)
-        {
+        public Calculator(int id, string name, int number){
             this.Id = id;
             this.Name = name;
             this.Number = number;
+        }
 
+        public Calculator(string name, int number){
+            this.Name = name;
+            this.Number = number;
         }
 
         [Key]

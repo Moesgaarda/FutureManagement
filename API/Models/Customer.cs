@@ -1,13 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
-{
-    public class Customer
-    {
+namespace API.Models{
+    public class Customer{
 
         public Customer(){}
-        public Customer(int id, string city, string country, string email, string name, string primaryPhoneNumber, string secondaryPhoneNumber, string company, CustomerType customerType)
-        {
+        public Customer(int id, string city, string country, string email, string name, string primaryPhoneNumber, string secondaryPhoneNumber, string company, CustomerType customerType){
             this.Id = id;
             this.City = city;
             this.Country = country;
@@ -19,8 +16,7 @@ namespace API.Models
             this.CustomerType = customerType;
         }
 
-        public Customer(string city, string country, string email, string name, string primaryPhoneNumber, string secondaryPhoneNumber, string company, CustomerType customerType)
-        {
+        public Customer(string city, string country, string email, string name, string primaryPhoneNumber, string secondaryPhoneNumber, string company, CustomerType customerType){
             this.City = city;
             this.Country = country;
             this.Email = email;
