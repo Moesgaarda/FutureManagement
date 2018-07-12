@@ -5,19 +5,11 @@ namespace API.Models
 {
     public class Calendar
     {
-        public Calendar(string name){
-            Name = name;
-        }
-
-        public Calendar(string name, List<CalendarEvent> events){
-            Name = name;
-            Events = events;
-        }
-
-        public int Id { get; }
+        [Key]
+        public int Id { get; private set; }
 
         [Required]
         public string Name { get; set; }
-        public List<CalendarEvent> Events { get; set; }
+        public ICollection<CalendarEvent> Events { get; set; }
     }
 }

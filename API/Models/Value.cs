@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace API.Models
 {
     public class Value
     {
-        public int Id { get; set; }
+        [Key]
+        public int Id { get; private set; }
         public string name {get; set;}
     }
 }

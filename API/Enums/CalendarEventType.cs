@@ -1,7 +1,8 @@
 namespace API.Enums
 {
-    public class CalendarEventType
+    public enum CalendarEventType
     {
-        
+        work,
+        notwork
     }
 }

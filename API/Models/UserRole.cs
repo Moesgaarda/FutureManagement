@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace API.Models
 {
     public class UserRole
     {
-        public int Id { get; }
+        [Key]
+        public int Id { get; private set; }
         public string Name { get; set; }
     }
 }

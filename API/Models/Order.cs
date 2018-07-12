@@ -7,38 +7,8 @@ namespace API.Models
 {
     public class Order
     {
-        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber,
-        int width, int height, int length, UnitType unitType, List<Item> products){
-            Company = company;
-            OrderDate = orderDate;
-            DeliveryDate = deliveryDate;
-            OrderedBy = orderedBy;
-            InvoicePath = invoicePath;
-            PurchaseNumber = purchaseNumber;
-            Width = width;
-            Height = height;
-            Length = length;
-            UnitType = unitType;
-            Products = products;
-        }
-
-        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, int purchaseNumber,
-        int width, int height, int length, UnitType unitType, List<Item> products){
-            Id = id;
-            Company = company;
-            OrderDate = orderDate;
-            DeliveryDate = deliveryDate;
-            OrderedBy = orderedBy;
-            InvoicePath = invoicePath;
-            PurchaseNumber = purchaseNumber;
-            Width = width;
-            Height = height;
-            Length = length;
-            UnitType = unitType;
-            Products = products;
-        }
-
-        public int Id { get; }
+        [Key]
+        public int Id { get; private set; }
         [Required]
         public string Company { get; set; }
         public DateTime OrderDate { get; set; }
@@ -52,6 +22,6 @@ namespace API.Models
         public int Length { get; set; }
         public UnitType UnitType { get; set; }
         [Required]
-        public List<Item> Products { get; set; }
+        public ICollection<Item> Products { get; set; }
     }
 }

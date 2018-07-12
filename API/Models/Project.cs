@@ -10,9 +10,10 @@ namespace API.Models
         private Customer _customer;
         private DateTime _startTime;
         private DateTime _endTime;
-        private List<Item> _products;
+        private ICollection<Item> _products;
         
-        public int Id { get; }
+        [Key]
+        public int Id { get; private set; }
 
         [Required]
         public Customer Customer { get; set; }
@@ -30,18 +31,7 @@ namespace API.Models
                 }
             } 
         }
-        public List<Item> Products {
-            get{
-                return _products;
-            } 
-            set{
-                if (value == null){
-                    _products = new List<Item>();
-                }
-                else{
-                    _products = value;
-                }
-            }}
+        public ICollection<Item> Products { get; set; }
         public string DeliveryAddress { get; set; }
         public string DeliveryCountry { get; set; }
         public string Comment { get; set; }

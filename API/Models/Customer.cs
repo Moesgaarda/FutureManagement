@@ -4,7 +4,8 @@ namespace API.Models
 {
     public class Customer
     {
-        public int Id { get; } 
+        [Key]
+        public int Id { get; private set; }
         public string City { get; set; }
         public string Country { get; set; }
         [EmailAddress]
