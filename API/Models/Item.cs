@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations;
 namespace API.Models{
     public class Item{
         public Item(){}
-        public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy){
+        public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy, ICollection<ItemProperty> properties, ICollection<Item> parts){
             this.Id = id;
             this.Placement = placement;
             this.Amount = amount;
             this.Template = template;
             this.Order = order;
             this.CreatedBy = createdBy;
+            this.Properties = Properties;
+            this.Parts = parts;
 
         }
         

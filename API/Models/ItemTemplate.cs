@@ -6,17 +6,21 @@ using API.Enums;
 namespace API.Models{
     public class ItemTemplate{
         public ItemTemplate(){}
-        public ItemTemplate(int id, string name, UnitType unitType, string description){
+        public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<ItemPropertyCategory> properties, ICollection<ItemTemplate> parts){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
+            this.Properties = properties;
+            this.Parts = parts;
         }
 
-        public ItemTemplate(string name, UnitType unitType, string description){
+        public ItemTemplate(string name, UnitType unitType, string description, ICollection<ItemPropertyCategory> properties, ICollection<ItemTemplate> parts){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
+            this.Properties = properties;
+            this.Parts = parts;
         }
         
         [Key]
