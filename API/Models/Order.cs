@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using API.Enums;
 
 namespace API.Models
@@ -40,9 +41,7 @@ namespace API.Models
         public int Id { get; }
         [Required]
         public string Company { get; set; }
-        [DateTime]
         public DateTime OrderDate { get; set; }
-        [DateTime]
         public DateTime DeliveryDate { get; set; }
         [Required]
         public User OrderedBy { get; set; }
