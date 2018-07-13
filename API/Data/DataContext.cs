@@ -15,7 +15,7 @@ namespace API.Data
         public DbSet<EventLog> EventLogs { get; set; }
         public DbSet<Item> Items { get; set; }    
         public DbSet<ItemProperty> ItemProperties { get; set; }     
-        public DbSet<CustomerType> ItemPropertyCategories { get; set; }
+        public DbSet<ItemPropertyCategory> ItemPropertyCategories { get; set; }
         public DbSet<ItemTemplate> ItemTemplates { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Project> Projects { get; set; }         
