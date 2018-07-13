@@ -5,7 +5,7 @@ namespace API.Models{
     public class Item{
         public Item(){}
         public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy,
-            ICollection<ItemProperty> properties, ICollection<Item> parts){
+            ICollection<ItemProperty> properties, ICollection<Item> parts, bool isArchived){
 
             this.Id = id;
             this.Placement = placement;
@@ -15,11 +15,12 @@ namespace API.Models{
             this.CreatedBy = createdBy;
             this.Properties = Properties;
             this.Parts = parts;
+            this.IsArchived = isArchived;
 
         }
         public Item(string placement, int amount, ItemTemplate template, Order order, User createdBy, 
-            ICollection<ItemProperty> properties, ICollection<Item> parts){
-                
+            ICollection<ItemProperty> properties, ICollection<Item> parts, bool isArchived){
+
             this.Placement = placement;
             this.Amount = amount;
             this.Template = template;
@@ -27,7 +28,7 @@ namespace API.Models{
             this.CreatedBy = createdBy;
             this.Properties = Properties;
             this.Parts = parts;
-
+            this.IsArchived = isArchived;
         }
         
         [Key]
@@ -40,5 +41,7 @@ namespace API.Models{
         public Order Order { get; set; }
         public User CreatedBy { get; set; }
         public ICollection<Item> Parts { get; set; }
+
+        public bool IsArchived { get; set; }
     }
 }
