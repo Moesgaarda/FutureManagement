@@ -41,7 +41,8 @@ namespace API.TESTS
                     123, 
                     456, 
                     789, 
-                    UnitType.cm),
+                    UnitType.cm,
+                    null),
                 new Order("CompanyB", 
                     DateTime.Today, 
                     DateTime.Now, 
@@ -51,7 +52,8 @@ namespace API.TESTS
                     345, 
                     678, 
                     910, 
-                    UnitType.mm),
+                    UnitType.mm,
+                    null),
             };
 
             context.Orders.AddRange(orders);
@@ -109,7 +111,8 @@ namespace API.TESTS
                     486, 
                     153, 
                     125, 
-                    UnitType.cm
+                    UnitType.cm,
+                    null
                 );
 
             // Act
@@ -128,7 +131,7 @@ namespace API.TESTS
             var result = await controller.GetAllOrders();
 
             // Assert
-            Assert.Equal(result.Count, 2);
+            Assert.Equal(2, result.Count);
         }
 
         public void Dispose(){

@@ -66,7 +66,7 @@ namespace API.TESTS{
             var result = await controller.GetAllCustomers();
 
             // Assert
-            Assert.Equal(result.Count, 2);
+            Assert.Equal(2, result.Count);
         }
 
         [Fact]
@@ -112,7 +112,7 @@ namespace API.TESTS{
             var result = controller.GetCustomer(3);
 
             // Assert 
-            Assert.Equal(result.Result, testCustomer);
+            Assert.Equal(testCustomer, result.Result);
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace API.TESTS{
             var result = await controller.DeleteCustomer(2);
 
             // Assert
-            Assert.Equal(result, true);
+            Assert.True(result);
         }
 
         [Fact]
@@ -136,7 +136,7 @@ namespace API.TESTS{
             var result = await controller.DeleteCustomer(5);
 
             // Assert
-            Assert.Equal(result, false);
+            Assert.False(result);
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace API.TESTS{
             var result = await controller.UpdateCustomer(testCustomer);
 
             // Assert
-            Assert.Equal(result, true);
+            Assert.True(result);
         }
 
         [Fact]
@@ -182,7 +182,7 @@ namespace API.TESTS{
             var result = await controller.UpdateCustomer(testCustomer);
 
             // Assert
-            Assert.Equal(result, false);
+            Assert.False(result);
         }
 
         [Fact]
@@ -194,7 +194,7 @@ namespace API.TESTS{
             var result = await controller.GetCustomer(1);
 
             // Assert
-            Assert.Equal(result.Id, 1);
+            Assert.Equal(1, result.Id);
         }
 
         public void Dispose(){
