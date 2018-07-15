@@ -234,7 +234,7 @@ namespace API.TESTS
             //Act
             var status = await controller.ArchiveItem(item);
             //Assert
-            Assert.True(status;
+            Assert.True(status);
         }
         private void Seed(DataContext context){
             var itemProperties = new[]{
