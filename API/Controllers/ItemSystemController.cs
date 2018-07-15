@@ -7,34 +7,37 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class InventoryManagementController : Controller
+    public class ItemSystemController : Controller
     {
         private readonly DataContext _context;
-        public InventoryManagementController(DataContext context){
+        public ItemSystemController(DataContext context){
             _context = context;
         }
-        public async Task<List<Item>> GetallActiveItems(){
+        public async Task<Item> ShowDetailsItem(int id){
             throw new NotImplementedException();
         }
-        public async Task<List<Item>> GetAllArchivedItems(){
+        public async Task<ItemTemplate> ShowDetailsTemplate(int id){
             throw new NotImplementedException();
         }
-        public async Task<List<Item>> GetAllItems(){
+        public async Task<bool> CreateTemplate(ItemTemplate template){
             throw new NotImplementedException();
         }
-        public async void ShowDetails(Item item){
+        public async Task<bool> EditTemplate(ItemTemplate template){
             throw new NotImplementedException();
         }
-        public async void EditItem(Item item){
+        public async Task<bool> DeleteTemplate(ItemTemplate template){
             throw new NotImplementedException();
         }
-        public async Task<bool> UpdateItem(Item item){
+        public async Task<bool> CreateItem(Item item){
             throw new NotImplementedException();
         }
-        public async Task<bool> ArchiveItem(Item item){
+        public async Task<bool> EditItem(Item item){
             throw new NotImplementedException();
         }
         public async Task<bool> DeleteItem(Item item){
+            throw new NotImplementedException();
+        }
+        public async Task<bool> ArchiveItem(Item item){
             throw new NotImplementedException();
         }
     }
