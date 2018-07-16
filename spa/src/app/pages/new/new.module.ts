@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { NewComponent } from './new.component';
 import { routing } from './new.routing';
+import { RegisterComponent } from '../register/register.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { routing } from './new.routing';
   ],
   declarations: [
     NewComponent,
+    RegisterComponent,
   ],
 })
 export class NewModule {}
