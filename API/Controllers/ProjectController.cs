@@ -8,7 +8,7 @@ using System;
 namespace API.Controllers
 {
 
-    [Route("api/[]")]
+    [Route("api/[controller]")]
     public class ProjectController : Controller
     {
         private readonly DataContext _context;

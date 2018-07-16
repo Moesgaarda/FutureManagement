@@ -30,23 +30,14 @@ namespace API.TESTS
             Seed(_dbContext);
 
         }
-        [Fact]
-        public async void ShowDetailsItemTest()
-        {
-            //Given
-            var controller = new ItemSystemController(_dbContext);
-            //When
-            var item = await controller.ShowDetailsItem(1);
-            //Then
-            Assert.Equal(item.Id, 1);
-        }
+
         [Fact]
         public async void ShowDetailsTemplateTest()
         {
             //Given
             var controller = new ItemSystemController(_dbContext);
             //When
-            var template = await controller.ShowDetailsTemplate(1);
+            var template = await controller.GetItemTemplate(1);
             //Then
             Assert.Equal(template.Id, 1);
         }
@@ -63,7 +54,7 @@ namespace API.TESTS
                 new List<ItemTemplate>() { }
             );
             //When
-            await controller.CreateTemplate(template);
+            await controller.AddItemTemplate(template);
             var dbTemplate = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 4);
             //Then
             Assert.True(dbTemplate.Id == 4 && dbTemplate.Name == template.Name);
@@ -80,7 +71,7 @@ namespace API.TESTS
                 new List<ItemTemplate>() { }
             );
             //When
-            var status = await controller.CreateTemplate(template);
+            var status = await controller.AddItemTemplate(template);
             //Then
             Assert.True(status);
         }
@@ -93,7 +84,7 @@ namespace API.TESTS
             //Act
             template.Description = "En Ny beskrivelse";
             template.Properties.Add(_dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 3));
-            await controller.EditTemplate(template);
+            await controller.EditItemTemplate(template);
             var editedTemplate = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Assert
             Assert.True(editedTemplate.Description == template.Description && editedTemplate.Properties.Count == 3);
@@ -107,7 +98,7 @@ namespace API.TESTS
             //Act
             template.Description = "En Ny beskrivelse";
             template.Properties.Add(_dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 3));
-            var status = await controller.EditTemplate(template);
+            var status = await controller.EditItemTemplate(template);
             //Assert
             Assert.True(status);
         }
@@ -118,7 +109,7 @@ namespace API.TESTS
             var controller = new ItemSystemController(_dbContext);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
-            await controller.DeleteTemplate(template);
+            await controller.DeleteItemTemplate(template);
             //Assert
             Assert.Null(_dbContext.ItemTemplates.First(x => x.Id == 1));
         }
@@ -129,7 +120,7 @@ namespace API.TESTS
             var controller = new ItemSystemController(_dbContext);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
-            var status = await controller.DeleteTemplate(template);
+            var status = await controller.DeleteItemTemplate(template);
             //Assert
             Assert.True(status);
         }

@@ -22,6 +22,9 @@ namespace API.Controllers
         public async Task<List<Item>> GetAllItems(){
             throw new NotImplementedException();
         }
+        public async Task<Item> GetItem(int id){
+            throw new NotImplementedException();
+        }
         public async Task<Item> ShowDetails(Item item){
             throw new NotImplementedException();
         }
