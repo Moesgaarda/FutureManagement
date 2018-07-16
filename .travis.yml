@@ -37,3 +37,10 @@ matrix:
 
       script:
       - dotnet test
+
+  notifications:
+    email: false
+
+  branches: 
+    only:
+      - master

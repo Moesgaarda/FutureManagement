@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-lg-6">
+      <nb-card>
+        <nb-card-header>Detaljer omkring genstanden</nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="templateUsed">Navn på genstanden</label>
+            <div class="input-group">
+              <input type="text" placeholder="Navn" class="form-control" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+              <button class="btn btn-success input-group-text" (click)="enableName()">
+                {{ nameDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="templateUsed">Anvendt skabelon</label>
+            <div class="input-group">
+              <input type="text" placeholder="Anvendt skabelon" class="form-control" [disabled]="templateDisabled">
+              <span class="input-group-append">
+              <button class="btn btn-success input-group-text" (click)="enableTemplate()">
+                {{ templateDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="templateUsed">Genstandes placering</label>
+            <div class="input-group">
+              <input type="text" placeholder="Placering" class="form-control"  id="placement" [disabled]="placementDisabled"/>
+              <span class="input-group-append">
+              <button class="btn btn-success input-group-text"  (click)="enablePlacement()">
+                {{ placementDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="itemList">Genstandsliste</label>
+            <input type="text" placeholder="Genstandsliste" class="form-control" disabled/>
+            <small class="form-text">En liste af genstande som denne genstand anvendes til at fremstille.</small>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  
+    <div class="col-lg-6">
+  
+      <nb-card>
+        <nb-card-header>Valgte egenskaber</nb-card-header>
+        <nb-card-body>
+          <div class="row demo-checkboxes-radio">
+            <div class="demo-checkboxes col-sm-4">
+              <nb-checkbox>Malingsfarve</nb-checkbox>
+              <nb-checkbox>Behandling</nb-checkbox>
+            </div>
+           </div>
+        </nb-card-body>
+      </nb-card> 
+    </div>
+  </div>
+  
