@@ -37,21 +37,26 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="file">Fil</label>
-            <div class="input-group">
-              <input type="text" placeholder="Fil" value="Fil#1" id="file" class="form-control" [disabled]="fileDisabled">
-              <span class="input-group-append">
-                <button class="btn btn-success input-group-text" (click)="enableFile()">
-                    {{ fileDisabled ? 'Rediger' : 'Gem' }}
-                </button>
-              </span>
+              <label for="templateList">Skabelonliste</label>
+              <input type="text" placeholder="Skabelonliste" id="templateList" class="form-control" disabled/>
+              <small class="form-text">En liste af skabeloner hvor denne skabelon anvendes. </small>
             </div>
+          <div class="form-group">
+            <label for="usedList">Anvendelsesliste</label>
+            <input type="text" placeholder="Anvendelsesliste" id="usedList" class="form-control" disabled/>
+            <small class="form-text">En liste af skabeloner hvori denne skabelon anvendes. </small>
           </div>
           <div class="form-group">
-            <label for="itemList">Liste af dele</label>
-            <input type="text" placeholder="Genstandsliste" id="itemList" class="form-control" disabled/>
-            <small class="form-text">En liste af dele der anvendes når skabelon bruges til at fremstille en genstand </small>
-          </div>
+              <label for="file">Fil</label>
+              <div class="input-group">
+                <input type="text" placeholder="Fil" value="Fil#1" id="file" class="form-control" [disabled]="fileDisabled">
+                <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableFile()">
+                      {{ fileDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </span>
+              </div>
+            </div>
         </nb-card-body>
       </nb-card>
     </div>
@@ -71,6 +76,14 @@
               <nb-checkbox>Egenskab6</nb-checkbox>
             </div>
            </div>
+           <div class="input-group">
+            <input type="text" placeholder="Tilføj ny egenskab" class="form-control"/>
+            <span class="input-group-append">
+              <button class="btn btn-success input-group-text">
+                Tilføj
+              </button>
+            </span>
+          </div>
         </nb-card-body>
       </nb-card> 
     </div>

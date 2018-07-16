@@ -47,7 +47,8 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="row">
+              <div class="form-group col-lg-4">
                 <label for="length">Længde</label>
                 <div class="input-group">
                   <input type="text" placeholder="Længde" id="length" class="form-control" [disabled]="lengthDisabled">
@@ -58,7 +59,7 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-lg-4">
                 <label for="width">Bredde</label>
                 <div class="input-group">
                   <input type="text" placeholder="Længde" id="width" class="form-control" [disabled]="widthDisabled">
@@ -69,7 +70,7 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-lg-4">
                 <label for="width">Højde</label>
                 <div class="input-group">
                   <input type="text" placeholder="Højde" id="width" class="form-control" [disabled]="heightDisabled">
@@ -80,6 +81,7 @@
                   </span>
                 </div>
               </div>
+            </div>
               <div class="form-group">
                 <label for="unitType">Mængdeenhed</label>
                 <div class="input-group">
@@ -139,6 +141,14 @@
                   <nb-checkbox>Egenskab6</nb-checkbox>
                 </div>
                </div>
+               <div class="input-group">
+                <input type="text" placeholder="Tilføj ny egenskab" class="form-control"/>
+                <span class="input-group-append">
+                  <button class="btn btn-success input-group-text">
+                    Tilføj
+                  </button>
+                </span>
+              </div>
             </nb-card-body>
           </nb-card> 
         </div>
