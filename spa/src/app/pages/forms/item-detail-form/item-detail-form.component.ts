@@ -10,6 +10,7 @@ export class ItemDetailFormComponent {
   nameDisabled: boolean;
   templateDisabled: boolean;
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     this.nameDisabled = true;
     this.templateDisabled = true;
@@ -19,19 +20,17 @@ export class ItemDetailFormComponent {
   enableName() {
     if (this.nameDisabled) {
       this.nameDisabled = false;
-    }
-    else {
-      //indsæt i db
+    } else {
+      // indsæt i db
       this.nameDisabled = true;
-    }   
+    }
   }
 
   enableTemplate() {
     if (this.templateDisabled) {
       this.templateDisabled = false;
-    }
-    else {
-      //indsæt i db
+    } else {
+      // indsæt i db
       this.templateDisabled = true;
     }
   }
@@ -39,9 +38,8 @@ export class ItemDetailFormComponent {
   enablePlacement() {
     if (this.placementDisabled) {
       this.placementDisabled = false;
-    }
-    else {
-      //indsæt i db
+    } else {
+      // indsæt i db
       this.placementDisabled = true;
     }
   }

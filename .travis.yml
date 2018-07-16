@@ -42,5 +42,5 @@ matrix:
     email: false
 
   branches: 
-   only:
-    - master
+    only:
+      - master
