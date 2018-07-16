@@ -42,7 +42,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        public async void GetAllArchivedItems(){
+        public async void GetAllArchivedItemsTest(){
             //Arrange
             var controller = new InventoryManagementController(_dbContext);
             //Act
@@ -62,28 +62,26 @@ namespace API.TESTS
         }
 
         [Fact]
-        public async void UpdateItemTest(){
+        public async void EditItemTest(){
             //Arrange
             var controller = new InventoryManagementController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             item.Amount = 5;
-            await controller.UpdateItem(item);
+            await controller.EditItem(item);
             //Assert
             Assert.Equal(_dbContext.Items.FirstOrDefault(x => x.Id == 1).Amount, 5);
-            /*Burder jeg teste alle værdier her eller er det her fint nok ? */
         }
         [Fact]
-        public async void UpdateItemReturnTest(){
+        public async void EditItemReturnTest(){
             //Arrange
             var controller = new InventoryManagementController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             item.Amount = 5;
-            bool status = await controller.UpdateItem(item);
+            bool status = await controller.EditItem(item);
             //Assert
             Assert.True(status);
-            /*Burder jeg teste alle værdier her eller er det her fint nok ? */
         }
         [Fact]
         public async void ArchiveItemTest(){
@@ -122,6 +120,49 @@ namespace API.TESTS
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             var status = await controller.DeleteItem(item);
+            //Assert
+            Assert.True(status);
+        }
+        
+        [Fact]
+        public async void CreateItemTest()
+        {
+            //Arrange
+            var controller = new InventoryManagementController(_dbContext);
+            var item = new Item(
+                    "39d",
+                    66,
+                    _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 2),
+                    _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
+                    _dbContext.Users.FirstOrDefault(x => x.Id == 1),
+                    new List<ItemProperty>() { _dbContext.ItemProperties.FirstOrDefault(X => X.Id == 1) },
+                    new List<Item>(),
+                    false
+                );
+            //Act
+            await controller.CreateItem(item);
+            var newItem = _dbContext.Items.FirstOrDefault(x => x.Id == 4);
+            //Assert
+            Assert.True(newItem.Placement == item.Placement && newItem.Amount == item.Amount
+                        && newItem.CreatedBy.Id == item.CreatedBy.Id);
+        }
+        [Fact]
+        public async void CreatItemReturnTest()
+        {
+            //Arrange
+            var controller = new InventoryManagementController(_dbContext);
+            var item = new Item(
+                    "39d",
+                    66,
+                    _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 2),
+                    _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
+                    _dbContext.Users.FirstOrDefault(x => x.Id == 1),
+                    new List<ItemProperty>() { _dbContext.ItemProperties.FirstOrDefault(X => X.Id == 1) },
+                    new List<Item>(),
+                    false
+                );
+            //Act
+            var status = await controller.CreateItem(item);
             //Assert
             Assert.True(status);
         }

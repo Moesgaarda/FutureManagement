@@ -14,7 +14,8 @@ namespace API.TESTS
     public class ItemSystemTest : IDisposable
     {
         private readonly DataContext _dbContext;
-        public ItemSystemTest(){
+        public ItemSystemTest()
+        {
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
@@ -27,27 +28,27 @@ namespace API.TESTS
             _dbContext = new DataContext(options);
             _dbContext.Database.EnsureCreated();
             Seed(_dbContext);
-        
+
         }
         [Fact]
         public async void ShowDetailsItemTest()
         {
-        //Given
-        var controller = new ItemSystemController(_dbContext);
-        //When
-        var item = await controller.ShowDetailsItem(1);
-        //Then
-        Assert.Equal(item.Id, 1);
+            //Given
+            var controller = new ItemSystemController(_dbContext);
+            //When
+            var item = await controller.ShowDetailsItem(1);
+            //Then
+            Assert.Equal(item.Id, 1);
         }
         [Fact]
         public async void ShowDetailsTemplateTest()
         {
-        //Given
-        var controller = new ItemSystemController(_dbContext);
-        //When
-        var template = await controller.ShowDetailsTemplate(1);
-        //Then
-        Assert.Equal(template.Id, 1);
+            //Given
+            var controller = new ItemSystemController(_dbContext);
+            //When
+            var template = await controller.ShowDetailsTemplate(1);
+            //Then
+            Assert.Equal(template.Id, 1);
         }
         [Fact]
         public async void CreateTemplateTest()
@@ -55,11 +56,11 @@ namespace API.TESTS
             //Given
             var controller = new ItemSystemController(_dbContext);
             var template = new ItemTemplate(
-                "Dør", 
-                UnitType.m, 
-                "Dette er en Dør", 
-                new List<ItemPropertyCategory>(){_dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
-                new List<ItemTemplate>(){}
+                "Dør",
+                UnitType.m,
+                "Dette er en Dør",
+                new List<ItemPropertyCategory>() { _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2) },
+                new List<ItemTemplate>() { }
             );
             //When
             await controller.CreateTemplate(template);
@@ -72,11 +73,11 @@ namespace API.TESTS
             //Given
             var controller = new ItemSystemController(_dbContext);
             var template = new ItemTemplate(
-                "Dør", 
-                UnitType.m, 
-                "Dette er en Dør", 
-                new List<ItemPropertyCategory>(){_dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
-                new List<ItemTemplate>(){}
+                "Dør",
+                UnitType.m,
+                "Dette er en Dør",
+                new List<ItemPropertyCategory>() { _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2) },
+                new List<ItemTemplate>() { }
             );
             //When
             var status = await controller.CreateTemplate(template);
@@ -84,7 +85,8 @@ namespace API.TESTS
             Assert.True(status);
         }
         [Fact]
-        public async void EditTemplateTest(){
+        public async void EditTemplateTest()
+        {
             //Arrange
             var controller = new ItemSystemController(_dbContext);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
@@ -97,7 +99,8 @@ namespace API.TESTS
             Assert.True(editedTemplate.Description == template.Description && editedTemplate.Properties.Count == 3);
         }
         [Fact]
-        public async void EditTemplateReturnTest(){
+        public async void EditTemplateReturnTest()
+        {
             //Arrange
             var controller = new ItemSystemController(_dbContext);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
@@ -109,7 +112,8 @@ namespace API.TESTS
             Assert.True(status);
         }
         [Fact]
-        public async void DeleteTemplateTest(){
+        public async void DeleteTemplateTest()
+        {
             //Arrange
             var controller = new ItemSystemController(_dbContext);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
@@ -119,7 +123,8 @@ namespace API.TESTS
             Assert.Null(_dbContext.ItemTemplates.First(x => x.Id == 1));
         }
         [Fact]
-        public async void DeleteTemplateTestReturn(){
+        public async void DeleteTemplateTestReturn()
+        {
             //Arrange
             var controller = new ItemSystemController(_dbContext);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
@@ -128,118 +133,11 @@ namespace API.TESTS
             //Assert
             Assert.True(status);
         }
-        [Fact]
-        public async void CreateItemTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = new Item(
-                    "39d",
-                    66,
-                    _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 2),
-                    _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
-                    _dbContext.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemProperty>(){_dbContext.ItemProperties.FirstOrDefault(X => X.Id == 1)},
-                    new List<Item>(),
-                    false
-                );
-            //Act
-            await controller.CreateItem(item);
-            var newItem = _dbContext.Items.FirstOrDefault(x => x.Id == 4);
-            //Assert
-            Assert.True(newItem.Placement == item.Placement && newItem.Amount == item.Amount
-                        && newItem.CreatedBy.Id == item.CreatedBy.Id);
-            //skal man change alle properties ellere er det her fint ?
-        }
-        [Fact]
-        public async void CreatItemReturnTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = new Item(
-                    "39d",
-                    66,
-                    _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 2),
-                    _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
-                    _dbContext.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemProperty>(){_dbContext.ItemProperties.FirstOrDefault(X => X.Id == 1)},
-                    new List<Item>(),
-                    false
-                );
-            //Act
-            var status = await controller.CreateItem(item);
-            //Assert
-            Assert.True(status);
-        }
-        [Fact]
-        public async void EditItemTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Act
-            item.Amount = 5;
-            item.Placement = "22c";
-            await controller.EditItem(item);
-            var editedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Assert
-            Assert.True(editedItem.Amount == 5 && editedItem.Placement == "22c"); 
-        }
-        [Fact]
-        public async void EditItemReturnTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Act
-            item.Amount = 5;
-            item.Placement = "22c";
-            var status = await controller.EditItem(item);
-            //Assert
-            Assert.True(status);
-        }
-        [Fact]
-        public async void DeleteItemTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Act
-            await controller.DeleteItem(item);
-            var deletedItem = _dbContext.Items.First(x => x.Id == 1);
-            //Assert
-            Assert.Null(deletedItem);
-        }
-        [Fact]
-        public async void DeleteItemReturnTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Act
-            var status = await controller.DeleteItem(item);
-            //Assert
-            Assert.True(status);
-        }
-        [Fact]
-        public async void ArchiveItemTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Act
-            await controller.ArchiveItem(item);
-            var archivedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Assert
-            Assert.True(archivedItem.IsArchived);
-        }
-        [Fact]
-        public async void ArchiveItemReturnTest(){
-            //Arrange
-            var controller = new ItemSystemController(_dbContext);
-            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
-            //Act
-            var status = await controller.ArchiveItem(item);
-            //Assert
-            Assert.True(status);
-        }
-        private void Seed(DataContext context){
+        private void Seed(DataContext context)
+        {
             var itemProperties = new[]{
                 new ItemProperty("gul"),
-                new ItemProperty("halv"), 
+                new ItemProperty("halv"),
                 new ItemProperty("slebet")
             };
             context.ItemProperties.AddRange(itemProperties);
@@ -254,24 +152,24 @@ namespace API.TESTS
 
             var itemTemplates = new[]{
                 new ItemTemplate(
-                    "Gavl", 
-                    UnitType.m, 
-                    "Dette er en gavl", 
-                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
+                    "Gavl",
+                    UnitType.m,
+                    "Dette er en gavl",
+                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){}
                 ),
                 new ItemTemplate(
-                    "stang", 
-                    UnitType.m, 
-                    "Dette er en stang", 
-                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
+                    "stang",
+                    UnitType.m,
+                    "Dette er en stang",
+                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){}
                 ),
                 new ItemTemplate(
-                    "tagplade", 
-                    UnitType.m, 
-                    "Dette er en tagplade", 
-                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
+                    "tagplade",
+                    UnitType.m,
+                    "Dette er en tagplade",
+                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){}
                 )
             };
@@ -292,32 +190,32 @@ namespace API.TESTS
             context.Users.AddRange(users);
             context.SaveChanges();
             var orders = new[]{
-                new Order("CompanyA", 
-                    DateTime.Today, 
-                    DateTime.Now, 
-                    context.Users.FirstOrDefault(x => x.Id == 1), 
-                    "core/pathA.pdf", 
-                    1, 
-                    123, 
-                    456, 
-                    789, 
+                new Order("CompanyA",
+                    DateTime.Today,
+                    DateTime.Now,
+                    context.Users.FirstOrDefault(x => x.Id == 1),
+                    "core/pathA.pdf",
+                    1,
+                    123,
+                    456,
+                    789,
                     UnitType.cm,
                     new List<Item>()),
-                new Order("CompanyB", 
-                    DateTime.Today, 
-                    DateTime.Now, 
-                    context.Users.FirstOrDefault(x => x.Id == 1), 
-                    "core/pathB.pdf", 
-                    2, 
-                    345, 
-                    678, 
-                    910, 
+                new Order("CompanyB",
+                    DateTime.Today,
+                    DateTime.Now,
+                    context.Users.FirstOrDefault(x => x.Id == 1),
+                    "core/pathB.pdf",
+                    2,
+                    345,
+                    678,
+                    910,
                     UnitType.mm,
                     new List<Item>()),
             };
             context.Orders.AddRange(orders);
             context.SaveChanges();
-            
+
             var items = new[]{
                 new Item(
                     "42d",

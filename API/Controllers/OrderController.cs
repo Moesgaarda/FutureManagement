@@ -19,7 +19,7 @@ namespace API.Controllers{
         }
 
         public async Task<Order> GetOrder(int orderId){
-            return await _context.Orders.FirstAsync(x => x.Id == orderId);
+            return await _context.Orders.FirstAsync(x => x.Id == orderId); 
         }
 
         public async Task<bool> CreateOrder(Order order){
@@ -28,6 +28,14 @@ namespace API.Controllers{
 
         public async Task<List<Order>> GetAllOrders(){
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> EditOrder(){
+            throw new NotImplementedException(); //TODO Unit testing
+        }
+
+        public async Task<bool> UpdateOrderStatus(){
+            throw new NotImplementedException(); //TODO Unit testing
         }
 
     }

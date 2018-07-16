@@ -62,17 +62,17 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void GetCustomerShouldReturnResult()
+        private async void GetCustomerShouldReturnResultTest()
         {
             Assert.True(_dbContext.Projects.Any(x => x.Customer.Name == "morfar"));
         
         }
         [Fact]
-        private async void GetCustomerShouldFail(){
+        private async void GetCustomerShouldFailTest(){
             Assert.False(_dbContext.Projects.Any(x => x.Customer.Name == "Notmorfar"));
         }
         [Fact]
-        private async void GetProjectShouldReturnTrue(){
+        private async void GetProjectShouldReturnTrueTest(){
             var con = new ProjectController(_dbContext);
             
             Project pro = await con.GetProject(0);
@@ -82,7 +82,7 @@ namespace API.TESTS
             Assert.True(result);
         }
         [Fact]
-        private async void GetProjectShouldReturnFalse(){
+        private async void GetProjectShouldReturnFalseTest(){
             var con = new ProjectController(_dbContext);
             
             Project pro = await con.GetProject(0);

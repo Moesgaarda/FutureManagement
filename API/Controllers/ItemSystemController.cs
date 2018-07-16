@@ -28,17 +28,5 @@ namespace API.Controllers
         public async Task<bool> DeleteTemplate(ItemTemplate template){
             throw new NotImplementedException();
         }
-        public async Task<bool> CreateItem(Item item){
-            throw new NotImplementedException();
-        }
-        public async Task<bool> EditItem(Item item){
-            throw new NotImplementedException();
-        }
-        public async Task<bool> DeleteItem(Item item){
-            throw new NotImplementedException();
-        }
-        public async Task<bool> ArchiveItem(Item item){
-            throw new NotImplementedException();
-        }
     }
 }

@@ -22,19 +22,19 @@ namespace API.Controllers
         public async Task<List<Item>> GetAllItems(){
             throw new NotImplementedException();
         }
-        public async void ShowDetails(Item item){
+        public async Task<Item> ShowDetails(Item item){
             throw new NotImplementedException();
         }
-        public async void EditItem(Item item){
+        public async Task<bool> CreateItem(Item item){
             throw new NotImplementedException();
         }
-        public async Task<bool> UpdateItem(Item item){
-            throw new NotImplementedException();
-        }
-        public async Task<bool> ArchiveItem(Item item){
+        public async Task<bool> EditItem(Item item){
             throw new NotImplementedException();
         }
         public async Task<bool> DeleteItem(Item item){
+            throw new NotImplementedException();
+        }
+        public async Task<bool> ArchiveItem(Item item){
             throw new NotImplementedException();
         }
     }

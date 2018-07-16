@@ -25,14 +25,8 @@ namespace API.Controllers
         public async Task<List<Project>> GetAllProjects(){
             throw new NotImplementedException();
         }
-        public async Task<Project> ChooseCustomerForProject(int projectId){
-            throw new NotImplementedException();
-        }
-        public async void ShowDetailForProject(int projectId){
-            throw new NotImplementedException();
-        }
         public async Task<bool> EditProject(int projectId){
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //TODO Unit testing
         }
     }
 }

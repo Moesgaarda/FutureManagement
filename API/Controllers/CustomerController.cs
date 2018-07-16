@@ -33,7 +33,7 @@ namespace API.Controllers{
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateCustomer(Customer customer){
+        public async Task<bool> EditCustomer(Customer customer){
             throw new NotImplementedException();
         }
     }

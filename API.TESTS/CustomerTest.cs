@@ -58,7 +58,7 @@ namespace API.TESTS{
         }
 
         [Fact]
-        private async void GetAllCustomersGetsAllCustomers(){
+        private async void GetAllCustomersGetsAllCustomersTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
 
@@ -70,7 +70,7 @@ namespace API.TESTS{
         }
 
         [Fact]
-        private async void AddNewCustomerReturnsTrue(){
+        private async void AddNewCustomerReturnsTrueTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
             var testCustomer = new Customer(
@@ -93,7 +93,7 @@ namespace API.TESTS{
         }
 
         [Fact]
-        private async void AddNewCustomerAddsUser(){
+        private async void AddNewCustomerAddsUserTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
             var testCustomer = new Customer(
@@ -116,7 +116,7 @@ namespace API.TESTS{
         }
 
         [Fact]
-        private async void DeleteCustomerReturnsTrueIfSuccess(){
+        private async void DeleteCustomerReturnsTrueIfSuccessTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
 
@@ -128,7 +128,7 @@ namespace API.TESTS{
         }
 
         [Fact]
-        private async void DeleteCustomerReturnsFalseIfUnsuccess(){
+        private async void DeleteCustomerReturnsFalseIfUnsuccessTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
 
@@ -140,7 +140,7 @@ namespace API.TESTS{
         }
 
         [Fact]
-        private async void ChangeCustomerInformationSuccess(){
+        private async void ChangeCustomerInformationSuccessTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
             var testCustomer = new Customer(
@@ -156,14 +156,14 @@ namespace API.TESTS{
             );
 
             // Act
-            var result = await controller.UpdateCustomer(testCustomer);
+            var result = await controller.EditCustomer(testCustomer);
 
             // Assert
             Assert.True(result);
         }
 
         [Fact]
-        private async void ChangeCustomerInformationUnsuccess(){
+        private async void ChangeCustomerInformationUnsuccessTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
             var testCustomer = new Customer(
@@ -179,14 +179,14 @@ namespace API.TESTS{
             );
 
             // Act
-            var result = await controller.UpdateCustomer(testCustomer);
+            var result = await controller.EditCustomer(testCustomer);
 
             // Assert
             Assert.False(result);
         }
 
         [Fact]
-        private async void GetCustomer(){
+        private async void GetCustomerTest(){
             // Arrange
             var controller = new CustomerController(_dbContext);
 

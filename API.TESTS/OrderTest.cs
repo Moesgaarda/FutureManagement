@@ -61,7 +61,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void ReadOrderReturnsCorrectResult(){
+        private async void ReadOrderReturnsCorrectResultTest(){
             // Arrange
             var controller = new OrderController(_dbContext);
 
@@ -73,7 +73,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void ReadOrderReturnsFalseResult(){
+        private async void ReadOrderReturnsFalseResultTest(){
             // Arrange
             var controller = new OrderController(_dbContext);
 
@@ -85,7 +85,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void InsertOrderSuccessfully(){
+        private async void InsertOrderSuccessfullyTest(){
             // Arange
             var controller = new OrderController(_dbContext);
             var testOrder = new Order();
@@ -98,7 +98,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void InsertOrderUnsuccessfully(){
+        private async void InsertOrderUnsuccessfullyTest(){
             // Arange
             var controller = new OrderController(_dbContext);
             var testOrder = new Order(
@@ -123,7 +123,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void GetAllOrdersGetsAllOrders(){
+        private async void GetAllOrdersGetsAllOrdersTest(){
             // Arrange
             var controller = new OrderController(_dbContext);
 
