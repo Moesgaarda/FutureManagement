@@ -86,7 +86,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'New Page', // menu title
+    title: 'Midlertigig loginside', // menu title
     icon: 'ion-android-home', // menu icon
     link: '/pages/new',
   },

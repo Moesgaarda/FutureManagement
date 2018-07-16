@@ -48,7 +48,7 @@
 							<a>Velkommen {{authService.decodedToken?.unique_name | titlecase}} </a><a (click)="logout()"><i class="fa fa-sign-out"></i>log ud</a>
 						</div>
 					</div>
-					<div class="panel-footer ">
+					<div *ngIf="!loggedIn()" class="panel-footer ">
 						<a>Hvis du ikke har en bruger </a> <a (click)="registerToggle()"><i class="fa fa-sign-out"></i>Registrer</a>
 					</div>
                 </div>
