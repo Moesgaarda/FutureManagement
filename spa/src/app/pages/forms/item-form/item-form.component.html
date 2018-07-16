@@ -3,11 +3,25 @@
       <nb-card>
         <nb-card-header>Ny genstand til lageret</nb-card-header>
         <nb-card-body>
-          <div class="input-group">
-            <input type="text" placeholder="Navn" class="form-control"/>
+          <div class="form-group">
+            <label for="name">Navn på genstanden</label>
+            <div class="input-group">
+              <input type="text" placeholder="Navn" class="form-control"/>
+            </div>
           </div>
           <div class="form-group">
-            <label><b>Vælg skabelon</b></label>
+            <label for="placement">Genstandens placering</label>
+            <div class="input-group">
+              <input type="text" placeholder="Placering" class="form-control"/>
+            </div>
+          </div><div class="form-group">
+            <label for="amount">Mængde</label>
+            <div class="input-group">
+              <input type="text" placeholder="Mængde" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Vælg skabelon</label>
             <select class="form-control btn btn-success dropdown-toggle">
               <option>Skabelon 1</option>
               <option>Skabelon 2</option>
@@ -15,12 +29,21 @@
             </select>
           </div>
           <div class="form-group">
-            <input type="text" placeholder="Placering" class="form-control"/>
+            <label for="order">Oprindelsesordre</label>
+            <div class="input-group">
+              <input type="text" placeholder="Ordre" class="form-control"/>
+            </div>
           </div>
           <div class="form-group">
-            <input type="text" placeholder="Genstandsliste" class="form-control"/>
-            <small class="form-text">En liste af genstande som denne genstand anvendes i.
-            </small>
+            <label for="madeBy">Lavet af</label>
+            <div class="input-group">
+              <input type="text" placeholder="Navn" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="itemList">Liste af dele</label>
+            <input type="text" placeholder="Genstandsliste" class="form-control" disabled/>
+            <small class="form-text">En liste af genstande der blev anvendt til at fremstille denne genstand </small>
           </div>
         </nb-card-body>
       </nb-card>

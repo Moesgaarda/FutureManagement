@@ -1,0 +1,156 @@
+<div class="row">
+        <div class="col-lg-6">
+          <nb-card>
+            <nb-card-header>Detaljer for ordren</nb-card-header>
+            <nb-card-body>
+              <div class="form-group">
+                <label for="orderId">Ordre-ID</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Ordre-ID" class="form-control" id="orderId" [disabled]="orderIdDisabled"/>
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text" (click)="enableOrderId()">
+                      {{ orderIdDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="company">Firma</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Firma" class="form-control" id="company" id="company" [disabled]="companyDisabled"/>
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text"  (click)="enableCompany()">
+                      {{ companyDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="orderDate">Dato for ordren</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Dato for ordren" class="form-control"  id="orderDate" [disabled]="orderDateDisabled"/>
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text"  (click)="enableOrderDate()">
+                      {{ orderDateDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="deliveryDate">Dato for ankomst</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Dato for ankomst" id="deliveryDate" class="form-control" [disabled]="deliveryDateDisabled">
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text" (click)="enableDeliveryDate()">
+                      {{ deliveryDateDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+              <div class="form-group col-lg-4">
+                <label for="length">Længde</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Længde" id="length" class="form-control" [disabled]="lengthDisabled">
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text" (click)="enableLength()">
+                      {{ lengthDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group col-lg-4">
+                <label for="width">Bredde</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Længde" id="width" class="form-control" [disabled]="widthDisabled">
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text" (click)="enableWidth()">
+                      {{ widthDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group col-lg-4">
+                <label for="width">Højde</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Højde" id="width" class="form-control" [disabled]="heightDisabled">
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text" (click)="enableHeight()">
+                      {{ heightDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+              <div class="form-group">
+                <label for="unitType">Mængdeenhed</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Mængdeenhed" class="form-control" id="unitType" [disabled]="unitTypeDisabled"/>
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text"  (click)="enableUnitType()">
+                      {{ unitTypeDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="purchaseNumber">Bestillingsnummer</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Bestillingsnummer" id="purchaseNumber" class="form-control" [disabled]="purchaseNumberDisabled">
+                  <span class="input-group-append">
+                    <button class="btn btn-success input-group-text" (click)="enablePurchaseNumber()">
+                      {{ purchaseNumberDisabled ? 'Rediger' : 'Gem' }}
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="orderedBy">Bestilt af</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Bestilt af" id="orderedBy" class="form-control" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="invoice">Faktura</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Faktura" id="invoice" class="form-control" disabled>
+                </div>
+              </div>
+    
+              <div class="form-group">
+                <label for="productList">Liste af produkter</label>
+                <input type="text" placeholder="Liste af produkter" class="form-control" disabled/>
+                <small class="form-text">En liste af de produkter der var i ordren</small>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      
+        <div class="col-lg-6">
+      
+          <nb-card>
+            <nb-card-header>Valgte egenskaber</nb-card-header>
+            <nb-card-body>
+              <div class="row demo-checkboxes-radio">
+                <div class="demo-checkboxes col-sm-4">
+                  <nb-checkbox>Malingsfarve</nb-checkbox>
+                  <nb-checkbox>Behandling</nb-checkbox>
+                  <nb-checkbox>Egenskab3</nb-checkbox>
+                  <nb-checkbox>Egenskab4</nb-checkbox>
+                  <nb-checkbox>Egenskab5</nb-checkbox>
+                  <nb-checkbox>Egenskab6</nb-checkbox>
+                </div>
+               </div>
+               <div class="input-group">
+                <input type="text" placeholder="Tilføj ny egenskab" class="form-control"/>
+                <span class="input-group-append">
+                  <button class="btn btn-success input-group-text">
+                    Tilføj
+                  </button>
+                </span>
+              </div>
+            </nb-card-body>
+          </nb-card> 
+        </div>
+      </div>
+      

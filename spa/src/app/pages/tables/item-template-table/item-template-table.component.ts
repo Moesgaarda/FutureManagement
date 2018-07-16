@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { ItemTemplateTableService } from '../../../@core/data/item-template-table.service';
 
 @Component({
   selector: 'ngx-item-template-table',
@@ -15,19 +15,18 @@ import { SmartTableService } from '../../../@core/data/smart-table.service';
 export class ItemTemplateTableComponent {
 
   settings = {
+    mode: 'external',
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
     add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      addButtonContent: 'Tilføj ny',
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
     },
     columns: {
       templateName: {
@@ -42,8 +41,8 @@ export class ItemTemplateTableComponent {
         title: 'Beskrivelse',
         type: 'string',
       },
-      properties: {
-        title: 'Egenskaber',
+      file: {
+        title: 'Fil',
         type: 'string',
       },
     },
@@ -51,7 +50,7 @@ export class ItemTemplateTableComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableService) {
+  constructor(private service: ItemTemplateTableService) {
     const data = this.service.getData();
     this.source.load(data);
   }
@@ -62,5 +61,17 @@ export class ItemTemplateTableComponent {
     } else {
       event.confirm.reject();
     }
+  }
+
+  editTemplate(event): void {
+    location.href = 'http://localhost:4200/#/pages/forms/item-template-detail';
+  }
+
+  deleteTemplate(event): void {
+
+  }
+
+  addNewTemplate() {
+    location.href = 'http://localhost:4200/#/pages/forms/item-template';
   }
 }

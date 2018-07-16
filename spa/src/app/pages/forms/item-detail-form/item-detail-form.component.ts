@@ -9,12 +9,14 @@ export class ItemDetailFormComponent implements OnInit {
   placementDisabled: boolean;
   nameDisabled: boolean;
   templateDisabled: boolean;
+  amountDisabled: boolean;
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     this.nameDisabled = true;
     this.templateDisabled = true;
     this.placementDisabled = true;
+    this.amountDisabled = true;
   }
 
   enableName() {
@@ -42,6 +44,20 @@ export class ItemDetailFormComponent implements OnInit {
       // indsæt i db
       this.placementDisabled = true;
     }
+  }
+
+  enableAmount() {
+    if (this.amountDisabled) {
+      this.amountDisabled = false;
+    }
+    else {
+      // indsæt i db
+      this.amountDisabled = true;
+    }
+  }
+
+  routeToOrderDetail() {
+    location.href = 'http://localhost:4200/#/pages/forms/order-detail';
   }
 
 
