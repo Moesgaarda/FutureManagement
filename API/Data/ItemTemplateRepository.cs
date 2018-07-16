@@ -20,11 +20,10 @@ namespace API.Data
 
         public async Task<bool> AddItemTemplate(ItemTemplate template)
         {
-            // await _context.AddAsync(template);
             await _context.ItemTemplates.AddAsync(template);
-            var result = _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
 
-            return result.IsCompletedSuccessfully;
+            return result == 1;  // The task result contains the number of objects written to the underlying database.
         }
 
         public Task<bool> DeleteItemTemplate(ItemTemplate template)
