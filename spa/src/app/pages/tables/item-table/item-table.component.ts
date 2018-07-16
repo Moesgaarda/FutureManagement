@@ -57,8 +57,6 @@ export class ItemTableComponent {
         filter: false,
         editable: false,
         valuePrepareFunction: (cell, row) => {
-          // tslint:disable-next-line:max-line-length
-          return `<a title="Se yderligere detaljer" width="10 px" href="/#/pages/forms/item-detail"> <i class="nb-edit"></i></a>`
         },
 
       },

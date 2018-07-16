@@ -10,6 +10,7 @@ export class ItemDetailFormComponent implements OnInit {
   nameDisabled: boolean;
   templateDisabled: boolean;
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     this.nameDisabled = true;
     this.templateDisabled = true;
