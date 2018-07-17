@@ -22,7 +22,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        [HttpGet("{id}", Name = "GetItemTemplate")]
+        [HttpGet("get/{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
             var itemTemplate = await _repo.GetItemTemplate(id);
 
@@ -53,6 +53,9 @@ namespace API.Controllers
 
         [HttpPost("edit")]
         public async Task<IActionResult> EditItemTemplate([FromBody]ItemTemplate template){
+            if(template.Id == 0){
+                ModelState.AddModelError("Item Template Error","Template id can not be 0.");
+            }
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
@@ -71,8 +74,18 @@ namespace API.Controllers
 
             return StatusCode(200);
         }
-        public async Task<bool> DeleteItemTemplate(ItemTemplate template){
-            throw new NotImplementedException();
+        [HttpPost("delete/{id}", Name = "DeleteItemTemplate")]
+        public async Task<IActionResult> DeleteItemTemplate(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Template Error","Can not delete template with id 0.");
+            }
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            await _repo.DeleteItemTemplate(id);
+
+            return StatusCode(200);
         }
     }
 }

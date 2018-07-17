@@ -21,21 +21,31 @@ namespace API.Data
         public async Task<bool> AddItemTemplate(ItemTemplate template)
         {
             await _context.ItemTemplates.AddAsync(template);
-            var result = await _context.SaveChangesAsync();
+            int result = await _context.SaveChangesAsync();
 
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
-        public Task<bool> DeleteItemTemplate(int id)
+        /* TODO Maybe check if the Item is in the database
+         * This approach is faster though and seems error free (only accesses the database once)
+         * Could instead get the item first to check if it exist before removing it (need to access twice)
+         * Could maybe use an already local version of the entity instead of the id?
+         */
+        public async Task<bool> DeleteItemTemplate(int id)
         {
-            throw new System.NotImplementedException();
+            ItemTemplate template = new ItemTemplate() {Id = id};
+            _context.ItemTemplates.Attach(template); 
+            _context.ItemTemplates.Remove(template); 
+            int result = _context.SaveChanges();     
+            return result > 0;
         }
 
         public async Task<bool> EditItemTemplate(ItemTemplate template)
         {
-            _context.ItemTemplates.Attach(template); //TODO reason to use attach over update https://stackoverflow.com/questions/41025338/why-use-attach-for-update-entity-framework-6 
-                                                     // https://stackoverflow.com/questions/30987806/dbset-attachentity-vs-dbcontext-entryentity-state-entitystate-modified
-            _context.Entry(template).State = EntityState.Modified;
+            //_context.ItemTemplates.Attach(template); 
+                                                    //TODO reason to use attach over update https://stackoverflow.com/questions/41025338/why-use-attach-for-update-entity-framework-6 
+                                                    // https://stackoverflow.com/questions/30987806/dbset-attachentity-vs-dbcontext-entryentity-state-entitystate-modified
+            _context.ItemTemplates.Update(template);
             var result = await _context.SaveChangesAsync();
 
             return result > 0;  // The task result contains the number of objects written to the underlying database.
