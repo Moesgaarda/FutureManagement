@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { ItemTemplateTableService } from '../../../@core/data/item-template-table.service';
+import { ItemTemplate } from '../../../_models/ItemTemplate';
+import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 
 @Component({
   selector: 'ngx-item-template-table',
@@ -12,9 +14,15 @@ import { ItemTemplateTableService } from '../../../@core/data/item-template-tabl
     }
   `],
 })
-export class ItemTemplateTableComponent {
+export class ItemTemplateTableComponent  {
+  source: LocalDataSource;
+  templates: ItemTemplate[];
+  template: ItemTemplate;
 
   settings = {
+    pager: {
+      perPage: 15,
+    },
     mode: 'external',
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -29,11 +37,11 @@ export class ItemTemplateTableComponent {
       cancelButtonContent: '<i class="nb-close"></i>',
     },
     columns: {
-      templateName: {
+      name: {
         title: 'Navn',
         type: 'string',
       },
-      amountUnit: {
+      unitType: {
         title: 'Mængdeenhed',
         type: 'number',
       },
@@ -41,19 +49,19 @@ export class ItemTemplateTableComponent {
         title: 'Beskrivelse',
         type: 'string',
       },
-      file: {
+      files: {
         title: 'Fil',
         type: 'string',
       },
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
-
-  constructor(private service: ItemTemplateTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
+  constructor(private templateService: ItemTemplateService) {
+    this.source = new LocalDataSource();
+    this.loadTemplates();
   }
+
+
 
   onDeleteConfirm(event): void {
     if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
@@ -63,8 +71,17 @@ export class ItemTemplateTableComponent {
     }
   }
 
+
+  loadTemplates() {
+    this.templateService.getItemTemplates().subscribe(templates => {
+      this.templates = templates;
+      this.source.load(templates);
+      this.source.refresh();
+    })
+  }
+
   editTemplate(event): void {
-    location.href = 'http://localhost:4200/#/pages/forms/item-template-detail';
+    
   }
 
   deleteTemplate(event): void {

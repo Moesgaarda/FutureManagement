@@ -22,7 +22,16 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        [HttpGet("get/{id}", Name = "GetItemTemplate")]
+        [HttpGet("getItemTemplates")]
+        public async Task<IActionResult> GetItemTemplates(){
+            var itemTemplates = await _repo.GetItemTemplates();
+
+            var itemTemplatesToReturn = _mapper.Map<List<ItemTemplateForTableDto>>(itemTemplates);
+
+            return Ok(itemTemplatesToReturn); // TODO Tjek om jeg virker.
+        }
+
+        [HttpGet("{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
             var itemTemplate = await _repo.GetItemTemplate(id);
 
