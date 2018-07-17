@@ -10,6 +10,6 @@ namespace API.Data
         Task<ItemTemplate> GetItemTemplate(int id);
         Task<bool> AddItemTemplate(ItemTemplate template);
         Task<bool> EditItemTemplate(ItemTemplate template);
-        Task<bool> DeleteItemTemplate(ItemTemplate template);
+        Task<bool> DeleteItemTemplate(int template);
     }
 }

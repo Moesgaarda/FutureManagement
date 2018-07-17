@@ -26,7 +26,7 @@ namespace API.Models{
         }
         
         [Key]
-        public int? Id { get; private set; }
+        public int Id { get; private set; }
         [Required]
         public string Name { get; set; }
         [Required]

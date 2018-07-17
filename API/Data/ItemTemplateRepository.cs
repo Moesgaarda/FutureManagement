@@ -23,17 +23,22 @@ namespace API.Data
             await _context.ItemTemplates.AddAsync(template);
             var result = await _context.SaveChangesAsync();
 
-            return result == 1;  // The task result contains the number of objects written to the underlying database.
+            return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
-        public Task<bool> DeleteItemTemplate(ItemTemplate template)
+        public Task<bool> DeleteItemTemplate(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> EditItemTemplate(ItemTemplate template)
+        public async Task<bool> EditItemTemplate(ItemTemplate template)
         {
-            throw new System.NotImplementedException();
+            _context.ItemTemplates.Attach(template); //TODO reason to use attach over update https://stackoverflow.com/questions/41025338/why-use-attach-for-update-entity-framework-6 
+                                                     // https://stackoverflow.com/questions/30987806/dbset-attachentity-vs-dbcontext-entryentity-state-entitystate-modified
+            _context.Entry(template).State = EntityState.Modified;
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
         public async Task<ItemTemplate> GetItemTemplate(int id)

@@ -50,8 +50,26 @@ namespace API.Controllers
 
             return StatusCode(201);
         }
-        public async Task<bool> EditItemTemplate(ItemTemplate template){
-            throw new NotImplementedException();
+
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditItemTemplate([FromBody]ItemTemplate template){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var itemTemplateToEdit = new ItemTemplate(
+                template.Id,
+                template.Name,
+                template.UnitType,
+                template.Description,
+                template.Properties,
+                template.Parts,
+                template.Files
+            );
+
+            await _repo.EditItemTemplate(itemTemplateToEdit);
+
+            return StatusCode(200);
         }
         public async Task<bool> DeleteItemTemplate(ItemTemplate template){
             throw new NotImplementedException();
