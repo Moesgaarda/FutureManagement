@@ -79,6 +79,7 @@ namespace API.Controllers
             if(id == 0){
                 ModelState.AddModelError("Item Template Error","Can not delete template with id 0.");
             }
+            
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
