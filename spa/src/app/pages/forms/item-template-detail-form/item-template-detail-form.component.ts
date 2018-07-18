@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ngx-item-template-detail-form',
   styleUrls: ['../form-inputs/form-inputs.component.scss'],
   templateUrl: './item-template-detail-form.component.html',
 })
-export class ItemTemplateDetailFormComponent {
+export class ItemTemplateDetailFormComponent implements OnInit {
   unitTypeDisabled: boolean;
   nameDisabled: boolean;
   fileDisabled: boolean;
@@ -21,18 +21,16 @@ export class ItemTemplateDetailFormComponent {
   enableName() {
     if (this.nameDisabled) {
       this.nameDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.nameDisabled = true;
-    }   
+    }
   }
 
   enableunitType() {
     if (this.unitTypeDisabled) {
       this.unitTypeDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.unitTypeDisabled = true;
     }
@@ -41,8 +39,7 @@ export class ItemTemplateDetailFormComponent {
   enableDescription() {
     if (this.descriptionDisabled) {
       this.descriptionDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.descriptionDisabled = true;
     }
@@ -51,8 +48,7 @@ export class ItemTemplateDetailFormComponent {
   enableFile() {
     if (this.fileDisabled) {
       this.fileDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.fileDisabled = true;
     }
