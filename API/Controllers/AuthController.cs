@@ -33,10 +33,7 @@ namespace API.Controllers
 
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);    
-        
 
-
-            
             var userToCreate = new User{
                 Username = userForRegisterDto.Username
             };
