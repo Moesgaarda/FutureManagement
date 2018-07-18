@@ -31,7 +31,7 @@ namespace API.Controllers
             return Ok(itemTemplatesToReturn); // TODO Tjek om jeg virker.
         }
 
-        [HttpGet("{id}", Name = "GetItemTemplate")]
+        [HttpGet("getItemTemplate/{id}")]
         public async Task<IActionResult> GetItemTemplate(int id){
             var itemTemplate = await _repo.GetItemTemplate(id);
 
