@@ -5,9 +5,8 @@
         </nb-card-header>
       
         <nb-card-body>
-          <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (edit)="editTemplate()" (delete)="deleteTemplate($event)" (create)="addNewTemplate()">
+          <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (edit)="editTemplate($event)" (delete)="deleteTemplate($event)" (create)="addNewTemplate()">
           </ng2-smart-table>
-          <p>{{templates.length}}</p>
         </nb-card-body>
 
                 

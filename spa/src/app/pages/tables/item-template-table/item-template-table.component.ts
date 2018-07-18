@@ -75,30 +75,29 @@ export class ItemTemplateTableComponent  {
   }
 
 
-  loadTemplates() {
-    this.templateService.getItemTemplates().subscribe(templates => {
+  async loadTemplates() {
+    await this.templateService.getItemTemplates().subscribe(templates => {
       this.templates = templates;
       this.source.load(templates);
       this.source.refresh();
     })
   }
 
-  async editTemplate() {
-    await this.loadTemplate();
+  async editTemplate(templateToLoad) {
+    await this.loadTemplate(templateToLoad.data.id);
     await this.delay(150);
     location.href = 'http://localhost:4200/#/pages/forms/item-template-detail/' + this.template.id;
   }
 
-    // + caster fra tekst til number
-    async loadTemplate() {
-      await this.templateService.getItemTemplate(7).subscribe((template: ItemTemplate) => {
-      this.template = template;
-      })
-    }
+  async loadTemplate(templateToLoadId) {
+    await this.templateService.getItemTemplate(templateToLoadId).subscribe((template: ItemTemplate) => {
+    this.template = template;
+    })
+  }
 
-    async delay(ms: number) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+  async delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   deleteTemplate(event): void {
   }
