@@ -188,21 +188,24 @@ namespace API.TESTS
                     UnitType.m, 
                     "Dette er en gavl", 
                     new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
-                    new List<ItemTemplate>(){}
+                    new List<ItemTemplate>(){},
+                    "Gavl.pdf"
                 ),
                 new ItemTemplate(
-                    "stang", 
+                    "Stang", 
                     UnitType.m, 
                     "Dette er en stang", 
                     new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
-                    new List<ItemTemplate>(){}
+                    new List<ItemTemplate>(){},
+                    "Stang.pdf"
                 ),
                 new ItemTemplate(
-                    "tagplade", 
+                    "Tagplade", 
                     UnitType.m, 
                     "Dette er en tagplade", 
                     new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)}, 
-                    new List<ItemTemplate>(){}
+                    new List<ItemTemplate>(){},
+                    "Tagplade.pdf"
                 )
             };
             context.ItemTemplates.AddRange(itemTemplates);
