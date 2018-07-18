@@ -8,12 +8,13 @@ import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
   styleUrls: ['../form-inputs/form-inputs.component.scss'],
   templateUrl: './item-template-detail-form.component.html',
 })
-export class ItemTemplateDetailFormComponent implements OnInit{
+export class ItemTemplateDetailFormComponent implements OnInit {
   unitTypeDisabled: boolean;
   nameDisabled: boolean;
   fileDisabled: boolean;
   descriptionDisabled: boolean;
   template: ItemTemplate;
+
 
   constructor(private templateService: ItemTemplateService, private route: ActivatedRoute) {
     this.loadTemplate();
@@ -25,13 +26,14 @@ export class ItemTemplateDetailFormComponent implements OnInit{
     this.unitTypeDisabled = true;
     this.descriptionDisabled = true;
   }
-
-  // + caster fra tekst til number
+    // + caster fra tekst til number
   loadTemplate() {
     this.templateService.getItemTemplate(+this.route.snapshot.params['id']).subscribe((template: ItemTemplate) => {
-      this.template = template;
+    this.template = template;
     })
   }
+
+
 
   enableName() {
     if (this.nameDisabled) {

@@ -4,6 +4,8 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ItemTemplateTableService } from '../../../@core/data/item-template-table.service';
 import { ItemTemplate } from '../../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
+import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'ngx-item-template-table',
@@ -18,6 +20,7 @@ export class ItemTemplateTableComponent  {
   source: LocalDataSource;
   templates: ItemTemplate[];
   template: ItemTemplate;
+  baseUrl = environment.apiUrl;
 
   settings = {
     pager: {
@@ -56,7 +59,7 @@ export class ItemTemplateTableComponent  {
     },
   };
 
-  constructor(private templateService: ItemTemplateService) {
+  constructor(private templateService: ItemTemplateService, private aRoute: ActivatedRoute, private route: Router) {
     this.source = new LocalDataSource();
     this.loadTemplates();
   }
@@ -80,12 +83,24 @@ export class ItemTemplateTableComponent  {
     })
   }
 
-  editTemplate(event): void {
-    
+  async editTemplate() {
+    await this.loadTemplate();
+    await this.delay(150);
+    location.href = 'http://localhost:4200/#/pages/forms/item-template-detail/' + this.template.id;
   }
 
-  deleteTemplate(event): void {
+    // + caster fra tekst til number
+    async loadTemplate() {
+      await this.templateService.getItemTemplate(7).subscribe((template: ItemTemplate) => {
+      this.template = template;
+      })
+    }
 
+    async delay(ms: number) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+  deleteTemplate(event): void {
   }
 
   addNewTemplate() {
