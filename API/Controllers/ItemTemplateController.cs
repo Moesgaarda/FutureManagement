@@ -33,9 +33,9 @@ namespace API.Controllers
 
         [HttpGet("getItemTemplate/{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
-            var itemTemplate = await _repo.GetItemTemplate(id);
+            ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
 
-            var itemTemplateToReturn = _mapper.Map<ItemTemplateForGetDto>(itemTemplate);
+            ItemTemplateForGetDto itemTemplateToReturn = _mapper.Map<ItemTemplateForGetDto>(itemTemplate);
 
             return Ok(itemTemplateToReturn);
         }
@@ -69,17 +69,7 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var itemTemplateToEdit = new ItemTemplate(
-                template.Id,
-                template.Name,
-                template.UnitType,
-                template.Description,
-                template.Properties,
-                template.Parts,
-                template.Files
-            );
-
-            await _repo.EditItemTemplate(itemTemplateToEdit);
+            await _repo.EditItemTemplate(template);
 
             return StatusCode(200);
         }

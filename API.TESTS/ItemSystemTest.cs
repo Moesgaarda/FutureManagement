@@ -50,21 +50,24 @@ namespace API.TESTS
         public async void ShowDetailsTemplateTest()
         {
             //Given
-            var controller = new ItemSystemController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             //When
             
-            IActionResult template = await controller.GetItemTemplate(1);
+            IActionResult templateResult = await controller.GetItemTemplate(1);
             //Then
-            ItemTemplate temp = template as ItemTemplate;
+            
+            OkObjectResult template = templateResult as OkObjectResult;
+            ItemTemplateForGetDto temp = template.Value as ItemTemplateForGetDto;
+
 
             Assert.Equal(temp.Id , 1);
         }
-        /* 
+         
         [Fact]
         public async void CreateTemplateTest()
         {
             //Given
-            var controller = new ItemSystemController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = new ItemTemplate(
                 "Dør",
                 UnitType.m,
@@ -74,15 +77,17 @@ namespace API.TESTS
                 "file/string/path"
             );
             //When
-            await controller.AddItemTemplate(template);
+            await controller.AddItemTemplate(_mapper.Map<ItemTemplateForAddDto>(template));
             var dbTemplate = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 4);
             //Then
             Assert.True(dbTemplate.Id == 4 && dbTemplate.Name == template.Name);
         }
+        
+        [Fact]
         public async void CreateTemplateReturnTest()
         {
             //Given
-            var controller = new ItemSystemController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = new ItemTemplate(
                 "Dør",
                 UnitType.m,
@@ -92,29 +97,33 @@ namespace API.TESTS
                 "file/string/path"
             );
             //When
-            var status = await controller.AddItemTemplate(template);
-            //Then
-            Assert.True(status);
+            var status = await controller.AddItemTemplate(_mapper.Map<ItemTemplateForAddDto>(template));
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(201);
+            Assert.True(result.StatusCode == test.StatusCode);
         }
+        /*    kom her til med at fixe, alt over er fint*/
         [Fact]
         public async void EditTemplateTest()
         {
             //Arrange
-            var controller = new ItemSystemController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
-            template.Properties.Add(_dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 3));
             await controller.EditItemTemplate(template);
             var editedTemplate = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Assert
-            Assert.True(editedTemplate.Description == template.Description && editedTemplate.Properties.Count == 3);
+            Assert.True(
+                editedTemplate.Description == template.Description 
+                );
         }
+        /*
         [Fact]
         public async void EditTemplateReturnTest()
         {
             //Arrange
-            var controller = new ItemSystemController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
@@ -127,7 +136,7 @@ namespace API.TESTS
         public async void DeleteTemplateTest()
         {
             //Arrange
-            var controller = new ItemSystemController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             await controller.DeleteItemTemplate(template.id);
@@ -138,7 +147,7 @@ namespace API.TESTS
         public async void DeleteTemplateTestReturn()
         {
             //Arrange
-            var controller = new ItemSystemController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             var status = await controller.DeleteItemTemplate(template.Id);
