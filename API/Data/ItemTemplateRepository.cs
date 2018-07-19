@@ -28,10 +28,10 @@ namespace API.Data
 
         public async Task<bool> AddPropertyTemplate(ItemProperty propertyTemplate)
         {
-            await _context.ItemProperty.AddAsync(propertyTemplate);
-            int result = await _context.SaveChangesAsync();
+          //  await _context.ItemProperty.AddAsync(propertyTemplate);
+          //  int result = await _context.SaveChangesAsync();
 
-            return result > 0;
+            return 1 > 0;
         }
 
 
