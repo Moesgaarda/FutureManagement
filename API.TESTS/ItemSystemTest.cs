@@ -15,12 +15,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.TESTS
 {
-    public class ItemSystemTest : IDisposable
+    public class ItemTemplateTest : IDisposable
     {
         private readonly DataContext _dbContext;
         private readonly IMapper _mapper; 
         private readonly IItemTemplateRepository _repo;
-        public ItemSystemTest()
+        public ItemTemplateTest()
         {
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
@@ -72,7 +72,7 @@ namespace API.TESTS
                 "Dør",
                 UnitType.m,
                 "Dette er en Dør",
-                new List<ItemPropertyCategory>() { _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2) },
+                new List<ItemProperty>() { _dbContext.ItemProperties.FirstOrDefault(x => x.Id == 1), _dbContext.ItemProperties.FirstOrDefault(x => x.Id == 2) },
                 new List<ItemTemplate>() { },
                 "file/string/path"
             );
@@ -92,8 +92,8 @@ namespace API.TESTS
                 "Dør",
                 UnitType.m,
                 "Dette er en Dør",
-                new List<ItemPropertyCategory>() { _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2) },
-                new List<ItemTemplate>() { },
+                new List<ItemProperty>() { },
+                null,
                 "file/string/path"
             );
             //When
@@ -102,7 +102,7 @@ namespace API.TESTS
             var test = new StatusCodeResult(201);
             Assert.True(result.StatusCode == test.StatusCode);
         }
-        /*    kom her til med at fixe, alt over er fint*/
+        
         [Fact]
         public async void EditTemplateTest()
         {
@@ -118,7 +118,8 @@ namespace API.TESTS
                 editedTemplate.Description == template.Description 
                 );
         }
-        /*
+        
+        
         [Fact]
         public async void EditTemplateReturnTest()
         {
@@ -127,11 +128,14 @@ namespace API.TESTS
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
-            template.Properties.Add(_dbContext.ItemPropertyCategories.FirstOrDefault(x => x.Id == 3));
+            template.Properties.Add(_dbContext.ItemProperties.FirstOrDefault(x => x.Id == 3));
             var status = await controller.EditItemTemplate(template);
             //Assert
-            Assert.True(status);
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(200);
+            Assert.True(result.StatusCode == test.StatusCode);
         }
+        /*    kom her til med at fixe, alt over er fint*/
         [Fact]
         public async void DeleteTemplateTest()
         {
@@ -139,10 +143,11 @@ namespace API.TESTS
             var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
-            await controller.DeleteItemTemplate(template.id);
+            await controller.DeleteItemTemplate(template.Id);
             //Assert
             Assert.Null(_dbContext.ItemTemplates.First(x => x.Id == 1));
         }
+        /*
         [Fact]
         public async void DeleteTemplateTestReturn()
         {
@@ -165,11 +170,11 @@ namespace API.TESTS
             context.ItemProperties.AddRange(itemProperties);
             context.SaveChanges();
             var itemPropertyCategories = new[]{
-                new ItemPropertyCategory("Farve"),
-                new ItemPropertyCategory("Behandling"),
-                new ItemPropertyCategory("skæring")
+                new ItemProperty("Farve"),
+                new ItemProperty("Behandling"),
+                new ItemProperty("skæring")
             };
-            context.ItemPropertyCategories.AddRange(itemPropertyCategories);
+            context.ItemProperties.AddRange(itemPropertyCategories);
             context.SaveChanges();
 
             var itemTemplates = new[]{
@@ -177,7 +182,7 @@ namespace API.TESTS
                     "Gavl",
                     UnitType.m,
                     "Dette er en gavl",
-                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)},
+                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(x => x.Id == 1), context.ItemProperties.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 ),
@@ -185,7 +190,7 @@ namespace API.TESTS
                     "stang",
                     UnitType.m,
                     "Dette er en stang",
-                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)},
+                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(x => x.Id == 1), context.ItemProperties.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 ),
@@ -193,7 +198,7 @@ namespace API.TESTS
                     "tagplade",
                     UnitType.m,
                     "Dette er en tagplade",
-                    new List<ItemPropertyCategory>(){context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 1), context.ItemPropertyCategories.FirstOrDefault(x => x.Id == 2)},
+                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(x => x.Id == 1), context.ItemProperties.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 )
