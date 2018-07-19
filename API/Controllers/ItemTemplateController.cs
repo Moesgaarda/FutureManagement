@@ -28,7 +28,7 @@ namespace API.Controllers
 
             var itemTemplatesToReturn = _mapper.Map<List<ItemTemplateForTableDto>>(itemTemplates);
 
-            return Ok(itemTemplatesToReturn); // TODO Tjek om jeg virker.
+            return Ok(itemTemplatesToReturn);
         }
 
         [HttpGet("getItemTemplate/{id}", Name = "GetItemTemplate")]
@@ -37,7 +37,7 @@ namespace API.Controllers
 
             var itemTemplateToReturn = _mapper.Map<ItemTemplateForGetDto>(itemTemplate);
 
-            return Ok(itemTemplateToReturn); // TODO Tjek om jeg virker.
+            return Ok(itemTemplateToReturn);
         }
 
         [HttpPost("add")]
@@ -99,18 +99,28 @@ namespace API.Controllers
         }
 
         [HttpPost("addProperty", Name = "AddPropertyTemplate")]
-        public async Task<IActionResult> AddPropertyTemplate([FromBody]ItemProperty propertyDto){
+        public async Task<IActionResult> AddPropertyTemplate([FromBody]ItemTemplatePropertyForAddDto propertyDto){
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
 
-            var itemTemplatePropertyToCreate = new ItemProperty(
+            var itemTemplateProperty = new ItemProperty(
                 propertyDto.Name
             );
 
-            await _repo.AddPropertyTemplate(itemTemplatePropertyToCreate);
+            await _repo.AddPropertyTemplate(itemTemplateProperty);
 
             return StatusCode(201);
+        }
+
+        [HttpGet("getPropertyTemplates")]
+        public async Task<IActionResult> GetPropertyTemplates(){
+            return await _repo.GetPropertyTemplates();
+        }
+
+        [HttpGet("getPropertyTemplate/{id}", Name = "GetPropertyTemplate")]
+        public async Task<IActionResult> GetPropertyTemplate(int id){
+            return await _repo.GetPropertyTemplate(int id);
         }
     }
 }

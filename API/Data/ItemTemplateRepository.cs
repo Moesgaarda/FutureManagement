@@ -60,17 +60,23 @@ namespace API.Data
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
-        public async Task<ItemTemplate> GetItemTemplate(int id)
-        {
-            var result = await _context.ItemTemplates.FirstAsync(x => x.Id == id);
-            return result;
+        public async Task<ItemTemplate> GetItemTemplate(int id){
+            await _context.ItemTemplates.FirstAsync(x => x.Id == id);
         }
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
         {
-            var results = await _context.ItemTemplates.Where(x => x.Id > 0).ToListAsync();
-            return results;
-            //return result;
+            return await _context.ItemTemplates.ToListAsync();
+        }
+
+        public async Task<ItemProperty> GetPropertyTemplate(int id)
+        {
+            return await _context.ItemProperties.FirstAsync(x => x.Id == id);
+        }
+
+        public async Task<List<ItemProperty>> GetPropertyTemplates()
+        {
+            return await _context.ItemProperties.ToListAsync();
         }
     }
 }
