@@ -26,14 +26,13 @@ export class ItemTemplateDetailFormComponent implements OnInit {
     this.unitTypeDisabled = true;
     this.descriptionDisabled = true;
   }
-    // + caster fra tekst til number
+
+  // + caster fra tekst til number
   loadTemplate() {
     this.templateService.getItemTemplate(+this.route.snapshot.params['id']).subscribe((template: ItemTemplate) => {
     this.template = template;
     })
   }
-
-
 
   enableName() {
     if (this.nameDisabled) {

@@ -20,7 +20,7 @@ export class ItemTemplateTableComponent  {
   source: LocalDataSource;
   templates: ItemTemplate[];
   template: ItemTemplate;
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.spaUrl;
 
   settings = {
     pager: {
@@ -83,20 +83,8 @@ export class ItemTemplateTableComponent  {
     })
   }
 
-  async editTemplate(templateToLoad) {
-    await this.loadTemplate(templateToLoad.data.id);
-    await this.delay(150);
-    location.href = 'http://localhost:4200/#/pages/forms/item-template-detail/' + this.template.id;
-  }
-
-  async loadTemplate(templateToLoadId) {
-    await this.templateService.getItemTemplate(templateToLoadId).subscribe((template: ItemTemplate) => {
-    this.template = template;
-    })
-  }
-
-  async delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  editTemplate(templateToLoad) {
+    location.href = this.baseUrl + '/pages/forms/item-template-detail/' + templateToLoad.data.id;
   }
 
   deleteTemplate(event): void {

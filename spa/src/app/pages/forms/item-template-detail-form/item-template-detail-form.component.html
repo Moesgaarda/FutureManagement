@@ -1,7 +1,3 @@
-<p>{{template?.id}}</p>
-<p>{{template?.files}}</p>
-<p>{{template?.description}}</p>
-<p>{{template?.unitType}}</p>
 <div class="row">
     <div class="col-lg-6">
       <nb-card>
@@ -10,7 +6,7 @@
           <div class="form-group">
             <label for="name">Navn på skabelon</label>
             <div class="input-group">
-              <input type="text" placeholder="Navn" id="name" class="form-control" value="Skrue skabelon" [disabled]="nameDisabled"/>
+              <input type="text" placeholder="Navn" id="name" class="form-control" value="{{template.name}}" [disabled]="nameDisabled"/>
               <span class="input-group-append">
                 <button class="btn btn-success input-group-text" (click)="enableName()">
                   {{ nameDisabled ? 'Rediger' : 'Gem' }}
@@ -21,7 +17,7 @@
           <div class="form-group">
             <label for="unitType">Mængdeenhed</label>
             <div class="input-group">
-              <input type="text" placeholder="Mængdeenhed" class="form-control"  value="paller" id="unitType" [disabled]="unitTypeDisabled"/>
+              <input type="text" placeholder="Mængdeenhed" class="form-control"  value="{{template.unitType}}" id="unitType" [disabled]="unitTypeDisabled"/>
               <span class="input-group-append">
                 <button class="btn btn-success input-group-text"  (click)="enableunitType()">
                   {{ unitTypeDisabled ? 'Rediger' : 'Gem' }}
@@ -32,7 +28,7 @@
           <div class="form-group">
             <label for="description">Beskrivelse</label>
             <div class="input-group">
-              <textarea rows="3" placeholder="Text Area" id="description" class="form-control" [disabled]="descriptionDisabled">Bruges til at skrue</textarea>
+              <textarea rows="3" placeholder="Text Area" id="description" class="form-control" [disabled]="descriptionDisabled">{{template.description}}</textarea>
               <span class="input-group-append">
                 <button class="btn btn-success input-group-text" (click)="enableDescription()">
                   {{ descriptionDisabled ? 'Rediger' : 'Gem' }}
@@ -53,7 +49,7 @@
           <div class="form-group">
               <label for="file">Fil</label>
               <div class="input-group">
-                <input type="text" placeholder="Fil" value="Fil#1" id="file" class="form-control" [disabled]="fileDisabled">
+                <input type="text" placeholder="Fil" value="{{template.files}}" id="file" class="form-control" [disabled]="fileDisabled">
                 <span class="input-group-append">
                   <button class="btn btn-success input-group-text" (click)="enableFile()">
                       {{ fileDisabled ? 'Rediger' : 'Gem' }}
