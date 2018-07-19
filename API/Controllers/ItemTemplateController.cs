@@ -10,13 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    public class ItemSystemController : Controller
+    public class ItemTemplateController : Controller
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IItemTemplateRepository _repo;
 
-        public ItemSystemController(IItemTemplateRepository repo, DataContext context, IMapper mapper){
+        public ItemTemplateController(IItemTemplateRepository repo, DataContext context, IMapper mapper){
             _context = context;
             _mapper = mapper;
             _repo = repo;

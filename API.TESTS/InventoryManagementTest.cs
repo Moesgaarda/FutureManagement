@@ -34,7 +34,7 @@ namespace API.TESTS
         [Fact]
         public async void GetAllActiveItemsTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var activeItems = await controller.GetallActiveItems();
             //Assert
@@ -44,7 +44,7 @@ namespace API.TESTS
         [Fact]
         public async void GetAllArchivedItemsTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var archivedItems = await controller.GetAllArchivedItems();
             //Assert
@@ -54,7 +54,7 @@ namespace API.TESTS
         public async void GetAllItemsTest()
         {
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var allItems = await controller.GetAllItems();
             //Assert
@@ -64,7 +64,7 @@ namespace API.TESTS
         [Fact]
         public async void EditItemTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             item.Amount = 5;
@@ -75,7 +75,7 @@ namespace API.TESTS
         [Fact]
         public async void EditItemReturnTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             item.Amount = 5;
@@ -86,7 +86,7 @@ namespace API.TESTS
         [Fact]
         public async void ArchiveItemTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             await controller.ArchiveItem(item);
@@ -96,7 +96,7 @@ namespace API.TESTS
         [Fact]
         public async void ArchiveItemReturnTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             bool status = await controller.ArchiveItem(item);
@@ -106,7 +106,7 @@ namespace API.TESTS
         [Fact]
         public async void DeletItemTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             await controller.DeleteItem(item);
@@ -116,7 +116,7 @@ namespace API.TESTS
         [Fact]
         public async void DeletItemReturnTest(){
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             //Act
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             var status = await controller.DeleteItem(item);
@@ -128,7 +128,7 @@ namespace API.TESTS
         public async void CreateItemTest()
         {
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             var item = new Item(
                     "39d",
                     66,
@@ -150,7 +150,7 @@ namespace API.TESTS
         public async void CreatItemReturnTest()
         {
             //Arrange
-            var controller = new InventoryManagementController(_dbContext);
+            var controller = new ItemController(_dbContext);
             var item = new Item(
                     "39d",
                     66,

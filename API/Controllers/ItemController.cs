@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class InventoryManagementController : Controller
+    public class ItemController : Controller
     {
         private readonly DataContext _context;
-        public InventoryManagementController(DataContext context){
+        public ItemController(DataContext context){
             _context = context;
         }
         public async Task<List<Item>> GetallActiveItems(){

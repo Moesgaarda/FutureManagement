@@ -31,7 +31,7 @@ namespace API.Data
             await _context.ItemProperties.AddAsync(propertyTemplate);
             int result = await _context.SaveChangesAsync();
 
-            return 1 > 0;
+            return result > 0;
         }
 
 

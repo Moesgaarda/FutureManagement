@@ -1,4 +1,4 @@
-import {ItemPropertyCategory} from './ItemPropertyCategory';
+import {ItemProperty} from './ItemProperty';
 enum UnitType {mm, cm, m}
 
 export interface ItemTemplate {
@@ -6,7 +6,7 @@ export interface ItemTemplate {
     name: string;
     unitType: UnitType;
     files: string;
-    propertyList: ItemPropertyCategory[];
+    propertyList: ItemProperty[];
     templateList: ItemTemplate[];
     description: string;
 }

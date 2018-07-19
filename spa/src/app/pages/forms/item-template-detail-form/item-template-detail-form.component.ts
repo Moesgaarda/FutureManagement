@@ -34,6 +34,10 @@ export class ItemTemplateDetailFormComponent implements OnInit {
     })
   }
 
+  addProperty() {
+    this.templateService.
+  }
+
   enableName() {
     if (this.nameDisabled) {
       this.nameDisabled = false;
