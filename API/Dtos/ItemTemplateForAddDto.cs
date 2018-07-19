@@ -12,7 +12,7 @@ namespace API.Dtos
         [Required]
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
-        public ICollection<ItemPropertyCategory> Properties { get; set; }
+        public ICollection<ItemProperty> Properties { get; set; }
         public ICollection<ItemTemplate> Parts { get; set; }
         public string Files { get; set; }
 

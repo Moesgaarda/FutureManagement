@@ -97,5 +97,20 @@ namespace API.Controllers
 
             return StatusCode(200);
         }
+
+        [HttpPost("addProperty", Name = "AddPropertyTemplate")]
+        public async Task<IActionResult> AddPropertyTemplate([FromBody]ItemProperty propertyDto){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var itemTemplatePropertyToCreate = new ItemProperty(
+                propertyDto.Name
+            );
+
+            await _repo.AddPropertyTemplate(itemTemplatePropertyToCreate);
+
+            return StatusCode(201);
+        }
     }
 }

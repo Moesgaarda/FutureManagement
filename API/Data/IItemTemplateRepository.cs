@@ -13,5 +13,6 @@ namespace API.Data
         Task<bool> AddItemTemplate(ItemTemplate template);
         Task<bool> EditItemTemplate(ItemTemplate template);
         Task<bool> DeleteItemTemplate(int template);
+        Task<bool> AddPropertyTemplate(ItemProperty propertyTemplate);
     }
 }

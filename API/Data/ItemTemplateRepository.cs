@@ -25,7 +25,15 @@ namespace API.Data
 
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
-        
+
+        public async Task<bool> AddPropertyTemplate(ItemProperty propertyTemplate)
+        {
+            await _context.ItemProperty.AddAsync(propertyTemplate);
+            int result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
 
         /* TODO Maybe check if the Item is in the database
          * This approach is faster though and seems error free (only accesses the database once)
