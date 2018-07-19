@@ -105,12 +105,20 @@ namespace API.Controllers
 
         [HttpGet("getPropertyTemplates")]
         public async Task<IActionResult> GetPropertyTemplates(){
-            return await _repo.GetPropertyTemplates();
+            var propertyTemplates = await _repo.GetPropertyTemplates();
+
+            var propertyTemplatesToReturn = _mapper.Map<List<ItemTemplate>>(propertyTemplates);
+
+            return Ok(propertyTemplatesToReturn);
         }
 
         [HttpGet("getPropertyTemplate/{id}", Name = "GetPropertyTemplate")]
         public async Task<IActionResult> GetPropertyTemplate(int id){
-            return await _repo.GetPropertyTemplate(int id);
+            ItemProperty propertyTemplate = await _repo.GetPropertyTemplate(id);
+
+            ItemProperty propertyTemplateToReturn = _mapper.Map<ItemProperty>(propertyTemplate);
+
+            return Ok(propertyTemplateToReturn);
         }
     }
 }

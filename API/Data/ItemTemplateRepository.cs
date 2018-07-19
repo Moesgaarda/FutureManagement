@@ -61,7 +61,7 @@ namespace API.Data
         }
 
         public async Task<ItemTemplate> GetItemTemplate(int id){
-            await _context.ItemTemplates.FirstAsync(x => x.Id == id);
+            return await _context.ItemTemplates.FirstAsync(x => x.Id == id);
         }
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
