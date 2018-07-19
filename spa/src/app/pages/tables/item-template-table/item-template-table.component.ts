@@ -59,7 +59,7 @@ export class ItemTemplateTableComponent  {
     },
   };
 
-  constructor(private templateService: ItemTemplateService, private aRoute: ActivatedRoute, private route: Router) {
+  constructor(private templateService: ItemTemplateService) {
     this.source = new LocalDataSource();
     this.loadTemplates();
   }
@@ -91,6 +91,6 @@ export class ItemTemplateTableComponent  {
   }
 
   addNewTemplate() {
-    location.href = 'http://localhost:4200/#/pages/forms/item-template';
+    location.href = this.baseUrl + '/pages/forms/item-template';
   }
 }

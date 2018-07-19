@@ -22,7 +22,7 @@ export class ItemTemplateService {
     }
 
     addTemplateProperty(property): Observable<ItemProperty> {
-        // return this.http.post(this.baseUrl + )
+        return this.http.post(this.baseUrl + )
     }
 
 }
