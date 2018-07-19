@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemTemplate } from '../../../_models/ItemTemplate';
 import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { ItemProperty } from '../../../_models/ItemProperty';
 
 @Component({
   selector: 'ngx-item-template-detail-form',
@@ -14,6 +15,7 @@ export class ItemTemplateDetailFormComponent implements OnInit {
   fileDisabled: boolean;
   descriptionDisabled: boolean;
   template: ItemTemplate;
+  newProperty: ItemProperty;
 
 
   constructor(private templateService: ItemTemplateService, private route: ActivatedRoute) {
@@ -34,8 +36,11 @@ export class ItemTemplateDetailFormComponent implements OnInit {
     })
   }
 
-  addProperty() {
-    this.templateService.
+  async addProperty() {
+    await this.templateService.addTemplateProperty(this.newProperty).subscribe(prop => {
+      this.newProperty = prop;
+      this.newProperty.name = '';
+    })
   }
 
   enableName() {
