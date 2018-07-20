@@ -69,9 +69,9 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _repo.EditItemTemplate(template);
+            bool result = await _repo.EditItemTemplate(template);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : StatusCode(400);
         }
         [HttpPost("delete/{id}", Name = "DeleteItemTemplate")]
         public async Task<IActionResult> DeleteItemTemplate(int id){
@@ -82,8 +82,9 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
+            var template = await _repo.GetItemTemplate(id);
 
-            await _repo.DeleteItemTemplate(id);
+            bool result = await _repo.DeleteItemTemplate(template);
 
             return StatusCode(200);
         }

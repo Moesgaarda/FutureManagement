@@ -40,9 +40,9 @@ namespace API.Data
          * Could instead get the item first to check if it exist before removing it (need to access twice)
          * Could maybe use an already local version of the entity instead of the id?
          */
-        public async Task<bool> DeleteItemTemplate(int id)
+        public async Task<bool> DeleteItemTemplate(ItemTemplate template)
         {
-            ItemTemplate template = new ItemTemplate() {Id = id};
+            
             _context.ItemTemplates.Attach(template); // todo shit går galt her, dobbelt tracking af entity med ID 
             _context.ItemTemplates.Remove(template); 
             int result = _context.SaveChanges();     
