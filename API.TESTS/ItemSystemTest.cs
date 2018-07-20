@@ -72,7 +72,7 @@ namespace API.TESTS
                 "Dør",
                 UnitType.m,
                 "Dette er en Dør",
-                new List<ItemProperty>() { _dbContext.ItemProperties.FirstOrDefault(x => x.Id == 1), _dbContext.ItemProperties.FirstOrDefault(x => x.Id == 2) },
+                new List<ItemPropertyName>() { _dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 2) },
                 new List<ItemTemplate>() { },
                 "file/string/path"
             );
@@ -92,7 +92,7 @@ namespace API.TESTS
                 "Dør",
                 UnitType.m,
                 "Dette er en Dør",
-                new List<ItemProperty>() { },
+                new List<ItemPropertyName>() { },
                 null,
                 "file/string/path"
             );
@@ -128,7 +128,7 @@ namespace API.TESTS
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
-            template.Properties.Add(_dbContext.ItemProperties.FirstOrDefault(x => x.Id == 3));
+            template.Properties.Add(_dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 3));
             var status = await controller.EditItemTemplate(template);
             //Assert
             StatusCodeResult result = status as StatusCodeResult;
@@ -163,18 +163,18 @@ namespace API.TESTS
         private void Seed(DataContext context)
         {
             var itemProperties = new[]{
-                new ItemPropertyDescription("gul"),
-                new ItemPropertyDescription("halv"),
-                new ItemPropertyDescription("slebet")
+                new ItemPropertyDescription(1,"gul"),
+                new ItemPropertyDescription(2,"halv"),
+                new ItemPropertyDescription(3,"slebet")
             };
-            context.ItemProperties.AddRange(itemProperties);
+            context.ItemPropertyDescriptions.AddRange(itemProperties);
             context.SaveChanges();
             var itemPropertyCategories = new[]{
-                new ItemProperty("Farve"),
-                new ItemProperty("Behandling"),
-                new ItemProperty("skæring")
+                new ItemPropertyName("Farve"),
+                new ItemPropertyName("Behandling"),
+                new ItemPropertyName("skæring")
             };
-            context.ItemProperties.AddRange(itemPropertyCategories);
+            context.ItemPropertyNames.AddRange(itemPropertyCategories);
             context.SaveChanges();
 
             var itemTemplates = new[]{
@@ -182,7 +182,7 @@ namespace API.TESTS
                     "Gavl",
                     UnitType.m,
                     "Dette er en gavl",
-                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(x => x.Id == 1), context.ItemProperties.FirstOrDefault(x => x.Id == 2)},
+                    new List<ItemPropertyName>(){context.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), context.ItemPropertyNames.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 ),
@@ -190,7 +190,7 @@ namespace API.TESTS
                     "stang",
                     UnitType.m,
                     "Dette er en stang",
-                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(x => x.Id == 1), context.ItemProperties.FirstOrDefault(x => x.Id == 2)},
+                    new List<ItemPropertyName>(){context.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), context.ItemPropertyNames.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 ),
@@ -198,7 +198,7 @@ namespace API.TESTS
                     "tagplade",
                     UnitType.m,
                     "Dette er en tagplade",
-                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(x => x.Id == 1), context.ItemProperties.FirstOrDefault(x => x.Id == 2)},
+                    new List<ItemPropertyName>(){context.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), context.ItemPropertyNames.FirstOrDefault(x => x.Id == 2)},
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 )
@@ -253,7 +253,7 @@ namespace API.TESTS
                     context.ItemTemplates.FirstOrDefault(x => x.Id == 1),
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemPropertyDescription>(){context.ItemProperties.FirstOrDefault(X => X.Id == 1)},
+                    new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
                     new List<Item>(),
                     false
                 ),
@@ -263,7 +263,7 @@ namespace API.TESTS
                     context.ItemTemplates.FirstOrDefault(x => x.Id == 2),
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemPropertyDescription>(){context.ItemProperties.FirstOrDefault(X => X.Id == 2)},
+                    new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 2)},
                     new List<Item>(),
                     false
                 ),
@@ -273,7 +273,7 @@ namespace API.TESTS
                     context.ItemTemplates.FirstOrDefault(x => x.Id == 3),
                     context.Orders.FirstOrDefault(x => x.Id == 2),
                     context.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemPropertyDescription>(){context.ItemProperties.FirstOrDefault(X => X.Id == 1)},
+                    new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
                     new List<Item>(),
                     true
                 )
