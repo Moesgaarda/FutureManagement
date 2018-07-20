@@ -17,7 +17,7 @@
           <div class="form-group">
             <label for="unitType">Mængdeenhed</label>
             <div class="input-group">
-              <input type="text" placeholder="Mængdeenhed" class="form-control"  value="{{template?.unitType}}" id="unitType" [disabled]="unitTypeDisabled"/>
+              <input type="text" placeholder="Mængdeenhed" class="form-control"  value="{{unitTypeEnum}}" id="unitType" [disabled]="unitTypeDisabled"/>
               <span class="input-group-append">
                 <button class="btn btn-success input-group-text"  (click)="enableunitType()">
                   {{ unitTypeDisabled ? 'Rediger' : 'Gem' }}

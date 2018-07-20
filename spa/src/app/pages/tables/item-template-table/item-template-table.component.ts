@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { ItemTemplate } from '../../../_models/ItemTemplate';
+import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { environment } from '../../../../environments/environment';
 import * as _ from 'underscore';
@@ -18,7 +18,6 @@ import * as _ from 'underscore';
 export class ItemTemplateTableComponent  {
   source: LocalDataSource;
   templates: ItemTemplate[];
-  template: ItemTemplate;
   baseUrl = environment.spaUrl;
 
   settings = {
@@ -45,7 +44,7 @@ export class ItemTemplateTableComponent  {
       },
       unitType: {
         title: 'Mængdeenhed',
-        type: 'number',
+        valuePrepareFunction: (value) => UnitType[value],
       },
       description: {
         title: 'Beskrivelse',
@@ -62,18 +61,6 @@ export class ItemTemplateTableComponent  {
     this.source = new LocalDataSource();
     this.loadTemplates();
   }
-
-
-
-  onDeleteConfirm(event): void {
-    if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
-      console.log(event.data);
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
 
   async loadTemplates() {
     await this.templateService.getItemTemplates().subscribe(templates => {
