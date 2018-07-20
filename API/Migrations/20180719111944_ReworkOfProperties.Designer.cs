@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180719111944_ReworkOfProperties")]
+    partial class ReworkOfProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,9 +176,13 @@ namespace API.Migrations
 
                     b.Property<int?>("ItemId");
 
+                    b.Property<int?>("ItemTemplateId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ItemId");
+
+                    b.HasIndex("ItemTemplateId");
 
                     b.ToTable("ItemPropertyDescription");
                 });
@@ -186,13 +192,9 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ItemTemplateId");
-
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemTemplateId");
 
                     b.ToTable("ItemProperties");
                 });
@@ -407,10 +409,7 @@ namespace API.Migrations
                     b.HasOne("API.Models.Item")
                         .WithMany("Properties")
                         .HasForeignKey("ItemId");
-                });
 
-            modelBuilder.Entity("API.Models.ItemPropertyName", b =>
-                {
                     b.HasOne("API.Models.ItemTemplate")
                         .WithMany("Properties")
                         .HasForeignKey("ItemTemplateId");

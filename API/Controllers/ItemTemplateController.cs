@@ -94,7 +94,7 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var itemTemplateProperty = new ItemProperty(
+            var itemTemplateProperty = new ItemPropertyName(
                 propertyDto.Name
             );
 
@@ -112,7 +112,7 @@ namespace API.Controllers
 
         [HttpGet("getPropertyTemplate/{id}", Name = "GetPropertyTemplate")]
         public async Task<IActionResult> GetPropertyTemplate(int id){
-            ItemProperty propertyTemplate = await _repo.GetPropertyTemplate(id);
+            ItemPropertyName propertyTemplate = await _repo.GetPropertyTemplate(id);
 
             return Ok(propertyTemplate);
         }

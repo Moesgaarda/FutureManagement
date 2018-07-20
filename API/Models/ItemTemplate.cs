@@ -6,7 +6,7 @@ using API.Enums;
 namespace API.Models{
     public class ItemTemplate{
         public ItemTemplate(){}
-        public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<ItemProperty> properties, ICollection<ItemTemplate> parts, string files){
+        public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<ItemPropertyName> properties, ICollection<ItemTemplate> parts, string files){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
@@ -16,7 +16,7 @@ namespace API.Models{
             this.Files = files;
         }
 
-        public ItemTemplate(string name, UnitType unitType, string description, ICollection<ItemProperty> properties, ICollection<ItemTemplate> parts, string files){
+        public ItemTemplate(string name, UnitType unitType, string description, ICollection<ItemPropertyName> properties, ICollection<ItemTemplate> parts, string files){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
@@ -32,7 +32,7 @@ namespace API.Models{
         [Required]
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
-        public ICollection<ItemProperty> Properties { get; set; }
+        public ICollection<ItemPropertyName> Properties { get; set; }
         public ICollection<ItemTemplate> Parts { get; set; }
         public string Files { get; set; }
 

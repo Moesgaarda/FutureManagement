@@ -11,7 +11,7 @@ namespace API.Helpers
             CreateMap<ItemTemplate, ItemTemplateForGetDto>();
             CreateMap<ItemTemplate, ItemTemplateForAddDto>();
             CreateMap<ItemTemplate, ItemTemplateForTableDto>();
-            CreateMap<ItemProperty, ItemTemplatePropertyForAddDto>();
+            CreateMap<ItemPropertyName, ItemTemplatePropertyForAddDto>();
         }
     }
 }

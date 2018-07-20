@@ -62,15 +62,15 @@ namespace API.TESTS
                 "Robert",
                 56
             );
-            ItemProperty ip1 = new ItemProperty(
+            ItemPropertyDescription ip1 = new ItemPropertyDescription(
                 1,
                 "Det er en væg"
             );
-            ItemProperty ip2 = new ItemProperty(
+            ItemPropertyDescription ip2 = new ItemPropertyDescription(
                 2,
                 "Det er en dør"
             );
-            List<ItemProperty> ipList = new List<ItemProperty>();
+            List<ItemPropertyDescription> ipList = new List<ItemPropertyDescription>();
             ipList.Add(ip1);
             ipList.Add(ip2);
 

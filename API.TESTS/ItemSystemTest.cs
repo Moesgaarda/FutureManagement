@@ -158,9 +158,9 @@ namespace API.TESTS
         private void Seed(DataContext context)
         {
             var itemProperties = new[]{
-                new ItemProperty("gul"),
-                new ItemProperty("halv"),
-                new ItemProperty("slebet")
+                new ItemPropertyDescription("gul"),
+                new ItemPropertyDescription("halv"),
+                new ItemPropertyDescription("slebet")
             };
             context.ItemProperties.AddRange(itemProperties);
             context.SaveChanges();
@@ -248,7 +248,7 @@ namespace API.TESTS
                     context.ItemTemplates.FirstOrDefault(x => x.Id == 1),
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(X => X.Id == 1)},
+                    new List<ItemPropertyDescription>(){context.ItemProperties.FirstOrDefault(X => X.Id == 1)},
                     new List<Item>(),
                     false
                 ),
@@ -258,7 +258,7 @@ namespace API.TESTS
                     context.ItemTemplates.FirstOrDefault(x => x.Id == 2),
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(X => X.Id == 2)},
+                    new List<ItemPropertyDescription>(){context.ItemProperties.FirstOrDefault(X => X.Id == 2)},
                     new List<Item>(),
                     false
                 ),
@@ -268,7 +268,7 @@ namespace API.TESTS
                     context.ItemTemplates.FirstOrDefault(x => x.Id == 3),
                     context.Orders.FirstOrDefault(x => x.Id == 2),
                     context.Users.FirstOrDefault(x => x.Id == 1),
-                    new List<ItemProperty>(){context.ItemProperties.FirstOrDefault(X => X.Id == 1)},
+                    new List<ItemPropertyDescription>(){context.ItemProperties.FirstOrDefault(X => X.Id == 1)},
                     new List<Item>(),
                     true
                 )
