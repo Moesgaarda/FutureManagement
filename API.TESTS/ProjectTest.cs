@@ -11,8 +11,10 @@ using Xunit;
 
 namespace API.TESTS
 {
+    /* 
     public class ProjectTest : IDisposable  
     {
+        
         private readonly DataContext _dbContext;
         public ProjectTest()
         {
@@ -85,7 +87,7 @@ namespace API.TESTS
             var ipcList = new List<ItemPropertyCategory>();
             ipcList.Add(ipc1);
             ipcList.Add(ipc2);
-/* 
+
             ItemTemplate it1 = new ItemTemplate(
                 1,
                 "ItemTemp1",
@@ -108,7 +110,7 @@ namespace API.TESTS
             };
            
             dbContext.Projects.AddRange(projects);
-            */
+            
             dbContext.SaveChanges(); 
         }
         public void Dispose()
@@ -170,5 +172,7 @@ namespace API.TESTS
         private async void EditProjectShouldReturnTrue(){
 
         }
+        
     }
+    */
 }

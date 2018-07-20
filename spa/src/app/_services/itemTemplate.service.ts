@@ -21,8 +21,9 @@ export class ItemTemplateService {
             .map(response => <ItemTemplate>response.json());
     }
 
-    addTemplateProperty(property): Observable<ItemProperty> {
-        return this.http.post(this.baseUrl + )
+    addTemplateProperty(property: ItemProperty): Observable<ItemProperty> {
+        return this.http.post(this.baseUrl + 'ItemTemplate/addProperty', property)
+        .map(response => <ItemTemplate>response.json());
     }
 
 }
