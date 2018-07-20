@@ -16,7 +16,7 @@ export class ItemTemplateService {
             .map(response => <ItemTemplate[]>response.json());
     }
 
-    getItemTemplate(id): Observable<ItemTemplate> {
+    getItemTemplate(id: number): Observable<ItemTemplate> {
         return this.http.get(this.baseUrl + 'ItemTemplate/getItemTemplate/' + id)
             .map(response => <ItemTemplate>response.json());
     }
@@ -25,5 +25,11 @@ export class ItemTemplateService {
         return this.http.post(this.baseUrl + 'ItemTemplate/addProperty', property)
         .map(response => <ItemTemplate>response.json());
     }
+
+    deleteItemTemplate(id) {
+        return this.http.post(this.baseUrl + 'ItemTemplate/delete/' + id, {})
+        .map(response => {});
+    }
+
 
 }

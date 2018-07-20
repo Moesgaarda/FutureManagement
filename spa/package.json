@@ -76,6 +76,7 @@
     "socicon": "3.0.5",
     "tinymce": "4.5.7",
     "typeface-exo": "0.0.22",
+    "underscore": "^1.9.1",
     "web-animations-js": "2.2.5",
     "zone.js": "^0.8.26"
   },

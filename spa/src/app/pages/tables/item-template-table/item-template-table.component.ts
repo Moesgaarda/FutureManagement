@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { ItemTemplateTableService } from '../../../@core/data/item-template-table.service';
 import { ItemTemplate } from '../../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
-import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { environment } from '../../../../environments/environment';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'ngx-item-template-table',
@@ -68,6 +67,7 @@ export class ItemTemplateTableComponent  {
 
   onDeleteConfirm(event): void {
     if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
+      console.log(event.data);
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -87,7 +87,13 @@ export class ItemTemplateTableComponent  {
     location.href = this.baseUrl + '/pages/forms/item-template-detail/' + templateToLoad.data.id;
   }
 
-  deleteTemplate(event): void {
+  deleteTemplate(templateToDelete) {
+    if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
+      this.templateService.deleteItemTemplate(templateToDelete.data.id).subscribe(() => {
+        this.templates.splice(_.findIndex(this.templates, {id: templateToDelete.data.id}), 1);
+        this.source.refresh();
+      });
+    }
   }
 
   addNewTemplate() {
