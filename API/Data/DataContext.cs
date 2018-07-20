@@ -21,16 +21,22 @@ namespace API.Data
         public DbSet<Project> Projects { get; set; }         
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }  
-        public DbSet<Value> Values { get; set; }              
+        public DbSet<Value> Values { get; set; }
+        public DbSet<TemplateProperty> TemplateProperties { get; set; }              
 
-        /* protected override void OnModelCreating(ModelBuilder modelBuilder){
-            modelBuilder.Entity<ItemPropertyName>()
-                .HasKey(x => new { x.Id });    
+        protected override void OnModelCreating(ModelBuilder modelBuilder){
+            modelBuilder.Entity<TemplateProperty>()
+                .HasKey(t => new { t.TemplateId, t.PropertyId });    
 
-            modelBuilder.Entity<ItemTemplate>()
-                .HasMany(x => x.Properties)
-        } */
+            modelBuilder.Entity<TemplateProperty>()
+                .HasOne(t => t.Template)
+                .WithMany(tp => tp.TemplateProperties)
+                .HasForeignKey(ti => ti.TemplateId);
+            
+            modelBuilder.Entity<TemplateProperty>()
+                .HasOne(t => t.Property)
+                .WithMany(p => p.TemplateProperties)
+                .HasForeignKey(pi => pi.PropertyId);
+        }
     }
-
-    
 }

@@ -6,21 +6,21 @@ using API.Enums;
 namespace API.Models{
     public class ItemTemplate{
         public ItemTemplate(){}
-        public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<ItemPropertyName> properties, ICollection<ItemTemplate> parts, string files){
+        public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplateProperty> properties, ICollection<ItemTemplate> parts, string files){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
-            this.Properties = properties;
+            this.TemplateProperties = properties;
             this.Parts = parts;
             this.Files = files;
         }
 
-        public ItemTemplate(string name, UnitType unitType, string description, ICollection<ItemPropertyName> properties, ICollection<ItemTemplate> parts, string files){
+        public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplateProperty> properties, ICollection<ItemTemplate> parts, string files){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
-            this.Properties = properties;
+            this.TemplateProperties = properties;
             this.Parts = parts;
             this.Files = files;
         }
@@ -32,7 +32,7 @@ namespace API.Models{
         [Required]
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
-        public ICollection<ItemPropertyName> Properties { get; set; }
+        public ICollection<TemplateProperty> TemplateProperties { get; set; }
         public ICollection<ItemTemplate> Parts { get; set; }
         public string Files { get; set; }
 
