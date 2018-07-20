@@ -1,5 +1,5 @@
 import {ItemProperty} from './ItemProperty';
-enum UnitType {mm, cm, m}
+export enum UnitType {mm = 1, cm, m}
 
 export interface ItemTemplate {
     id: number;
