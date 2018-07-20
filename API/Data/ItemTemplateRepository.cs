@@ -42,8 +42,6 @@ namespace API.Data
          */
         public async Task<bool> DeleteItemTemplate(ItemTemplate template)
         {
-            
-            _context.ItemTemplates.Attach(template); // todo shit går galt her, dobbelt tracking af entity med ID 
             _context.ItemTemplates.Remove(template); 
             int result = _context.SaveChanges();     
             return result > 0;

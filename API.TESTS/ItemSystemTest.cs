@@ -67,12 +67,17 @@ namespace API.TESTS
         public async void CreateTemplateTest()
         {
             //Given
+            var listTP = new List<TemplateProperty>();
+            listTP.AddRange( _dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
+            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
+            
+
             var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
             var template = new ItemTemplate(
                 "Dør",
                 UnitType.m,
                 "Dette er en Dør",
-                new List<ItemPropertyName>() { _dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), _dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 2) },
+                listTP,
                 new List<ItemTemplate>() { },
                 "file/string/path"
             );
@@ -92,7 +97,7 @@ namespace API.TESTS
                 "Dør",
                 UnitType.m,
                 "Dette er en Dør",
-                new List<ItemPropertyName>() { },
+                new List<TemplateProperty>() { },
                 null,
                 "file/string/path"
             );
@@ -128,7 +133,7 @@ namespace API.TESTS
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
-            template.Properties.Add(_dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 3));
+            template.TemplateProperties.Concat(_dbContext.TemplateProperties.Where(x => x.TemplateId == 3));
             var status = await controller.EditItemTemplate(template);
             //Assert
             StatusCodeResult result = status as StatusCodeResult;
@@ -145,23 +150,41 @@ namespace API.TESTS
             //Act
             await controller.DeleteItemTemplate(template.Id);
             //Assert
-            Assert.Null(_dbContext.ItemTemplates.First(x => x.Id == 1));
+            var test = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
+            Assert.Null(test);
         }
-        /*
+        
         [Fact]
-        public async void DeleteTemplateTestReturn()
+        public async void DeleteTemplateReturnTrueTest()
         {
             //Arrange
             var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
-            var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
+            var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 4);
             //Act
             var status = await controller.DeleteItemTemplate(template.Id);
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(200);
             //Assert
-            Assert.True(status);
+            Assert.True(result.StatusCode == test.StatusCode);
         }
-        */
+                [Fact]
+        public async void DeleteTemplateReturnFalseTest()
+        {
+            //Arrange
+            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            //Act
+            var status = await controller.DeleteItemTemplate(0);
+            BadRequestObjectResult result = status as BadRequestObjectResult;
+            var test = new StatusCodeResult(200);
+            //Assert
+            Assert.False(result.StatusCode == test.StatusCode);
+        }
         private void Seed(DataContext context)
         {
+            var listTP = new List<TemplateProperty>();
+            listTP.AddRange( _dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
+            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
+
             var itemProperties = new[]{
                 new ItemPropertyDescription(1,"gul"),
                 new ItemPropertyDescription(2,"halv"),
@@ -182,7 +205,7 @@ namespace API.TESTS
                     "Gavl",
                     UnitType.m,
                     "Dette er en gavl",
-                    new List<ItemPropertyName>(){context.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), context.ItemPropertyNames.FirstOrDefault(x => x.Id == 2)},
+                    listTP,
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 ),
@@ -190,7 +213,7 @@ namespace API.TESTS
                     "stang",
                     UnitType.m,
                     "Dette er en stang",
-                    new List<ItemPropertyName>(){context.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), context.ItemPropertyNames.FirstOrDefault(x => x.Id == 2)},
+                    listTP,
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 ),
@@ -198,7 +221,7 @@ namespace API.TESTS
                     "tagplade",
                     UnitType.m,
                     "Dette er en tagplade",
-                    new List<ItemPropertyName>(){context.ItemPropertyNames.FirstOrDefault(x => x.Id == 1), context.ItemPropertyNames.FirstOrDefault(x => x.Id == 2)},
+                    listTP,
                     new List<ItemTemplate>(){},
                     "file/string/path"
                 )
