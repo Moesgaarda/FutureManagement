@@ -13,7 +13,8 @@ namespace API.Dtos
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
         public ICollection<TemplateProperty> TemplateProperties { get; set; }
-        public ICollection<ItemTemplate> Parts { get; set; }
+        public ICollection<ItemTemplatePart> Parts { get; set; }
+        public ICollection<ItemTemplatePart> PartOf { get; set; }
         public string Files { get; set; }
 
     }
