@@ -47,7 +47,7 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteItem(Item item){
             throw new NotImplementedException();
         }
-        [HttpPost("Archive/{id}", Name = "DeleteItem")]
+        [HttpPost("Archive/{id}", Name = "ArchieveItem")]
         public async Task<IActionResult> ArchiveItem(Item item){
             throw new NotImplementedException();
         }

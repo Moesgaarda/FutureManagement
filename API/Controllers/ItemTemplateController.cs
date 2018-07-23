@@ -22,7 +22,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        [HttpGet("getAll")]
+        [HttpGet("getAll", Name = "GetAllitemTemplates")]
         public async Task<IActionResult> GetItemTemplates(){
             var itemTemplates = await _repo.GetItemTemplates();
 
