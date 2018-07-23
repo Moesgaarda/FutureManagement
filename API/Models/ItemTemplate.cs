@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using API.Enums;
+using Newtonsoft.Json;
 
 namespace API.Models{
     public class ItemTemplate{
@@ -31,6 +33,7 @@ namespace API.Models{
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
         public ICollection<TemplateProperty> TemplateProperties { get; set; }
+   
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
         public string Files { get; set; }

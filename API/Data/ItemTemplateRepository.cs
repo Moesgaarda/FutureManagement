@@ -59,7 +59,11 @@ namespace API.Data
         }
 
         public async Task<ItemTemplate> GetItemTemplate(int id){
-            return await _context.ItemTemplates.FirstAsync(x => x.Id == id);
+            ItemTemplate template = await _context.ItemTemplates.FirstAsync(x => x.Id == id);
+  //          template.Parts = _context.ItemTemplates.Include(x => x.Parts);
+            //template.PartOf = _context  
+//            _context.Entry(template).Collection(t => t.Parts).Query().Where(x => x.Part.Contains(id)).Load();
+            return template;
         }
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
