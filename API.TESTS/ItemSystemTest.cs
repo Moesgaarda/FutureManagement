@@ -78,14 +78,14 @@ namespace API.TESTS
                 UnitType.m,
                 "Dette er en Dør",
                 listTP,
-                new List<ItemTemplate>() { },
+                new List<ItemTemplatePart>() { },
                 "file/string/path"
             );
             //When
             await controller.AddItemTemplate(_mapper.Map<ItemTemplateForAddDto>(template));
-            var dbTemplate = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 4);
+            var dbTemplate = _dbContext.ItemTemplates.FirstOrDefault(x => x.Name == "Dør");
             //Then
-            Assert.True(dbTemplate.Id == 4 && dbTemplate.Name == template.Name);
+            Assert.True(dbTemplate.Name == template.Name);
         }
         
         [Fact]
@@ -159,7 +159,7 @@ namespace API.TESTS
         {
             //Arrange
             var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
-            var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 4);
+            var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             var status = await controller.DeleteItemTemplate(template.Id);
             StatusCodeResult result = status as StatusCodeResult;
@@ -167,7 +167,7 @@ namespace API.TESTS
             //Assert
             Assert.True(result.StatusCode == test.StatusCode);
         }
-                [Fact]
+        [Fact]
         public async void DeleteTemplateReturnFalseTest()
         {
             //Arrange
@@ -206,7 +206,7 @@ namespace API.TESTS
                     UnitType.m,
                     "Dette er en gavl",
                     listTP,
-                    new List<ItemTemplate>(){},
+                    new List<ItemTemplatePart>(){},
                     "file/string/path"
                 ),
                 new ItemTemplate(
@@ -214,7 +214,7 @@ namespace API.TESTS
                     UnitType.m,
                     "Dette er en stang",
                     listTP,
-                    new List<ItemTemplate>(){},
+                    new List<ItemTemplatePart>(){},
                     "file/string/path"
                 ),
                 new ItemTemplate(
@@ -222,7 +222,7 @@ namespace API.TESTS
                     UnitType.m,
                     "Dette er en tagplade",
                     listTP,
-                    new List<ItemTemplate>(){},
+                    new List<ItemTemplatePart>(){},
                     "file/string/path"
                 )
             };

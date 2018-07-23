@@ -4,40 +4,51 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace API.Controllers
 {
+    [Route("api/[controller]")]
     public class ItemController : Controller
     {
         private readonly DataContext _context;
-        public ItemController(DataContext context){
+        private readonly IMapper _mapper;
+        private readonly IItemTemplateRepository _repo;
+        public ItemController(IItemTemplateRepository repo, DataContext context, IMapper mapper){
             _context = context;
+            _mapper = mapper;
+            _repo = repo;
         }
-        public async Task<List<Item>> GetallActiveItems(){
+        [HttpGet("getActive")]
+        public async Task<IActionResult> GetallActiveItems(){
             throw new NotImplementedException();
         }
-        public async Task<List<Item>> GetAllArchivedItems(){
+        [HttpGet("getArchived")]
+        public async Task<IActionResult> GetAllArchivedItems(){
             throw new NotImplementedException();
         }
-        public async Task<List<Item>> GetAllItems(){
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllItems(){
             throw new NotImplementedException();
         }
-        public async Task<Item> GetItem(int id){
+        [HttpGet("get/{id}", Name = "GetItem")]
+        public async Task<IActionResult> GetItem(int id){
             throw new NotImplementedException();
         }
-        public async Task<Item> ShowDetails(Item item){
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateItem(Item item){
             throw new NotImplementedException();
         }
-        public async Task<bool> CreateItem(Item item){
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditItem(Item item){
             throw new NotImplementedException();
         }
-        public async Task<bool> EditItem(Item item){
+         [HttpPost("delete/{id}", Name = "DeleteItem")]
+        public async Task<IActionResult> DeleteItem(Item item){
             throw new NotImplementedException();
         }
-        public async Task<bool> DeleteItem(Item item){
-            throw new NotImplementedException();
-        }
-        public async Task<bool> ArchiveItem(Item item){
+        [HttpPost("Archive/{id}", Name = "DeleteItem")]
+        public async Task<IActionResult> ArchiveItem(Item item){
             throw new NotImplementedException();
         }
     }

@@ -22,7 +22,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        [HttpGet("getItemTemplates")]
+        [HttpGet("getAll")]
         public async Task<IActionResult> GetItemTemplates(){
             var itemTemplates = await _repo.GetItemTemplates();
 
@@ -31,7 +31,7 @@ namespace API.Controllers
             return Ok(itemTemplatesToReturn);
         }
 
-        [HttpGet("getItemTemplate/{id}", Name = "GetItemTemplate")]
+        [HttpGet("get/{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
 
