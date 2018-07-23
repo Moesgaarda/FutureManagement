@@ -11,8 +11,10 @@ using Xunit;
 
 namespace API.TESTS
 {
+    /* 
     public class ProjectTest : IDisposable  
     {
+        
         private readonly DataContext _dbContext;
         public ProjectTest()
         {
@@ -30,16 +32,70 @@ namespace API.TESTS
             Seed(_dbContext);
         }
         private void Seed(DataContext dbContext){
-            Customer c1 = new Customer();
-            c1.Name = "morfar";
-            Calculator cal1 = new Calculator();
-            ItemProperty ip1 = new ItemProperty(1,"bla");
-            List<ItemProperty> ipList = new List<ItemProperty>();
+            Customer customer1 = new Customer(
+                1,
+                "Aalborg",
+                "Denmark",
+                "generic@Email.com",
+                "Daniel",
+                "+4520304050",
+                "+4512345678",
+                "Futman",
+                new CustomerType("Private")
+            );
+            Customer customer2 = new Customer(
+                2,
+                "Berlin",
+                "Germany",
+                "deutsch@Gmail.com",
+                "Adolg",
+                "+4922334455",
+                "+4998876554",
+                "GermanLaborParty",
+                new CustomerType("Public")
+            );
+            Calculator calculator1 = new Calculator(
+                1,
+                "Thomas",
+                99
+            );
+            Calculator calculator2 = new Calculator(
+                2,
+                "Robert",
+                56
+            );
+            ItemPropertyDescription ip1 = new ItemPropertyDescription(
+                1,
+                "Det er en væg"
+            );
+            ItemPropertyDescription ip2 = new ItemPropertyDescription(
+                2,
+                "Det er en dør"
+            );
+            List<ItemPropertyDescription> ipList = new List<ItemPropertyDescription>();
             ipList.Add(ip1);
-            ItemPropertyCategory ipc1 = new ItemPropertyCategory(1,"bla");
+            ipList.Add(ip2);
+
+            ItemPropertyCategory ipc1 = new ItemPropertyCategory(
+                1,
+                "cate1"
+            );
+            ItemPropertyCategory ipc2 = new ItemPropertyCategory(
+                2,
+                "gory2"
+            );
             var ipcList = new List<ItemPropertyCategory>();
             ipcList.Add(ipc1);
-            ItemTemplate it1 = new ItemTemplate(1,"something", UnitType.mm,"blabla",ipcList, null);
+            ipcList.Add(ipc2);
+
+            ItemTemplate it1 = new ItemTemplate(
+                1,
+                "ItemTemp1",
+                UnitType.mm,
+                "Item description",
+                ipcList, 
+                null
+            );
             User u1 = new User();
             Order o1 = new Order(1,"asd",DateTime.Now, DateTime.MaxValue,
                 u1,"invoicepath",13,1,2,3,UnitType.cm,null);
@@ -52,7 +108,9 @@ namespace API.TESTS
                 "jpstur","færøerne", "this is a comment",23,cal1, Status.Modtaget,11,12,13,UnitType.mm,"usage2",1001,"methoddecl2323")
 
             };
+           
             dbContext.Projects.AddRange(projects);
+            
             dbContext.SaveChanges(); 
         }
         public void Dispose()
@@ -114,5 +172,7 @@ namespace API.TESTS
         private async void EditProjectShouldReturnTrue(){
 
         }
+        
     }
+    */
 }

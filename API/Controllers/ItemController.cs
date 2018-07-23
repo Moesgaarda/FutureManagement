@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class InventoryManagementController : Controller
+    public class ItemController : Controller
     {
         private readonly DataContext _context;
-        public InventoryManagementController(DataContext context){
+        public ItemController(DataContext context){
             _context = context;
         }
         public async Task<List<Item>> GetallActiveItems(){
@@ -20,6 +20,9 @@ namespace API.Controllers
             throw new NotImplementedException();
         }
         public async Task<List<Item>> GetAllItems(){
+            throw new NotImplementedException();
+        }
+        public async Task<Item> GetItem(int id){
             throw new NotImplementedException();
         }
         public async Task<Item> ShowDetails(Item item){

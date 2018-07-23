@@ -17,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from './pages/forms/forms.module';
 import { AuthService } from './_services/auth.service';
 import { HttpModule } from '../../node_modules/@angular/http';
+import { ItemTemplateService } from './_services/itemTemplate.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { HttpModule } from '../../node_modules/@angular/http';
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
     AuthService,
+    ItemTemplateService,
   ],
 })
 export class AppModule {
