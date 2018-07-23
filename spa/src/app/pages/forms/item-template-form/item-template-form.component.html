@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-lg-6">
       <nb-card>
@@ -23,14 +24,17 @@
               <textarea rows="5" placeholder="Beskrivelse" class="form-control"></textarea>
             </div>
           </div>
+
           <div class="form-group">
             <label for="templateList">Skabelonliste</label>
             <div class="form-group">
-              <input type="text" placeholder="Skabelonliste" class="form-control"/>
+                <ngx-select-dropdown [config]="config" [options]="templates" (change)="changeValue($event)"
+                [(value)]="multiSelect" [multiple]="true"></ngx-select-dropdown>
               <small class="form-text">En liste af skabeloner hvor denne skabelon anvendes.
               </small>
             </div>
           </div>
+
           <div class="form-group">
             <label for="usedList">Anvendelsesliste</label>
             <div class="form-group">
