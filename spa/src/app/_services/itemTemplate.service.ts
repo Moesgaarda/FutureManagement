@@ -12,12 +12,12 @@ export class ItemTemplateService {
     constructor(private http: Http) {}
 
     getItemTemplates(): Observable<ItemTemplate[]> {
-        return this.http.get(this.baseUrl + 'ItemTemplate/getItemTemplates')
+        return this.http.get(this.baseUrl + 'ItemTemplate/getAll')
             .map(response => <ItemTemplate[]>response.json());
     }
 
     getItemTemplate(id: number): Observable<ItemTemplate> {
-        return this.http.get(this.baseUrl + 'ItemTemplate/getItemTemplate/' + id)
+        return this.http.get(this.baseUrl + 'ItemTemplate/ItemTemplate/get/' + id)
             .map(response => <ItemTemplate>response.json());
     }
 
