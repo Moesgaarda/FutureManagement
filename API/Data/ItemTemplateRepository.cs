@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Dtos;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,7 +63,7 @@ namespace API.Data
             ItemTemplate template = await _context.ItemTemplates
                     .Where(x => x.Id == id)
                     .FirstOrDefaultAsync();
-                    
+
             _context.Entry(template).Collection( x => x.Parts )
                     .Query()
                     .Include(x => x.Part)
@@ -78,7 +79,7 @@ namespace API.Data
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
         {
-            return await _context.ItemTemplates.Include(temp => temp.Parts).ToListAsync();
+            return await _context.ItemTemplates.ToListAsync();
         }
 
         public async Task<ItemPropertyName> GetPropertyTemplate(int id)
