@@ -18,6 +18,7 @@ import { FormsModule } from './pages/forms/forms.module';
 import { AuthService } from './_services/auth.service';
 import { HttpModule } from '../../node_modules/@angular/http';
 import { ItemTemplateService } from './_services/itemTemplate.service';
+import { ItemService } from './_services/item.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ItemTemplateService } from './_services/itemTemplate.service';
     { provide: APP_BASE_HREF, useValue: '/' },
     AuthService,
     ItemTemplateService,
+    ItemService,
   ],
 })
 export class AppModule {
