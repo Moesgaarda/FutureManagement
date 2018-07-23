@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { ItemTemplateTableService } from '../../../@core/data/item-template-table.service';
+import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
+import { ItemTemplateService } from '../../../_services/itemTemplate.service';
+import { environment } from '../../../../environments/environment';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'ngx-item-template-table',
@@ -12,9 +15,15 @@ import { ItemTemplateTableService } from '../../../@core/data/item-template-tabl
     }
   `],
 })
-export class ItemTemplateTableComponent {
+export class ItemTemplateTableComponent  {
+  source: LocalDataSource;
+  templates: ItemTemplate[];
+  baseUrl = environment.spaUrl;
 
   settings = {
+    pager: {
+      perPage: 15,
+    },
     mode: 'external',
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -29,49 +38,52 @@ export class ItemTemplateTableComponent {
       cancelButtonContent: '<i class="nb-close"></i>',
     },
     columns: {
-      templateName: {
+      name: {
         title: 'Navn',
         type: 'string',
       },
-      amountUnit: {
+      unitType: {
         title: 'Mængdeenhed',
-        type: 'number',
+        valuePrepareFunction: (value) => UnitType[value],
       },
       description: {
         title: 'Beskrivelse',
         type: 'string',
       },
-      file: {
+      files: {
         title: 'Fil',
         type: 'string',
       },
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
-
-  constructor(private service: ItemTemplateTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
+  constructor(private templateService: ItemTemplateService) {
+    this.source = new LocalDataSource();
+    this.loadTemplates();
   }
 
-  onDeleteConfirm(event): void {
+  async loadTemplates() {
+    await this.templateService.getItemTemplates().subscribe(templates => {
+      this.templates = templates;
+      this.source.load(templates);
+      this.source.refresh();
+    })
+  }
+
+  editTemplate(templateToLoad) {
+    location.href = this.baseUrl + '/pages/forms/item-template-detail/' + templateToLoad.data.id;
+  }
+
+  deleteTemplate(templateToDelete) {
     if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
+      this.templateService.deleteItemTemplate(templateToDelete.data.id).subscribe(() => {
+        this.templates.splice(_.findIndex(this.templates, {id: templateToDelete.data.id}), 1);
+        this.source.refresh();
+      });
     }
   }
 
-  editTemplate(event): void {
-    location.href = 'http://localhost:4200/#/pages/forms/item-template-detail';
-  }
-
-  deleteTemplate(event): void {
-
-  }
-
   addNewTemplate() {
-    location.href = 'http://localhost:4200/#/pages/forms/item-template';
+    location.href = this.baseUrl + '/pages/forms/item-template';
   }
 }

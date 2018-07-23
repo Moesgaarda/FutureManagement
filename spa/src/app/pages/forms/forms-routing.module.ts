@@ -36,7 +36,7 @@ const routes: Routes = [{
     path: 'order-detail',
     component: OrderDetailComponent,
   }, {
-    path: 'item-template-detail',
+    path: 'item-template-detail/:id',
     component: ItemTemplateDetailFormComponent,
   }],
 }];

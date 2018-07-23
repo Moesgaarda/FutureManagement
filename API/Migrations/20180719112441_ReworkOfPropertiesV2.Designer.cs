@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180719112441_ReworkOfPropertiesV2")]
+    partial class ReworkOfPropertiesV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,7 +180,7 @@ namespace API.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("ItemPropertyDescriptions");
+                    b.ToTable("ItemPropertyDescription");
                 });
 
             modelBuilder.Entity("API.Models.ItemPropertyName", b =>
@@ -186,11 +188,15 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("ItemTemplateId");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ItemPropertyNames");
+                    b.HasIndex("ItemTemplateId");
+
+                    b.ToTable("ItemProperties");
                 });
 
             modelBuilder.Entity("API.Models.ItemTemplate", b =>
@@ -202,26 +208,18 @@ namespace API.Migrations
 
                     b.Property<string>("Files");
 
-                    b.Property<string>("Name");
+                    b.Property<int?>("ItemTemplateId");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("UnitType");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ItemTemplateId");
+
                     b.ToTable("ItemTemplates");
-                });
-
-            modelBuilder.Entity("API.Models.ItemTemplatePart", b =>
-                {
-                    b.Property<int>("TemplateId");
-
-                    b.Property<int>("PartId");
-
-                    b.HasKey("TemplateId", "PartId");
-
-                    b.HasIndex("PartId");
-
-                    b.ToTable("ItemTemplateParts");
                 });
 
             modelBuilder.Entity("API.Models.Order", b =>
@@ -301,19 +299,6 @@ namespace API.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("API.Models.TemplateProperty", b =>
-                {
-                    b.Property<int>("TemplateId");
-
-                    b.Property<int>("PropertyId");
-
-                    b.HasKey("TemplateId", "PropertyId");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("TemplateProperties");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
@@ -426,17 +411,18 @@ namespace API.Migrations
                         .HasForeignKey("ItemId");
                 });
 
-            modelBuilder.Entity("API.Models.ItemTemplatePart", b =>
+            modelBuilder.Entity("API.Models.ItemPropertyName", b =>
                 {
-                    b.HasOne("API.Models.ItemTemplate", "Part")
-                        .WithMany("PartOf")
-                        .HasForeignKey("PartId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("API.Models.ItemTemplate")
+                        .WithMany("Properties")
+                        .HasForeignKey("ItemTemplateId");
+                });
 
-                    b.HasOne("API.Models.ItemTemplate", "Template")
+            modelBuilder.Entity("API.Models.ItemTemplate", b =>
+                {
+                    b.HasOne("API.Models.ItemTemplate")
                         .WithMany("Parts")
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ItemTemplateId");
                 });
 
             modelBuilder.Entity("API.Models.Order", b =>
@@ -457,19 +443,6 @@ namespace API.Migrations
                     b.HasOne("API.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("API.Models.TemplateProperty", b =>
-                {
-                    b.HasOne("API.Models.ItemPropertyName", "Property")
-                        .WithMany("TemplateProperties")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("API.Models.ItemTemplate", "Template")
-                        .WithMany("TemplateProperties")
-                        .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

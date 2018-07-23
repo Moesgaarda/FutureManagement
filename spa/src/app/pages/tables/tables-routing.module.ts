@@ -17,8 +17,7 @@ const routes: Routes = [{
   }, {
     path: 'item-table',
     component: ItemTableComponent,
-  },
-  {
+  }, {
     path: 'item-template-table',
     component: ItemTemplateTableComponent,
   }, {
@@ -28,7 +27,7 @@ const routes: Routes = [{
     path: 'project-table',
     component: ProjectTableComponent,
   }],
-}];
+  }]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
