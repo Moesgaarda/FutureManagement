@@ -19,7 +19,7 @@ namespace API.TESTS
         private readonly DataContext _dbContext;
         private readonly IConfiguration _config;
 
-        public AuthTest(IConfiguration config){
+        public AuthTest(){
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
@@ -32,7 +32,9 @@ namespace API.TESTS
             _dbContext = new DataContext(options);
             _dbContext.Database.EnsureCreated();
             Seed(_dbContext);
-            _config = config;
+
+            var builder = new ConfigurationBuilder().AddJsonFile("C:/Future/FutureManagement/API/appsettings.json");
+            _config = builder.Build();
         }
 
         [Fact]
@@ -40,18 +42,56 @@ namespace API.TESTS
             var repo = new AuthRepository(_dbContext);
             var controller = new AuthController(repo, _config);
 
-            var userDto = new UserForLoginDto("admin", "password");
+            var userLoginDto = new UserForLoginDto("admin", "password");
+            var user = new UserForRegisterDto("admin", "password");
 
-            await controller.Login(userDto);
+            await controller.Register(user);
 
-            Assert.
+            var tokenString = await controller.Login(userLoginDto);
+
+            Assert.NotNull(tokenString);
         }
 
+
+        [Fact]
         public async void UserSuccesfulRegisterTest(){
             var repo = new AuthRepository(_dbContext);
             var controller = new AuthController(repo, _config);
 
-            var userDto = new UserForRegisterDto("testUser","testPassword");
+            var userRegisterDto = new UserForRegisterDto("testUser","testPassword");
+
+            await controller.Register(userRegisterDto);
+            Assert.NotNull(_dbContext.Users.FirstOrDefault(x => x.Username == "testUser"));
+        }
+
+        [Fact]
+        public async void UserExistTest(){
+            var repo = new AuthRepository(_dbContext);
+
+            var userExists = await repo.UserExists("jankrabbe");
+
+            Assert.True(userExists);
+        }
+
+        [Fact]
+        public async void UserDoesNotExistTest(){
+            var repo = new AuthRepository(_dbContext);
+
+            var userExists = await repo.UserExists("thisuserdoesnotexist");
+
+            Assert.False(userExists);
+        }
+
+        public async void PasswordHashTest(){
+            var repo = new AuthRepository(_dbContext);
+
+            String password = "somepassword";
+            byte[] passwordHash = new byte[]{};
+            byte[] passwordSalt = new byte[]{};
+            repo.CreatePasswordHash(password, out passwordHash, out  passwordSalt);
+            bool passwordMatches = repo.VerifyPasswordHash(password, passwordHash, passwordSalt);
+
+            Assert.True(passwordMatches);
         }
 
         private void Seed(DataContext context){
