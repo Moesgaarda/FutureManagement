@@ -36,6 +36,8 @@ namespace API.Controllers
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
 
             ItemTemplateForGetDto itemTemplateToReturn = _mapper.Map<ItemTemplateForGetDto>(itemTemplate);
+            itemTemplateToReturn.Parts = _mapper.Map<List<ItemTemplatePartDto>>(itemTemplate.Parts);            
+            itemTemplateToReturn.TemplateProperties = _mapper.Map<List<TemplatePropertyForGetDto>>(itemTemplate.TemplateProperties);
 
             return Ok(itemTemplateToReturn);
         }
@@ -90,7 +92,7 @@ namespace API.Controllers
         }
 
         [HttpPost("addProperty", Name = "AddPropertyTemplate")]
-        public async Task<IActionResult> AddPropertyTemplate([FromBody]ItemTemplatePropertyForAddDto propertyDto){
+        public async Task<IActionResult> AddPropertyTemplate([FromBody]ItemPropertyNameForAddDto propertyDto){
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }

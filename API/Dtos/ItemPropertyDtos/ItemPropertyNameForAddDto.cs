@@ -1,6 +1,6 @@
 namespace API.Dtos
 {
-    public class ItemTemplatePropertyForAddDto
+    public class ItemPropertyNameForAddDto
     {
         public string Name { get; set; }
     }
