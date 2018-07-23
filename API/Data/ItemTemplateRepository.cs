@@ -59,16 +59,26 @@ namespace API.Data
         }
 
         public async Task<ItemTemplate> GetItemTemplate(int id){
-            ItemTemplate template = await _context.ItemTemplates.FirstAsync(x => x.Id == id);
-  //          template.Parts = _context.ItemTemplates.Include(x => x.Parts);
-            //template.PartOf = _context  
-//            _context.Entry(template).Collection(t => t.Parts).Query().Where(x => x.Part.Contains(id)).Load();
+            ItemTemplate template = await _context.ItemTemplates
+                    .Where(x => x.Id == id)
+                    .FirstOrDefaultAsync();
+                    
+            _context.Entry(template).Collection( x => x.Parts )
+                    .Query()
+                    .Include(x => x.Part)
+                    .Load();
+
+            _context.Entry(template).Collection( x => x.TemplateProperties )
+                    .Query()
+                    .Include(x => x.Property)
+                    .Load();
+
             return template;
         }
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
         {
-            return await _context.ItemTemplates.ToListAsync();
+            return await _context.ItemTemplates.Include(temp => temp.Parts).ToListAsync();
         }
 
         public async Task<ItemPropertyName> GetPropertyTemplate(int id)
