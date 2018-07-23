@@ -13,8 +13,8 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly IItemTemplateRepository _repo;
-        public ItemController(IItemTemplateRepository repo, DataContext context, IMapper mapper){
+        private readonly IItemRepository _repo;
+        public ItemController(IItemRepository repo, DataContext context, IMapper mapper){
             _context = context;
             _mapper = mapper;
             _repo = repo;
