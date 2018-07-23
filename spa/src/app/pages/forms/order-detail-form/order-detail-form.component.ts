@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ngx-order-detail-form',
   styleUrls: ['../form-inputs/form-inputs.component.scss'],
   templateUrl: './order-detail-form.component.html',
 })
-export class OrderDetailComponent {
+export class OrderDetailComponent implements OnInit {
   orderIdDisabled: boolean;
   companyDisabled: boolean;
   orderDateDisabled: boolean;
@@ -31,8 +31,7 @@ export class OrderDetailComponent {
   enableOrderId() {
     if (this.orderIdDisabled) {
       this.orderIdDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.orderIdDisabled = true;
     }
@@ -41,8 +40,7 @@ export class OrderDetailComponent {
   enableCompany() {
     if (this.companyDisabled) {
       this.companyDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.companyDisabled = true;
     }
@@ -51,8 +49,7 @@ export class OrderDetailComponent {
   enableOrderDate() {
     if (this.orderDateDisabled) {
       this.orderDateDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.orderDateDisabled = true;
     }
@@ -61,8 +58,7 @@ export class OrderDetailComponent {
   enableDeliveryDate() {
     if (this.deliveryDateDisabled) {
       this.deliveryDateDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.deliveryDateDisabled = true;
     }
@@ -71,8 +67,7 @@ export class OrderDetailComponent {
   enableLength() {
     if (this.lengthDisabled) {
       this.lengthDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.lengthDisabled = true;
     }
@@ -81,8 +76,7 @@ export class OrderDetailComponent {
   enableWidth() {
     if (this.widthDisabled) {
       this.purchaseNumberDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.widthDisabled = true;
     }
@@ -91,8 +85,7 @@ export class OrderDetailComponent {
   enableHeight() {
     if (this.heightDisabled) {
       this.heightDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.heightDisabled = true;
     }
@@ -101,8 +94,7 @@ export class OrderDetailComponent {
   enableUnitType() {
     if (this.unitTypeDisabled) {
       this.unitTypeDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.unitTypeDisabled = true;
     }
@@ -111,8 +103,7 @@ export class OrderDetailComponent {
   enablePurchaseNumber() {
     if (this.purchaseNumberDisabled) {
       this.purchaseNumberDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.purchaseNumberDisabled = true;
     }

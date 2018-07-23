@@ -4,6 +4,10 @@ namespace API.Dtos
 {
     public class UserForRegisterDto
     {
+        public UserForRegisterDto(string Username, string Password){
+            this.Username = Username;
+            this.Password = Password;
+        }
         [Required]
         public string Username { get; set; }   
 

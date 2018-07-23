@@ -49,8 +49,7 @@ export class ItemDetailFormComponent implements OnInit {
   enableAmount() {
     if (this.amountDisabled) {
       this.amountDisabled = false;
-    }
-    else {
+    } else {
       // indsæt i db
       this.amountDisabled = true;
     }
