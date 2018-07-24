@@ -75,10 +75,11 @@ namespace API.Data
                     .Load();
 
             template.PartOf = _context.ItemTemplateParts.Where(x => x.PartId == template.Id).ToList();
-            
-            foreach(ItemTemplatePart parent in template.PartOf){
-                parent.Template = _context.ItemTemplates.FirstOrDefault(x => x.Id == parent.TemplateId);
-            }
+
+            _context.Entry(template).Collection(x => x.PartOf)
+                    .Query()
+                    .Include(x => x.Template)
+                    .Load();
 
             return template;
         }
@@ -96,6 +97,22 @@ namespace API.Data
         public async Task<List<ItemPropertyName>> GetPropertyTemplates()
         {
             return await _context.ItemPropertyNames.ToListAsync();
+        }
+
+        public async Task<bool> ActivateItemTemplate(int id){
+            var TemplateToUpdate = await _context.ItemTemplates.FirstAsync(x => x.Id == id);
+            _context.ItemTemplates.Update(TemplateToUpdate);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeactivateItemTemplate(int id){
+            var TemplateToUpdate = await _context.ItemTemplates.FirstAsync(x => x.Id == id);
+            _context.ItemTemplates.Update(TemplateToUpdate);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }

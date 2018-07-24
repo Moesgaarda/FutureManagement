@@ -16,7 +16,6 @@ namespace API.Models{
             this.Properties = Properties;
             this.Parts = parts;
             this.IsArchived = isArchived;
-
         }
         public Item(string placement, int amount, ItemTemplate template, Order order, User createdBy, 
             ICollection<ItemPropertyDescription> properties, ICollection<Item> parts, bool isArchived){

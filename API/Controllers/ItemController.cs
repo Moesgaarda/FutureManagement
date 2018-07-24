@@ -51,5 +51,9 @@ namespace API.Controllers
         public async Task<IActionResult> ArchiveItem(Item item){
             throw new NotImplementedException();
         }
+        [HttpPost("add", Name = "AddItem")]
+        public async Task<IActionResult> AddItem([FromBody]Item item){
+            throw new NotImplementedException();
+        }
     }
 }
