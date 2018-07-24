@@ -75,6 +75,11 @@ namespace API.Data
                     .Load();
 
             template.PartOf = _context.ItemTemplateParts.Where(x => x.PartId == template.Id).ToList();
+            
+            foreach(ItemTemplatePart parent in template.PartOf){
+                parent.Template = _context.ItemTemplates.FirstOrDefault(x => x.Id == parent.TemplateId);
+            }
+
             return template;
         }
 
