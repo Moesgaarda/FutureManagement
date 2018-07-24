@@ -40,6 +40,7 @@ namespace API.Models{
         public Order Order { get; set; }
         public User CreatedBy { get; set; } 
         public ICollection<Item> Parts { get; set; }
+        public ICollection<Item> PartOf { get; set; }
         public bool IsActive { get; set; }
     }
 }

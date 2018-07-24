@@ -1,7 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using API.Data;
 using API.Dtos;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
@@ -23,9 +29,9 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<bool> AddItem(ItemForAddDto item)
+        public async Task<bool> AddItem(Item item)
         {
-            // await _context.Items.AddAsync(item);
+            await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync();
 
             return result > 0;
@@ -49,32 +55,40 @@ namespace API.Data
 
         public async Task<bool> EditItem(Item item)
         {
-            throw new System.NotImplementedException();
+            var itemToChange = await _context.Items.FirstAsync(x => x.Id == item.Id);
+            _context.Entry(itemToChange).CurrentValues.SetValues(item);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<List<Item>> GetActiveItems(List<Item> activeItemList)
         {
-            throw new System.NotImplementedException();
+            return await _context.Items.Where(x => x.IsActive == true).ToListAsync();
         }
 
         public async Task<List<Item>> GetInactiveItems(List<Item> archivedItemList)
         {
-            throw new System.NotImplementedException();
+            return await _context.Items.Where(x => x.IsActive == false).ToListAsync();
         }
 
         public async Task<List<Item>> GetAllItems(List<Item> itemList)
         {
-            throw new System.NotImplementedException();
+            return await _context.Items.ToListAsync();
         }
 
         public async Task<Item> GetItem(int id)
         {
-            throw new System.NotImplementedException();
-        }
+            Item item = await _context.Items
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
 
-        public async Task<Item> ShowDetails(Item item)
-        {
-            throw new System.NotImplementedException();
+            _context.Entry(item).Collection( x => x.Parts )
+                    .Query()
+                    .Include(x => x.Parts)
+                    .Load();
+
+                return item;
         }
     }
 }

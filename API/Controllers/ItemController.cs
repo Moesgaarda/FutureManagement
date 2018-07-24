@@ -68,7 +68,7 @@ namespace API.Controllers
                 item.Parts,
                 item.IsArchived
             ); 
-            await _repo.AddItem(item);
+            await _repo.AddItem(itemToCreate);
             return StatusCode(201);
         }
     }
