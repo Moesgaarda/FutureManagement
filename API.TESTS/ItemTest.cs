@@ -180,7 +180,8 @@ namespace API.TESTS
             );
             
             // Act
-            await itemController.AddItem(itemToCreate);
+            var itemDTO = _mapper.Map<ItemForAddDto>(itemToCreate);
+            await itemController.AddItem(itemDTO);
             var item = _dbContext.Items.FirstOrDefault(x => x.Placement == "D4");
 
             // Assert
@@ -203,7 +204,8 @@ namespace API.TESTS
                 );
             
             // Act
-            var status = await controller.AddItem(createdItem);
+            var itemDTO = _mapper.Map<ItemForAddDto>(createdItem);
+            var status = await controller.AddItem(itemDTO);
             // Assert
             StatusCodeResult result = status as StatusCodeResult;
             var test = new StatusCodeResult(201);
