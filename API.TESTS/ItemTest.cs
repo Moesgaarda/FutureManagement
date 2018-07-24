@@ -52,7 +52,7 @@ namespace API.TESTS
             // Arrange
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             // Act
-            IActionResult allActiveItems = await itemController.GetallActiveItems();
+            IActionResult allActiveItems = await itemController.GetActiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
             List<Item> result = intermediate.Value as List<Item>;
             // Assert
@@ -64,7 +64,7 @@ namespace API.TESTS
             // Arrange
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             // Act
-            IActionResult allActiveItems = await itemController.GetAllInactiveItems();
+            IActionResult allActiveItems = await itemController.GetInactiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
             List<Item> result = intermediate.Value as List<Item>;
             // Assert
@@ -76,7 +76,7 @@ namespace API.TESTS
             // Arrange
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             // Act
-            IActionResult allActiveItems = await itemController.GetAllItems();
+            IActionResult allActiveItems = await itemController.GetItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
             List<Item> result = intermediate.Value as List<Item>;
             // Assert

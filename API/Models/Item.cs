@@ -5,7 +5,7 @@ namespace API.Models{
     public class Item{
         public Item(){}
         public Item(int id, string placement, int amount, ItemTemplate template, Order order, User createdBy,
-            ICollection<ItemPropertyDescription> properties, ICollection<Item> parts, bool isActive){
+            ICollection<ItemPropertyDescription> properties, ICollection<Item> parts, ICollection<Item> partOf, bool isActive){
 
             this.Id = id;
             this.Placement = placement;
@@ -15,10 +15,11 @@ namespace API.Models{
             this.CreatedBy = createdBy;
             this.Properties = Properties;
             this.Parts = parts;
+            this.PartOf = partOf;
             this.IsActive = isActive;
         }
         public Item(string placement, int amount, ItemTemplate template, Order order, User createdBy, 
-            ICollection<ItemPropertyDescription> properties, ICollection<Item> parts, bool isActive){
+            ICollection<ItemPropertyDescription> properties, ICollection<Item> parts, ICollection<Item> partOf, bool isActive){
 
             this.Placement = placement;
             this.Amount = amount;
@@ -27,6 +28,7 @@ namespace API.Models{
             this.CreatedBy = createdBy;
             this.Properties = Properties;
             this.Parts = parts;
+            this.PartOf = partOf;
             this.IsActive = isActive;
         }
         

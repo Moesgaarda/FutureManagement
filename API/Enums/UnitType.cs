@@ -4,6 +4,9 @@ namespace API.Enums
     {
         mm,
         cm,
-        m
+        m,
+        stk,
+        paller,
+        par
     }
 }

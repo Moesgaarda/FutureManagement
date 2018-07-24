@@ -14,6 +14,7 @@ namespace API.Dtos
         public Order Order { get; set; }
         public User CreatedBy { get; set; }
         public ICollection<Item> Parts { get; set; }
+        public ICollection<Item> PartOf { get; set; }
 
         public bool IsArchived { get; set; }
     }
