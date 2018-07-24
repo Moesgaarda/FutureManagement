@@ -60,6 +60,7 @@
         </nb-card-body>
       </nb-card>
     </div>
+
   
     <div class="col-lg-6">
   
@@ -68,14 +69,13 @@
         <nb-card-body>
           <div class="row demo-checkboxes-radio">
             <div class="demo-checkboxes col-sm-4">
-              <nb-checkbox>Malingsfarve</nb-checkbox>
-              <nb-checkbox>Behandling</nb-checkbox>
-              <nb-checkbox>Egenskab3</nb-checkbox>
-              <nb-checkbox>Egenskab4</nb-checkbox>
-              <nb-checkbox>Egenskab5</nb-checkbox>
-              <nb-checkbox>Egenskab6</nb-checkbox>
+              <ng-container *ngFor="let prop of properties">
+                <nb-checkbox [value]="true">{{prop.name}}</nb-checkbox>
+              </ng-container>
+        
             </div>
-           </div>
+          </div>
+
            <div class="input-group">
             <input type="text" placeholder="Tilføj ny egenskab" class="form-control" name="propertyContent"/>
             <span class="input-group-append">

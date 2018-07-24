@@ -18,10 +18,14 @@ export class ItemTemplateDetailFormComponent implements OnInit {
   template: ItemTemplate;
   newProperty: ItemProperty;
   unitTypeEnum: string;
+  properties: ItemProperty[];
+  propertiesToCheck: ItemProperty[];
 
 
   constructor(private templateService: ItemTemplateService, private route: ActivatedRoute) {
     this.loadTemplate();
+    this.loadTemplateProperties();
+   // this.propertyCheck();
   }
 
   ngOnInit() {
@@ -32,12 +36,27 @@ export class ItemTemplateDetailFormComponent implements OnInit {
   }
 
   // + caster fra tekst til number
-  loadTemplate() {
-    this.templateService.getItemTemplate(+this.route.snapshot.params['id']).subscribe((template: ItemTemplate) => {
-    this.template = template;
-    this.unitTypeEnum = UnitType[template.unitType];
+  async loadTemplate() {
+    await this.templateService.getItemTemplate(+this.route.snapshot.params['id'])
+    .subscribe((template: ItemTemplate) => {
+      this.template = template;
+      this.unitTypeEnum = UnitType[template.unitType];
     })
   }
+
+   loadTemplateProperties() {
+      this.templateService.getAllTemplateProperties().subscribe(properties => {
+      this.properties = properties;
+    })
+  }
+
+  /*propertyCheck() {
+    for (const temp of this.properties) {
+      if (this.template.templateProperties.includes(temp)) {
+        this.propertiesToCheck.push(temp);
+      }
+    }
+  }*/
 
   async addProperty() {
     await this.templateService.addTemplateProperty(this.newProperty).subscribe(prop => {

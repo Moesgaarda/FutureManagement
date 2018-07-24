@@ -17,18 +17,23 @@ export class ItemTemplateService {
     }
 
     getItemTemplate(id: number): Observable<ItemTemplate> {
-        return this.http.get(this.baseUrl + 'ItemTemplate/ItemTemplate/get/' + id)
+        return this.http.get(this.baseUrl + 'ItemTemplate/get/' + id)
             .map(response => <ItemTemplate>response.json());
     }
 
     addTemplateProperty(property: ItemProperty): Observable<ItemProperty> {
         return this.http.post(this.baseUrl + 'ItemTemplate/addProperty', property)
-        .map(response => <ItemTemplate>response.json());
+        .map(response => <ItemProperty>response.json());
     }
 
     deleteItemTemplate(id) {
         return this.http.post(this.baseUrl + 'ItemTemplate/delete/' + id, {})
         .map(response => {});
+    }
+
+    getAllTemplateProperties(): Observable<ItemProperty[]> {
+        return this.http.get(this.baseUrl + 'ItemTemplate/getPropertyNames')
+            .map(response => <ItemProperty[]>response.json());
     }
 
 
