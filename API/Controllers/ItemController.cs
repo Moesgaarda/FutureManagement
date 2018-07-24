@@ -6,6 +6,7 @@ using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using API.Dtos;
+using API.Dtos.ItemDtos;
 
 namespace API.Controllers
 {
@@ -20,40 +21,96 @@ namespace API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
+
         [HttpGet("getActive")]
-        public async Task<IActionResult> GetallActiveItems(){
-            throw new NotImplementedException();
+        public async Task<IActionResult> GetActiveItems(){
+            var items = await _repo.GetActiveItems();
+            var itemsToReturn = _mapper.Map<List<ItemForGetDto>>(items);
+
+            return Ok(itemsToReturn);
         }
+
         [HttpGet("getArchived")]
-        public async Task<IActionResult> GetAllInactiveItems(){
-            throw new NotImplementedException();
+        public async Task<IActionResult> GetInactiveItems(){
+            var items = await _repo.GetInactiveItems();
+            var itemsToReturn = _mapper.Map<List<ItemForGetDto>>(items);
+
+            return Ok(itemsToReturn);
         }
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAllItems(){
-            throw new NotImplementedException();
+        public async Task<IActionResult> GetItems(){
+            var items = await _repo.GetAllItems();
+            var itemsToReturn = _mapper.Map<List<ItemForGetDto>>(items);
+
+            return Ok(itemsToReturn);
         }
         [HttpGet("get/{id}", Name = "GetItem")]
         public async Task<IActionResult> GetItem(int id){
-            throw new NotImplementedException();
+            Item item = await _repo.GetItem(id);
+            ItemForGetDto itemToReturn = _mapper.Map<ItemForGetDto>(item);
+
+            return Ok(itemToReturn);
         }
         [HttpPost("edit")]
         public async Task<IActionResult> EditItem(Item item){
-            throw new NotImplementedException();
-            // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 200
+            if(item.Id == 0){
+                ModelState.AddModelError("Item Error","Item id can not be 0.");
+            }
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            bool result = await _repo.EditItem(item);
+
+            return result ? StatusCode(200) : StatusCode(400);
         }
+
          [HttpPost("delete/{id}", Name = "DeleteItem")]
-        public async Task<IActionResult> DeleteItem(Item item){
-            throw new NotImplementedException();
+        public async Task<IActionResult> DeleteItem(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Error","Can not delete item with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            var item = await _repo.GetItem(id);
+
+            bool result = await _repo.DeleteItem(item);
+
+            return StatusCode(200);
         }
         [HttpPost("deactivate/{id}", Name = "DeactivateItem")]
-        public async Task<IActionResult> DeactivateItem(Item item){
-            throw new NotImplementedException();
-            // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 200
+        public async Task<IActionResult> DeactivateItem(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Error","Can not deactivate item with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var template = await _repo.GetItem(id);
+
+            bool result = await _repo.DeactivateItem(template);
+
+            return StatusCode(200);
         }
 
         [HttpPost("activate/{id}", Name = "ActivateItem")]
-        public async Task<IActionResult> ActivateItem(Item item){
-            throw new NotImplementedException();
+        public async Task<IActionResult> ActivateItem(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Error","Can not activate item with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            var template = await _repo.GetItem(id);
+
+            bool result = await _repo.ActivateItem(template);
+
+            return StatusCode(200);
         }
 
         [HttpPost("add", Name = "AddItem")]
@@ -66,6 +123,7 @@ namespace API.Controllers
                 item.CreatedBy,
                 item.Properties,
                 item.Parts,
+                item.PartOf,
                 item.IsArchived
             ); 
             await _repo.AddItem(itemToCreate);

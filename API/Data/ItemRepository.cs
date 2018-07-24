@@ -18,7 +18,7 @@ namespace API.Data
 
         public ItemRepository(DataContext context){
             this._context = context;
-}
+        }
 
         public async Task<bool> ActivateItem(Item item)
         {
@@ -62,17 +62,17 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<List<Item>> GetActiveItems(List<Item> activeItemList)
+        public async Task<List<Item>> GetActiveItems()
         {
             return await _context.Items.Where(x => x.IsActive == true).ToListAsync();
         }
 
-        public async Task<List<Item>> GetInactiveItems(List<Item> archivedItemList)
+        public async Task<List<Item>> GetInactiveItems()
         {
             return await _context.Items.Where(x => x.IsActive == false).ToListAsync();
         }
 
-        public async Task<List<Item>> GetAllItems(List<Item> itemList)
+        public async Task<List<Item>> GetAllItems()
         {
             return await _context.Items.ToListAsync();
         }

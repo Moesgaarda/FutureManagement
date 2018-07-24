@@ -311,6 +311,7 @@ namespace API.TESTS
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
                     new List<Item>(),
+                    new List<Item>(),
                     false
                 ),
                 new Item(
@@ -321,6 +322,7 @@ namespace API.TESTS
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 2)},
                     new List<Item>(),
+                    new List<Item>(),
                     false
                 ),
                 new Item(
@@ -330,6 +332,7 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 2),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
+                    new List<Item>(),
                     new List<Item>(),
                     true
                 )
