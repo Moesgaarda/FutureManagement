@@ -14,8 +14,8 @@ namespace API.Data
         Task<bool> EditItemTemplate(ItemTemplate template);
         Task<bool> DeleteItemTemplate(ItemTemplate template);
         Task<bool> AddPropertyTemplate(ItemPropertyName propertyTemplate);
-        Task<bool> ActivateItemTemplate(int id);
-        Task<bool> DeactivateItemTemplate(int id);
+        Task<bool> ActivateItemTemplate(ItemTemplate template);
+        Task<bool> DeactivateItemTemplate(ItemTemplate template);
         Task<ItemPropertyName> GetPropertyTemplate(int id);
         Task<List<ItemPropertyName>> GetPropertyTemplates();
 

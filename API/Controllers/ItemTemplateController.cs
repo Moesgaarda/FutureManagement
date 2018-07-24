@@ -122,5 +122,38 @@ namespace API.Controllers
 
             return Ok(propertyTemplateToReturn);
         }
+
+        [HttpPost("activate/{id}", Name = "ActivateItemTemplate")]
+        public async Task<IActionResult> ActivateItemTemplate(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Template Error","Can not activate template with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            var template = await _repo.GetItemTemplate(id);
+
+            bool result = await _repo.ActivateItemTemplate(template);
+
+            return StatusCode(200);
+        }
+
+        [HttpPost("deactivate/{id}", Name = "DeactivateItemTemplate")]
+        public async Task<IActionResult> DeactivateItemTemplate(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Template Error","Can not deactivate template with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var template = await _repo.GetItemTemplate(id);
+
+            bool result = await _repo.DeactivateItemTemplate(template);
+
+            return StatusCode(200);
+        }
     }
 }

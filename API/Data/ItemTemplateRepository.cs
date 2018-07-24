@@ -99,17 +99,17 @@ namespace API.Data
             return await _context.ItemPropertyNames.ToListAsync();
         }
 
-        public async Task<bool> ActivateItemTemplate(int id){
-            var TemplateToUpdate = await _context.ItemTemplates.FirstAsync(x => x.Id == id);
-            _context.ItemTemplates.Update(TemplateToUpdate);
+        public async Task<bool> ActivateItemTemplate(ItemTemplate template){
+            template.IsActive = true;
+            _context.ItemTemplates.Update(template);
             var result = await _context.SaveChangesAsync();
 
             return result > 0;
         }
 
-        public async Task<bool> DeactivateItemTemplate(int id){
-            var TemplateToUpdate = await _context.ItemTemplates.FirstAsync(x => x.Id == id);
-            _context.ItemTemplates.Update(TemplateToUpdate);
+        public async Task<bool> DeactivateItemTemplate(ItemTemplate template){
+            template.IsActive = false;
+            _context.ItemTemplates.Update(template);
             var result = await _context.SaveChangesAsync();
 
             return result > 0;
