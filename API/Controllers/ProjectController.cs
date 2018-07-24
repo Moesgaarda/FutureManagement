@@ -16,16 +16,16 @@ namespace API.Controllers
         public ProjectController(DataContext context){
             this._context = context;
         }
-        public async Task<Project> GetProject(int projectId){
+        public Task<Project> GetProject(int projectId){
             throw new NotImplementedException();
         }
-        public async Task<bool> CreateProject(){
+        public Task<bool> CreateProject(){
             throw new NotImplementedException();
         }
-        public async Task<List<Project>> GetAllProjects(){
+        public Task<List<Project>> GetAllProjects(){
             throw new NotImplementedException();
         }
-        public async Task<bool> EditProject(int projectId){
+        public Task<bool> EditProject(int projectId){
             throw new NotImplementedException(); //TODO Unit testing
         }
     }

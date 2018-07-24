@@ -17,23 +17,23 @@ namespace API.Controllers{
             _context = context;
         }
 
-        public async Task<List<Customer>> GetAllCustomers(){
+        public Task<List<Customer>> GetAllCustomers(){
             throw new NotImplementedException();
         }
 
-        public async Task<bool> AddNewCustomer(Customer customer){
+        public Task<bool> AddNewCustomer(Customer customer){
             throw new NotImplementedException();
         }
 
-        public async Task<Customer> GetCustomer(int userId){
+        public Task<Customer> GetCustomer(int userId){
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteCustomer(int userId){
+        public Task<bool> DeleteCustomer(int userId){
             throw new NotImplementedException();
         }
 
-        public async Task<bool> EditCustomer(Customer customer){
+        public Task<bool> EditCustomer(Customer customer){
             throw new NotImplementedException();
         }
     }

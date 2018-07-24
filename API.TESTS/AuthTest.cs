@@ -82,7 +82,7 @@ namespace API.TESTS
             Assert.False(userExists);
         }
 
-        public async void PasswordHashTest(){
+        public void PasswordHashTest(){
             var repo = new AuthRepository(_dbContext);
 
             String password = "somepassword";

@@ -116,7 +116,7 @@ namespace API.TESTS
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
-            await itemController.DeactivateItem(item);
+            await itemController.DeactivateItem(item.Id);
             Item editedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             //Assert
             Assert.True(editedItem.IsActive == true);
@@ -124,12 +124,12 @@ namespace API.TESTS
         }
 
         [Fact]
-        public async void ArchiveItemReturnTest(){
+        public async void DeactivateItemReturnTest(){
             // Arrange
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
-            var status = await itemController.DeactivateItem(item);
+            var status = await itemController.DeactivateItem(item.Id);
             // Assert
             StatusCodeResult result = status as StatusCodeResult;
             var test = new StatusCodeResult(200);
@@ -143,7 +143,7 @@ namespace API.TESTS
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1); 
 
             // Act
-            await itemController.DeleteItem(item);
+            await itemController.DeleteItem(item.Id);
 
             // Assert
             var result = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
@@ -156,7 +156,7 @@ namespace API.TESTS
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
-            var status = await itemController.DeleteItem(item);
+            var status = await itemController.DeleteItem(item.Id);
             // Assert
             StatusCodeResult result = status as StatusCodeResult;
             var test = new StatusCodeResult(200);
@@ -176,6 +176,7 @@ namespace API.TESTS
                 _dbContext.Users.FirstOrDefault(x => x.Id == 1),
                 new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x => x.Id == 1)},
                 new List<Item> {_dbContext.Items.FirstOrDefault(x => x.Id == 1)},
+                new List<Item>(),
                 true
             );
             
@@ -200,6 +201,7 @@ namespace API.TESTS
                 _dbContext.Users.FirstOrDefault(x => x.Id == 1),
                 new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x=> x.Id == 1)},
                 new List<Item> {_dbContext.Items.FirstOrDefault(x => x.Id == 1)},
+                new List<Item>(),
                 false
                 );
             
@@ -302,6 +304,7 @@ namespace API.TESTS
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
                     new List<Item>(),
+                    new List<Item>(),
                     false
                 ),
                 new Item(
@@ -312,6 +315,7 @@ namespace API.TESTS
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 2)},
                     new List<Item>(),
+                    new List<Item>(),
                     false
                 ),
                 new Item(
@@ -321,6 +325,7 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 2),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
+                    new List<Item>(),
                     new List<Item>(),
                     true
                 )
