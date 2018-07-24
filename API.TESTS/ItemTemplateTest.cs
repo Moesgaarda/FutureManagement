@@ -45,6 +45,32 @@ namespace API.TESTS
             
             _mapper =  config.CreateMapper();
         }
+        [Fact]
+        public async void GetAllTemplatesTest(){
+            //Arrange
+            var con = new ItemTemplateController(_repo,_dbContext,_mapper);
+            
+            //Act
+            IActionResult allItems = await con.GetItemTemplates();
+            OkObjectResult intermediate = allItems as OkObjectResult;
+            List<ItemTemplateForTableDto> result = intermediate.Value as List<ItemTemplateForTableDto>;            
+            
+            //Asserty
+            Assert.True(result.Count == 3);
+        }
+                [Fact]
+        public async void GetAllTemplatesFalseTest(){
+            //Arrange
+            var con = new ItemTemplateController(_repo,_dbContext,_mapper);
+            
+            //Act
+            IActionResult allItems = await con.GetItemTemplates();
+            OkObjectResult intermediate = allItems as OkObjectResult;
+            List<ItemTemplateForTableDto> result = intermediate.Value as List<ItemTemplateForTableDto>;            
+            
+            //Asserty
+            Assert.False(result.Count != 3);
+        }
 
         [Fact]
         public async void ShowDetailsTemplateTest()
