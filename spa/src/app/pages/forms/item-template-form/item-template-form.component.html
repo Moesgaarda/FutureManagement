@@ -29,13 +29,13 @@
             <label for="templateList">Skabelonliste</label>
             <div class="form-group">
               <ng-select
-                [items]="templates.slice(0,5)"
+                [items]="templates | async"
                 [multiple]="true"
                 [closeOnSelect]="false"
                 [hideSelected]="true"
                 bindLabel="name"
                 placeholder="Vælg skabeloner"
-                [(ngModel)]="selectedTemplates">
+                [(ngModel)]="selectedTemplates">               
               </ng-select>
               <small class="form-text">En liste af skabeloner hvor denne skabelon anvendes.
               </small>
