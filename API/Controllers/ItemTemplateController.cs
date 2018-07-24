@@ -22,7 +22,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        [HttpGet("getAll", Name = "GetAllitemTemplates")]
+        [HttpGet("getAll", Name = "GetItemTemplates")]
         public async Task<IActionResult> GetItemTemplates(){
             var itemTemplates = await _repo.GetItemTemplates();
 
@@ -107,18 +107,18 @@ namespace API.Controllers
             return StatusCode(201);
         }
 
-        [HttpGet("getPropertyNames", Name = "GetAllPropertyNames")]
+        [HttpGet("getPropertyNames", Name = "GetPropertyNames")]
         public async Task<IActionResult> GetPropertyNames(){
             var propertyNames = await _repo.GetPropertyNames();
-            var PropertyNamesToReturn = _mapper.Map<List<TemplatePropertyForGetDto>>(propertyNames);
+            var PropertyNamesToReturn = _mapper.Map<List<ItemPropertyNameForGetDto>>(propertyNames);
 
             return Ok(PropertyNamesToReturn);
         }
 
         [HttpGet("getPropertyName/{id}", Name = "GetPropertyName")]
         public async Task<IActionResult> GetPropertyName(int id){
-            var propertyName = await _repo.GetPropertyName(id);
-            var propertyNameToReturn = _mapper.Map<ItemPropertyNameForGetDto>(propertyName);
+            ItemPropertyName propertyName = await _repo.GetPropertyName(id);
+            ItemPropertyNameForGetDto propertyNameToReturn = _mapper.Map<ItemPropertyNameForGetDto>(propertyName);
 
             return Ok(propertyNameToReturn);
         }
