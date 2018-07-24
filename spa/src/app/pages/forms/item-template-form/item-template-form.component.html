@@ -28,8 +28,15 @@
           <div class="form-group">
             <label for="templateList">Skabelonliste</label>
             <div class="form-group">
-                <ngx-select-dropdown [config]="config" [options]="templates" (change)="changeValue($event)"
-                [(value)]="multiSelect" [multiple]="true"></ngx-select-dropdown>
+              <ng-select
+                [items]="templates.slice(0,5)"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [hideSelected]="true"
+                bindLabel="name"
+                placeholder="Vælg skabeloner"
+                [(ngModel)]="selectedTemplates">
+              </ng-select>
               <small class="form-text">En liste af skabeloner hvor denne skabelon anvendes.
               </small>
             </div>

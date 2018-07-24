@@ -10,22 +10,15 @@ import { FormControl } from '../../../../../node_modules/@angular/forms';
 })
 export class ItemTemplateFormComponent {
   templates: ItemTemplate[];
-  typeahead: FormControl = new FormControl();
-  suggestions: ItemTemplate[] = [];
-  multiSelect: any = [];
-
-  config = {
-    displayKey: 'name',
-    search: true,
-  };
+  selectedTemplates: ItemTemplate[];
 
   constructor(private templateService: ItemTemplateService) {
-    this.templateService.getItemTemplates().subscribe(templates => {
-      this.templates = templates;
-    })
+    this.getTemplates();
   }
 
-  changeValue($event: any) {
-    console.log($event);
+  async getTemplates() {
+    await this.templateService.getItemTemplates().subscribe(templates => {
+      this.templates = templates;
+    })
   }
 }
