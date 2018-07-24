@@ -6,6 +6,10 @@ namespace API.Data
 {
     public class ItemRepository : IItemRepository
     {
+        private readonly DataContext _context;
+        public ItemRepository(DataContext context){
+            this._context = context;
+        }
         public Task<bool> ArchiveItem(Item item)
         {
             throw new System.NotImplementedException();

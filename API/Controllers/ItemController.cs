@@ -38,10 +38,12 @@ namespace API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateItem(Item item){
             throw new NotImplementedException();
+            // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 201
         }
         [HttpPost("edit")]
         public async Task<IActionResult> EditItem(Item item){
             throw new NotImplementedException();
+            // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 200
         }
          [HttpPost("delete/{id}", Name = "DeleteItem")]
         public async Task<IActionResult> DeleteItem(Item item){
@@ -50,6 +52,7 @@ namespace API.Controllers
         [HttpPost("Archive/{id}", Name = "ArchieveItem")]
         public async Task<IActionResult> ArchiveItem(Item item){
             throw new NotImplementedException();
+            // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 200
         }
         [HttpPost("add", Name = "AddItem")]
         public async Task<IActionResult> AddItem([FromBody]Item item){

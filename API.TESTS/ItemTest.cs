@@ -9,16 +9,21 @@ using Microsoft.Extensions.DependencyInjection;
 using API.Enums;
 using API.Data;
 using System.Collections.Generic;
+using AutoMapper;
+using API.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.TESTS
 {
     
-    public class InventoryManagementTest : IDisposable
+    public class ItemTest : IDisposable
     {
         private readonly DataContext _dbContext;
+        private readonly IMapper _mapper; 
+        private readonly IItemRepository _repo;
 
-        public InventoryManagementTest(){
-            var serviceProvider = new ServiceCollection()
+        public ItemTest(){
+             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
 
@@ -30,62 +35,180 @@ namespace API.TESTS
             _dbContext = new DataContext(options);
             _dbContext.Database.EnsureCreated();
             Seed(_dbContext);
+
+            _repo = new ItemRepository(_dbContext);
+            MapperConfiguration config = new MapperConfiguration( cfg => {
+                cfg.CreateMap<ItemTemplate, ItemTemplateForGetDto>();
+                cfg.CreateMap<ItemTemplate, ItemTemplateForAddDto>();
+                cfg.CreateMap<ItemTemplate, ItemTemplateForTableDto>();
+
+            });
+            
+            _mapper =  config.CreateMapper();
         }
 
         [Fact]
         public async void GetAllActiveItemsTest(){
-
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            // Act
+            IActionResult allActiveItems = await itemController.GetallActiveItems();
+            OkObjectResult intermediate = allActiveItems as OkObjectResult;
+            List<Item> result = intermediate.Value as List<Item>;
+            // Assert
+            Assert.True(result.Count == 2);
         }
 
         [Fact]
         public async void GetAllArchivedItemsTest(){
-
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            // Act
+            IActionResult allActiveItems = await itemController.GetAllArchivedItems();
+            OkObjectResult intermediate = allActiveItems as OkObjectResult;
+            List<Item> result = intermediate.Value as List<Item>;
+            // Assert
+            Assert.True(result.Count == 1);
         }
 
         [Fact]
         public async void GetAllItemsTest(){
-
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            // Act
+            IActionResult allActiveItems = await itemController.GetAllItems();
+            OkObjectResult intermediate = allActiveItems as OkObjectResult;
+            List<Item> result = intermediate.Value as List<Item>;
+            // Assert
+            Assert.True(result.Count == 3);
         }
 
         [Fact]
         public async void EditItemTest(){
-
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
+            // Act
+            item.Placement = "Denne placering er ændret";
+            await itemController.EditItem(item);
+            var editedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
+            // Assert
+            Assert.True(editedItem.Placement == item.Placement);
         }
 
         [Fact]
         public async void EditItemReturnTest(){
-
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
+            // Act
+            item.Placement = "En ny placering";
+            var status = await itemController.EditItem(item);
+            //Assert
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(200);
+            Assert.True(result.StatusCode == test.StatusCode);
         }
 
         [Fact]
         public async void ArchiveItemTest(){
-
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
+            // Act
+            await itemController.ArchiveItem(item);
+            Item editedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
+            //Assert
+            Assert.True(editedItem.IsArchived == true);
+            
         }
 
         [Fact]
         public async void ArchiveItemReturnTest(){
-
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
+            // Act
+            var status = await itemController.ArchiveItem(item);
+            // Assert
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(200);
+            Assert.True(result.StatusCode == test.StatusCode);
         }
 
         [Fact]
-        public async void DeletItemTest(){
+        public async void DeleteItemTest(){
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper); 
+            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1); 
 
+            // Act
+            await itemController.DeleteItem(item);
+
+            // Assert
+            var result = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
+            Assert.Null(result);
         }
 
         [Fact]
-        public async void DeletItemReturnTest(){
-
+        public async void DeleteItemReturnTest(){
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
+            // Act
+            var status = await itemController.DeleteItem(item);
+            // Assert
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(200);
+            Assert.True(result.StatusCode == test.StatusCode);
         }
         
         [Fact]
         public async void CreateItemTest()
         {
+            // Arrange
+            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            Item itemToCreate = new Item(
+                "D4",
+                23,
+                _dbContext.ItemTemplates.FirstOrDefault(x => x.Id==1),
+                _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
+                _dbContext.Users.FirstOrDefault(x => x.Id == 1),
+                new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x => x.Id == 1)},
+                new List<Item> {_dbContext.Items.FirstOrDefault(x => x.Id == 1)},
+                true
+            );
+            
+            // Act
+            await itemController.CreateItem(itemToCreate);
+            var item = _dbContext.Items.FirstOrDefault(x => x.Placement == "D4");
 
+            // Assert
+            Assert.True(item.Amount == 23);
         }
 
         [Fact]
-        public async void CreatItemReturnTest()
-        {
+        public async void CreateItemReturnTest(){
+            // Arrange
+            var controller = new ItemController(_repo, _dbContext, _mapper);
+            Item createdItem = new Item(
+                "D4",
+                10,
+                _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1),
+                _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
+                _dbContext.Users.FirstOrDefault(x => x.Id == 1),
+                new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x=> x.Id == 1)},
+                new List<Item> {_dbContext.Items.FirstOrDefault(x => x.Id == 1)},
+                false
+                );
+            
+            // Act
+            var status = await controller.CreateItem(createdItem);
+            // Assert
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(201);
+            Assert.True(result.StatusCode == test.StatusCode);
+
 
         }
         
@@ -97,13 +220,6 @@ namespace API.TESTS
                 new ItemPropertyDescription(3, "slebet")
             };
             context.ItemPropertyDescriptions.AddRange(itemProperties);
-            context.SaveChanges();
-            var itemPropertyCategories = new[]{
-                new ItemPropertyName("Farve"),
-                new ItemPropertyName("Behandling"),
-                new ItemPropertyName("skæring")
-            };
-            context.ItemPropertyNames.AddRange(itemPropertyCategories);
             context.SaveChanges();
 
             var itemTemplates = new[]{
