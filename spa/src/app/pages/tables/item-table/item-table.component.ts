@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-
-
+import { environment } from '../../../../environments/environment';
 import { ItemTableService } from '../../../@core/data/item-table.service';
-
 
 @Component({
   selector: 'ngx-item-table',
@@ -15,8 +13,13 @@ import { ItemTableService } from '../../../@core/data/item-table.service';
   `],
 })
 export class ItemTableComponent {
+  baseUrl = environment.spaUrl;
+  source: LocalDataSource = new LocalDataSource();
 
   settings = {
+    pager: {
+      perPage: 10,
+    },
     mode: 'external',
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -54,8 +57,6 @@ export class ItemTableComponent {
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
-
   constructor(private service: ItemTableService) {
     const data = this.service.getData();
     this.source.load(data);
@@ -70,7 +71,7 @@ export class ItemTableComponent {
   }
 
   editItem(event): void {
-    location.href = 'http://localhost:4200/#/pages/forms/item-detail';
+    location.href = this.baseUrl + '/pages/forms/item-detail';
   }
 
   deleteItem(event): void {
@@ -82,6 +83,6 @@ export class ItemTableComponent {
   }
 
   addNewItem() {
-    location.href = 'http://localhost:4200/#/pages/forms/item';
+    location.href = this.baseUrl + '/pages/forms/item';
   }
 }
