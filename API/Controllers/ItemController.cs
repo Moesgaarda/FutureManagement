@@ -5,6 +5,7 @@ using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using API.Dtos;
 
 namespace API.Controllers
 {
@@ -55,7 +56,12 @@ namespace API.Controllers
             // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 200
         }
         [HttpPost("add", Name = "AddItem")]
-        public async Task<IActionResult> AddItem([FromBody]Item item){
+        public async Task<IActionResult> AddItem([FromBody]ItemForAddDto item){
+         /*   var itemToCreate = new Item(
+                item.Placement,
+                item.Amount,
+
+            ) */
             throw new NotImplementedException();
         }
     }

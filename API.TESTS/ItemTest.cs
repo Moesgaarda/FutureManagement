@@ -119,7 +119,7 @@ namespace API.TESTS
             await itemController.ArchiveItem(item);
             Item editedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             //Assert
-            Assert.True(editedItem.IsArchived == true);
+            Assert.True(editedItem.IsActive == true);
             
         }
 
