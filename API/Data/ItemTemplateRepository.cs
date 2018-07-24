@@ -53,7 +53,8 @@ namespace API.Data
             //_context.ItemTemplates.Attach(template); 
                                                     //TODO reason to use attach over update https://stackoverflow.com/questions/41025338/why-use-attach-for-update-entity-framework-6 
                                                     // https://stackoverflow.com/questions/30987806/dbset-attachentity-vs-dbcontext-entryentity-state-entitystate-modified
-            _context.ItemTemplates.Update(template);
+            var templateToChange = _context.ItemTemplates.First(x => x.Id == template.Id);
+            _context.Entry(templateToChange).CurrentValues.SetValues(template);
             var result = await _context.SaveChangesAsync();
 
             return result > 0;  // The task result contains the number of objects written to the underlying database.

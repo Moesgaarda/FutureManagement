@@ -63,7 +63,7 @@ namespace API.Controllers
             return StatusCode(201);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditItemTemplate([FromBody]ItemTemplate template){
             if(template.Id == 0){
                 ModelState.AddModelError("Item Template Error","Template id can not be 0.");

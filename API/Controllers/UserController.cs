@@ -24,7 +24,7 @@ namespace API.Controllers
             throw new NotImplementedException();
             
         }
-        [HttpGet(("get/{id}", Name = "GetUser"))]
+        [HttpGet("get/{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id){
             throw new NotImplementedException();
         }   
