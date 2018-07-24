@@ -14,52 +14,65 @@ namespace API.Data
             this._context = context;
 }
 
-        public Task<bool> ActivateItem(Item item)
+        public async Task<bool> ActivateItem(Item item)
+        {
+            item.IsActive = true;
+            _context.Items.Update(item);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> AddItem(ItemForAddDto item)
+        {
+            // await _context.Items.AddAsync(item);
+            int result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeactivateItem(Item item)
+        {
+            item.IsActive = false;
+            _context.Items.Update(item);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeleteItem(Item item)
+        {
+            _context.Items.Remove(item);
+            int result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
+
+        public async Task<bool> EditItem(Item item)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> AddItem(ItemForAddDto item)
+        public async Task<List<Item>> GetActiveItems(List<Item> activeItemList)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> DeactivateItem(Item item)
+        public async Task<List<Item>> GetInactiveItems(List<Item> archivedItemList)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> DeleteItem(Item item)
+        public async Task<List<Item>> GetAllItems(List<Item> itemList)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> EditItem(Item item)
+        public async Task<Item> GetItem(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Item>> GetallActiveItems(List<Item> activeItemList)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<List<Item>> GetAllInactiveItems(List<Item> archivedItemList)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<List<Item>> GetAllItems(List<Item> itemList)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Item> GetItem(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Item> ShowDetails(Item item)
+        public async Task<Item> ShowDetails(Item item)
         {
             throw new System.NotImplementedException();
         }

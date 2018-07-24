@@ -4,7 +4,7 @@ namespace API.Dtos
 {
     public class TemplatePropertyForGetDto
     {
-        public int PropertyId { get; set; }
-        public string PropertyName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace API.Data
 {
     public interface IItemRepository
     {
-        Task<List<Item>> GetallActiveItems(List<Item> activeItemList);  
-        Task<List<Item>> GetAllInactiveItems(List<Item> archivedItemList);
+        Task<List<Item>> GetActiveItems(List<Item> activeItemList);  
+        Task<List<Item>> GetInactiveItems(List<Item> archivedItemList);
         Task<List<Item>> GetAllItems(List<Item> itemList);
         Task<Item> GetItem(int id);
         Task<Item> ShowDetails(Item item);
