@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Dtos;
 using API.Models;
 
 namespace API.Data
@@ -18,7 +19,7 @@ namespace API.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> CreateItem(Item item)
+        public Task<bool> AddItem(ItemForAddDto item)
         {
             throw new System.NotImplementedException();
         }

@@ -95,7 +95,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        public async void CreateTemplateTest()
+        public async void AddTemplateTest()
         {
             //Given
             var listTP = new List<TemplateProperty>();
@@ -120,7 +120,7 @@ namespace API.TESTS
         }
 
         [Fact]
-        public async void CreateTemplateReturnTest()
+        public async void AddTemplateReturnTest()
         {
             //Given
             var controller = new ItemTemplateController(_repo, _dbContext, _mapper);

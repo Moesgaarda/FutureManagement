@@ -180,7 +180,7 @@ namespace API.TESTS
             );
             
             // Act
-            await itemController.CreateItem(itemToCreate);
+            await itemController.AddItem(itemToCreate);
             var item = _dbContext.Items.FirstOrDefault(x => x.Placement == "D4");
 
             // Assert
@@ -203,7 +203,7 @@ namespace API.TESTS
                 );
             
             // Act
-            var status = await controller.CreateItem(createdItem);
+            var status = await controller.AddItem(createdItem);
             // Assert
             StatusCodeResult result = status as StatusCodeResult;
             var test = new StatusCodeResult(201);

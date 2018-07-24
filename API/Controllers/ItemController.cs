@@ -36,11 +36,6 @@ namespace API.Controllers
         public async Task<IActionResult> GetItem(int id){
             throw new NotImplementedException();
         }
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateItem(Item item){
-            throw new NotImplementedException();
-            // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 201
-        }
         [HttpPost("edit")]
         public async Task<IActionResult> EditItem(Item item){
             throw new NotImplementedException();
@@ -73,9 +68,8 @@ namespace API.Controllers
                 item.Parts,
                 item.IsArchived
             ); 
-
-        throw new NotImplementedException();
-
+            await _repo.AddItem(item);
+            return StatusCode(201);
         }
     }
 }
