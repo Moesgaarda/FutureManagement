@@ -107,7 +107,7 @@ namespace API.Controllers
             return StatusCode(201);
         }
 
-        [HttpGet("getPropertyName")]
+        [HttpGet("getPropertyNames", Name = "GetAllPropertyNames")]
         public async Task<IActionResult> GetPropertyNames(){
             var propertyNames = await _repo.GetPropertyNames();
             var PropertyNamesToReturn = _mapper.Map<List<TemplatePropertyForGetDto>>(propertyNames);
