@@ -60,11 +60,11 @@ namespace API.TESTS
         }
 
         [Fact]
-        public async void GetAllArchivedItemsTest(){
+        public async void GetAllInactiveItemsTest(){
             // Arrange
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             // Act
-            IActionResult allActiveItems = await itemController.GetAllArchivedItems();
+            IActionResult allActiveItems = await itemController.GetAllInactiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
             List<Item> result = intermediate.Value as List<Item>;
             // Assert
@@ -111,12 +111,12 @@ namespace API.TESTS
         }
 
         [Fact]
-        public async void ArchiveItemTest(){
+        public async void DeactivateItemTest(){
             // Arrange
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
-            await itemController.ArchiveItem(item);
+            await itemController.DeactivateItem(item);
             Item editedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             //Assert
             Assert.True(editedItem.IsActive == true);
@@ -129,7 +129,7 @@ namespace API.TESTS
             var itemController = new ItemController(_repo, _dbContext, _mapper);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
-            var status = await itemController.ArchiveItem(item);
+            var status = await itemController.DeactivateItem(item);
             // Assert
             StatusCodeResult result = status as StatusCodeResult;
             var test = new StatusCodeResult(200);

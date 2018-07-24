@@ -92,35 +92,35 @@ namespace API.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost("addProperty", Name = "AddPropertyTemplate")]
-        public async Task<IActionResult> AddPropertyTemplate([FromBody]ItemPropertyNameForAddDto propertyDto){
+        [HttpPost("addProperty", Name = "AddPropertyName")]
+        public async Task<IActionResult> AddPropertyName([FromBody]ItemPropertyNameForAddDto propertyDto){
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
 
-            var itemTemplateProperty = new ItemPropertyName(
+            var itemPropertyName = new ItemPropertyName(
                 propertyDto.Name
             );
 
-            await _repo.AddPropertyTemplate(itemTemplateProperty);
+            await _repo.AddPropertyName(itemPropertyName);
 
             return StatusCode(201);
         }
 
-        [HttpGet("getPropertyTemplates")]
-        public async Task<IActionResult> GetPropertyTemplates(){
-            var propertyTemplates = await _repo.GetPropertyTemplates();
-            var itemPropertyToReturn = _mapper.Map<List<ItemPropertyNameForGetDto>>(propertyTemplates);
+        [HttpGet("getPropertyName")]
+        public async Task<IActionResult> GetPropertyNames(){
+            var propertyNames = await _repo.GetPropertyNames();
+            var PropertyNamesToReturn = _mapper.Map<List<TemplatePropertyForGetDto>>(propertyNames);
 
-            return Ok(itemPropertyToReturn);
+            return Ok(PropertyNamesToReturn);
         }
 
-        [HttpGet("getPropertyTemplate/{id}", Name = "GetPropertyTemplate")]
-        public async Task<IActionResult> GetPropertyTemplate(int id){
-            var propertyTemplate = await _repo.GetPropertyTemplate(id);
-            var propertyTemplateToReturn = _mapper.Map<ItemPropertyNameForGetDto>(propertyTemplate);
+        [HttpGet("getPropertyName/{id}", Name = "GetPropertyName")]
+        public async Task<IActionResult> GetPropertyName(int id){
+            var propertyName = await _repo.GetPropertyName(id);
+            var propertyNameToReturn = _mapper.Map<ItemPropertyNameForGetDto>(propertyName);
 
-            return Ok(propertyTemplateToReturn);
+            return Ok(propertyNameToReturn);
         }
 
         [HttpPost("activate/{id}", Name = "ActivateItemTemplate")]

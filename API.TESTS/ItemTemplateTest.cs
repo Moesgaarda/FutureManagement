@@ -18,7 +18,7 @@ namespace API.TESTS
     public class ItemTemplateTest : IDisposable
     {
         private readonly DataContext _dbContext;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
         private readonly IItemTemplateRepository _repo;
         public ItemTemplateTest()
         {
@@ -36,38 +36,43 @@ namespace API.TESTS
             Seed(_dbContext);
 
             _repo = new ItemTemplateRepository(_dbContext);
-            MapperConfiguration config = new MapperConfiguration( cfg => {
+            MapperConfiguration config = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<ItemTemplate, ItemTemplateForGetDto>();
                 cfg.CreateMap<ItemTemplate, ItemTemplateForAddDto>();
                 cfg.CreateMap<ItemTemplate, ItemTemplateForTableDto>();
 
             });
-            
-            _mapper =  config.CreateMapper();
+
+            _mapper = config.CreateMapper();
         }
+
         [Fact]
-        public async void GetAllTemplatesTest(){
+        public async void GetAllTemplatesTest()
+        {
             //Arrange
-            var con = new ItemTemplateController(_repo,_dbContext,_mapper);
-            
+            var con = new ItemTemplateController(_repo, _dbContext, _mapper);
+
             //Act
             IActionResult allItems = await con.GetItemTemplates();
             OkObjectResult intermediate = allItems as OkObjectResult;
-            List<ItemTemplateForTableDto> result = intermediate.Value as List<ItemTemplateForTableDto>;            
-            
+            List<ItemTemplateForTableDto> result = intermediate.Value as List<ItemTemplateForTableDto>;
+
             //Asserty
             Assert.True(result.Count == 3);
         }
-                [Fact]
-        public async void GetAllTemplatesFalseTest(){
+
+        [Fact]
+        public async void GetAllTemplatesFalseTest()
+        {
             //Arrange
-            var con = new ItemTemplateController(_repo,_dbContext,_mapper);
-            
+            var con = new ItemTemplateController(_repo, _dbContext, _mapper);
+
             //Act
             IActionResult allItems = await con.GetItemTemplates();
             OkObjectResult intermediate = allItems as OkObjectResult;
-            List<ItemTemplateForTableDto> result = intermediate.Value as List<ItemTemplateForTableDto>;            
-            
+            List<ItemTemplateForTableDto> result = intermediate.Value as List<ItemTemplateForTableDto>;
+
             //Asserty
             Assert.False(result.Count != 3);
         }
@@ -76,29 +81,29 @@ namespace API.TESTS
         public async void ShowDetailsTemplateTest()
         {
             //Given
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             //When
-            
+
             IActionResult templateResult = await controller.GetItemTemplate(1);
             //Then
-            
+
             OkObjectResult template = templateResult as OkObjectResult;
             ItemTemplateForGetDto temp = template.Value as ItemTemplateForGetDto;
 
 
-            Assert.Equal(temp.Id , 1);
+            Assert.Equal(temp.Id, 1);
         }
-         
+
         [Fact]
         public async void CreateTemplateTest()
         {
             //Given
             var listTP = new List<TemplateProperty>();
-            listTP.AddRange( _dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
+            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
             listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
-            
 
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             var template = new ItemTemplate(
                 "Dør",
                 UnitType.m,
@@ -113,12 +118,12 @@ namespace API.TESTS
             //Then
             Assert.True(dbTemplate.Name == template.Name);
         }
-        
+
         [Fact]
         public async void CreateTemplateReturnTest()
         {
             //Given
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             var template = new ItemTemplate(
                 "Dør",
                 UnitType.m,
@@ -133,12 +138,12 @@ namespace API.TESTS
             var test = new StatusCodeResult(201);
             Assert.True(result.StatusCode == test.StatusCode);
         }
-        
+
         [Fact]
         public async void EditTemplateTest()
         {
             //Arrange
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
@@ -146,16 +151,16 @@ namespace API.TESTS
             var editedTemplate = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Assert
             Assert.True(
-                editedTemplate.Description == template.Description 
+                editedTemplate.Description == template.Description
                 );
         }
-        
-        
+
+
         [Fact]
         public async void EditTemplateReturnTest()
         {
             //Arrange
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
@@ -166,12 +171,13 @@ namespace API.TESTS
             var test = new StatusCodeResult(200);
             Assert.True(result.StatusCode == test.StatusCode);
         }
+
         /*    kom her til med at fixe, alt over er fint*/
         [Fact]
         public async void DeleteTemplateTest()
         {
             //Arrange
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             await controller.DeleteItemTemplate(template.Id);
@@ -179,12 +185,12 @@ namespace API.TESTS
             var test = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             Assert.Null(test);
         }
-        
+
         [Fact]
         public async void DeleteTemplateReturnTrueTest()
         {
             //Arrange
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             var status = await controller.DeleteItemTemplate(template.Id);
@@ -197,7 +203,7 @@ namespace API.TESTS
         public async void DeleteTemplateReturnFalseTest()
         {
             //Arrange
-            var controller = new ItemTemplateController(_repo,_dbContext, _mapper);
+            var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
             //Act
             var status = await controller.DeleteItemTemplate(0);
             BadRequestObjectResult result = status as BadRequestObjectResult;
@@ -205,10 +211,11 @@ namespace API.TESTS
             //Assert
             Assert.False(result.StatusCode == test.StatusCode);
         }
+
         private void Seed(DataContext context)
         {
             var listTP = new List<TemplateProperty>();
-            listTP.AddRange( _dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
+            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
             listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
 
             var itemProperties = new[]{
@@ -339,6 +346,7 @@ namespace API.TESTS
             context.Orders.Update(order);
             context.SaveChanges();
         }
+
         public void Dispose()
         {
             _dbContext.Database.EnsureDeleted();

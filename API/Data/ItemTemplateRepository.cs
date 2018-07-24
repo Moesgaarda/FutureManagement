@@ -27,9 +27,9 @@ namespace API.Data
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
-        public async Task<bool> AddPropertyTemplate(ItemPropertyName propertyTemplate)
+        public async Task<bool> AddPropertyName(ItemPropertyName propertyName)
         {
-            await _context.ItemPropertyNames.AddAsync(propertyTemplate);
+            await _context.ItemPropertyNames.AddAsync(propertyName);
             int result = await _context.SaveChangesAsync();
 
             return result > 0;
@@ -44,7 +44,7 @@ namespace API.Data
         public async Task<bool> DeleteItemTemplate(ItemTemplate template)
         {
             _context.ItemTemplates.Remove(template); 
-            int result = _context.SaveChanges();     
+            int result = await _context.SaveChangesAsync();     
             return result > 0;
         }
 
@@ -89,12 +89,12 @@ namespace API.Data
             return await _context.ItemTemplates.ToListAsync();
         }
 
-        public async Task<ItemPropertyName> GetPropertyTemplate(int id)
+        public async Task<ItemPropertyName> GetPropertyName(int id)
         {
             return await _context.ItemPropertyNames.FirstAsync(x => x.Id == id);
         }
 
-        public async Task<List<ItemPropertyName>> GetPropertyTemplates()
+        public async Task<List<ItemPropertyName>> GetPropertyNames()
         {
             return await _context.ItemPropertyNames.ToListAsync();
         }

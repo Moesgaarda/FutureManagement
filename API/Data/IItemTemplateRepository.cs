@@ -13,11 +13,11 @@ namespace API.Data
         Task<bool> AddItemTemplate(ItemTemplate template);
         Task<bool> EditItemTemplate(ItemTemplate template);
         Task<bool> DeleteItemTemplate(ItemTemplate template);
-        Task<bool> AddPropertyTemplate(ItemPropertyName propertyTemplate);
+        Task<bool> AddPropertyName(ItemPropertyName propertyTemplate);
         Task<bool> ActivateItemTemplate(ItemTemplate template);
         Task<bool> DeactivateItemTemplate(ItemTemplate template);
-        Task<ItemPropertyName> GetPropertyTemplate(int id);
-        Task<List<ItemPropertyName>> GetPropertyTemplates();
+        Task<ItemPropertyName> GetPropertyName(int id);
+        Task<List<ItemPropertyName>> GetPropertyNames();
 
     }
 }

@@ -25,7 +25,7 @@ namespace API.Controllers
             throw new NotImplementedException();
         }
         [HttpGet("getArchived")]
-        public async Task<IActionResult> GetAllArchivedItems(){
+        public async Task<IActionResult> GetAllInactiveItems(){
             throw new NotImplementedException();
         }
         [HttpGet("getAll")]
@@ -50,19 +50,32 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteItem(Item item){
             throw new NotImplementedException();
         }
-        [HttpPost("Archive/{id}", Name = "ArchieveItem")]
-        public async Task<IActionResult> ArchiveItem(Item item){
+        [HttpPost("deactivate/{id}", Name = "DeactivateItem")]
+        public async Task<IActionResult> DeactivateItem(Item item){
             throw new NotImplementedException();
             // TODO ReturnCode in unit test is to 200, plz change it if the return code isn't 200
         }
+
+        [HttpPost("activate/{id}", Name = "ActivateItem")]
+        public async Task<IActionResult> ActivateItem(Item item){
+            throw new NotImplementedException();
+        }
+
         [HttpPost("add", Name = "AddItem")]
         public async Task<IActionResult> AddItem([FromBody]ItemForAddDto item){
-         /*   var itemToCreate = new Item(
+            var itemToCreate = new Item(
                 item.Placement,
                 item.Amount,
+                item.Template,
+                item.Order,
+                item.CreatedBy,
+                item.Properties,
+                item.Parts,
+                item.IsArchived
+            ); 
 
-            ) */
-            throw new NotImplementedException();
+        throw new NotImplementedException();
+
         }
     }
 }

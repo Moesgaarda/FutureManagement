@@ -6,16 +6,24 @@ namespace API.Data
 {
     public class ItemRepository : IItemRepository
     {
+
         private readonly DataContext _context;
+
         public ItemRepository(DataContext context){
             this._context = context;
-        }
-        public Task<bool> ArchiveItem(Item item)
+}
+
+        public Task<bool> ActivateItem(Item item)
         {
             throw new System.NotImplementedException();
         }
 
         public Task<bool> CreateItem(Item item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> DeactivateItem(Item item)
         {
             throw new System.NotImplementedException();
         }
@@ -35,7 +43,7 @@ namespace API.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Item>> GetAllArchivedItems(List<Item> archivedItemList)
+        public Task<List<Item>> GetAllInactiveItems(List<Item> archivedItemList)
         {
             throw new System.NotImplementedException();
         }
