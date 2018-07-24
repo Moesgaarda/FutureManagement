@@ -74,6 +74,7 @@ namespace API.Data
                     .Include(x => x.Property)
                     .Load();
 
+            template.PartOf = _context.ItemTemplateParts.Where(x => x.PartId == template.Id).ToList();
             return template;
         }
 
