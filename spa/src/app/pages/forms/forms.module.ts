@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsRoutingModule, routedComponents } from './forms-routing.module';
-import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
     ThemeModule,
     FormsRoutingModule,
-    SelectDropDownModule,
+    NgSelectModule,
   ],
   declarations: [
     ...routedComponents,

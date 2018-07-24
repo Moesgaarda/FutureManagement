@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemTemplate } from '../../../_models/ItemTemplate';
-import { FormControl } from '../../../../../node_modules/@angular/forms';
+import { Observable } from '../../../../../node_modules/rxjs';
 
 @Component({
   selector: 'ngx-item-template-form',
@@ -9,23 +9,14 @@ import { FormControl } from '../../../../../node_modules/@angular/forms';
   templateUrl: './item-template-form.component.html',
 })
 export class ItemTemplateFormComponent {
-  templates: ItemTemplate[];
-  typeahead: FormControl = new FormControl();
-  suggestions: ItemTemplate[] = [];
-  multiSelect: any = [];
-
-  config = {
-    displayKey: 'name',
-    search: true,
-  };
+  templates: Observable<ItemTemplate[]>;
+  selectedTemplates: ItemTemplate[];
 
   constructor(private templateService: ItemTemplateService) {
-    this.templateService.getItemTemplates().subscribe(templates => {
-      this.templates = templates;
-    })
+    this.getTemplates();
   }
 
-  changeValue($event: any) {
-    console.log($event);
+  async getTemplates() {
+    this.templates = await this.templateService.getItemTemplates();
   }
 }
