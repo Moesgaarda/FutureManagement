@@ -11,7 +11,7 @@ namespace API.Models{
         }
         
         [Key]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         User User;
         DateTime Timestamp;
         String Description;

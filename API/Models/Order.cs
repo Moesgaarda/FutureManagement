@@ -40,7 +40,7 @@ namespace API.Models{
         }
 
         [Key]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string Company { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }

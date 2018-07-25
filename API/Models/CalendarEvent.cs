@@ -32,7 +32,7 @@ namespace API.Models{
         }
 
         [Key]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public CalendarEventType EventType { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

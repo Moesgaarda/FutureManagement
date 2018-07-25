@@ -6,7 +6,6 @@ using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using API.Dtos;
-using API.Dtos.ItemDtos;
 
 namespace API.Controllers
 {

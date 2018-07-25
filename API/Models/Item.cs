@@ -34,7 +34,7 @@ namespace API.Models{
         }
         
         [Key]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public ICollection<ItemPropertyDescription> Properties { get; set; }
         public string Placement { get; set; }
         public int Amount { get; set; }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using API.Models;
 
-namespace API.Dtos.ItemDtos
+namespace API.Dtos
 {
     public class ItemForGetDto
     {
