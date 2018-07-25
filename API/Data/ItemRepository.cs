@@ -31,6 +31,10 @@ namespace API.Data
 
         public async Task<bool> AddItem(Item item)
         {
+            item.Template = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == item.Template.Id);
+            item.Order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == item.Order.Id);
+            item.CreatedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.CreatedBy.Id);
+            
             await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync();
 

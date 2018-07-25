@@ -39,8 +39,6 @@ namespace API.Models{
         [Phone]
         public string SecondaryPhoneNumber { get; set; }
         public string Company { get; set; }
-
-        [Required]
         public CustomerType CustomerType { get; set; }
     }
 }

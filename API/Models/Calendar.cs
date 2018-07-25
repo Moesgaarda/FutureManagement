@@ -21,7 +21,6 @@ namespace API.Models
         [Key]
         public int Id { get; private set; }
 
-        [Required]
         public string Name { get; set; }
         public ICollection<CalendarEvent> Events { get; set; }
     }

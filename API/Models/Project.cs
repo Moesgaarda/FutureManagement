@@ -100,14 +100,11 @@ namespace API.Models{
         public string DeliveryCountry { get; set; }
         public string Comment { get; set; }
         public int InvoiceNumber { get; set; }
-        [Required]
         public Calculator Calculator { get; set; }
-        [Required]
         public Status Status { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public int Length { get; set; }
-        [Required]
         public UnitType UnitType { get; set; }
         public string Usage { get; set; }
         public int OrderNumber { get; set; }

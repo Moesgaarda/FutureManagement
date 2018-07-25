@@ -91,7 +91,7 @@ namespace API.Data
         {
             return await _context.ItemPropertyNames.FirstAsync(x => x.Id == id);
         }
-
+        
         public async Task<List<ItemPropertyName>> GetPropertyNames()
         {
             return await _context.ItemPropertyNames.ToListAsync();
