@@ -33,6 +33,7 @@ namespace API.Models{
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
         public ICollection<TemplatePropertyRelation> TemplateProperties { get; set; }
+
         public bool IsActive { get; set; }
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }

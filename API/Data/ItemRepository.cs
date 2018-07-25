@@ -35,6 +35,14 @@ namespace API.Data
             item.Order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == item.Order.Id);
             item.CreatedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.CreatedBy.Id);
             
+            await _context.ItemPropertyDescriptions.AddRangeAsync(item.Properties);
+            await _context.SaveChangesAsync();
+
+            _context.Entry(item).Collection( x => x.Properties )
+                    .Query()
+                    .Include(x => x.PropertyName)
+                    .Load();
+
             await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync();
 

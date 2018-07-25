@@ -7,6 +7,11 @@ namespace API.Dtos
 {
     public class ItemTemplateForAddDto
     {
+
+        public ItemTemplateForAddDto(){
+            IsActive = true;
+        }
+
         [Required]
         public string Name { get; set; }
         [Required]
@@ -16,6 +21,6 @@ namespace API.Dtos
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
         public string Files { get; set; }
-
+        public bool IsActive { get; set; }
     }
 }
