@@ -98,7 +98,7 @@ namespace API.TESTS
         public async void AddTemplateTest()
         {
             //Given
-            var listTP = new List<TemplateProperty>();
+            var listTP = new List<TemplatePropertyRelation>();
             listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
             listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
 
@@ -128,7 +128,7 @@ namespace API.TESTS
                 "Dør",
                 UnitType.m,
                 "Dette er en Dør",
-                new List<TemplateProperty>() { },
+                new List<TemplatePropertyRelation>() { },
                 null,
                 "file/string/path"
             );
@@ -214,7 +214,7 @@ namespace API.TESTS
 
         private void Seed(DataContext context)
         {
-            var listTP = new List<TemplateProperty>();
+            var listTP = new List<TemplatePropertyRelation>();
             listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
             listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
 

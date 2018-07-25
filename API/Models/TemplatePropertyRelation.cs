@@ -1,6 +1,6 @@
 namespace API.Models
 {
-    public class TemplateProperty
+    public class TemplatePropertyRelation
     {
         public int TemplateId { get; set; }
         public ItemTemplate Template { get; set; }

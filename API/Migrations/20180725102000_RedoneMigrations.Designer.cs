@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180723112912_AddedAmountToTemplatePart")]
-    partial class AddedAmountToTemplatePart
+    [Migration("20180725102000_RedoneMigrations")]
+    partial class RedoneMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,8 +24,7 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<int>("Number");
 
@@ -39,8 +38,7 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -62,8 +60,7 @@ namespace API.Migrations
 
                     b.Property<int>("EventType");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<int>("RepeatedInterval");
 
@@ -91,7 +88,7 @@ namespace API.Migrations
 
                     b.Property<string>("Country");
 
-                    b.Property<int>("CustomerTypeId");
+                    b.Property<int?>("CustomerTypeId");
 
                     b.Property<string>("Email");
 
@@ -140,9 +137,7 @@ namespace API.Migrations
 
                     b.Property<int?>("CreatedById");
 
-                    b.Property<bool>("IsArchived");
-
-                    b.Property<int?>("ItemId");
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("OrderId");
 
@@ -150,13 +145,11 @@ namespace API.Migrations
 
                     b.Property<int?>("ProjectId");
 
-                    b.Property<int>("TemplateId");
+                    b.Property<int?>("TemplateId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("ItemId");
 
                     b.HasIndex("OrderId");
 
@@ -165,6 +158,19 @@ namespace API.Migrations
                     b.HasIndex("TemplateId");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("API.Models.ItemItemRelation", b =>
+                {
+                    b.Property<int>("ItemId");
+
+                    b.Property<int>("PartId");
+
+                    b.HasKey("ItemId", "PartId");
+
+                    b.HasIndex("PartId");
+
+                    b.ToTable("ItemItemRelations");
                 });
 
             modelBuilder.Entity("API.Models.ItemPropertyDescription", b =>
@@ -176,9 +182,13 @@ namespace API.Migrations
 
                     b.Property<int?>("ItemId");
 
+                    b.Property<int?>("PropertyNameId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ItemId");
+
+                    b.HasIndex("PropertyNameId");
 
                     b.ToTable("ItemPropertyDescriptions");
                 });
@@ -203,6 +213,8 @@ namespace API.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("Files");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("Name");
 
@@ -233,8 +245,7 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Company")
-                        .IsRequired();
+                    b.Property<string>("Company");
 
                     b.Property<DateTime>("DeliveryDate");
 
@@ -246,7 +257,7 @@ namespace API.Migrations
 
                     b.Property<DateTime>("OrderDate");
 
-                    b.Property<int>("OrderedById");
+                    b.Property<int?>("OrderedById");
 
                     b.Property<int>("PurchaseNumber");
 
@@ -266,7 +277,7 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CalculatorId");
+                    b.Property<int?>("CalculatorId");
 
                     b.Property<string>("Comment");
 
@@ -307,7 +318,7 @@ namespace API.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("API.Models.TemplateProperty", b =>
+            modelBuilder.Entity("API.Models.TemplatePropertyRelation", b =>
                 {
                     b.Property<int>("TemplateId");
 
@@ -317,7 +328,7 @@ namespace API.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("TemplateProperties");
+                    b.ToTable("TemplatePropertyRelations");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
@@ -395,8 +406,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.CustomerType", "CustomerType")
                         .WithMany()
-                        .HasForeignKey("CustomerTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CustomerTypeId");
                 });
 
             modelBuilder.Entity("API.Models.Item", b =>
@@ -404,10 +414,6 @@ namespace API.Migrations
                     b.HasOne("API.Models.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
-
-                    b.HasOne("API.Models.Item")
-                        .WithMany("Parts")
-                        .HasForeignKey("ItemId");
 
                     b.HasOne("API.Models.Order", "Order")
                         .WithMany("Products")
@@ -419,15 +425,31 @@ namespace API.Migrations
 
                     b.HasOne("API.Models.ItemTemplate", "Template")
                         .WithMany()
-                        .HasForeignKey("TemplateId")
+                        .HasForeignKey("TemplateId");
+                });
+
+            modelBuilder.Entity("API.Models.ItemItemRelation", b =>
+                {
+                    b.HasOne("API.Models.Item", "Item")
+                        .WithMany("Parts")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("API.Models.Item", "Part")
+                        .WithMany("PartOf")
+                        .HasForeignKey("PartId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("API.Models.ItemPropertyDescription", b =>
                 {
-                    b.HasOne("API.Models.Item")
+                    b.HasOne("API.Models.Item", "Item")
                         .WithMany("Properties")
                         .HasForeignKey("ItemId");
+
+                    b.HasOne("API.Models.ItemPropertyName", "PropertyName")
+                        .WithMany()
+                        .HasForeignKey("PropertyNameId");
                 });
 
             modelBuilder.Entity("API.Models.ItemTemplatePart", b =>
@@ -447,16 +469,14 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.User", "OrderedBy")
                         .WithMany()
-                        .HasForeignKey("OrderedById")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrderedById");
                 });
 
             modelBuilder.Entity("API.Models.Project", b =>
                 {
                     b.HasOne("API.Models.Calculator", "Calculator")
                         .WithMany()
-                        .HasForeignKey("CalculatorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CalculatorId");
 
                     b.HasOne("API.Models.Customer", "Customer")
                         .WithMany()
@@ -464,7 +484,7 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("API.Models.TemplateProperty", b =>
+            modelBuilder.Entity("API.Models.TemplatePropertyRelation", b =>
                 {
                     b.HasOne("API.Models.ItemPropertyName", "Property")
                         .WithMany("TemplateProperties")

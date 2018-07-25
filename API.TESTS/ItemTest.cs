@@ -231,7 +231,7 @@ namespace API.TESTS
                     "Gavl", 
                     UnitType.m, 
                     "Dette er en gavl", 
-                    new List<TemplateProperty>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
                     new List<ItemTemplatePart>(){},
                     "Gavl.pdf"
                 ),
@@ -239,7 +239,7 @@ namespace API.TESTS
                     "Stang", 
                     UnitType.m, 
                     "Dette er en stang", 
-                    new List<TemplateProperty>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
                     new List<ItemTemplatePart>(){},
                     "Stang.pdf"
                 ),
@@ -247,7 +247,7 @@ namespace API.TESTS
                     "Tagplade", 
                     UnitType.m, 
                     "Dette er en tagplade", 
-                    new List<TemplateProperty>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
                     new List<ItemTemplatePart>(){},
                     "Tagplade.pdf"
                 )

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class AddedEnumsAndModels : Migration
+    public partial class RedoneMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Number = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -28,7 +28,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,7 +36,7 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CustomerType",
+                name: "CustomerTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -45,7 +45,7 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerType", x => x.Id);
+                    table.PrimaryKey("PK_CustomerTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,25 +61,33 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ItemPropertyNames",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemPropertyNames", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ItemTemplates",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     UnitType = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    ItemTemplateId = table.Column<int>(nullable: true)
+                    IsActive = table.Column<bool>(nullable: false),
+                    Files = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemTemplates", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ItemTemplates_ItemTemplates_ItemTemplateId",
-                        column: x => x.ItemTemplateId,
-                        principalTable: "ItemTemplates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,37 +129,66 @@ namespace API.Migrations
                     PrimaryPhoneNumber = table.Column<string>(nullable: true),
                     SecondaryPhoneNumber = table.Column<string>(nullable: true),
                     Company = table.Column<string>(nullable: true),
-                    CustomerTypeId = table.Column<int>(nullable: false)
+                    CustomerTypeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_CustomerType_CustomerTypeId",
+                        name: "FK_Customers_CustomerTypes_CustomerTypeId",
                         column: x => x.CustomerTypeId,
-                        principalTable: "CustomerType",
+                        principalTable: "CustomerTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemTemplateParts",
+                columns: table => new
+                {
+                    TemplateId = table.Column<int>(nullable: false),
+                    PartId = table.Column<int>(nullable: false),
+                    Amount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemTemplateParts", x => new { x.TemplateId, x.PartId });
+                    table.ForeignKey(
+                        name: "FK_ItemTemplateParts_ItemTemplates_PartId",
+                        column: x => x.PartId,
+                        principalTable: "ItemTemplates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemTemplateParts_ItemTemplates_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "ItemTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemPropertyCategory",
+                name: "TemplatePropertyRelations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    ItemTemplateId = table.Column<int>(nullable: true)
+                    TemplateId = table.Column<int>(nullable: false),
+                    PropertyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemPropertyCategory", x => x.Id);
+                    table.PrimaryKey("PK_TemplatePropertyRelations", x => new { x.TemplateId, x.PropertyId });
                     table.ForeignKey(
-                        name: "FK_ItemPropertyCategory_ItemTemplates_ItemTemplateId",
-                        column: x => x.ItemTemplateId,
+                        name: "FK_TemplatePropertyRelations_ItemPropertyNames_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "ItemPropertyNames",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TemplatePropertyRelations_ItemTemplates_TemplateId",
+                        column: x => x.TemplateId,
                         principalTable: "ItemTemplates",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,7 +204,7 @@ namespace API.Migrations
                     DeliveryCountry = table.Column<string>(nullable: true),
                     Comment = table.Column<string>(nullable: true),
                     InvoiceNumber = table.Column<int>(nullable: false),
-                    CalculatorId = table.Column<int>(nullable: false),
+                    CalculatorId = table.Column<int>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     Width = table.Column<int>(nullable: false),
                     Height = table.Column<int>(nullable: false),
@@ -185,7 +222,7 @@ namespace API.Migrations
                         column: x => x.CalculatorId,
                         principalTable: "Calculators",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Projects_Customers_CustomerId",
                         column: x => x.CustomerId,
@@ -230,7 +267,7 @@ namespace API.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EventType = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
@@ -262,10 +299,10 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Company = table.Column<string>(nullable: false),
+                    Company = table.Column<string>(nullable: true),
                     OrderDate = table.Column<DateTime>(nullable: false),
                     DeliveryDate = table.Column<DateTime>(nullable: false),
-                    OrderedById = table.Column<int>(nullable: false),
+                    OrderedById = table.Column<int>(nullable: true),
                     InvoicePath = table.Column<string>(nullable: true),
                     PurchaseNumber = table.Column<int>(nullable: false),
                     Width = table.Column<int>(nullable: false),
@@ -281,7 +318,7 @@ namespace API.Migrations
                         column: x => x.OrderedById,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -292,10 +329,10 @@ namespace API.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Placement = table.Column<string>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
-                    TemplateId = table.Column<int>(nullable: false),
+                    TemplateId = table.Column<int>(nullable: true),
                     OrderId = table.Column<int>(nullable: true),
                     CreatedById = table.Column<int>(nullable: true),
-                    ItemId = table.Column<int>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     ProjectId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -305,12 +342,6 @@ namespace API.Migrations
                         name: "FK_Items_Users_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Items_Items_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -330,25 +361,56 @@ namespace API.Migrations
                         column: x => x.TemplateId,
                         principalTable: "ItemTemplates",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemItemRelations",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(nullable: false),
+                    PartId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemItemRelations", x => new { x.ItemId, x.PartId });
+                    table.ForeignKey(
+                        name: "FK_ItemItemRelations_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemItemRelations_Items_PartId",
+                        column: x => x.PartId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemProperties",
+                name: "ItemPropertyDescriptions",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
+                    PropertyNameId = table.Column<int>(nullable: true),
                     ItemId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemProperties", x => x.Id);
+                    table.PrimaryKey("PK_ItemPropertyDescriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemProperties_Items_ItemId",
+                        name: "FK_ItemPropertyDescriptions_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ItemPropertyDescriptions_ItemPropertyNames_PropertyNameId",
+                        column: x => x.PropertyNameId,
+                        principalTable: "ItemPropertyNames",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -369,24 +431,24 @@ namespace API.Migrations
                 column: "CustomerTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemProperties_ItemId",
-                table: "ItemProperties",
+                name: "IX_ItemItemRelations_PartId",
+                table: "ItemItemRelations",
+                column: "PartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemPropertyDescriptions_ItemId",
+                table: "ItemPropertyDescriptions",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemPropertyCategory_ItemTemplateId",
-                table: "ItemPropertyCategory",
-                column: "ItemTemplateId");
+                name: "IX_ItemPropertyDescriptions_PropertyNameId",
+                table: "ItemPropertyDescriptions",
+                column: "PropertyNameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_CreatedById",
                 table: "Items",
                 column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Items_ItemId",
-                table: "Items",
-                column: "ItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_OrderId",
@@ -404,9 +466,9 @@ namespace API.Migrations
                 column: "TemplateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemTemplates_ItemTemplateId",
-                table: "ItemTemplates",
-                column: "ItemTemplateId");
+                name: "IX_ItemTemplateParts_PartId",
+                table: "ItemTemplateParts",
+                column: "PartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderedById",
@@ -422,6 +484,11 @@ namespace API.Migrations
                 name: "IX_Projects_CustomerId",
                 table: "Projects",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplatePropertyRelations_PropertyId",
+                table: "TemplatePropertyRelations",
+                column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_CalendarEventId",
@@ -456,16 +523,25 @@ namespace API.Migrations
                 name: "EventLogs");
 
             migrationBuilder.DropTable(
-                name: "ItemProperties");
+                name: "ItemItemRelations");
 
             migrationBuilder.DropTable(
-                name: "ItemPropertyCategory");
+                name: "ItemPropertyDescriptions");
+
+            migrationBuilder.DropTable(
+                name: "ItemTemplateParts");
+
+            migrationBuilder.DropTable(
+                name: "TemplatePropertyRelations");
 
             migrationBuilder.DropTable(
                 name: "Values");
 
             migrationBuilder.DropTable(
                 name: "Items");
+
+            migrationBuilder.DropTable(
+                name: "ItemPropertyNames");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -483,7 +559,7 @@ namespace API.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "CustomerType");
+                name: "CustomerTypes");
 
             migrationBuilder.DropTable(
                 name: "Calendars");

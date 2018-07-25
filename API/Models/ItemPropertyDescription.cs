@@ -13,5 +13,7 @@ namespace API.Models{
         public int Id { get; set; }
 
         public string Description { get; set; }
+        public ItemPropertyName PropertyName { get; set; }
+        public Item Item { get; set; }
     }
 }

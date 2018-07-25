@@ -89,7 +89,7 @@ namespace API.Data
 
             _context.Entry(item).Collection( x => x.Parts )
                     .Query()
-                    .Include(x => x.Parts)
+                    .Include(x => x.Part)
                     .Load();
 
                 return item;
