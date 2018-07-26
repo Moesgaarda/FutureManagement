@@ -86,6 +86,11 @@ namespace API.Data {
                 .Include (x => x.Part)
                 .Load ();
 
+            _context.Entry(item).Collection(x => x.PartOf)
+                .Query()
+                .Include(x => x.Item)
+                .Load ();
+
             return item;
         }
     }
