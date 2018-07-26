@@ -99,8 +99,8 @@ namespace API.TESTS
         {
             //Given
             var listTP = new List<TemplatePropertyRelation>();
-            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
-            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
+            listTP.AddRange(_dbContext.TemplatePropertyRelations.Where(x => x.TemplateId == 1));
+            listTP.AddRange(_dbContext.TemplatePropertyRelations.Where(x => x.TemplateId == 2));
 
 
             var controller = new ItemTemplateController(_repo, _dbContext, _mapper);
@@ -164,7 +164,7 @@ namespace API.TESTS
             var template = _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1);
             //Act
             template.Description = "En Ny beskrivelse";
-            template.TemplateProperties.Concat(_dbContext.TemplateProperties.Where(x => x.TemplateId == 3));
+            template.TemplateProperties.Concat(_dbContext.TemplatePropertyRelations.Where(x => x.TemplateId == 3));
             var status = await controller.EditItemTemplate(template);
             //Assert
             StatusCodeResult result = status as StatusCodeResult;
@@ -215,8 +215,8 @@ namespace API.TESTS
         private void Seed(DataContext context)
         {
             var listTP = new List<TemplatePropertyRelation>();
-            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 1));
-            listTP.AddRange(_dbContext.TemplateProperties.Where(x => x.TemplateId == 2));
+            listTP.AddRange(_dbContext.TemplatePropertyRelations.Where(x => x.TemplateId == 1));
+            listTP.AddRange(_dbContext.TemplatePropertyRelations.Where(x => x.TemplateId == 2));
 
             var itemProperties = new[]{
                 new ItemPropertyDescription(1,"gul"),
@@ -310,8 +310,8 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
-                    new List<Item>(),
-                    new List<Item>(),
+                    new List<ItemItemRelation>(),
+                    new List<ItemItemRelation>(),
                     false
                 ),
                 new Item(
@@ -321,8 +321,8 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 2)},
-                    new List<Item>(),
-                    new List<Item>(),
+                    new List<ItemItemRelation>(),
+                    new List<ItemItemRelation>(),
                     false
                 ),
                 new Item(
@@ -332,8 +332,8 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 2),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
-                    new List<Item>(),
-                    new List<Item>(),
+                    new List<ItemItemRelation>(),
+                    new List<ItemItemRelation>(),
                     true
                 )
             };
