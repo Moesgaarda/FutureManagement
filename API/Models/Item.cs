@@ -43,6 +43,6 @@ namespace API.Models{
         public User CreatedBy { get; set; } 
         public ICollection<ItemItemRelation> Parts { get; set; }
         public ICollection<ItemItemRelation> PartOf { get; set; }
-        public bool IsActive { get; set; }  
+        public bool? IsActive { get; set; }  
     }
 }
