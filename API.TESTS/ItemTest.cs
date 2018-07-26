@@ -175,8 +175,8 @@ namespace API.TESTS
                 _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
                 _dbContext.Users.FirstOrDefault(x => x.Id == 1),
                 new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x => x.Id == 1)},
-                new List<Item> {_dbContext.Items.FirstOrDefault(x => x.Id == 1)},
-                new List<Item>(),
+                new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                new List<ItemItemRelation>(),
                 true
             );
             
@@ -200,8 +200,8 @@ namespace API.TESTS
                 _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
                 _dbContext.Users.FirstOrDefault(x => x.Id == 1),
                 new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x=> x.Id == 1)},
-                new List<Item> {_dbContext.Items.FirstOrDefault(x => x.Id == 1)},
-                new List<Item>(),
+                new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                new List<ItemItemRelation>(),
                 false
                 );
             
@@ -231,7 +231,9 @@ namespace API.TESTS
                     "Gavl", 
                     UnitType.m, 
                     "Dette er en gavl", 
-                    new List<TemplatePropertyRelation>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 1), 
+                                                            context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
                     "Gavl.pdf"
                 ),
@@ -239,7 +241,9 @@ namespace API.TESTS
                     "Stang", 
                     UnitType.m, 
                     "Dette er en stang", 
-                    new List<TemplatePropertyRelation>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 1), 
+                                                            context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
                     "Stang.pdf"
                 ),
@@ -247,7 +251,9 @@ namespace API.TESTS
                     "Tagplade", 
                     UnitType.m, 
                     "Dette er en tagplade", 
-                    new List<TemplatePropertyRelation>(){context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 1), context.TemplateProperties.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 1), 
+                                                            context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
                     "Tagplade.pdf"
                 )
@@ -303,8 +309,8 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
-                    new List<Item>(),
-                    new List<Item>(),
+                    new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                new List<ItemItemRelation>(),
                     false
                 ),
                 new Item(
@@ -314,8 +320,8 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 2)},
-                    new List<Item>(),
-                    new List<Item>(),
+                    new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                new List<ItemItemRelation>(),
                     false
                 ),
                 new Item(
@@ -325,8 +331,8 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 2),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
-                    new List<Item>(),
-                    new List<Item>(),
+                    new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                new List<ItemItemRelation>(),
                     true
                 )
             };

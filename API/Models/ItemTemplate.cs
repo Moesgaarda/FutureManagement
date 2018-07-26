@@ -8,22 +8,26 @@ using Newtonsoft.Json;
 namespace API.Models{
     public class ItemTemplate{
         public ItemTemplate(){}
-        public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, ICollection<ItemTemplatePart> parts, string files){
+        public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, string files){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
             this.TemplateProperties = properties;
             this.Parts = parts;
+            this.PartOf = partOf;
             this.Files = files;
         }
 
-        public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, ICollection<ItemTemplatePart> parts, string files){
+        public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, string files){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
             this.TemplateProperties = properties;
             this.Parts = parts;
+            this.PartOf = partOf;
             this.Files = files;
         }
         
