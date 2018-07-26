@@ -29,7 +29,7 @@ namespace API.Controllers
             return Ok(itemsToReturn);
         }
 
-        [HttpGet("getArchived")]
+        [HttpGet("GetInactive")]
         public async Task<IActionResult> GetInactiveItems(){
             var items = await _repo.GetInactiveItems();
             var itemsToReturn = _mapper.Map<List<ItemForGetDto>>(items);
@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpGet("getAll")]
         public async Task<IActionResult> GetItems(){
             var items = await _repo.GetAllItems();
-            var itemsToReturn = _mapper.Map<List<ItemForGetDto>>(items);
+            var itemsToReturn = _mapper.Map<List<ItemForTableGetDto>>(items);
 
             return Ok(itemsToReturn);
         }

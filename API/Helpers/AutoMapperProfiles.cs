@@ -20,6 +20,7 @@ namespace API.Helpers
             CreateMap<TemplatePropertyRelation, TemplatePropertyForGetDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Property.Name))
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.PropertyId));
+            CreateMap<Item, ItemForTableGetDto>();
         }
     }
 }
