@@ -21,10 +21,10 @@ namespace API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-        [HttpGet()]
+        [HttpGet("active")]
         public async Task<IActionResult> GetAllActiveUsers()
         {
-            var users = _repo.GetAllActiveUsers();
+            var users = await _repo.GetAllActiveUsers();
             var usersToReturn = _mapper.Map<List<UserForGetDto>>(users);
 
             return Ok(usersToReturn);

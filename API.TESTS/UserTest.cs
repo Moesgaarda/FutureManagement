@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using API.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using API.Dtos.UserDtos;
 
 namespace API.TESTS
 {
@@ -53,7 +54,7 @@ namespace API.TESTS
             // Act
             IActionResult allActiveUsers = await con.GetAllActiveUsers();
             OkObjectResult intermediate = allActiveUsers as OkObjectResult;
-            List<User> result = intermediate.Value as List<User>;
+            List<UserForGetDto> result = intermediate.Value as List<UserForGetDto>;
             // Assert
             Assert.True(result.Count == 1);
         }
@@ -64,7 +65,7 @@ namespace API.TESTS
             // Act
             IActionResult allActiveUsers = await con.GetAllInactiveUsers();
             OkObjectResult intermediate = allActiveUsers as OkObjectResult;
-            List<User> result = intermediate.Value as List<User>;
+            List<UserForGetDto> result = intermediate.Value as List<UserForGetDto>;
             // Assert
             Assert.True(result.Count == 1);
         }
