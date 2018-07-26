@@ -34,14 +34,10 @@ namespace API.Data
             item.Template = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == item.Template.Id);
             item.Order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == item.Order.Id);
             item.CreatedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == item.CreatedBy.Id);
-            
-//            await _context.ItemPropertyDescriptions.AddRangeAsync(item.Properties);
-  //          await _context.SaveChangesAsync();
 
-            _context.Entry(item).Collection( x => x.Properties )
-                    .Query()
-                    .Include(x => x.PropertyName)
-                    .Load(); 
+            foreach(var prop in item.Properties){
+                prop.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync(x => x.Id == prop.PropertyName.Id);
+            }
 
             await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync();
