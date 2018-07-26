@@ -55,7 +55,7 @@ namespace API.TESTS
             OkObjectResult intermediate = allActiveUsers as OkObjectResult;
             List<User> result = intermediate.Value as List<User>;
             // Assert
-            Assert.True(result.Count == 2);
+            Assert.True(result.Count == 1);
         }
         [Fact]
         public async void GetAllInactiveUsersTest(){
@@ -66,7 +66,7 @@ namespace API.TESTS
             OkObjectResult intermediate = allActiveUsers as OkObjectResult;
             List<User> result = intermediate.Value as List<User>;
             // Assert
-            Assert.True(result.Count == 0);
+            Assert.True(result.Count == 1);
         }
         [Fact]
         public async void GetUserTest(){
@@ -87,6 +87,12 @@ namespace API.TESTS
             // Arrange
             var con = new UserController(_repo, _dbContext, _mapper);
 
+            // Act
+            con.AddNewRole("Developer");
+
+            // Assert
+            var role = _dbContext.UserRoles.FirstOrDefault(x => x.Name == "Developer");
+            Assert.NotNull(role);
 
         }
         [Fact]
@@ -123,7 +129,7 @@ namespace API.TESTS
             await con.DeactivateUser(testUser.Id);
             User deactivatedUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
             // Assert
-            Assert.True(deactivatedUser.Active == false);
+            Assert.True(deactivatedUser.IsActive == false);
                                       
         } 
         [Fact]
@@ -147,7 +153,7 @@ namespace API.TESTS
             await con.DeactivateUser(testUser.Id);
             User deactivatedUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
             // Assert
-            Assert.True(deactivatedUser.Active == true);
+            Assert.True(deactivatedUser.IsActive == true);
                                       
         } 
         [Fact]

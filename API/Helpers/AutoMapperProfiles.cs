@@ -1,6 +1,7 @@
 using AutoMapper;
 using API.Models;
 using API.Dtos;
+using API.Dtos.UserDtos;
 
 namespace API.Helpers
 {

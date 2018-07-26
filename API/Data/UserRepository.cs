@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
@@ -11,9 +13,13 @@ namespace API.Data
             this._dbContext = dbContext;
         }
 
-        public Task<bool> ActivateUser(User user)
+        public async Task<bool> ActivateUser(User user)
         {
-            throw new System.NotImplementedException();
+            user.IsActive = true;
+            _dbContext.Users.Update(user);
+            var result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public Task<bool> AddRoles()
@@ -26,14 +32,20 @@ namespace API.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> DeActivateUser(User user)
+        public async Task<bool> DeActivateUser(User user)
         {
-            throw new System.NotImplementedException();
+            user.IsActive = false;
+            _dbContext.Users.Update(user);
+            var result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
-        public Task<bool> DeleteUser(User user)
+        public async Task<bool> DeleteUser(User user)
         {
-            throw new System.NotImplementedException();
+            _dbContext.Users.Remove(user);
+            int result = await _dbContext.SaveChangesAsync();
+            return result > 0;
         }
 
         public Task<bool> EditRole(User user)
@@ -41,24 +53,28 @@ namespace API.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> EditUser(User user)
+        public async Task<bool> EditUser(User user)
         {
-            throw new System.NotImplementedException();
+            var userToChange = _dbContext.Users.First(x => x.Id == user.Id);
+            _dbContext.Entry(userToChange).CurrentValues.SetValues(user);
+            var result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
-        public Task<List<User>> GetAllActiveUsers()
+        public async Task<List<User>> GetAllActiveUsers()
         {
-            throw new System.NotImplementedException();
+            return await _dbContext.Users.Where(x => x.IsActive == true).ToListAsync();
         }
 
-        public Task<List<User>> GetAllInactiveUsers()
+        public async Task<List<User>> GetAllInactiveUsers()
         {
-            throw new System.NotImplementedException();
+            return await _dbContext.Users.Where(x => x.IsActive == false).ToListAsync();
         }
 
-        public Task<User> GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            throw new System.NotImplementedException();
+            return await _dbContext.Users.FirstAsync(x => x.Id == id);
         }
 
         public Task<User> ShowDetails(User user)

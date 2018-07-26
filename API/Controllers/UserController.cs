@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
+using API.Dtos.UserDtos;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -20,21 +22,29 @@ namespace API.Controllers
             _repo = repo;
         }
         [HttpGet()]
-        public Task<IActionResult> GetAllActiveUsers()
+        public async Task<IActionResult> GetAllActiveUsers()
         {
-            throw new NotImplementedException();
+            var users = _repo.GetAllActiveUsers();
+            var usersToReturn = _mapper.Map<List<UserForGetDto>>(users);
 
+            return Ok(usersToReturn);
         }
         [HttpGet("inactive")]
-        public Task<IActionResult> GetAllInactiveUsers()
+        public async Task<IActionResult> GetAllInactiveUsers()
         {
-            throw new NotImplementedException();
+            var users = await _repo.GetAllInactiveUsers();
+            var usersToReturn = _mapper.Map<List<UserForGetDto>>(users);
+
+            return Ok(usersToReturn);
 
         }
         [HttpGet("get/{id}", Name = "GetUser")]
-        public Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
-            throw new NotImplementedException();
+            User user = await _repo.GetUser(id);
+            UserForGetDto userToReturn = _mapper.Map<UserForGetDto>(user);
+
+            return Ok(userToReturn);            
         }
         [HttpPost("editRole")]
         public Task<IActionResult> EditUserRole(User User)
@@ -42,7 +52,7 @@ namespace API.Controllers
             throw new NotImplementedException();
         }
         [HttpPost("addRoles")]
-        public Task<IActionResult> AddNewRoles()
+        public Task<IActionResult> AddNewRole(string name)
         {
             throw new NotImplementedException();
 
