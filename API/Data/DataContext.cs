@@ -74,6 +74,18 @@ namespace API.Data
                 .HasOne(p => p.Part)
                 .WithMany(i => i.PartOf)
                 .HasForeignKey(ii => ii.PartId);
+            
+            modelBuilder.Entity<Item>()
+                .Property(x => x.IsActive)
+                .HasDefaultValue(true);
+            
+            modelBuilder.Entity<ItemTemplate>()
+                .Property(x => x.IsActive)
+                .HasDefaultValue(true);
+            
+            modelBuilder.Entity<User>()
+                .Property(x => x.IsActive)
+                .HasDefaultValue(true);
         }
     }
 }
