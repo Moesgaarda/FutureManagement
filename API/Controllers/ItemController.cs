@@ -47,7 +47,6 @@ namespace API.Controllers
         public async Task<IActionResult> GetItem(int id){
             Item item = await _repo.GetItem(id);
             ItemForGetDto itemToReturn = _mapper.Map<ItemForGetDto>(item);
-
             return Ok(itemToReturn);
         }
         [HttpPost("edit")]

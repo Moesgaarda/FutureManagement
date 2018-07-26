@@ -22,7 +22,8 @@ namespace API.Helpers
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.PropertyId));
             CreateMap<Item, ItemForTableGetDto>();
             CreateMap<Order, OrderForGetDto>();
-            CreateMap<ItemItemRelation, ItemItemRelationForGet>();
+            CreateMap<ItemItemRelation, ItemItemRelationForGet>()
+                .ForMember(x => x.Template, opt => opt.MapFrom(src => src.Part.Template));
             CreateMap<User, UserForGetDto>();
         }
     }
