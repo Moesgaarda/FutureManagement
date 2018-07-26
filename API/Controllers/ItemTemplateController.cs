@@ -55,6 +55,7 @@ namespace API.Controllers
                 templateDto.Description,
                 templateDto.TemplateProperties,
                 templateDto.Parts,
+                templateDto.PartOf,
                 templateDto.Files
             );
 
