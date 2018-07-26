@@ -50,7 +50,7 @@ namespace API.Controllers
             return Ok(itemToReturn);
         }
         [HttpPost("edit")]
-        public async Task<IActionResult> EditItem(Item item){
+        public async Task<IActionResult> EditItem([FromBody]Item item){
             if(item.Id == 0){
                 ModelState.AddModelError("Item Error","Item id can not be 0.");
             }
