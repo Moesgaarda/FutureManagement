@@ -79,13 +79,15 @@ namespace API.Data {
             Item item = await _context.Items
                 .Where (x => x.Id == id)
                 .Include (x => x.Template)
+                .Include(x => x.CreatedBy)
                 .FirstOrDefaultAsync ();
 
-            _context.Entry (item).Collection (x => x.Parts)
+            _context.Entry(item).Collection (x => x.Parts)
                 .Query ()
                 .Include (x => x.Part)
                 .Load ();
 
+            item.PartOf = _context.ItemItemRelations.Where(x => x.PartId == item.Id).ToList();
             _context.Entry(item).Collection(x => x.PartOf)
                 .Query()
                 .Include(x => x.Item)
