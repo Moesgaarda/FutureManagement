@@ -49,6 +49,10 @@ namespace API.Data {
             return result > 0;
         }
 
+        public async Task<bool> HasDependencies(Item item){
+            return await _context.ItemItemRelations.AnyAsync(x => x.PartId == item.Id);        
+        }
+
         public async Task<bool> DeleteItem (Item item) {
             _context.Entry(item).Collection(x => x.Properties)
                 .Query()

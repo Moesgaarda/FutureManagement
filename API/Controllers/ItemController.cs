@@ -6,6 +6,7 @@ using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using API.Dtos;
+using System.Net;
 
 namespace API.Controllers
 {
@@ -27,6 +28,14 @@ namespace API.Controllers
             var itemsToReturn = _mapper.Map<List<ItemForGetDto>>(items);
 
             return Ok(itemsToReturn);
+        }
+
+        [HttpGet("HasDependencies/{id}")]
+        public async Task<IActionResult> HasDependencies(int id){
+            var item = await _repo.GetItem(id);
+            var result = _repo.HasDependencies(item);
+
+            return result.Result ? StatusCode(200) : StatusCode(400);
         }
 
         [HttpGet("GetInactive")]
@@ -60,7 +69,7 @@ namespace API.Controllers
 
             bool result = await _repo.EditItem(item);
 
-            return result ? StatusCode(200) : StatusCode(400);
+            return result ? StatusCode(400) : StatusCode(200);
         }
 
          [HttpPost("delete/{id}", Name = "DeleteItem")]

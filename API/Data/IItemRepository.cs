@@ -16,6 +16,6 @@ namespace API.Data
         Task<bool> DeleteItem(Item item);
         Task<bool> ActivateItem(Item item);
         Task<bool> DeactivateItem(Item item);
-
+        Task<bool> HasDependencies(Item item);
     }
 }
