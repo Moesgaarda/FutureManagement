@@ -35,7 +35,7 @@ namespace API.Data {
                 prop.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync (x => x.Id == prop.PropertyName.Id);
             }
 
-            await _context.Items.AddAsync (item);
+            await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync ();
 
             return result > 0;
@@ -50,7 +50,12 @@ namespace API.Data {
         }
 
         public async Task<bool> DeleteItem (Item item) {
-            _context.Items.Remove (item);
+            _context.Entry(item).Collection(x => x.Properties)
+                .Query()
+                .Include(x => x.PropertyName)
+                .Load();
+            _context.ItemPropertyDescriptions.RemoveRange(item.Properties);
+            _context.Items.Remove(item);
             int result = await _context.SaveChangesAsync ();
             return result > 0;
         }
