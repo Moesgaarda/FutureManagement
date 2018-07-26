@@ -83,9 +83,9 @@ namespace API.Data {
                 .FirstOrDefaultAsync ();
 
             _context.Entry(item).Collection (x => x.Parts)
-                .Query ()
-                .Include (x => x.Part)
-                .Load ();
+                .Query()
+                .Include(x => x.Part)
+                .Load();
 
             item.PartOf = _context.ItemItemRelations.Where(x => x.PartId == item.Id).ToList();
             _context.Entry(item).Collection(x => x.PartOf)
