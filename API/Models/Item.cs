@@ -14,7 +14,7 @@ namespace API.Models{
             this.Template = template;
             this.Order = order;
             this.CreatedBy = createdBy;
-            this.Properties = Properties;
+            this.Properties = properties;
             this.Parts = parts;
             this.PartOf = partOf;
             this.IsActive = isActive;
@@ -27,7 +27,7 @@ namespace API.Models{
             this.Template = template;
             this.Order = order;
             this.CreatedBy = createdBy;
-            this.Properties = Properties;
+            this.Properties = properties;
             this.Parts = parts;
             this.PartOf = partOf;
             this.IsActive = isActive;
