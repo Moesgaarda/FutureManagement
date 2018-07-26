@@ -12,15 +12,21 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly IItemRepository _repo;
-        public UserController(IItemRepository repo, DataContext context, IMapper mapper)
+        private readonly IUserRepository _repo;
+        public UserController(IUserRepository repo, DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
             _repo = repo;
         }
         [HttpGet()]
-        public Task<IActionResult> GetAllUsers()
+        public Task<IActionResult> GetAllActiveUsers()
+        {
+            throw new NotImplementedException();
+
+        }
+        [HttpGet("inactive")]
+        public Task<IActionResult> GetAllInactiveUsers()
         {
             throw new NotImplementedException();
 
@@ -42,19 +48,25 @@ namespace API.Controllers
 
         }
         [HttpPost("edit")]
-        public Task<IActionResult> EditUser()
+        public Task<IActionResult> EditUser(User user)
         {
             throw new NotImplementedException();
 
         }
-        [HttpPost("archive")]
-        public Task<IActionResult> ArchiveUser()
+        [HttpPost("deactivate")]
+        public Task<IActionResult> DeactivateUser(int id)
+        {
+            throw new NotImplementedException();
+
+        }
+        [HttpPost("activate")]
+        public Task<IActionResult> ActivateUser(int id)
         {
             throw new NotImplementedException();
 
         }
         [HttpPost("delete")]
-        public Task<IActionResult> DeleteUser()
+        public Task<IActionResult> DeleteUser(int id)
         {
             throw new NotImplementedException();
 

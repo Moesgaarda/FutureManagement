@@ -21,7 +21,7 @@ namespace API.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> AddUser()
+        public Task<bool> AddUser(User user)
         {
             throw new System.NotImplementedException();
         }
@@ -46,12 +46,12 @@ namespace API.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<List<User>> GetAllInactiveUsers()
+        public Task<List<User>> GetAllActiveUsers()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<List<User>> GetAllUsers()
+        public Task<List<User>> GetAllInactiveUsers()
         {
             throw new System.NotImplementedException();
         }

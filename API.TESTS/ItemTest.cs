@@ -269,7 +269,7 @@ namespace API.TESTS
                     new DateTime(1980, 1, 18),
                     true,
                     "Bjarne@FutureRundbuehaller.dk",
-                    29292929
+                    "29292929"
                 )
             };
             context.Users.AddRange(users);

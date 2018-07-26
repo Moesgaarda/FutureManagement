@@ -104,7 +104,7 @@ namespace API.TESTS
                     new DateTime(1980, 1, 18),
                     true,
                     "Jan@FutureRundbuehaller.dk",
-                    88888888
+                    "88888888"
                     ),
                 new User(2,
                     "geopoulsen",
@@ -112,9 +112,9 @@ namespace API.TESTS
                     "Geo",
                     "Poulsen",
                     new DateTime(1970, 5, 18),
-                    true,
+                    false,
                     "Geo@FutureRundbuehaller.dk",
-                    55443322
+                    "55443322"
                     )
             };
         }
