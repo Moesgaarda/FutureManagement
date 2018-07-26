@@ -13,7 +13,7 @@ export class ItemService {
     constructor(private http: Http) {}
 
     getItems(): Observable<Item[]> {
-        return this.http.get(this.baseUrl + 'Item/getItems')
+        return this.http.get(this.baseUrl + 'Item/getAll')
             .map(response => <Item[]>response.json());
     }
 

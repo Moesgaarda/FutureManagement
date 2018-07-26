@@ -22,7 +22,7 @@ export class ItemTemplateTableComponent  {
 
   settings = {
     pager: {
-      perPage: 10,
+      perPage: 15,
     },
     mode: 'external',
     delete: {

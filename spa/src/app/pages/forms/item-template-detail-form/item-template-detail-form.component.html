@@ -38,14 +38,37 @@
           </div>
           <div class="form-group">
               <label for="templateList">Skabelonliste</label>
-              <input type="text" placeholder="Skabelonliste" id="templateList" class="form-control" disabled/>
-              <small class="form-text">En liste af skabeloner hvor denne skabelon anvendes. </small>
+              <div class="form-group">
+                <ng-select
+                  [items]="templates | async"
+                  [multiple]="true"
+                  [closeOnSelect]="false"
+                  [hideSelected]="true"
+                  bindLabel="name"
+                  placeholder="Vælg skabeloner"
+                  [(ngModel)]="selectedTemplates">              
+                </ng-select>
+                <small class="form-text">En liste af skabeloner der bruges til at fremstille denne skabelon.
+                </small>
+              </div>
             </div>
-          <div class="form-group">
-            <label for="usedList">Anvendelsesliste</label>
-            <input type="text" placeholder="Anvendelsesliste" id="usedList" class="form-control" disabled/>
-            <small class="form-text">En liste af skabeloner hvori denne skabelon anvendes. </small>
-          </div>
+            <div class="form-group">
+                <label for="usedList">Anvendelsesliste</label>
+                <div class="form-group">
+                    <ng-select
+                    [items]="templates | async"
+                    [multiple]="true"
+                    [closeOnSelect]="false"
+                    [hideSelected]="true"
+                    bindLabel="name"
+                    placeholder="Vælg skabeloner"
+                    ng-repeat="temp in usedTemplates"
+                    [(ngModel)]="usedTemplates">             
+                  </ng-select>
+                  <small class="form-text">En liste af skabeloner hvori denne skabelon anvendes.
+                  </small>
+                </div>
+              </div>
           <div class="form-group">
               <label for="file">Fil</label>
               <div class="input-group">
@@ -57,6 +80,8 @@
                 </span>
               </div>
             </div>
+            <button (click)="getUsedTemplates()">Hej</button>
+            <button (click)="printList()">med</button>
         </nb-card-body>
       </nb-card>
     </div>
@@ -70,7 +95,7 @@
           <div class="row demo-checkboxes-radio">
             <div class="demo-checkboxes col-sm-4">
               <ng-container *ngFor="let prop of properties">
-                <nb-checkbox [value]="true">{{prop.name}}</nb-checkbox>
+                <nb-checkbox [value]="template?.templateProperties.includes(prop)">{{prop.name}}</nb-checkbox>
               </ng-container>
         
             </div>
