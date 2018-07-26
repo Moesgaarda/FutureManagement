@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { ItemService } from '../../../_services/item.service';
 import { environment } from '../../../../environments/environment';
-import { ItemTableService } from '../../../@core/data/item-table.service';
+import * as _ from 'underscore';
+import { Item } from '../../../_models/Item';
+
 
 @Component({
   selector: 'ngx-item-table',
@@ -14,11 +17,13 @@ import { ItemTableService } from '../../../@core/data/item-table.service';
 })
 export class ItemTableComponent {
   baseUrl = environment.spaUrl;
-  source: LocalDataSource = new LocalDataSource();
+  source: LocalDataSource;
+  items: Item[];
+
 
   settings = {
     pager: {
-      perPage: 10,
+      perPage: 15,
     },
     mode: 'external',
     delete: {
@@ -57,9 +62,17 @@ export class ItemTableComponent {
     },
   };
 
-  constructor(private service: ItemTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
+  constructor(private itemService: ItemService) {
+    this.source = new LocalDataSource();
+    this.loadItems();
+  }
+
+  async loadItems() {
+    await this.itemService.getItems().subscribe(items => {
+      this.items = items;
+      this.source.load(items);
+      this.source.refresh();
+    })
   }
 
   onDeleteConfirm(event): void {

@@ -1,4 +1,5 @@
 import {ItemProperty} from './ItemProperty';
+import { ItemTemplatePart } from './ItemTemplatePart';
 export enum UnitType {mm = 1, cm, m}
 
 export interface ItemTemplate {
@@ -7,6 +8,6 @@ export interface ItemTemplate {
     unitType: UnitType;
     files: string;
     templateProperties: ItemProperty[];
-    templateList: ItemTemplate[];
+    parts: ItemTemplatePart[];
     description: string;
 }
