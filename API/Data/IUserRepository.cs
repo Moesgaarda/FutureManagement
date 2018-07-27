@@ -11,7 +11,7 @@ namespace API.Data
         Task<List<User>> GetAllInactiveUsers();
         Task<User> GetUser(int id);
         Task<User> ShowDetails(User user);
-        Task<bool> AddRoles();
+        Task<bool> AddRole(UserRole newRole);
         Task<bool> AddUser(User user);
         Task<bool> EditUser(User user);
         Task<bool> EditRole(User user);

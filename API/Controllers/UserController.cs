@@ -46,12 +46,12 @@ namespace API.Controllers
 
             return Ok(userToReturn);            
         }
-             public Task<IActionResult> AddNewRole(string name)
+             public async Task<IActionResult> AddNewRole(string name)
         {
             var newRole = new UserRole(name);
-            _repo.AddRole(newRole);
-            
+            bool succes = await _repo.AddRole(newRole);
 
+            return succes ? StatusCode(201) : BadRequest();
         }
         [HttpPost("editRole")]
         public Task<IActionResult> EditUserRole(User User)
