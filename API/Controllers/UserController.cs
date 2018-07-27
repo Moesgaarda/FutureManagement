@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
-using API.Dtos.UserDtos;
+using API.Dtos;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using API.Dtos.UserDtos;
+using API.Dtos;
 using API.Models;
 
 namespace API.Dtos

@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using AutoMapper;
 using API.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using API.Dtos.UserDtos;
 
 namespace API.TESTS
 {
