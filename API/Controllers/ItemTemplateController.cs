@@ -90,7 +90,7 @@ namespace API.Controllers
 
             bool result = await _repo.DeleteItemTemplate(template);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : BadRequest();
         }
 
         [HttpPost("addProperty", Name = "AddPropertyName")]
@@ -103,9 +103,9 @@ namespace API.Controllers
                 propertyDto.Name
             );
 
-            await _repo.AddPropertyName(itemPropertyName);
+            bool result = await _repo.AddPropertyName(itemPropertyName);
 
-            return StatusCode(201);
+            return result ? StatusCode(201) : BadRequest();
         }
 
         [HttpGet("getPropertyNames", Name = "GetPropertyNames")]
@@ -137,7 +137,7 @@ namespace API.Controllers
 
             bool result = await _repo.ActivateItemTemplate(template);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : BadRequest();
         }
 
         [HttpPost("deactivate/{id}", Name = "DeactivateItemTemplate")]
@@ -154,7 +154,7 @@ namespace API.Controllers
 
             bool result = await _repo.DeactivateItemTemplate(template);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : BadRequest();
         }
     }
 }

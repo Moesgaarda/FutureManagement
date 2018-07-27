@@ -85,7 +85,7 @@ namespace API.Controllers
 
             bool result = await _repo.DeleteItem(item);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : BadRequest();
         }
         [HttpPost("deactivate/{id}", Name = "DeactivateItem")]
         public async Task<IActionResult> DeactivateItem(int id){
@@ -101,7 +101,7 @@ namespace API.Controllers
 
             bool result = await _repo.DeactivateItem(template);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : BadRequest();
         }
 
         [HttpPost("activate/{id}", Name = "ActivateItem")]
@@ -117,7 +117,7 @@ namespace API.Controllers
 
             bool result = await _repo.ActivateItem(template);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : BadRequest();
         }
 
         [HttpPost("add", Name = "AddItem")]
@@ -134,8 +134,8 @@ namespace API.Controllers
                 item.IsActive
             );
 
-            await _repo.AddItem(itemToCreate);
-            return StatusCode(201);
+            bool result = await _repo.AddItem(itemToCreate);
+            return result ? StatusCode(201) : BadRequest();
         }
     }
 }
