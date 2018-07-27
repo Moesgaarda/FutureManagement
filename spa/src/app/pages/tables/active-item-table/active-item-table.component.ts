@@ -7,15 +7,15 @@ import { Item } from '../../../_models/Item';
 
 
 @Component({
-  selector: 'ngx-item-table',
-  templateUrl: './item-table.component.html',
+  selector: 'ngx-active-item-table',
+  templateUrl: './active-item-table.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
     }
   `],
 })
-export class ItemTableComponent {
+export class ActiveItemTableComponent {
   baseUrl = environment.spaUrl;
   source: LocalDataSource;
   items: Item[];
@@ -84,10 +84,11 @@ export class ItemTableComponent {
   }
 
   async loadItems() {
-    await this.itemService.getAllItems().subscribe(items => {
+    await this.itemService.getActiveItems().subscribe(items => {
       this.items = items;
       this.source.load(items);
-      this.source.refresh();
+      this.source.refresh;
+      console.log(items);
     })
   }
 
@@ -114,5 +115,9 @@ export class ItemTableComponent {
 
   addNewItem() {
     location.href = this.baseUrl + '/pages/forms/item';
+  }
+
+  redirectToInactive() {
+    location.href = this.baseUrl + 'pages/tables/inactive-item-table';
   }
 }

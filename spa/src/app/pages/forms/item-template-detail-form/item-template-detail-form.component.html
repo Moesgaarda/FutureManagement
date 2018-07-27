@@ -44,7 +44,8 @@
                   [multiple]="true"
                   [closeOnSelect]="false"
                   [hideSelected]="true"
-                  bindLabel="name"
+                  bindValue="name"
+                  bindLabel="description"
                   placeholder="Vælg skabeloner"
                   [(ngModel)]="selectedTemplates">              
                 </ng-select>
@@ -60,7 +61,7 @@
                     [multiple]="true"
                     [closeOnSelect]="false"
                     [hideSelected]="true"
-                    bindLabel="name"
+                    bindLabel="part.name"
                     placeholder="Vælg skabeloner"
                     ng-repeat="temp in usedTemplates"
                     [(ngModel)]="usedTemplates">             

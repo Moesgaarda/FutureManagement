@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TablesComponent } from './tables.component';
 import { EmployeeTableComponent } from './employee-table/employee-table.component';
+import { ActiveItemTableComponent } from './active-item-table/active-item-table.component';
+import { InactiveItemTableComponent } from './inactive-item-table/inactive-item-table.component';
 import { ItemTableComponent } from './item-table/item-table.component';
 import { ItemTemplateTableComponent } from './item-template-table/item-template-table.component';
 import { CustomerTableComponent } from './customer-table/customer-table.component';
@@ -14,6 +16,12 @@ const routes: Routes = [{
   children: [{
     path: 'employee-table',
     component: EmployeeTableComponent,
+  }, {
+    path: 'active-item-table',
+    component: ActiveItemTableComponent,
+  }, {
+    path: 'inactive-item-table',
+    component: InactiveItemTableComponent,
   }, {
     path: 'item-table',
     component: ItemTableComponent,
@@ -38,8 +46,10 @@ export class TablesRoutingModule { }
 export const routedComponents = [
   TablesComponent,
   EmployeeTableComponent,
-  ItemTableComponent,
+  ActiveItemTableComponent,
   ItemTemplateTableComponent,
   CustomerTableComponent,
   ProjectTableComponent,
+  ItemTableComponent,
+  InactiveItemTableComponent,
 ];

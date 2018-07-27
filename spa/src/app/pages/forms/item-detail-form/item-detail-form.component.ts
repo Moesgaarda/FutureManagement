@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemService } from '../../../_services/item.service';
 import { Item } from '../../../_models/Item';
 import { Order } from '../../../_models/Order';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-item-detail-form',

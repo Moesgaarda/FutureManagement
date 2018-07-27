@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemTemplate } from '../../../_models/ItemTemplate';
-import { Observable } from '../../../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-item-template-form',

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Http } from '../../../node_modules/@angular/http';
+import { Http } from '@angular/http';
 import { ItemTemplate } from '../_models/ItemTemplate';
-import { Observable } from '../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { ItemProperty } from '../_models/ItemProperty';
 
 @Injectable()

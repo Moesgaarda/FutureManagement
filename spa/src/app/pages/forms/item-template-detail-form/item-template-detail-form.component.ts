@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ItemProperty } from '../../../_models/ItemProperty';
-import { Observable } from '../../../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
 
 @Component({
@@ -41,7 +41,6 @@ export class ItemTemplateDetailFormComponent implements OnInit {
     this.delay(15000);
     await this.loadTemplates();
     this.delay(15000);
-    await this.getUsedTemplates();
   }
 
   ngOnInit() {
@@ -60,6 +59,7 @@ export class ItemTemplateDetailFormComponent implements OnInit {
       this.template = template;
       this.unitTypeEnum = UnitType[template.unitType];
       this.usedTemplates = template.parts;
+      this.getUsedTemplates();
     })
   }
 
@@ -92,10 +92,7 @@ export class ItemTemplateDetailFormComponent implements OnInit {
   }
 
   printList() {
-    console.log(this.template.parts);
-    console.log(this.templatesToGet);
     console.log(this.selectedTemplates);
-    console.log(this.template.templateProperties);
     console.log(this.usedTemplates);
   }
 
