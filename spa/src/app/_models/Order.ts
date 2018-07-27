@@ -1,3 +1,4 @@
 export interface Order {
-    customer: String;
+    company: string;
+    orderDate: Date;
 }

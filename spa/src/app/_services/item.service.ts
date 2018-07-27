@@ -18,7 +18,7 @@ export class ItemService {
     }
 
     getItem(id: number): Observable<Item> {
-        return this.http.get(this.baseUrl + 'Item/getItem/' + id)
+        return this.http.get(this.baseUrl + 'Item/get/' + id)
             .map(response => <Item>response.json());
     }
 
