@@ -73,11 +73,21 @@ namespace API.Data {
         }
 
         public async Task<List<Item>> GetActiveItems () {
-            return await _context.Items.Where (x => x.IsActive == true).ToListAsync ();
+            return await _context.Items
+                .Include(x => x.Template)
+                .Include(x => x.Order)
+                .Include(x => x.CreatedBy)
+                .Where(x => x.IsActive == true)
+                .ToListAsync();
         }
 
         public async Task<List<Item>> GetInactiveItems () {
-            return await _context.Items.Where (x => x.IsActive == false).ToListAsync ();
+            return await _context.Items
+                .Include(x => x.Template)
+                .Include(x => x.Order)
+                .Include(x => x.CreatedBy)
+                .Where(x => x.IsActive == false)
+                .ToListAsync ();
         }
 
         public async Task<List<Item>> GetAllItems () {
