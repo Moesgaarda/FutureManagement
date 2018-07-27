@@ -54,7 +54,7 @@ namespace API.TESTS
             // Act
             IActionResult allActiveItems = await itemController.GetActiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
-            List<Item> result = intermediate.Value as List<Item>;
+            List<ItemForGetDto> result = intermediate.Value as List<ItemForGetDto>;
             // Assert
             Assert.True(result.Count == 2);
         }
@@ -66,7 +66,7 @@ namespace API.TESTS
             // Act
             IActionResult allActiveItems = await itemController.GetInactiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
-            List<Item> result = intermediate.Value as List<Item>;
+            List<ItemForGetDto> result = intermediate.Value as List<ItemForGetDto>;
             // Assert
             Assert.True(result.Count == 1);
         }
@@ -78,7 +78,7 @@ namespace API.TESTS
             // Act
             IActionResult allActiveItems = await itemController.GetItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
-            List<Item> result = intermediate.Value as List<Item>;
+            List<ItemForTableGetDto> result = intermediate.Value as List<ItemForTableGetDto>;
             // Assert
             Assert.True(result.Count == 3);
         }
@@ -119,7 +119,7 @@ namespace API.TESTS
             await itemController.DeactivateItem(item.Id);
             Item editedItem = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             //Assert
-            Assert.True(editedItem.IsActive == true);
+            Assert.True(editedItem.IsActive == false);
             
         }
 
@@ -174,8 +174,18 @@ namespace API.TESTS
                 _dbContext.ItemTemplates.FirstOrDefault(x => x.Id==1),
                 _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
                 _dbContext.Users.FirstOrDefault(x => x.Id == 1),
-                new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x => x.Id == 1)},
-                new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                new List<ItemPropertyDescription> {
+                    new ItemPropertyDescription(){
+                        Description = "halv",
+                        PropertyName = _dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 1)
+                    }
+                },
+                new List<ItemItemRelation> {
+                    new ItemItemRelation(){
+                        PartId = 1,
+                        Amount = 2
+                    }
+                },
                 new List<ItemItemRelation>(),
                 true
             );
@@ -195,15 +205,25 @@ namespace API.TESTS
             var controller = new ItemController(_repo, _dbContext, _mapper);
             Item createdItem = new Item(
                 "D4",
-                10,
-                _dbContext.ItemTemplates.FirstOrDefault(x => x.Id == 1),
+                23,
+                _dbContext.ItemTemplates.FirstOrDefault(x => x.Id==1),
                 _dbContext.Orders.FirstOrDefault(x => x.Id == 1),
                 _dbContext.Users.FirstOrDefault(x => x.Id == 1),
-                new List<ItemPropertyDescription> {_dbContext.ItemPropertyDescriptions.FirstOrDefault(x=> x.Id == 1)},
-                new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                new List<ItemPropertyDescription> {
+                    new ItemPropertyDescription(){
+                        Description = "halv",
+                        PropertyName = _dbContext.ItemPropertyNames.FirstOrDefault(x => x.Id == 1)
+                    }
+                },
+                new List<ItemItemRelation> {
+                    new ItemItemRelation(){
+                        PartId = 1,
+                        Amount = 2
+                    }
+                },
                 new List<ItemItemRelation>(),
-                false
-                );
+                true
+            );
             
             // Act
             var itemDTO = _mapper.Map<ItemForAddDto>(createdItem);
@@ -219,11 +239,11 @@ namespace API.TESTS
         private void Seed(DataContext context){
             
             var itemProperties = new[]{
-                new ItemPropertyDescription(1, "gul"),
-                new ItemPropertyDescription(2, "halv"), 
-                new ItemPropertyDescription(3, "slebet")
+                new ItemPropertyName("gul"),
+                new ItemPropertyName("halv"), 
+                new ItemPropertyName("slebet")
             };
-            context.ItemPropertyDescriptions.AddRange(itemProperties);
+            context.ItemPropertyNames.AddRange(itemProperties);
             context.SaveChanges();
 
             var itemTemplates = new[]{
@@ -231,18 +251,30 @@ namespace API.TESTS
                     "Gavl", 
                     UnitType.m, 
                     "Dette er en gavl", 
-                    new List<TemplatePropertyRelation>(){context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 1), 
-                                                            context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 2)}, 
-                    new List<ItemTemplatePart>(){},
-                    new List<ItemTemplatePart>(){},
+                    new List<TemplatePropertyRelation>(){
+                        new TemplatePropertyRelation{
+                            PropertyId = 1
+                        },
+                        new TemplatePropertyRelation{
+                            PropertyId = 2
+                        }
+                    }, 
+                    new List<ItemTemplatePart>(),
+                    new List<ItemTemplatePart>(),
                     "Gavl.pdf"
                 ),
                 new ItemTemplate(
                     "Stang", 
                     UnitType.m, 
                     "Dette er en stang", 
-                    new List<TemplatePropertyRelation>(){context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 1), 
-                                                            context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){
+                        new TemplatePropertyRelation{
+                            PropertyId = 1
+                        },
+                        new TemplatePropertyRelation{
+                            PropertyId = 2
+                        }
+                    }, 
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
                     "Stang.pdf"
@@ -251,8 +283,14 @@ namespace API.TESTS
                     "Tagplade", 
                     UnitType.m, 
                     "Dette er en tagplade", 
-                    new List<TemplatePropertyRelation>(){context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 1), 
-                                                            context.TemplatePropertyRelations.FirstOrDefault(x => x.TemplateId == 2)}, 
+                    new List<TemplatePropertyRelation>(){
+                        new TemplatePropertyRelation{
+                            PropertyId = 1
+                        },
+                        new TemplatePropertyRelation{
+                            PropertyId = 2
+                        }
+                    },
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
                     "Tagplade.pdf"
@@ -300,19 +338,32 @@ namespace API.TESTS
             };
             context.Orders.AddRange(orders);
             context.SaveChanges();
-            
-            var items = new[]{
-                new Item(
+            var propertyDescriptions = new List<ItemPropertyDescription>(){
+                new ItemPropertyDescription(){
+                    Description = "Gul"
+                },
+                new ItemPropertyDescription(){
+                    Description = "slebet"
+                },
+                new ItemPropertyDescription(){
+                    Description = "galvaniseret"
+                }
+            };
+            context.ItemPropertyDescriptions.AddRange(propertyDescriptions);
+            context.SaveChanges();
+            Item item = new Item(
                     "42d",
                     12,
                     context.ItemTemplates.FirstOrDefault(x => x.Id == 1),
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
-                    new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                    new List<ItemItemRelation> {},
                 new List<ItemItemRelation>(),
-                    false
-                ),
+                    true
+            );
+
+            var items = new[]{
                 new Item(
                     "41d",
                     11,
@@ -320,9 +371,14 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 1),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 2)},
-                    new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                    new List<ItemItemRelation> {
+                        new ItemItemRelation(){
+                            PartId = 1,
+                            Amount = 2
+                        }
+                    },
                 new List<ItemItemRelation>(),
-                    false
+                    true
                 ),
                 new Item(
                     "40d",
@@ -331,11 +387,18 @@ namespace API.TESTS
                     context.Orders.FirstOrDefault(x => x.Id == 2),
                     context.Users.FirstOrDefault(x => x.Id == 1),
                     new List<ItemPropertyDescription>(){context.ItemPropertyDescriptions.FirstOrDefault(X => X.Id == 1)},
-                    new List<ItemItemRelation> {_dbContext.ItemItemRelations.FirstOrDefault(x => x.ItemId == 1)},
+                    new List<ItemItemRelation> {
+                        new ItemItemRelation(){
+                            PartId = 1,
+                            Amount = 2
+                        }
+                    },
                 new List<ItemItemRelation>(),
-                    true
+                    false
                 )
             };
+            context.Items.Add(item);
+            context.SaveChanges();
             context.Items.AddRange(items);
             context.SaveChanges();
             var order = context.Orders.FirstOrDefault(x => x.Id == 1);
