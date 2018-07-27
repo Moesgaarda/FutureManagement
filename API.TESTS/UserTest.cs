@@ -74,13 +74,11 @@ namespace API.TESTS
             var con = new UserController(_repo, _dbContext, _mapper);
 
             // Act
-            IActionResult userToGet = await con.GetUser(1);
-            OkObjectResult intermediate = userToGet as OkObjectResult;
-            User userGot = intermediate.Value as User;
-
+            OkObjectResult intermediate = await con.GetUser(1) as OkObjectResult;
+            UserForGetDto userToGet = intermediate.Value as UserForGetDto;
 
             // Assert
-            Assert.True(userGot.Username == "Tekrus");
+            Assert.True(userToGet.Username == "Tekrus");
         }
         [Fact]
         public async void AddRoleTest(){

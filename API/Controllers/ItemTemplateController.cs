@@ -59,9 +59,9 @@ namespace API.Controllers
                 templateDto.Files
             );
 
-            await _repo.AddItemTemplate(itemTemplateToCreate);
+            bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);
 
-            return StatusCode(201);
+            return succes ? StatusCode(201) : BadRequest();
         }
 
         [HttpPut("edit")]

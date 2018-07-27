@@ -46,17 +46,20 @@ namespace API.Controllers
 
             return Ok(userToReturn);            
         }
+             public Task<IActionResult> AddNewRole(string name)
+        {
+            var newRole = new UserRole(name);
+            _repo.AddRole(newRole);
+            
+
+        }
         [HttpPost("editRole")]
         public Task<IActionResult> EditUserRole(User User)
         {
             throw new NotImplementedException();
         }
         [HttpPost("addRoles")]
-        public Task<IActionResult> AddNewRole(string name)
-        {
-            throw new NotImplementedException();
-
-        }
+   
         [HttpPost("edit")]
         public Task<IActionResult> EditUser(User user)
         {

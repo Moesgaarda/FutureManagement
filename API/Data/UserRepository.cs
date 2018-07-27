@@ -22,9 +22,13 @@ namespace API.Data
             return result > 0;
         }
 
-        public Task<bool> AddRoles()
+        public async Task<bool> AddRole(UserRole newRole)
         {
-            throw new System.NotImplementedException();
+
+            _dbContext.UserRoles.Add(newRole);
+            int result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public Task<bool> AddUser(User user)
