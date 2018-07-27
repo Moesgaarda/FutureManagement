@@ -12,7 +12,7 @@ namespace API.Dtos
         public int Amount { get; set; }
         public ItemTemplateForTableDto Template { get; set; }
         public Order Order { get; set; }
-        public UserForGetDto CreatedBy { get; set; } 
+        public UserForItemGetDto CreatedBy { get; set; } 
         public ICollection<ItemItemRelationForGet> Parts { get; set; }
         public ICollection<ItemItemRelationForGet> PartOf { get; set; }
         public bool IsActive { get; set; }
