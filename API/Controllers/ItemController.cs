@@ -30,7 +30,7 @@ namespace API.Controllers
             return Ok(itemsToReturn);
         }
 
-        [HttpGet("HasDependencies/{id}")]
+        [HttpGet("hasDependencies/{id}")]
         public async Task<IActionResult> HasDependencies(int id){
             var item = await _repo.GetItem(id);
             var result = _repo.HasDependencies(item);
@@ -38,7 +38,7 @@ namespace API.Controllers
             return result.Result ? StatusCode(200) : StatusCode(400);
         }
 
-        [HttpGet("GetInactive")]
+        [HttpGet("getInactive")]
         public async Task<IActionResult> GetInactiveItems(){
             var items = await _repo.GetInactiveItems();
             var itemsToReturn = _mapper.Map<List<ItemForGetDto>>(items);
@@ -69,7 +69,7 @@ namespace API.Controllers
 
             bool result = await _repo.EditItem(item);
 
-            return result ? StatusCode(400) : StatusCode(200);
+            return result ? StatusCode(200) : StatusCode(400);
         }
 
          [HttpPost("delete/{id}", Name = "DeleteItem")]

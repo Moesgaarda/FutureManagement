@@ -89,6 +89,7 @@ namespace API.Data {
                 .Where (x => x.Id == id)
                 .Include (x => x.Template)
                 .Include(x => x.CreatedBy)
+                .Include(x => x.Order)
                 .FirstOrDefaultAsync ();
 
             _context.Entry(item).Collection (x => x.Parts)
