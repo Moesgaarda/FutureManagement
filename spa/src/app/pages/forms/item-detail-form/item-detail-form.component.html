@@ -4,39 +4,6 @@
         <nb-card-header>Detaljer omkring genstanden</nb-card-header>
         <nb-card-body>
           <div class="form-group">
-            <label for="name">Navn på genstanden</label>
-            <div class="input-group">
-              <input type="text" placeholder="Navn" class="form-control" id="name" value="Skrue" [disabled]="nameDisabled"/>
-              <span class="input-group-append">
-                <button class="btn btn-success input-group-text" (click)="enableName()">
-                  {{ nameDisabled ? 'Rediger' : 'Gem' }}
-                </button>
-              </span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="placement">Genstandens placering</label>
-            <div class="input-group">
-              <input type="text" placeholder="Genstandens placering" class="form-control" id="placement" value="Hal 3 plads 8" id="placement" [disabled]="placementDisabled"/>
-              <span class="input-group-append">
-                <button class="btn btn-success input-group-text"  (click)="enablePlacement()">
-                  {{ placementDisabled ? 'Rediger' : 'Gem' }}
-                </button>
-              </span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="amount">Mængde</label>
-            <div class="input-group">
-              <input type="text" placeholder="Mængde" class="form-control"  id="amount" value="29" [disabled]="amountDisabled"/>
-              <span class="input-group-append">
-                <button class="btn btn-success input-group-text"  (click)="enableAmount()">
-                  {{ amountDisabled ? 'Rediger' : 'Gem' }}
-                </button>
-              </span>
-            </div>
-          </div>
-          <div class="form-group">
             <label for="templateUsed">Anvendt skabelon</label>
             <div class="input-group">
               <input type="text" placeholder="Anvendt skabelon" id="templateUsed" class="form-control" value="Skabelon 1" [disabled]="templateDisabled">
@@ -48,9 +15,32 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="placement">Genstandens placering</label>
+            <div class="input-group">
+              <input type="text" placeholder="Genstandens placering" class="form-control" id="placement" value="{{item?.placement}}" id="placement" [disabled]="placementDisabled"/>
+              <span class="input-group-append">
+                <button class="btn btn-success input-group-text"  (click)="enablePlacement()">
+                  {{ placementDisabled ? 'Rediger' : 'Gem' }}
+                </button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="amount">Mængde</label>
+            <div class="input-group">
+              <input type="text" placeholder="Mængde" class="form-control"  id="amount" value="{{item?.amount}}" [disabled]="amountDisabled"/>
+              <span class="input-group-append">
+                <button class="btn btn-success input-group-text"  (click)="enableAmount()">
+                  {{ amountDisabled ? 'Rediger' : 'Gem' }}
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="order">Oprindelsesordre</label>
             <div class="input-group">
-              <input type="text" placeholder="Oprindelsesordre" id="order" value="Ordre #4" class="form-control" disabled>
+              <input type="text" placeholder="Oprindelsesordre" id="order" value="{{item?.order.company}} - {{item?.order.orderDate}}" class="form-control" disabled>
               <span class="input-group-append">
                 <button class="btn btn-success input-group-text" (click)="routeToOrderDetail()">
                   Detaljer
@@ -61,7 +51,7 @@
           <div class="form-group">
             <label for="madeBy">Lavet af</label>
             <div class="input-group">
-              <input type="text" placeholder="Lavet af" id="madeBy" class="form-control" value="Poul" disabled>
+              <input type="text" placeholder="Lavet af" id="madeBy" class="form-control" value="{{item?.createdBy.username}}" disabled>
             </div>
           </div>
 

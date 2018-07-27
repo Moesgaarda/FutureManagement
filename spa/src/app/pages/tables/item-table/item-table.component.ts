@@ -39,9 +39,19 @@ export class ItemTableComponent {
       cancelButtonContent: '<i class="nb-close"></i>',
     },
     columns: {
-      name: {
-        title: 'Navn',
-        type: 'string',
+      template: {
+        title: 'Lavet af skabelon',
+        valuePrepareFunction: (temp) => {
+          return temp.name.toString();
+        },
+        filterFunction(temp?: any, search?: string): boolean {
+          const match = temp.name.indexOf(search) > -1
+          if (match || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
       placement: {
         title: 'Placering',
@@ -52,12 +62,18 @@ export class ItemTableComponent {
         type: 'string',
       },
       order: {
-        title: 'Ordre',
-        type: 'string',
-      },
-      type: {
-        title: 'Lavet af skabelon',
-        type: 'string',
+        title: 'Købt fra eller lavet af',
+        valuePrepareFunction: (order) => {
+          return order.company.toString()
+        },
+        filterFunction(order?: any, search?: string): boolean {
+          const match = order.company.indexOf(search) > -1
+          if (match || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
     },
   };
@@ -83,15 +99,16 @@ export class ItemTableComponent {
     }
   }
 
-  editItem(event): void {
-    location.href = this.baseUrl + '/pages/forms/item-detail';
+  editItem(itemToLoad): void {
+    location.href = this.baseUrl + '/pages/forms/item-detail/' + itemToLoad.data.id;
   }
 
-  deleteItem(event): void {
-    if (window.confirm('Er du sikker på at du vil slette denne forekomst?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
+  deleteItem(itemToDelete): void {
+    if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
+      this.itemService.deleteItem(itemToDelete.data.id).subscribe(() => {
+        this.items.splice(_.findIndex(this.items, {id: itemToDelete.data.id}), 1);
+        this.source.refresh();
+      });
     }
   }
 

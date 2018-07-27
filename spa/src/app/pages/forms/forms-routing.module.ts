@@ -30,7 +30,7 @@ const routes: Routes = [{
     path: 'new-project',
     component: NewProjectFormComponent,
   }, {
-    path: 'item-detail',
+    path: 'item-detail/:id',
     component: ItemDetailFormComponent,
   }, {
     path: 'order-detail',

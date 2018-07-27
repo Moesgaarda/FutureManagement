@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ItemService } from '../../../_services/item.service';
+import { Item } from '../../../_models/Item';
+import { Order } from '../../../_models/Order';
+import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'ngx-item-detail-form',
@@ -10,22 +14,26 @@ export class ItemDetailFormComponent implements OnInit {
   nameDisabled: boolean;
   templateDisabled: boolean;
   amountDisabled: boolean;
+  item: Item;
+
+  constructor(private itemService: ItemService, private route: ActivatedRoute) {
+
+  }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
-    this.nameDisabled = true;
+    this.loadItem();
     this.templateDisabled = true;
     this.placementDisabled = true;
     this.amountDisabled = true;
   }
 
-  enableName() {
-    if (this.nameDisabled) {
-      this.nameDisabled = false;
-    } else {
-      // indsæt i db
-      this.nameDisabled = true;
-    }
+  async loadItem() {
+    await this.itemService.getItem(+this.route.snapshot.params['id'])
+    .subscribe((item: Item) => {
+      this.item = item;
+      console.log(this.item);
+    })
   }
 
   enableTemplate() {
