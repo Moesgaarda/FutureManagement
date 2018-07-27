@@ -1,6 +1,6 @@
 using API.Models;
 
-namespace API.Dtos.UserDtos
+namespace API.Dtos
 {
     public class UserForGetDto
     {
