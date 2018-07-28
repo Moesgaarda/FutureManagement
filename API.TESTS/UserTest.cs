@@ -148,10 +148,10 @@ namespace API.TESTS
             var con = new UserController(_repo, _dbContext, _mapper);
             var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
             // Act
-            await con.DeactivateUser(testUser.Id);
-            User deactivatedUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
+            await con.ActivateUser(testUser.Id);
+            User activatedUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
             // Assert
-            Assert.True(deactivatedUser.IsActive == true);
+            Assert.True(activatedUser.IsActive == true);
                                       
         } 
         [Fact]
@@ -189,6 +189,10 @@ namespace API.TESTS
             StatusCodeResult result = status as StatusCodeResult;
             var test = new StatusCodeResult(200);           
             Assert.True(result.StatusCode == test.StatusCode);                          
+        }
+        [Fact]
+        public async void EditUserRoleTest(){
+            
         }
            
         private void Seed(DataContext context){

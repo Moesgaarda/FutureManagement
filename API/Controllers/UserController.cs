@@ -46,6 +46,7 @@ namespace API.Controllers
 
             return Ok(userToReturn);            
         }
+                [HttpPost("addRole")]
              public async Task<IActionResult> AddNewRole(string name)
         {
             var newRole = new UserRole(name);
@@ -53,42 +54,59 @@ namespace API.Controllers
 
             return succes ? StatusCode(201) : BadRequest();
         }
-        [HttpPost("editRole")]
-        public Task<IActionResult> EditUserRole(User User)
-        {
-            throw new NotImplementedException();
-        }
-        [HttpPost("addRoles")]
-   
         [HttpPost("edit")]
-        public Task<IActionResult> EditUser(User user)
+        public async Task<IActionResult> EditUser([FromBody]User user)
         {
-            throw new NotImplementedException();
+            if(user.Id == 0){
+                ModelState.AddModelError("User Error", "User id can not be 0.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            bool succes = await _repo.EditUser(user);
+
+            return succes ? StatusCode(200) : BadRequest();
 
         }
+        
         [HttpPost("deactivate")]
-        public Task<IActionResult> DeactivateUser(int id)
+        public async Task<IActionResult> DeactivateUser(int id)
         {
-            throw new NotImplementedException();
-
+            var user = await _repo.GetUser(id);
+            user.IsActive = false;
+            var succes = await _repo.DeActivateUser(user);
+            return succes ? StatusCode(200) : BadRequest();
         }
         [HttpPost("activate")]
-        public Task<IActionResult> ActivateUser(int id)
+        public async Task<IActionResult> ActivateUser(int id)
         {
-            throw new NotImplementedException();
-
+            var userActivate = await _repo.GetUser(id);
+            userActivate.IsActive = true;
+            bool succes = await _repo.ActivateUser(userActivate);
+            return succes ? StatusCode(200) : BadRequest();
         }
         [HttpPost("delete")]
-        public Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            var userDel = await _repo.GetUser(id);
+            bool succes = await _repo.DeleteUser(userDel);
+            return succes ? StatusCode(200) : BadRequest();
 
         }
         [HttpPost("add")]
-        public Task<IActionResult> AddUser()
+        public async Task<IActionResult> AddUser([FromBody]User userToAdd)
         {
-            throw new NotImplementedException();
-
+            // TODO maybe need to be UserForRegister or something
+            bool succes = await _repo.AddUser(userToAdd);
+            return succes ? StatusCode(200) : BadRequest();
+        }
+        [HttpPost("editRole")]
+        public async Task<IActionResult> EditUserRole([FromBody]User user, UserRole newRole)
+        {
+            user.Role = newRole;
+            bool succes = await _repo.EditRole(user);
+            return succes ? StatusCode(201) : BadRequest();
         }
 
 

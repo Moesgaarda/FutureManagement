@@ -38,10 +38,8 @@ namespace API.Data
 
         public async Task<bool> DeActivateUser(User user)
         {
-            user.IsActive = false;
             _dbContext.Users.Update(user);
             var result = await _dbContext.SaveChangesAsync();
-
             return result > 0;
         }
 
@@ -52,9 +50,11 @@ namespace API.Data
             return result > 0;
         }
 
-        public Task<bool> EditRole(User user)
+        public async Task<bool> EditRole(User user)
         {
-            throw new System.NotImplementedException();
+            _dbContext.Users.Update(user);
+            var result = await _dbContext.SaveChangesAsync();
+            return result > 0;
         }
 
         public async Task<bool> EditUser(User user)
