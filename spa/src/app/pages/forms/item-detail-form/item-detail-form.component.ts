@@ -3,6 +3,7 @@ import { ItemService } from '../../../_services/item.service';
 import { Item } from '../../../_models/Item';
 import { Order } from '../../../_models/Order';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'ngx-item-detail-form',
@@ -15,6 +16,7 @@ export class ItemDetailFormComponent implements OnInit {
   templateDisabled: boolean;
   amountDisabled: boolean;
   item: Item;
+  baseUrl = environment.spaUrl;
 
   constructor(private itemService: ItemService, private route: ActivatedRoute) {
 
@@ -64,7 +66,7 @@ export class ItemDetailFormComponent implements OnInit {
   }
 
   routeToOrderDetail() {
-    location.href = 'http://localhost:4200/#/pages/forms/order-detail';
+    location.href = this.baseUrl + 'pages/forms/order-detail';
   }
 
 
