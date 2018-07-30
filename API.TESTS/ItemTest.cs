@@ -54,7 +54,7 @@ namespace API.TESTS
             // Act
             IActionResult allActiveItems = await itemController.GetActiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
-            List<ItemForGetDto> result = intermediate.Value as List<ItemForGetDto>;
+            List<ItemForTableGetDto> result = intermediate.Value as List<ItemForTableGetDto>;
             // Assert
             Assert.True(result.Count == 2);
         }
@@ -66,7 +66,7 @@ namespace API.TESTS
             // Act
             IActionResult allActiveItems = await itemController.GetInactiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
-            List<ItemForGetDto> result = intermediate.Value as List<ItemForGetDto>;
+            List<ItemForTableGetDto> result = intermediate.Value as List<ItemForTableGetDto>;
             // Assert
             Assert.True(result.Count == 1);
         }
