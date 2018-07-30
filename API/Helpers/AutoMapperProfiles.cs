@@ -1,6 +1,6 @@
 using AutoMapper;
-using API.Dtos;
 using API.Models;
+using API.Dtos;
 
 namespace API.Helpers
 {
@@ -11,7 +11,22 @@ namespace API.Helpers
             CreateMap<ItemTemplate, ItemTemplateForGetDto>();
             CreateMap<ItemTemplate, ItemTemplateForAddDto>();
             CreateMap<ItemTemplate, ItemTemplateForTableDto>();
-            CreateMap<ItemPropertyName, ItemTemplatePropertyForAddDto>();
+            CreateMap<ItemTemplate, ItemTemplatePartForGetDto>();
+            CreateMap<ItemTemplate, ItemTemplatePartOfForGetDto>();
+            CreateMap<ItemTemplate, ItemTemplateForItemGetDto>();
+            CreateMap<ItemTemplatePart, ItemTemplatePartDto>();
+            CreateMap<ItemTemplatePart, ItemTemplatePartOfDto>();
+            CreateMap<ItemPropertyName, ItemPropertyNameForAddDto>();
+            CreateMap<ItemPropertyName, ItemPropertyNameForGetDto>();
+            CreateMap<TemplatePropertyRelation, TemplatePropertyForGetDto>()
+                .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Property.Name))
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.PropertyId));
+            CreateMap<Item, ItemForTableGetDto>();
+            CreateMap<Item, UserForItemGetDto>();
+            CreateMap<Order, OrderForGetDto>();
+            CreateMap<ItemItemRelation, ItemItemRelationForGet>()
+                .ForMember(x => x.Template, opt => opt.MapFrom(src => src.Part.Template));
+            CreateMap<User, UserForGetDto>();
         }
     }
 }

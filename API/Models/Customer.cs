@@ -28,7 +28,7 @@ namespace API.Models{
         }
         
         [Key]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         [EmailAddress]
@@ -39,8 +39,6 @@ namespace API.Models{
         [Phone]
         public string SecondaryPhoneNumber { get; set; }
         public string Company { get; set; }
-
-        [Required]
         public CustomerType CustomerType { get; set; }
     }
 }

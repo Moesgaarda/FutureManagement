@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-
-
-import { ItemTableService } from '../../../@core/data/item-table.service';
+import { ItemService } from '../../../_services/item.service';
+import { environment } from '../../../../environments/environment';
+import * as _ from 'underscore';
+import { Item } from '../../../_models/Item';
 
 
 @Component({
@@ -15,8 +16,15 @@ import { ItemTableService } from '../../../@core/data/item-table.service';
   `],
 })
 export class ItemTableComponent {
+  baseUrl = environment.spaUrl;
+  source: LocalDataSource;
+  items: Item[];
+
 
   settings = {
+    pager: {
+      perPage: 15,
+    },
     mode: 'external',
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -31,9 +39,19 @@ export class ItemTableComponent {
       cancelButtonContent: '<i class="nb-close"></i>',
     },
     columns: {
-      name: {
-        title: 'Navn',
-        type: 'string',
+      template: {
+        title: 'Lavet af skabelon',
+        valuePrepareFunction: (temp) => {
+          return temp.name.toString();
+        },
+        filterFunction(temp?: any, search?: string): boolean {
+          const match = temp.name.indexOf(search) > -1
+          if (match || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
       placement: {
         title: 'Placering',
@@ -44,21 +62,33 @@ export class ItemTableComponent {
         type: 'string',
       },
       order: {
-        title: 'Ordre',
-        type: 'string',
-      },
-      type: {
-        title: 'Lavet af skabelon',
-        type: 'string',
+        title: 'Købt fra eller lavet af',
+        valuePrepareFunction: (order) => {
+          return order.company.toString()
+        },
+        filterFunction(order?: any, search?: string): boolean {
+          const match = order.company.indexOf(search) > -1
+          if (match || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  constructor(private itemService: ItemService) {
+    this.source = new LocalDataSource();
+    this.loadItems();
+  }
 
-  constructor(private service: ItemTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
+  async loadItems() {
+    await this.itemService.getAllItems().subscribe(items => {
+      this.items = items;
+      this.source.load(items);
+      this.source.refresh();
+    })
   }
 
   onDeleteConfirm(event): void {
@@ -69,19 +99,20 @@ export class ItemTableComponent {
     }
   }
 
-  editItem(event): void {
-    location.href = 'http://localhost:4200/#/pages/forms/item-detail';
+  editItem(itemToLoad): void {
+    location.href = this.baseUrl + '/pages/forms/item-detail/' + itemToLoad.data.id;
   }
 
-  deleteItem(event): void {
-    if (window.confirm('Er du sikker på at du vil slette denne forekomst?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
+  deleteItem(itemToDelete): void {
+    if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
+      this.itemService.deleteItem(itemToDelete.data.id).subscribe(() => {
+        this.items.splice(_.findIndex(this.items, {id: itemToDelete.data.id}), 1);
+        this.source.refresh();
+      });
     }
   }
 
   addNewItem() {
-    location.href = 'http://localhost:4200/#/pages/forms/item';
+    location.href = this.baseUrl + '/pages/forms/item';
   }
 }

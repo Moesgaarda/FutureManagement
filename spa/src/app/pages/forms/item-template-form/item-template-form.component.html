@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-lg-6">
       <nb-card>
@@ -23,18 +24,36 @@
               <textarea rows="5" placeholder="Beskrivelse" class="form-control"></textarea>
             </div>
           </div>
+
           <div class="form-group">
             <label for="templateList">Skabelonliste</label>
             <div class="form-group">
-              <input type="text" placeholder="Skabelonliste" class="form-control"/>
-              <small class="form-text">En liste af skabeloner hvor denne skabelon anvendes.
+              <ng-select
+                [items]="templates | async"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [hideSelected]="true"
+                bindLabel="name"
+                placeholder="Vælg skabeloner"
+                [(ngModel)]="selectedTemplates">               
+              </ng-select>
+              <small class="form-text">En liste af skabeloner der bruges til at fremstille denne skabelon.
               </small>
             </div>
           </div>
+
           <div class="form-group">
             <label for="usedList">Anvendelsesliste</label>
             <div class="form-group">
-              <input type="text" placeholder="usedList" class="form-control"/>
+                <ng-select
+                [items]="templates | async"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [hideSelected]="true"
+                bindLabel="name"
+                placeholder="Vælg skabeloner"
+                [(ngModel)]="selectedTemplates">               
+              </ng-select>
               <small class="form-text">En liste af skabeloner hvori denne skabelon anvendes.
               </small>
             </div>

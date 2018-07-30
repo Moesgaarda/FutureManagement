@@ -11,6 +11,8 @@ using API.Data;
 using API.Dtos;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.FileExtensions;
+using System.IO;
 
 namespace API.TESTS
 {
@@ -33,7 +35,7 @@ namespace API.TESTS
             _dbContext.Database.EnsureCreated();
             Seed(_dbContext);
 
-            var builder = new ConfigurationBuilder().AddJsonFile("C:/Future/FutureManagement/API/appsettings.json");
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
             _config = builder.Build();
         }
 
@@ -58,10 +60,10 @@ namespace API.TESTS
             var repo = new AuthRepository(_dbContext);
             var controller = new AuthController(repo, _config);
 
-            var userRegisterDto = new UserForRegisterDto("testUser","testPassword");
+            var userRegisterDto = new UserForRegisterDto("testuser","testPassword");
 
             await controller.Register(userRegisterDto);
-            Assert.NotNull(_dbContext.Users.FirstOrDefault(x => x.Username == "testUser"));
+            Assert.NotNull(_dbContext.Users.FirstOrDefault(x => x.Username == "testuser"));
         }
 
         [Fact]
@@ -82,7 +84,7 @@ namespace API.TESTS
             Assert.False(userExists);
         }
 
-        public async void PasswordHashTest(){
+        public void PasswordHashTest(){
             var repo = new AuthRepository(_dbContext);
 
             String password = "somepassword";
@@ -96,7 +98,7 @@ namespace API.TESTS
 
         private void Seed(DataContext context){
             var users = new []{
-                new User(1,
+                new User(
                     "jankrabbe",
                     new UserRole(1, "Admin"),
                     "jan",
@@ -104,19 +106,22 @@ namespace API.TESTS
                     new DateTime(1980, 1, 18),
                     true,
                     "Jan@FutureRundbuehaller.dk",
-                    88888888
+                    "88888888"
                     ),
-                new User(2,
+                new User(
                     "geopoulsen",
-                    new UserRole(1, "Kontor"),
+                    new UserRole(2, "Kontor"),
                     "Geo",
                     "Poulsen",
                     new DateTime(1970, 5, 18),
-                    true,
+                    false,
                     "Geo@FutureRundbuehaller.dk",
-                    55443322
+                    "55443322"
                     )
             };
+
+            context.Users.AddRange(users);
+            context.SaveChanges();
         }
 
         public void Dispose(){

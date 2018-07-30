@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Dtos;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,9 +27,9 @@ namespace API.Data
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
-        public async Task<bool> AddPropertyTemplate(ItemPropertyName propertyTemplate)
+        public async Task<bool> AddPropertyName(ItemPropertyName propertyName)
         {
-            await _context.ItemPropertyNames.AddAsync(propertyTemplate);
+            await _context.ItemPropertyNames.AddAsync(propertyName);
             int result = await _context.SaveChangesAsync();
 
             return result > 0;
@@ -43,23 +44,42 @@ namespace API.Data
         public async Task<bool> DeleteItemTemplate(ItemTemplate template)
         {
             _context.ItemTemplates.Remove(template); 
-            int result = _context.SaveChanges();     
+            int result = await _context.SaveChangesAsync();     
             return result > 0;
         }
 
         public async Task<bool> EditItemTemplate(ItemTemplate template)
         {
-            //_context.ItemTemplates.Attach(template); 
-                                                    //TODO reason to use attach over update https://stackoverflow.com/questions/41025338/why-use-attach-for-update-entity-framework-6 
-                                                    // https://stackoverflow.com/questions/30987806/dbset-attachentity-vs-dbcontext-entryentity-state-entitystate-modified
-            _context.ItemTemplates.Update(template);
+            var templateToChange = _context.ItemTemplates.First(x => x.Id == template.Id);
+            _context.Entry(templateToChange).CurrentValues.SetValues(template);
             var result = await _context.SaveChangesAsync();
 
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
         public async Task<ItemTemplate> GetItemTemplate(int id){
-            return await _context.ItemTemplates.FirstAsync(x => x.Id == id);
+            ItemTemplate template = await _context.ItemTemplates
+                    .Where(x => x.Id == id)
+                    .FirstOrDefaultAsync();
+
+            _context.Entry(template).Collection( x => x.Parts )
+                    .Query()
+                    .Include(x => x.Part)
+                    .Load();
+
+            _context.Entry(template).Collection( x => x.TemplateProperties )
+                    .Query()
+                    .Include(x => x.Property)
+                    .Load();
+
+            template.PartOf = _context.ItemTemplateParts.Where(x => x.PartId == template.Id).ToList();
+
+            _context.Entry(template).Collection(x => x.PartOf)
+                    .Query()
+                    .Include(x => x.Template)
+                    .Load();
+
+            return template;
         }
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
@@ -67,14 +87,30 @@ namespace API.Data
             return await _context.ItemTemplates.ToListAsync();
         }
 
-        public async Task<ItemPropertyName> GetPropertyTemplate(int id)
+        public async Task<ItemPropertyName> GetPropertyName(int id)
         {
             return await _context.ItemPropertyNames.FirstAsync(x => x.Id == id);
         }
-
-        public async Task<List<ItemPropertyName>> GetPropertyTemplates()
+        
+        public async Task<List<ItemPropertyName>> GetPropertyNames()
         {
             return await _context.ItemPropertyNames.ToListAsync();
+        }
+
+        public async Task<bool> ActivateItemTemplate(ItemTemplate template){
+            template.IsActive = true;
+            _context.ItemTemplates.Update(template);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeactivateItemTemplate(ItemTemplate template){
+            template.IsActive = false;
+            _context.ItemTemplates.Update(template);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }

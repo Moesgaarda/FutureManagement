@@ -33,7 +33,8 @@ namespace API
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
 
             services.AddDbContext<DataContext>( x => x.UseMySql(Configuration.GetConnectionString("SqlConn")));
-            services.AddMvc();
+            services.AddMvc()
+                    .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             services.AddAutoMapper();
             services.AddScoped<IAuthRepository, AuthRepository>();

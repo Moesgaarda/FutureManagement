@@ -6,5 +6,6 @@ namespace API.Models
         public ItemTemplate Template { get; set; }
         public int PartId { get; set; }
         public ItemTemplate Part { get; set; }
+        public int Amount { get; set; }
     }
 }

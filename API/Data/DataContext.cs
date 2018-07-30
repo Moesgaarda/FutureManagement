@@ -22,8 +22,9 @@ namespace API.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }  
         public DbSet<Value> Values { get; set; }
-        public DbSet<TemplateProperty> TemplateProperties { get; set; }
-        public DbSet<ItemTemplatePart> ItemTemplateParts { get; set; }              
+        public DbSet<TemplatePropertyRelation> TemplatePropertyRelations { get; set; }
+        public DbSet<ItemTemplatePart> ItemTemplateParts { get; set; }      
+        public DbSet<ItemItemRelation> ItemItemRelations { get; set; }        
 
 
         /************************************************************
@@ -31,15 +32,15 @@ namespace API.Data
         * one to many and many to many reations in Entity Framework *            
         ************************************************************/
         protected override void OnModelCreating(ModelBuilder modelBuilder){
-            modelBuilder.Entity<TemplateProperty>()
+            modelBuilder.Entity<TemplatePropertyRelation>()
                 .HasKey(t => new { t.TemplateId, t.PropertyId });    
 
-            modelBuilder.Entity<TemplateProperty>()
+            modelBuilder.Entity<TemplatePropertyRelation>()
                 .HasOne(t => t.Template)
                 .WithMany(tp => tp.TemplateProperties)
                 .HasForeignKey(ti => ti.TemplateId);
 
-            modelBuilder.Entity<TemplateProperty>()
+            modelBuilder.Entity<TemplatePropertyRelation>()
                 .HasOne(t => t.Property)
                 .WithMany(p => p.TemplateProperties)
                 .HasForeignKey(pi => pi.PropertyId);
@@ -56,6 +57,35 @@ namespace API.Data
                 .HasOne(p => p.Part)
                 .WithMany(t => t.PartOf)
                 .HasForeignKey(pi => pi.PartId);
+
+            modelBuilder.Entity<Item>()
+                .HasMany(x => x.Properties)
+                .WithOne(x => x.Item);
+        
+            modelBuilder.Entity<ItemItemRelation>()
+                .HasKey(i => new{ i.ItemId, i.PartId});
+            
+            modelBuilder.Entity<ItemItemRelation>()
+                .HasOne(i => i.Item)
+                .WithMany(p => p.Parts)
+                .HasForeignKey(x => x.ItemId);
+
+            modelBuilder.Entity<ItemItemRelation>()
+                .HasOne(p => p.Part)
+                .WithMany(i => i.PartOf)
+                .HasForeignKey(ii => ii.PartId);
+            
+            modelBuilder.Entity<Item>()
+                .Property(x => x.IsActive)
+                .HasDefaultValue(true);
+            
+            modelBuilder.Entity<ItemTemplate>()
+                .Property(x => x.IsActive)
+                .HasDefaultValue(true);
+            
+            modelBuilder.Entity<User>()
+                .Property(x => x.IsActive)
+                .HasDefaultValue(true);
         }
     }
 }

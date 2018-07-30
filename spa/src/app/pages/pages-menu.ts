@@ -27,7 +27,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Lagerbeholdning',
-        link: '/pages/tables/item-table',
+        link: '/pages/tables/active-item-table',
       },
       {
         title: 'Tilføj ny genstand',

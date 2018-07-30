@@ -16,12 +16,8 @@ namespace API.Models{
         }
 
         [Key]
-        public int Id { get; private set; }
-
-        [Required]
+        public int Id { get; set; }
         public string Name { get; set; }
-
-        [Required]
         public int Number { get; set; }
     }
 }

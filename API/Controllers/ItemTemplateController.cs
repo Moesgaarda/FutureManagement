@@ -22,7 +22,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        [HttpGet("getItemTemplates")]
+        [HttpGet("getAll", Name = "GetItemTemplates")]
         public async Task<IActionResult> GetItemTemplates(){
             var itemTemplates = await _repo.GetItemTemplates();
 
@@ -31,11 +31,14 @@ namespace API.Controllers
             return Ok(itemTemplatesToReturn);
         }
 
-        [HttpGet("getItemTemplate/{id}", Name = "GetItemTemplate")]
+        [HttpGet("get/{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
 
             ItemTemplateForGetDto itemTemplateToReturn = _mapper.Map<ItemTemplateForGetDto>(itemTemplate);
+            itemTemplateToReturn.Parts = _mapper.Map<List<ItemTemplatePartDto>>(itemTemplate.Parts);            
+            itemTemplateToReturn.TemplateProperties = _mapper.Map<List<TemplatePropertyForGetDto>>(itemTemplate.TemplateProperties);
+            itemTemplateToReturn.PartOf = _mapper.Map<List<ItemTemplatePartOfDto>>(itemTemplate.PartOf);
 
             return Ok(itemTemplateToReturn);
         }
@@ -52,15 +55,16 @@ namespace API.Controllers
                 templateDto.Description,
                 templateDto.TemplateProperties,
                 templateDto.Parts,
+                templateDto.PartOf,
                 templateDto.Files
             );
 
-            await _repo.AddItemTemplate(itemTemplateToCreate);
+            bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);
 
-            return StatusCode(201);
+            return succes ? StatusCode(201) : BadRequest();
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditItemTemplate([FromBody]ItemTemplate template){
             if(template.Id == 0){
                 ModelState.AddModelError("Item Template Error","Template id can not be 0.");
@@ -86,36 +90,71 @@ namespace API.Controllers
 
             bool result = await _repo.DeleteItemTemplate(template);
 
-            return StatusCode(200);
+            return result ? StatusCode(200) : BadRequest();
         }
 
-        [HttpPost("addProperty", Name = "AddPropertyTemplate")]
-        public async Task<IActionResult> AddPropertyTemplate([FromBody]ItemTemplatePropertyForAddDto propertyDto){
+        [HttpPost("addProperty", Name = "AddPropertyName")]
+        public async Task<IActionResult> AddPropertyName([FromBody]ItemPropertyNameForAddDto propertyDto){
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
 
-            var itemTemplateProperty = new ItemPropertyName(
+            var itemPropertyName = new ItemPropertyName(
                 propertyDto.Name
             );
 
-            await _repo.AddPropertyTemplate(itemTemplateProperty);
+            bool result = await _repo.AddPropertyName(itemPropertyName);
 
-            return StatusCode(201);
+            return result ? StatusCode(201) : BadRequest();
         }
 
-        [HttpGet("getPropertyTemplates")]
-        public async Task<IActionResult> GetPropertyTemplates(){
-            var propertyTemplates = await _repo.GetPropertyTemplates();
+        [HttpGet("getPropertyNames", Name = "GetPropertyNames")]
+        public async Task<IActionResult> GetPropertyNames(){
+            var propertyNames = await _repo.GetPropertyNames();
+            var PropertyNamesToReturn = _mapper.Map<List<ItemPropertyNameForGetDto>>(propertyNames);
 
-            return Ok(propertyTemplates);
+            return Ok(PropertyNamesToReturn);
         }
 
-        [HttpGet("getPropertyTemplate/{id}", Name = "GetPropertyTemplate")]
-        public async Task<IActionResult> GetPropertyTemplate(int id){
-            ItemPropertyName propertyTemplate = await _repo.GetPropertyTemplate(id);
+        [HttpGet("getPropertyName/{id}", Name = "GetPropertyName")]
+        public async Task<IActionResult> GetPropertyName(int id){
+            ItemPropertyName propertyName = await _repo.GetPropertyName(id);
+            ItemPropertyNameForGetDto propertyNameToReturn = _mapper.Map<ItemPropertyNameForGetDto>(propertyName);
 
-            return Ok(propertyTemplate);
+            return Ok(propertyNameToReturn);
+        }
+
+        [HttpPost("activate/{id}", Name = "ActivateItemTemplate")]
+        public async Task<IActionResult> ActivateItemTemplate(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Template Error","Can not activate template with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            var template = await _repo.GetItemTemplate(id);
+
+            bool result = await _repo.ActivateItemTemplate(template);
+
+            return result ? StatusCode(200) : BadRequest();
+        }
+
+        [HttpPost("deactivate/{id}", Name = "DeactivateItemTemplate")]
+        public async Task<IActionResult> DeactivateItemTemplate(int id){
+            if(id == 0){
+                ModelState.AddModelError("Item Template Error","Can not deactivate template with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var template = await _repo.GetItemTemplate(id);
+
+            bool result = await _repo.DeactivateItemTemplate(template);
+
+            return result ? StatusCode(200) : BadRequest();
         }
     }
 }

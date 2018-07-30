@@ -11,6 +11,8 @@
 // loading progress bar theme
 @import './pace.theme';
 
+// ng select style
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 // install the framework and custom global styles
 @include nb-install() {

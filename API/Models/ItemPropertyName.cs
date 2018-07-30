@@ -12,13 +12,13 @@ namespace API.Models{
         public ItemPropertyName(int id, string name){
             this.Id = id;
             this.Name = name;
-            this.TemplateProperties = new HashSet<TemplateProperty>();
+            this.TemplateProperties = new HashSet<TemplatePropertyRelation>();
         }
         
         [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public virtual ICollection<TemplateProperty> TemplateProperties{ get; set; }
+        public virtual ICollection<TemplatePropertyRelation> TemplateProperties{ get; set; }
     }
 }
