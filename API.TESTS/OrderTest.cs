@@ -8,12 +8,15 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using API.Enums;
 using API.Data;
+using AutoMapper;
 
 namespace API.TESTS
 {
     public class OrderTest : IDisposable
     {
         private readonly DataContext _dbContext;
+        private readonly IMapper _mapper; 
+        private readonly IOrderRepository _repo;
 
         public OrderTest(){
             var serviceProvider = new ServiceCollection()
@@ -63,7 +66,7 @@ namespace API.TESTS
         [Fact]
         private async void ReadOrderReturnsCorrectResultTest(){
             // Arrange
-            var controller = new OrderController(_dbContext);
+            var controller = new OrderController(_dbContext, _mapper, _repo);
 
             // Act
             var result = await controller.GetOrder(1);
@@ -75,7 +78,7 @@ namespace API.TESTS
         [Fact]
         private async void ReadOrderReturnsFalseResultTest(){
             // Arrange
-            var controller = new OrderController(_dbContext);
+            var controller = new OrderController(_dbContext, _mapper, _repo);
 
             // Act
             var result = await controller.GetOrder(2);
@@ -85,9 +88,9 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void InsertOrderSuccessfullyTest(){
+        private async void InsertOrderUnsuccessfullyTest(){
             // Arange
-            var controller = new OrderController(_dbContext);
+            var controller = new OrderController(_dbContext, _mapper, _repo);
             var testOrder = new Order();
 
             // Act
@@ -98,9 +101,9 @@ namespace API.TESTS
         }
 
         [Fact]
-        private async void InsertOrderUnsuccessfullyTest(){
+        private async void InsertOrderSuccessfullyTest(){
             // Arange
-            var controller = new OrderController(_dbContext);
+            var controller = new OrderController(_dbContext, _mapper, _repo);
             var testOrder = new Order(
                     "CompanyC", 
                     DateTime.Today, 
@@ -125,7 +128,7 @@ namespace API.TESTS
         [Fact]
         private async void GetAllOrdersGetsAllOrdersTest(){
             // Arrange
-            var controller = new OrderController(_dbContext);
+            var controller = new OrderController(_dbContext, _mapper, _repo);
 
             // Act
             var result = await controller.GetAllOrders();

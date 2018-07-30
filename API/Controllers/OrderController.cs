@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,13 @@ namespace API.Controllers{
     [Route("api/[controller]")]
     public class OrderController : Controller{
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
+        private readonly IOrderRepository _repo;
 
-        public OrderController(DataContext context){
+        public OrderController(DataContext context, IMapper mapper, IOrderRepository repo){
             _context = context;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<Order> GetOrder(int orderId){
