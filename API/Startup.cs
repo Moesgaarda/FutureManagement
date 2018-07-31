@@ -32,7 +32,7 @@ namespace API
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
 
-            services.AddDbContext<DataContext>( x => x.UseMySql(Configuration.GetConnectionString("SqlConn")));
+            services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("SqlConn")));
             services.AddMvc()
                     .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
@@ -41,8 +41,10 @@ namespace API
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemTemplateRepository, ItemTemplateRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters{
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
@@ -61,7 +63,14 @@ namespace API
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseMvc(routes =>
+                routes.MapSpaFallbackRoute(
+                name: "spa-fallback",
+                defaults: new { controller = "Fallback", action = "Index" }
+                )
+                );
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
     }
 }
