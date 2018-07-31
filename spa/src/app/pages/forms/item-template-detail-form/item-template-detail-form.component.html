@@ -14,17 +14,23 @@
               </span>
             </div>
           </div>
+
           <div class="form-group">
-            <label for="unitType">Mængdeenhed</label>
-            <div class="input-group">
-              <input type="text" placeholder="Mængdeenhed" class="form-control"  value="{{unitTypeEnum}}" id="unitType" [disabled]="unitTypeDisabled"/>
-              <span class="input-group-append">
-                <button class="btn btn-success input-group-text"  (click)="enableunitType()">
-                  {{ unitTypeDisabled ? 'Rediger' : 'Gem' }}
-                </button>
-              </span>
+              <label>Mængdeenhed</label>
+            <div class="row">
+              <div class="col-lg-10">
+              <select class="form-control btn btn-success btn-rectangle dropdown-toggle">
+              <option *ngFor="let enum of unitTypes" [value]="unitTypes[enum]" [disabled]="unitTypeDisabled" [selected]="enum == unitTypeEnum">{{enum}}</option>
+              </select>
             </div>
+            <div class="col-lg-2">
+                <button class="btn btn-success btn-rectangle input-group-text"  (click)="enableunitType()">
+                    {{ unitTypeDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </div>
           </div>
+        </div>
+
           <div class="form-group">
             <label for="description">Beskrivelse</label>
             <div class="input-group">
@@ -36,40 +42,43 @@
               </span>
             </div>
           </div>
+
           <div class="form-group">
               <label for="templateList">Skabelonliste</label>
               <div class="form-group">
                 <ng-select
-                  [items]="templates | async"
+                  [items]="templates"
                   [multiple]="true"
                   [closeOnSelect]="false"
                   [hideSelected]="true"
-                  bindValue="name"
-                  bindLabel="description"
+                  bindValue="id"
+                  bindLabel="name"
                   placeholder="Vælg skabeloner"
-                  [(ngModel)]="selectedTemplates">              
+                  [(ngModel)]="selectedTemplates">
                 </ng-select>
                 <small class="form-text">En liste af skabeloner der bruges til at fremstille denne skabelon.
                 </small>
               </div>
             </div>
+            <div class="input-group"  *ngFor="let temp of template?.parts">
+                {{temp.part.name}} {{temp.amount}}
+            </div>
             <div class="form-group">
                 <label for="usedList">Anvendelsesliste</label>
                 <div class="form-group">
                     <ng-select
-                    [items]="templates | async"
+                    [items]="templates"
                     [multiple]="true"
                     [closeOnSelect]="false"
                     [hideSelected]="true"
                     bindLabel="part.name"
                     placeholder="Vælg skabeloner"
-                    ng-repeat="temp in usedTemplates"
                     [(ngModel)]="usedTemplates">             
                   </ng-select>
                   <small class="form-text">En liste af skabeloner hvori denne skabelon anvendes.
                   </small>
                 </div>
-              </div>
+              </div> 
           <div class="form-group">
               <label for="file">Fil</label>
               <div class="input-group">
@@ -81,7 +90,6 @@
                 </span>
               </div>
             </div>
-            <button (click)="getUsedTemplates()">Hej</button>
             <button (click)="printList()">med</button>
         </nb-card-body>
       </nb-card>
@@ -96,9 +104,8 @@
           <div class="row demo-checkboxes-radio">
             <div class="demo-checkboxes col-sm-4">
               <ng-container *ngFor="let prop of properties">
-                <nb-checkbox [value]="template?.templateProperties.includes(prop)">{{prop.name}}</nb-checkbox>
-              </ng-container>
-        
+                  <nb-checkbox [value]="propertiesToCheck.includes(prop)"> {{prop.name}}</nb-checkbox>
+              </ng-container>  
             </div>
           </div>
 

@@ -6,7 +6,8 @@
     <nb-card-body>
       <ng2-smart-table [settings]="settings" [source]="source" (edit)="editItem($event)" (deleteConfirm)="onDeleteConfirm($event)" (create)="addNewItem()" (delete)="deleteItem($event)">
       </ng2-smart-table>
-      <button (click)="redirectToActive()">Se aktive varer</button>
+      <br>
+      <button class="btn btn-success input-group-text" (click)="redirectToActive()">Se aktive varer</button>
     </nb-card-body>        
 </nb-card>
  
