@@ -86,7 +86,7 @@ namespace API.TESTS
             var con = new UserController(_repo, _dbContext, _mapper);
 
             // Act
-            con.AddNewRole("Developer");
+            await con.AddNewRole("Developer");
 
             // Assert
             var role = _dbContext.UserRoles.FirstOrDefault(x => x.Name == "Developer");
@@ -191,7 +191,7 @@ namespace API.TESTS
             Assert.True(result.StatusCode == test.StatusCode);                          
         }
         [Fact]
-        public async void EditUserRoleTest(){
+        public void EditUserRoleTest(){
             
         }
            
