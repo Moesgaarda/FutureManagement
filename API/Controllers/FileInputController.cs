@@ -14,7 +14,8 @@ namespace API.Controllers
         public FileInputController(DataContext context){
             _context = context;
         }
-
+        //https://www.c-sharpcorner.com/article/upload-download-files-in-asp-net-core-2-0/
+        //This is the tutorial that i used
         [HttpPost("uploadfiles", Name = "UploadFiles")]
         public async Task<IActionResult> UploadFiles(List<IFormFile> files, string originPath){
             if(files.Count == 0 ||files == null){
