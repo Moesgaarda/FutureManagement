@@ -30,7 +30,7 @@ namespace API.Controllers{
             return Ok(order);
         }
 
-        [HttpPost("add", Name = "AddItem")]
+        [HttpPost("add", Name = "AddItemToOrder")]
         public async Task<IActionResult> AddOrder(Order order){
             var orderToCreate = new Order(
                 order.Company,
