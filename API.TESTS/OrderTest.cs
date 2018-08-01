@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using API.Enums;
 using API.Data;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.TESTS
 {
@@ -33,35 +34,6 @@ namespace API.TESTS
             Seed(_dbContext);
         }
 
-        private void Seed(DataContext context){
-            var orders = new[]{
-                new Order("CompanyA", 
-                    DateTime.Today, 
-                    DateTime.Now, 
-                    null, 
-                    "core/pathA.pdf", 
-                    1, 
-                    123, 
-                    456, 
-                    789, 
-                    UnitType.cm,
-                    null),
-                new Order("CompanyB", 
-                    DateTime.Today, 
-                    DateTime.Now, 
-                    null, 
-                    "core/pathB.pdf", 
-                    2, 
-                    345, 
-                    678, 
-                    910, 
-                    UnitType.mm,
-                    null),
-            };
-
-            context.Orders.AddRange(orders);
-            context.SaveChanges();
-        }
 
         [Fact]
         private async void ReadOrderReturnsCorrectResultTest(){
@@ -131,12 +103,41 @@ namespace API.TESTS
             var controller = new OrderController(_dbContext, _mapper, _repo);
 
             // Act
-            var result = await controller.GetAllOrders();
+            IActionResult result = await controller.GetAllOrders();
 
             // Assert
             Assert.Equal(2, result.Count);
         }
 
+        private void Seed(DataContext context){
+            var orders = new[]{
+                new Order("CompanyA", 
+                    DateTime.Today, 
+                    DateTime.Now, 
+                    null, 
+                    "core/pathA.pdf", 
+                    1, 
+                    123, 
+                    456, 
+                    789, 
+                    UnitType.cm,
+                    null),
+                new Order("CompanyB", 
+                    DateTime.Today, 
+                    DateTime.Now, 
+                    null, 
+                    "core/pathB.pdf", 
+                    2, 
+                    345, 
+                    678, 
+                    910, 
+                    UnitType.mm,
+                    null),
+            };
+
+            context.Orders.AddRange(orders);
+            context.SaveChanges();
+        }
         public void Dispose(){
             _dbContext.Database.EnsureDeleted();
             _dbContext.Dispose();

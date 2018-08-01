@@ -23,20 +23,70 @@ namespace API.Controllers{
             _mapper = mapper;
         }
 
-        public async Task<Order> GetOrder(int orderId){
-            return await _context.Orders.FirstAsync(x => x.Id == orderId); 
+        [HttpGet("get/{id}", Name = "GetOrder")]
+        public async Task<IActionResult> GetOrder(int orderId){
+            var order = await _repo.GetOrder(orderId);
+            
+            return Ok(order);
         }
 
-        public Task<bool> CreateOrder(Order order){
-            throw new NotImplementedException();
+        [HttpPost("add", Name = "AddItem")]
+        public async Task<IActionResult> AddOrder(Order order){
+            var orderToCreate = new Order(
+                order.Company,
+                order.OrderDate,
+                order.DeliveryDate,
+                order.OrderedBy,
+                order.InvoicePath,
+                order.PurchaseNumber,
+                order.Width,
+                order.Height,
+                order.Length,
+                order.UnitType,
+                order.Products
+            );
+
+            bool result = await _repo.AddOrder(orderToCreate);
+            return result ? StatusCode(201) : BadRequest();
+        }
+        
+
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllOrders(){
+            var orders = await _repo.GetAllOrders();
+
+            return Ok(orders);
         }
 
-        public Task<List<Order>> GetAllOrders(){
-            throw new NotImplementedException();
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditOrder([FromBody]Order order){
+            if(order.Id == 0){
+                ModelState.AddModelError("Order Error","Order id can not be 0.");
+            }
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            bool result = await _repo.EditOrder(order);
+
+            return result ? StatusCode(200) : StatusCode(400);
         }
 
-        public Task<bool> EditOrder(){
-            throw new NotImplementedException(); //TODO Unit testing
+        
+        [HttpPost("delete/{id}", Name = "DeleteOrder")]
+        public async Task<IActionResult> DeleteOrder(int id){
+            if(id == 0){
+                ModelState.AddModelError("Order Error","Can not delete order with id 0.");
+            }
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            var order = await _repo.GetOrder(id);
+
+            bool result = await _repo.DeleteOrder(order);
+
+            return result ? StatusCode(200) : BadRequest();
         }
 
         public Task<bool> UpdateOrderStatus(){
