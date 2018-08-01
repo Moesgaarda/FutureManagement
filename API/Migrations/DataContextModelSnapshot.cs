@@ -399,7 +399,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.CalendarEvent", b =>
                 {
-                    b.HasOne("API.Models.Calendar")
+                    b.HasOne("API.Models.Calendar", "Calendar")
                         .WithMany("Events")
                         .HasForeignKey("CalendarId");
 
