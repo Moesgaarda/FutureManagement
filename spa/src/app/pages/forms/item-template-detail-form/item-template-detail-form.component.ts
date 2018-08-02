@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ActivatedRoute } from '@angular/router';
-import { ItemProperty } from '../../../_models/ItemProperty';
+import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
 
@@ -18,11 +18,11 @@ export class ItemTemplateDetailFormComponent implements OnInit {
   fileDisabled: boolean;
   descriptionDisabled: boolean;
   template: ItemTemplate;
-  newProperty: ItemProperty;
+  newProperty: ItemPropertyName;
   unitTypeEnum: string;
-  properties: ItemProperty[] = [];
-  propertiesToCheck: ItemProperty[] = [];
-  listToCheck: ItemProperty[] = [];
+  properties: ItemPropertyName[] = [];
+  propertiesToCheck: ItemPropertyName[] = [];
+  listToCheck: ItemPropertyName[] = [];
   templates: ItemTemplate[];
   selectedTemplates: ItemTemplate[] = [];
   templatesToGet: ItemTemplatePart[] = [];

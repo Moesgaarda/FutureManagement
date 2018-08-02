@@ -1,6 +1,6 @@
 
 
-export interface ItemProperty {
+export interface ItemPropertyName {
     id: number;
     name: string;
 }
