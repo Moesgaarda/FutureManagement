@@ -123,7 +123,7 @@ namespace API.TESTS
             // Act
             IActionResult allOrders = await controller.GetAllOrders();
             OkObjectResult intermediate = allOrders as OkObjectResult;
-            List<Order> result = allOrders as List<Order>;
+            List<Order> result = intermediate.Value as List<Order>;
 
             // Assert
             Assert.True(result.Count == 2);
