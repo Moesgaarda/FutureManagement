@@ -35,8 +35,8 @@ export class ItemTemplateDetailFormComponent implements OnInit {
   }
 
   async asyncSetup() {
-    await this.loadAllTemplateProperties();
     await this.loadTemplate();
+    await this.loadAllTemplateProperties();
     this.delay(15000);
     this.delay(15000);
     await this.loadTemplates();

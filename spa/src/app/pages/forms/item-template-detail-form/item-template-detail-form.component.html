@@ -104,7 +104,11 @@
           <div class="row demo-checkboxes-radio">
             <div class="demo-checkboxes col-sm-4">
               <ng-container *ngFor="let prop of properties">
-                  <nb-checkbox [value]="propertiesToCheck.includes(prop)"> {{prop.name}}</nb-checkbox>
+                <ng-container *ngFor="let check of propertiesToCheck">  
+                    <div *ngIf="prop.id == check.id; then checkedBox else unCheckedBox"></div>  
+                    <ng-template #checkedBox> <nb-checkbox [value]="true"> {{prop.id}} </nb-checkbox> </ng-template>  
+                    <ng-template #unCheckedBox> <nb-checkbox [value]="false"> {{prop.id}} </nb-checkbox> </ng-template>  
+                </ng-container>  
               </ng-container>  
             </div>
           </div>
@@ -121,4 +125,5 @@
       </nb-card> 
     </div>
   </div>
+
   
