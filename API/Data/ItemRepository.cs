@@ -122,7 +122,7 @@ namespace API.Data {
 
         public async Task<List<ItemPropertyDescription>> GetPropertyDescriptions(int itemId)
         {
-            return await _context.ItemPropertyDescriptions.Where(x => x.Item.Id == itemId).ToListAsync(); 
+            return await _context.ItemPropertyDescriptions.Where(x => x.Item.Id == itemId).Include(x => x.PropertyName).ToListAsync(); 
         }
     }
 }

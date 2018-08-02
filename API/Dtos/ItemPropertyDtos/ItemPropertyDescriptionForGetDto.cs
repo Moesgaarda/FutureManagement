@@ -7,6 +7,5 @@ namespace API.Dtos
         public int Id { get; set; }
         public string Description { get; set; }
         public ItemPropertyNameForGetDto PropertyName { get; set; }
-        public ItemForGetDto Item { get; set; }
     }
 }
