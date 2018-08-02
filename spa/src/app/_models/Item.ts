@@ -1,7 +1,7 @@
 import {ItemTemplate} from './ItemTemplate';
 import {User} from './User';
 import {Order} from './Order';
-import { ItemProperty } from './ItemProperty';
+import { ItemPropertyName } from './ItemPropertyName';
 
 export interface Item {
     id: number;

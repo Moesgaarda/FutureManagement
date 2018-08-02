@@ -7,21 +7,19 @@
           <div class="form-group">
             <label for="name">Navn på skabelonen</label>
             <div class="input-group">
-              <input type="text" placeholder="Navn" class="form-control"/>
+              <input type="text" placeholder="Navn" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.name"/>
             </div>
           </div>
           <div class="form-group">
             <label>Mængdeenhed</label>
-            <select class="form-control btn btn-success dropdown-toggle">
-              <option>Stk</option>
-              <option>Cm</option>
-              <option>Paller</option>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="unitType">
+              <option *ngFor="let enum of unitTypes" selected>{{enum}}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="name">Beskrivelse</label>
             <div class="input-group">
-              <textarea rows="5" placeholder="Beskrivelse" class="form-control"></textarea>
+              <textarea rows="5" placeholder="Beskrivelse" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.description"></textarea>
             </div>
           </div>
 
@@ -43,29 +41,23 @@
           </div>
 
           <div class="form-group">
-            <label for="usedList">Anvendelsesliste</label>
-            <div class="form-group">
-                <ng-select
-                [items]="templates | async"
-                [multiple]="true"
-                [closeOnSelect]="false"
-                [hideSelected]="true"
-                bindLabel="name"
-                placeholder="Vælg skabeloner"
-                [(ngModel)]="selectedTemplates">               
-              </ng-select>
-              <small class="form-text">En liste af skabeloner hvori denne skabelon anvendes.
-              </small>
-            </div>
-          </div>
+            <label for="name">Vælg mængder til de forskellige skabeloner</label>
+            <div class="input-group"  *ngFor="let temp of selectedTemplates; let i=index">
+                     <label>{{temp.name}}: </label>
+                    <input type="number" placeholder="{{temp.name}}" class="form-control col-lg-8" name="amount{{i}}" [(ngModel)]="partAmounts[i]" />
+                </div>
+                
+        </div>
+
           <div class="form-group">
             <label for="files">Tilknyttede filer</label>
             <div class="form-group">
-              <input type="text" placeholder="Tilknyttede filer" class="form-control"/>
+              <input type="text" placeholder="Tilknyttede filer" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.files"/>
               <small class="form-text">Har denne skabelon nogle filer der skal tilknyttes?
               </small>
             </div>
           </div>
+          <button class="btn btn-success btn-rectangle input-group-text" (click)="addTemplate()">Tilføj skabelonen</button> 
         </nb-card-body>
       </nb-card>
     </div>
@@ -75,12 +67,10 @@
       <nb-card>
         <nb-card-header>Egenskaber</nb-card-header>
         <nb-card-body>
-          <div class="row demo-checkboxes-radio">
-            <div class="demo-checkboxes col-sm-4">
-              <nb-checkbox>Malingsfarve</nb-checkbox>
-              <nb-checkbox>Behandling</nb-checkbox>
+            <div class="col-sm-6" *ngFor="let prop of properties; let i=index">
+              <input type="checkbox" [(ngModel)]="propertiesToAdd[i]" value="{{prop.id}}"/> {{prop.name}}
             </div>
-           </div>
+       
            <div class="input-group">
             <input type="text" placeholder="Tilføj ny egenskab" class="form-control"/>
             <span class="input-group-append">
@@ -91,6 +81,7 @@
           </div>
         </nb-card-body>
       </nb-card> 
+      <button (click)="hej()">hej</button>
     </div>
   </div>
   

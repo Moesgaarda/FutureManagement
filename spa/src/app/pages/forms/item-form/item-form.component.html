@@ -4,47 +4,54 @@
         <nb-card-header>Ny genstand til lageret</nb-card-header>
         <nb-card-body>
           <div class="form-group">
-            <label for="name">Navn på genstanden</label>
-            <div class="input-group">
-              <input type="text" placeholder="Navn" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group">
             <label for="placement">Genstandens placering</label>
             <div class="input-group">
-              <input type="text" placeholder="Placering" class="form-control"/>
+              <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="itemToAdd.placement"/>
             </div>
           </div><div class="form-group">
             <label for="amount">Mængde</label>
             <div class="input-group">
-              <input type="text" placeholder="Mængde" class="form-control"/>
+              <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="itemToAdd.amount"/>
             </div>
           </div>
           <div class="form-group">
             <label>Vælg skabelon</label>
-            <select class="form-control btn btn-success dropdown-toggle">
-              <option>Skabelon 1</option>
-              <option>Skabelon 2</option>
-              <option>Skabelon 3</option>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="itemToAdd.template">
+              <option *ngFor="let temp of templates">{{temp.name}}</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="order">Oprindelsesordre</label>
-            <div class="input-group">
-              <input type="text" placeholder="Ordre" class="form-control"/>
-            </div>
+
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="item-checkbox">
+            <label class="custom-control-label" for="item-checkbox">Er genstanden bestilt?</label>
           </div>
-          <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="created-checkbox" [(ngModel)]="showCreatedBy">
+          <label class="custom-control-label" for="created-checkbox">Er genstanden fremstillet?</label>
+        </div>
+          <div class="form-group" *ngIf="showCreatedBy">
             <label for="madeBy">Lavet af</label>
             <div class="input-group">
-              <input type="text" placeholder="Navn" class="form-control"/>
+              <input type="text" placeholder="Navn" class="form-control" [(ngModel)]="itemToAdd.createdBy"/>
             </div>
           </div>
           <div class="form-group">
-            <label for="itemList">Liste af dele</label>
-            <input type="text" placeholder="Genstandsliste" class="form-control" disabled/>
-            <small class="form-text">En liste af genstande der blev anvendt til at fremstille denne genstand </small>
+            <label for="itemList">Genstandsliste</label>
+            <div class="form-group">
+              <ng-select
+                [items]="items | async"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [hideSelected]="true"
+                bindLabel="template.name"
+                placeholder="Vælg genstande"
+                [(ngModel)]="selectedItemParts">               
+              </ng-select>
+              <small class="form-text">En liste af genstande der bruges til at fremstille denne genstand.
+              </small>
+            </div>
           </div>
+          <button (click)="hej()">hej</button>
         </nb-card-body>
       </nb-card>
     </div>
