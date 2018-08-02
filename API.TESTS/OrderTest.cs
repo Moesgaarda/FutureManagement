@@ -8,7 +8,9 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using API.Enums;
 using API.Data;
+using System.Collections.Generic;
 using AutoMapper;
+using API.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.TESTS
@@ -32,31 +34,43 @@ namespace API.TESTS
             _dbContext = new DataContext(options);
             _dbContext.Database.EnsureCreated();
             Seed(_dbContext);
+
+            _repo = new OrderRepository(_dbContext);
+            MapperConfiguration config = new MapperConfiguration( cfg => {
+                cfg.CreateMap<Order, OrderForGetDto>();
+            });
+            
+            _mapper =  config.CreateMapper();
         }
 
 
         [Fact]
-        private async void ReadOrderReturnsCorrectResultTest(){
+        private async void GetOrderTest(){
             // Arrange
             var controller = new OrderController(_dbContext, _mapper, _repo);
 
             // Act
-            var result = await controller.GetOrder(1);
-
+            IActionResult result = await controller.GetOrder(1);
+            OkObjectResult intermediate = result as OkObjectResult;
+            Order order = intermediate.Value as Order;
+            
             // Assert
-            Assert.True(result.Id == 1);
+            Assert.True(order.Id == 1);
+            
         }
 
         [Fact]
-        private async void ReadOrderReturnsFalseResultTest(){
+        private async void GetOrderReturnsFalseResultTest(){
             // Arrange
             var controller = new OrderController(_dbContext, _mapper, _repo);
 
             // Act
-            var result = await controller.GetOrder(2);
+            IActionResult result = await controller.GetOrder(2);
+            OkObjectResult intermediate = result as OkObjectResult;
+            Order order = intermediate.Value as Order;
 
             // Assert
-            Assert.False(result.Id == 1);
+            Assert.False(order.Id == 1);
         }
 
         [Fact]
@@ -66,10 +80,12 @@ namespace API.TESTS
             var testOrder = new Order();
 
             // Act
-            var result = await controller.CreateOrder(testOrder);
+            var status = await controller.AddOrder(testOrder);
 
             // Assert
-            Assert.False(result);
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(201);
+            Assert.False(result.StatusCode == test.StatusCode);
         }
 
         [Fact]
@@ -91,10 +107,12 @@ namespace API.TESTS
                 );
 
             // Act
-            var result = await controller.CreateOrder(testOrder);
+            var status = await controller.AddOrder(testOrder);
 
             // Assert
-            Assert.True(result);
+            StatusCodeResult result = status as StatusCodeResult;
+            var test = new StatusCodeResult(201);
+            Assert.True(result.StatusCode == test.StatusCode);
         }
 
         [Fact]
@@ -103,10 +121,12 @@ namespace API.TESTS
             var controller = new OrderController(_dbContext, _mapper, _repo);
 
             // Act
-            IActionResult result = await controller.GetAllOrders();
+            IActionResult allOrders = await controller.GetAllOrders();
+            OkObjectResult intermediate = allOrders as OkObjectResult;
+            List<Order> result = intermediate.Value as List<Order>;
 
             // Assert
-            Assert.Equal(2, result.Count);
+            Assert.True(result.Count == 2);
         }
 
         private void Seed(DataContext context){

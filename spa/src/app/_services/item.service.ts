@@ -36,5 +36,4 @@ export class ItemService {
         return this.http.post(this.baseUrl + 'Item/delete/' + id, {})
         .map(response => {});
     }
-
 }

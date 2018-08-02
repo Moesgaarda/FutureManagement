@@ -1,6 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using API.Data;
+using API.Dtos;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -39,12 +45,12 @@ namespace API.Data
 
         public async Task<List<Order>> GetAllOrders()
         {
-            return await _context.Orders.Include(x => x.OrderedBy).ToListAsync();
+            return await _context.Orders.ToListAsync();
         }
 
-        public Task<Order> GetOrder(int id)
+        public async Task<Order> GetOrder(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

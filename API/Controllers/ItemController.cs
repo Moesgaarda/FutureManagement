@@ -137,5 +137,13 @@ namespace API.Controllers
             bool result = await _repo.AddItem(itemToCreate);
             return result ? StatusCode(201) : BadRequest();
         }
+
+        [HttpGet("getPropertyDescription/{id}", Name = "GetPropertyDescription")]
+        public async Task<IActionResult> GetPropertyDescriptions(int id){
+            List<ItemPropertyDescription> propertyDescription = await _repo.GetPropertyDescriptions(id);
+            List<ItemPropertyDescriptionForGetDto> propertyDescriptionToReturn = _mapper.Map<List<ItemPropertyDescriptionForGetDto>>(propertyDescription);
+
+            return Ok(propertyDescriptionToReturn);
+        }
     }
 }

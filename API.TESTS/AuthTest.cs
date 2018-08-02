@@ -84,6 +84,7 @@ namespace API.TESTS
             Assert.False(userExists);
         }
 
+        [Fact]
         public void PasswordHashTest(){
             var repo = new AuthRepository(_dbContext);
 
