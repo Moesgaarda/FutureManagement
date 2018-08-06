@@ -91,6 +91,15 @@ export class ItemTemplateDetailFormComponent implements OnInit {
     return this.selectedTemplates;
   }
 
+  checkBox(id) {
+    for (const propToCheck of this.propertiesToCheck){
+      if (propToCheck.id === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   printList() {
     console.log(this.selectedTemplates);
     console.log(this.usedTemplates);
