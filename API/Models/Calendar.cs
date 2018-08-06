@@ -6,10 +6,17 @@ namespace API.Models
     public class Calendar
     {
         public Calendar(){}
+        
         public Calendar(int id, string name)
         {
             this.Id = id;
             this.Name = name;
+        }
+
+        public Calendar(string name, ICollection<CalendarEvent> events)
+        {
+            this.Name = name;
+            this.Events = events;
         }
 
         public Calendar(string name)

@@ -18,6 +18,7 @@ namespace API.Helpers
             CreateMap<ItemTemplatePart, ItemTemplatePartOfDto>();
             CreateMap<ItemPropertyName, ItemPropertyNameForAddDto>();
             CreateMap<ItemPropertyName, ItemPropertyNameForGetDto>();
+            CreateMap<ItemPropertyDescription, ItemPropertyDescriptionForGetDto>();
             CreateMap<TemplatePropertyRelation, TemplatePropertyForGetDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Property.Name))
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.PropertyId));

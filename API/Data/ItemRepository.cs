@@ -27,9 +27,13 @@ namespace API.Data {
         }
 
         public async Task<bool> AddItem (Item item) {
+            if(item.Order != null)
+                item.Order = await _context.Orders.FirstOrDefaultAsync (x => x.Id == item.Order.Id);
+
+            if(item.CreatedBy != null)
+                item.CreatedBy = await _context.Users.FirstOrDefaultAsync (x => x.Id == item.CreatedBy.Id);
+
             item.Template = await _context.ItemTemplates.FirstOrDefaultAsync (x => x.Id == item.Template.Id);
-            item.Order = await _context.Orders.FirstOrDefaultAsync (x => x.Id == item.Order.Id);
-            item.CreatedBy = await _context.Users.FirstOrDefaultAsync (x => x.Id == item.CreatedBy.Id);
 
             foreach (var prop in item.Properties) {
                 prop.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync (x => x.Id == prop.PropertyName.Id);
@@ -114,6 +118,11 @@ namespace API.Data {
                 .Load ();
 
             return item;
+        }
+
+        public async Task<List<ItemPropertyDescription>> GetPropertyDescriptions(int itemId)
+        {
+            return await _context.ItemPropertyDescriptions.Where(x => x.Item.Id == itemId).Include(x => x.PropertyName).ToListAsync(); 
         }
     }
 }

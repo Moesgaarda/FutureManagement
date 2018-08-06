@@ -14,8 +14,9 @@ namespace API.Controllers
         public FileInputController(DataContext context){
             _context = context;
         }
-
-        [HttpPost]
+        //https://www.c-sharpcorner.com/article/upload-download-files-in-asp-net-core-2-0/
+        //This is the tutorial that i used
+        [HttpPost("uploadfiles", Name = "UploadFiles")]
         public async Task<IActionResult> UploadFiles(List<IFormFile> files, string originPath){
             if(files.Count == 0 ||files == null){
                 ModelState.AddModelError("File Error","No files selected");
@@ -23,7 +24,6 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-
             foreach(IFormFile file in files){
                 if(file == null || file.Length == 0){
                     ModelState.AddModelError("File Error", "No file selected");
@@ -32,7 +32,7 @@ namespace API.Controllers
                     return BadRequest(ModelState);
                 }
                 var path = Path.Combine(
-                            Directory.GetCurrentDirectory(), "wwwroot",
+                            Directory.GetCurrentDirectory(),
                             originPath, file.Name);
                 using(var stream = new FileStream(path, FileMode.Create)){
                     await file.CopyToAsync(stream);
@@ -64,7 +64,5 @@ namespace API.Controllers
             memory.Position = 0;
             return File(memory, Path.GetFileName(path));
         }
-
-
     }
 }

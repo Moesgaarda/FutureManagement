@@ -75,6 +75,8 @@ namespace API.Data
                 .WithMany(i => i.PartOf)
                 .HasForeignKey(ii => ii.PartId);
             
+
+            /* Ensures that IsActive defaults to true */
             modelBuilder.Entity<Item>()
                 .Property(x => x.IsActive)
                 .HasDefaultValue(true);

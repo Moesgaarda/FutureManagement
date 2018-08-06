@@ -42,5 +42,6 @@ namespace API.Models{
         public int RepeatedInterval { get; set; }
         public User CreatedBy { get; set; }
         public ICollection<User> Participants { get; set; }
+        public Calendar Calendar { get; set; }
     }
 }

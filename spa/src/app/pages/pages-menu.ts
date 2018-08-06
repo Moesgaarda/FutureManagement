@@ -3,13 +3,13 @@ import { NbMenuItem } from '@nebular/theme';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Forside',
-    icon: 'nb-home',
+    icon: 'fa fa-home',
     link: '/pages/dashboard',
     home: true,
   },
   {
     title: 'Projekter',
-    icon: 'nb-grid-b',
+    icon: 'fa fa-th',
     children: [
       {
         title: 'Projekter',
@@ -87,7 +87,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Midlertigig loginside', // menu title
-    icon: 'ion-android-home', // menu icon
+    icon: 'fa fa-unlock', // menu icon
     link: '/pages/new',
   },
 ];
