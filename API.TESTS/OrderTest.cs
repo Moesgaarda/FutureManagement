@@ -129,6 +129,20 @@ namespace API.TESTS
             Assert.True(result.Count == 2);
         }
 
+        [Fact]
+        private async void EditOrderTest(){
+            // Arrange
+            var controller = new OrderController(_dbContext, _mapper, _repo);
+            var order = _dbContext.Orders.FirstOrDefault(x => x.Id == 1);
+            // Act
+            order.Company = "CompanyC";
+            await controller.EditOrder(order);
+            Order editedOrder = _dbContext.Orders.FirstOrDefault(x => x.Id == 1);
+
+            // Assert
+            Assert.True(editedOrder.Company == order.Company);
+        }
+
         private void Seed(DataContext context){
             var orders = new[]{
                 new Order("CompanyA", 

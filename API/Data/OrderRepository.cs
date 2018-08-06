@@ -19,7 +19,9 @@ namespace API.Data
         }
         public async Task<bool> AddOrder(Order order)
         {
-            order.OrderedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == order.OrderedBy.Id);
+            if(order.OrderedBy != null){
+                order.OrderedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == order.OrderedBy.Id);
+            }
 
             await _context.Orders.AddAsync(order);
             int result = await _context.SaveChangesAsync();
