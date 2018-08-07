@@ -41,13 +41,33 @@ export class ItemTemplateFormComponent implements OnInit {
     })
   }
 
+  onCheckboxChange(prop, event) {
+    if (event.target.checked) {
+      this.propertiesToAdd.push(prop.id);
+    } else {
+      for (let i = 0; i < this.properties.length; i++) {
+        if (this.propertiesToAdd[i] === prop.id) {
+          this.propertiesToAdd.splice(i, 1);
+        }
+      }
+    }
+  }
+/*
+  addExistingTemplateProperty() {
+  }*/
+
   addTemplate() {
-    // this.templateService.
+    this.templateService.addTemplateProperty(this.templateToAdd);
+    console.log('added tempalte!');
+    console.log(this.templateToAdd);
   }
 
   hej() {
+    console.log('SelectedTemplates');
     console.log(this.selectedTemplates);
+    console.log('partAmounts');
     console.log(this.partAmounts);
+    console.log('properties');
     console.log(this.properties);
     // createTemplateToAdd
 
@@ -59,7 +79,7 @@ export class ItemTemplateFormComponent implements OnInit {
     }*/
 
   // this.templateToAdd.parts = this.templatePartsToAdd;
-
+  console.log('propertiesToAdd');
   console.log(this.propertiesToAdd);
   /*for (const prop of this.propertiesToAdd) {
     console.log(prop.id);
@@ -70,7 +90,7 @@ export class ItemTemplateFormComponent implements OnInit {
 
   this.templateToAdd.templateProperties = this.propertiesToAdd;
 
-
+  console.log('templateToAdd');
     // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
     console.log(this.templateToAdd);
 

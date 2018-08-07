@@ -68,13 +68,13 @@
         <nb-card-header>Egenskaber</nb-card-header>
         <nb-card-body>
             <div class="col-sm-6" *ngFor="let prop of properties; let i=index">
-              <input type="checkbox" [(ngModel)]="propertiesToAdd[i]" value="{{prop.id}}"/> {{prop.name}}
+              <input type="checkbox" [(ngModel)]="propertiesToAdd[i]" value="{{prop.id}}" (ng-change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
             </div>
        
            <div class="input-group">
             <input type="text" placeholder="Tilføj ny egenskab" class="form-control"/>
             <span class="input-group-append">
-              <button class="btn btn-success input-group-text" onclick="addProperty()">
+              <button class="btn btn-success input-group-text" onclick="addTemplateProperty()">
                 Tilføj
               </button>
             </span>
