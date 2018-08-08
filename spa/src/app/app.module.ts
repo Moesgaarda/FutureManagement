@@ -19,6 +19,7 @@ import { AuthService } from './_services/auth.service';
 import { HttpModule } from '@angular/http';
 import { ItemTemplateService } from './_services/itemTemplate.service';
 import { ItemService } from './_services/item.service';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ItemService } from './_services/item.service';
     AppRoutingModule,
     FormsModule,
     HttpModule,
+    FileUploadModule,
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),

@@ -4,6 +4,9 @@ import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
+import { FileUploader } from 'ng2-file-upload';
+
+const URL = 'https://localhost:5000/api/FileInput/';
 
 @Component({
   selector: 'ngx-item-template-form',
@@ -21,6 +24,18 @@ export class ItemTemplateFormComponent implements OnInit {
   templatePartsToAdd: ItemTemplatePart[] = [];
   partAmounts: number[] = [];
   propertiesToAdd: ItemPropertyName[] = [];
+
+  public uploader: FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver: boolean = false;
+  public hasAnotherDropZoneOver: boolean = false;
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
+  }
 
   constructor(private templateService: ItemTemplateService) {
     this.getTemplates();
