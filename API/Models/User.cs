@@ -41,6 +41,6 @@ namespace API.Models{
         public bool? IsActive { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public ICollection<Change> Changes {get; set;}
+        public ICollection<EventLog> Changes {get; set;}
     }
 }
