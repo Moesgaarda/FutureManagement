@@ -36,7 +36,10 @@ export class ItemFormComponent {
   hej() {
     this.itemToAdd.parts = this.selectedItemParts;
     console.log(this.itemToAdd);
-    console.log(this.itemToAdd.template.name);
+  }
+
+  addItem() {
+    this.itemService.addItem(this.itemToAdd).subscribe();
   }
 
 }
