@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Item } from '../_models/Item';
 import { Observable } from 'rxjs';
-import { Http } from '@angular/http';
+import { HttpClient } from '../../../node_modules/@angular/common/http';
 
 
 @Injectable()
@@ -10,30 +10,30 @@ export class ItemService {
 
     baseUrl = environment.apiUrl;
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {}
 
     getAllItems(): Observable<Item[]> {
-        return this.http.get(this.baseUrl + 'Item/getAll')
-            .map(response => <Item[]>response.json());
+        return this.http.get<Item[]>(this.baseUrl + 'Item/getAll');
     }
 
     getActiveItems(): Observable<Item[]> {
-        return this.http.get(this.baseUrl + 'Item/getActive')
-            .map(response => <Item[]>response.json());
+        return this.http.get<Item[]>(this.baseUrl + 'Item/getActive');
     }
 
     getInactiveItems(): Observable<Item[]> {
-        return this.http.get(this.baseUrl + 'Item/getInactive')
-            .map(response => <Item[]>response.json());
+        return this.http.get<Item[]>(this.baseUrl + 'Item/getInactive');
     }
 
     getItem(id: number): Observable<Item> {
-        return this.http.get(this.baseUrl + 'Item/get/' + id)
-            .map(response => <Item>response.json());
+        return this.http.get<Item>(this.baseUrl + 'Item/get/' + id);
     }
 
-    deleteItem(id) {
+    deleteItem(id: number) {
         return this.http.post(this.baseUrl + 'Item/delete/' + id, {})
         .map(response => {});
+    }
+
+    addItem(item: Item): Observable<Item> {
+        return this.http.post<Item>(this.baseUrl + 'Item/add', item);
     }
 }

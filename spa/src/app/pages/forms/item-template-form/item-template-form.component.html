@@ -53,6 +53,7 @@
           </div>
         </div>
         <button class="btn btn-success btn-rectangle input-group-text" (click)="addTemplate()">Tilføj skabelonen</button>
+        <button (click)="hej()">hej</button>
       </nb-card-body>
     </nb-card>
   </div>
@@ -65,11 +66,12 @@
         <div class="col-sm-6" *ngFor="let prop of properties; let i=index">
           <input type="checkbox" [(ngModel)]="propertiesToAdd[i]" value="{{prop.id}}" (ng-change)="onCheckboxChange(prop,$event)" /> {{prop.name}}
         </div>
+        <br>
 
         <div class="input-group">
           <input type="text" placeholder="Tilføj ny egenskab" class="form-control" />
           <span class="input-group-append">
-            <button class="btn btn-success input-group-text" onclick="addTemplateProperty()">
+            <button class="btn btn-success input-group-text" (click)="addTemplateProperty()">
               Tilføj
             </button>
           </span>
@@ -132,9 +134,6 @@
                   <span *ngIf="item.isSuccess">
                     <i class="glyphicon glyphicon-ok"></i>
                   </span>
-                  <span *ngIf="item.isCancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                  </span>
                   <span *ngIf="item.isError">
                     <i class="glyphicon glyphicon-remove"></i>
                   </span>
@@ -142,9 +141,6 @@
                 <td nowrap>
                   <button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
                     <span class="glyphicon glyphicon-upload"></span> Upload
-                  </button>
-                  <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
-                    <span class="glyphicon glyphicon-ban-circle"></span> Fortryd
                   </button>
                   <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
                     <span class="glyphicon glyphicon-trash"></span> Fjern
@@ -164,9 +160,6 @@
 
             <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
               <span class="glyphicon glyphicon-upload"></span> Upload alle
-            </button>
-            <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-              <span class="glyphicon glyphicon-ban-circle"></span> Fortryd alle
             </button>
             <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
               <span class="glyphicon glyphicon-trash"></span> Fjern alle

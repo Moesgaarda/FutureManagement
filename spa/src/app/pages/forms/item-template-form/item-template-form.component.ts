@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
 import { FileUploader } from 'ng2-file-upload';
 
-const URL = 'https://localhost:5000/api/FileInput/';
+const URL = 'http://localhost:5000/api/FileInput/uploadfiles';
 
 @Component({
   selector: 'ngx-item-template-form',
@@ -24,18 +24,9 @@ export class ItemTemplateFormComponent implements OnInit {
   templatePartsToAdd: ItemTemplatePart[] = [];
   partAmounts: number[] = [];
   propertiesToAdd: ItemPropertyName[] = [];
+  propToAddToDb: ItemPropertyName;
 
   public uploader: FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver: boolean = false;
-  public hasAnotherDropZoneOver: boolean = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
 
   constructor(private templateService: ItemTemplateService) {
     this.getTemplates();
@@ -44,6 +35,11 @@ export class ItemTemplateFormComponent implements OnInit {
 
   ngOnInit() {
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+
+      console.log('ImageUpload:uploaded:', item, status);
+  };
   }
 
   async getTemplates() {
@@ -67,14 +63,19 @@ export class ItemTemplateFormComponent implements OnInit {
       }
     }
   }
-/*
+
   addExistingTemplateProperty() {
-  }*/
+  }
 
   addTemplate() {
-    this.templateService.addTemplateProperty(this.templateToAdd);
     console.log('added tempalte!');
     console.log(this.templateToAdd);
+    this.templateService.addTemplate(this.templateToAdd).subscribe();
+  }
+
+  addTemplateProperty() {
+    this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
+    this.loadAllTemplateProperties();
   }
 
   hej() {
@@ -84,31 +85,34 @@ export class ItemTemplateFormComponent implements OnInit {
     console.log(this.partAmounts);
     console.log('properties');
     console.log(this.properties);
+
     // createTemplateToAdd
 
-    /*for (let i = 0; i < this.selectedTemplates.length; i++) {
+    for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
+        part: this.selectedTemplates[i],
         templateId: this.selectedTemplates[i].id,
         amount: this.partAmounts[i],
       });
-    }*/
+    }
 
-  // this.templateToAdd.parts = this.templatePartsToAdd;
+  this.templateToAdd.parts = this.templatePartsToAdd;
   console.log('propertiesToAdd');
   console.log(this.propertiesToAdd);
+
   /*for (const prop of this.propertiesToAdd) {
     console.log(prop.id);
   }*/
 
 
+  // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
 
-
-  this.templateToAdd.templateProperties = this.propertiesToAdd;
+  // this.templateToAdd.templateProperties = this.propertiesToAdd;
 
   console.log('templateToAdd');
-    // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
-    console.log(this.templateToAdd);
+
+  console.log(this.templateToAdd);
+
 
   }
-
 }
