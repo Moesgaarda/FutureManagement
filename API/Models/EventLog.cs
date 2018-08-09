@@ -1,28 +1,29 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using API.Enums;
 
-namespace API.Models
-{
-    public class Change
-    {
+namespace API.Models{
+    public class EventLog{
         [Key]
         public int Id {get; set;}
         public DateTime Time {get; set;}
         public User User {get; set;}
         public int UserId {get; set;}
         public string Description {get; set;}
-        public Change(){
+        public EventLog(){
             this.Time = DateTime.Now;
         }
-        public Change(int id, User user, string description){
+        public EventLog(int id, User user, int userId, string description){
             this.Id = id;
             this.User = user;
+            this.UserId = userId;
             this.Description = description;
             this.Time = DateTime.Now;
         }
 
-        public Change(User user, string description){
+        public EventLog(User user, int userId, string description){
             this.User = user;
+            this.UserId = userId;
             this.Description = description;
             this.Time = DateTime.Now;
         }
