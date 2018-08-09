@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
 import { FileUploader } from 'ng2-file-upload';
 
-const URL = 'https://localhost:5000/api/FileInput/';
+const URL = 'http://localhost:5000/api/FileInput/uploadfiles';
 
 @Component({
   selector: 'ngx-item-template-form',
@@ -26,16 +26,6 @@ export class ItemTemplateFormComponent implements OnInit {
   propertiesToAdd: ItemPropertyName[] = [];
 
   public uploader: FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver: boolean = false;
-  public hasAnotherDropZoneOver: boolean = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
 
   constructor(private templateService: ItemTemplateService) {
     this.getTemplates();
@@ -44,6 +34,11 @@ export class ItemTemplateFormComponent implements OnInit {
 
   ngOnInit() {
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+
+      console.log('ImageUpload:uploaded:', item, status);
+  };
   }
 
   async getTemplates() {
@@ -110,5 +105,6 @@ export class ItemTemplateFormComponent implements OnInit {
     console.log(this.templateToAdd);
 
   }
+
 
 }
