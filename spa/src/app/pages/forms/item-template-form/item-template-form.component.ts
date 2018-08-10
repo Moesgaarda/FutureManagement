@@ -23,7 +23,7 @@ export class ItemTemplateFormComponent implements OnInit {
   unitTypeEnumNumber = UnitType;
   templatePartsToAdd: ItemTemplatePart[] = [];
   partAmounts: number[] = [];
-  propertiesToAdd: ItemPropertyName[] = [];
+  propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
 
   public uploader: FileUploader = new FileUploader({url: URL});
@@ -54,10 +54,10 @@ export class ItemTemplateFormComponent implements OnInit {
 
   onCheckboxChange(prop, event) {
     if (event.target.checked) {
-      this.propertiesToAdd.push(prop.id);
+      this.propertiesToAdd.push(prop);
     } else {
       for (let i = 0; i < this.properties.length; i++) {
-        if (this.propertiesToAdd[i] === prop.id) {
+        if (this.propertiesToAdd[i] === prop) {
           this.propertiesToAdd.splice(i, 1);
         }
       }
@@ -70,23 +70,6 @@ export class ItemTemplateFormComponent implements OnInit {
   addTemplate() {
     console.log('added tempalte!');
     console.log(this.templateToAdd);
-    this.templateService.addTemplate(this.templateToAdd).subscribe();
-  }
-
-  async addTemplateProperty() {
-    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
-    this.loadAllTemplateProperties();
-  }
-
-  hej() {
-    console.log('SelectedTemplates');
-    console.log(this.selectedTemplates);
-    console.log('partAmounts');
-    console.log(this.partAmounts);
-    console.log('properties');
-    console.log(this.properties);
-
-    // createTemplateToAdd
 
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
@@ -96,23 +79,15 @@ export class ItemTemplateFormComponent implements OnInit {
       });
     }
 
-  this.templateToAdd.parts = this.templatePartsToAdd;
-  console.log('propertiesToAdd');
-  console.log(this.propertiesToAdd);
+    this.templateToAdd.parts = this.templatePartsToAdd;
+    this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
+    this.templateToAdd.templateProperties = this.propertiesToAdd;
 
-  /*for (const prop of this.propertiesToAdd) {
-    console.log(prop.id);
-  }*/
+    this.templateService.addTemplate(this.templateToAdd).subscribe();
+  }
 
-
-  // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
-
-  // this.templateToAdd.templateProperties = this.propertiesToAdd;
-
-  console.log('templateToAdd');
-
-  console.log(this.templateToAdd);
-
-
+  async addTemplateProperty() {
+    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
+    this.loadAllTemplateProperties();
   }
 }

@@ -53,7 +53,6 @@
           </div>
         </div>
         <button class="btn btn-success btn-rectangle input-group-text" (click)="addTemplate()">Tilføj skabelonen</button>
-        <button (click)="hej()">hej</button>
       </nb-card-body>
     </nb-card>
   </div>
@@ -64,7 +63,7 @@
       <nb-card-header>Egenskaber</nb-card-header>
       <nb-card-body>
         <div class="col-sm-6" *ngFor="let prop of properties; let i=index">
-          <input type="checkbox" [(ngModel)]="propertiesToAdd[i]" value="{{prop.id}}" (ng-change)="onCheckboxChange(prop,$event)" /> {{prop.name}}
+          <input type="checkbox" value="{{prop}}" (click)="onCheckboxChange(prop,$event)" /> {{prop.name}}
         </div>
         <br>
 

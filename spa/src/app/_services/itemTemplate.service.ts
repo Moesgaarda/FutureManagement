@@ -36,7 +36,7 @@ export class ItemTemplateService {
     }
 
     addTemplate(template: ItemTemplate): Observable<ItemTemplate> {
-        return this.http.post<ItemTemplate>(this.baseUrl + 'ItemTemplate/add', template);
+        return this.http.post<ItemTemplate>(this.baseUrl + 'ItemTemplate/add', template, this.httpOptions);
     }
 
     addTemplateProperty(property: ItemPropertyName): Observable<ItemPropertyName> {
