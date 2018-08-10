@@ -5,8 +5,9 @@ import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
 import { FileUploader } from 'ng2-file-upload';
+import { environment } from '../../../../environments/environment'
 
-const URL = 'http://localhost:5000/api/FileInput/uploadfiles';
+const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
 @Component({
   selector: 'ngx-item-template-form',
