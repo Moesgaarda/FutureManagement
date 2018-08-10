@@ -96,5 +96,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: !isDevMode(),
     link: '/pages/new',
   },
+  {
+    title: 'Log', // menu title
+    icon: 'fa fa-history', // menu icon
+    hidden: !isDevMode(),
+    children: [
+      {
+        title: 'Alle',
+        link: '/pages/tables/event-log-table',
+      },
+    ],
+  },
 ];
 
