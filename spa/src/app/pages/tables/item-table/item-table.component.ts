@@ -45,7 +45,7 @@ export class ItemTableComponent {
           return temp.name.toString();
         },
         filterFunction(temp?: any, search?: string): boolean {
-          const match = temp.name.indexOf(search) > -1
+          const match = temp.name.toLowerCase().indexOf(search.toLowerCase()) > -1
           if (match || search === '') {
             return true;
           } else {
