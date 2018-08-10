@@ -69,9 +69,9 @@
         <br>
 
         <div class="input-group">
-          <input type="text" placeholder="Tilføj ny egenskab" class="form-control" />
+          <input type="text" placeholder="Tilføj ny egenskab" class="form-control" id="propField" [(ngModel)]="propToAddToDb && propToAddToDb.name" />
           <span class="input-group-append">
-            <button class="btn btn-success input-group-text" (click)="addTemplateProperty()">
+            <button class="btn btn-success input-group-text" (click)="addTemplateProperty()" onclick="document.getElementById('propField').value = ''">
               Tilføj
             </button>
           </span>

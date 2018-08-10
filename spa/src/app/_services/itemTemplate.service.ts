@@ -4,10 +4,17 @@ import { ItemTemplate } from '../_models/ItemTemplate';
 import { Observable } from 'rxjs';
 import { ItemPropertyName } from '../_models/ItemPropertyName';
 import { HttpClient } from '../../../node_modules/@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ItemTemplateService {
     baseUrl = environment.apiUrl;
+
+    httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+        }),
+      };
 
     constructor(private http: HttpClient) {}
 
@@ -33,7 +40,7 @@ export class ItemTemplateService {
     }
 
     addTemplateProperty(property: ItemPropertyName): Observable<ItemPropertyName> {
-        return this.http.post<ItemPropertyName>(this.baseUrl + 'ItemTemplate/addProperty', property);
+        return this.http.post<ItemPropertyName>(this.baseUrl + 'ItemTemplate/addProperty', property, this.httpOptions);
     }
 
 

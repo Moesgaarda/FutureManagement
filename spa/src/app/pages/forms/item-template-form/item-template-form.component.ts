@@ -24,7 +24,7 @@ export class ItemTemplateFormComponent implements OnInit {
   templatePartsToAdd: ItemTemplatePart[] = [];
   partAmounts: number[] = [];
   propertiesToAdd: ItemPropertyName[] = [];
-  propToAddToDb: ItemPropertyName;
+  propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
 
   public uploader: FileUploader = new FileUploader({url: URL});
 
@@ -73,8 +73,8 @@ export class ItemTemplateFormComponent implements OnInit {
     this.templateService.addTemplate(this.templateToAdd).subscribe();
   }
 
-  addTemplateProperty() {
-    this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
+  async addTemplateProperty() {
+    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
     this.loadAllTemplateProperties();
   }
 
