@@ -19,10 +19,10 @@ namespace API.Data
         private readonly DataContext _context;
         private readonly IUserRepository _userRepo;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public EventLogRepository(DataContext context, IUserRepository userRepo, IHttpContextAccessor httpContextAccessor){
+        public EventLogRepository(DataContext context){
             this._context = context;
-            this._userRepo = userRepo;
-            this._httpContextAccessor = httpContextAccessor;
+            this._userRepo = new UserRepository(_context);
+            this._httpContextAccessor = new HttpContextAccessor();
         }
 
         public async Task<bool> AddEventLogCalendarEvent(EventType action, CalendarEvent calendarEvent)
@@ -140,12 +140,16 @@ namespace API.Data
 
         public async Task<User> GetCurrentUser()
         {
-            int userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            User user = await _userRepo.GetUser(userId);
-            if(user == null){
+            // Try-catch blok is here because the login is not fully implemented,
+            // so it can not find the currently logged in user.
+            try{
+                int userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                User user = await _userRepo.GetUser(userId);
+
+                return user;
+            }catch(NullReferenceException){
                 return new User(){ Username = "unauthorized user"};
             }
-            return user;
         }
 
         public async Task<List<EventLog>> GetEventLogs(int id)
