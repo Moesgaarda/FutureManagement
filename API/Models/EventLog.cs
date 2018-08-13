@@ -10,22 +10,25 @@ namespace API.Models{
         public User User {get; set;}
         public int UserId {get; set;}
         public string Description {get; set;}
+        public string LocalIP {get; set;}
         public EventLog(){
             this.Time = DateTime.Now;
         }
-        public EventLog(int id, User user, int userId, string description){
+        public EventLog(int id, User user, int userId, string description, string localIP){
             this.Id = id;
             this.User = user;
             this.UserId = userId;
             this.Description = description;
             this.Time = DateTime.Now;
+            this.LocalIP = localIP;
         }
 
-        public EventLog(User user, int userId, string description){
+        public EventLog(User user, int userId, string description, string localIP){
             this.User = user;
             this.UserId = userId;
             this.Description = description;
             this.Time = DateTime.Now;
+            this.LocalIP = localIP;
         }
     }
 }

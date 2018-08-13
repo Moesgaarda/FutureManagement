@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.Net.Sockets;
 
 namespace API.Data
 {
@@ -30,10 +32,7 @@ namespace API.Data
             User currUser = await GetCurrentUser();
             string desc = $"Bruger {currUser.Username} {GetAction(action)} kalenderbegivenhed \"{calendarEvent.Name}\" med ID[{calendarEvent.Id}]";
             
-            EventLog eventLog = new EventLog(currUser, currUser.Id, desc);
-            
-            await _context.EventLogs.AddAsync(eventLog);
-            int result = await _context.SaveChangesAsync();
+            int result = await WriteEvent(currUser, desc);
 
             return result < 0;
         }
@@ -43,10 +42,7 @@ namespace API.Data
             User currUser = await GetCurrentUser();
             string desc = $"Bruger {currUser.Username} {GetAction(action)} kunde \"{customer.Name}\" med ID[{customer.Id}]";
             
-            EventLog eventLog = new EventLog(currUser, currUser.Id, desc);
-            
-            await _context.EventLogs.AddAsync(eventLog);
-            int result = await _context.SaveChangesAsync();
+            int result = await WriteEvent(currUser, desc);
 
             return result < 0;
         }
@@ -56,10 +52,7 @@ namespace API.Data
             User currUser = await GetCurrentUser();
             string desc = $"Bruger {currUser.Username} {GetAction(action)} genstand \"{item.Template.Name}\" med ID[{item.Id}]";
             
-            EventLog eventLog = new EventLog(currUser, currUser.Id, desc);
-            
-            await _context.EventLogs.AddAsync(eventLog);
-            int result = await _context.SaveChangesAsync();
+            int result = await WriteEvent(currUser, desc);
 
             return result < 0;
         }
@@ -69,10 +62,7 @@ namespace API.Data
             User currUser = await GetCurrentUser();
             string desc = $"Bruger {currUser.Username} {GetAction(action)} skabelon \"{itemTemplate.Name}\" med ID[{itemTemplate.Id}]";
             
-            EventLog eventLog = new EventLog(currUser, currUser.Id, desc);
-            
-            await _context.EventLogs.AddAsync(eventLog);
-            int result = await _context.SaveChangesAsync();
+            int result = await WriteEvent(currUser, desc);
 
             return result < 0;
         }
@@ -82,10 +72,7 @@ namespace API.Data
             User currUser = await GetCurrentUser();
             string desc = $"Bruger {currUser.Username} {GetAction(action)} ordre fra \"{order.Company}\" med købsnummer[{order.PurchaseNumber}]";
             
-            EventLog eventLog = new EventLog(currUser, currUser.Id, desc);
-            
-            await _context.EventLogs.AddAsync(eventLog);
-            int result = await _context.SaveChangesAsync();
+            int result = await WriteEvent(currUser, desc);
 
             return result < 0;
         }
@@ -95,10 +82,7 @@ namespace API.Data
             User currUser = await GetCurrentUser();
             string desc = $"Bruger {currUser.Username} {GetAction(action)} projekt for kunde \"{project.Customer.Name}\" med ID[{project.Id}]";
             
-            EventLog eventLog = new EventLog(currUser, currUser.Id, desc);
-            
-            await _context.EventLogs.AddAsync(eventLog);
-            int result = await _context.SaveChangesAsync();
+            int result = await WriteEvent(currUser, desc);
 
             return result < 0;
         }
@@ -108,10 +92,7 @@ namespace API.Data
             User currUser = await GetCurrentUser();
             string desc = $"Bruger {currUser.Username} {GetAction(action)} bruger \"{user.Username}\" med ID[{user.Id}]";
             
-            EventLog eventLog = new EventLog(currUser, currUser.Id, desc);
-            
-            await _context.EventLogs.AddAsync(eventLog);
-            int result = await _context.SaveChangesAsync();
+            int result = await WriteEvent(currUser, desc);
 
             return result < 0;
         }
@@ -155,6 +136,29 @@ namespace API.Data
         public async Task<List<EventLog>> GetEventLogs(int id)
         {
             return await _context.EventLogs.Include(x => x.User).Where(x => x.UserId == id).ToListAsync();
+        }
+
+        private string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            return "Ingen IP-adresse fundet";
+        }
+
+        private async Task<int> WriteEvent(User currUser, string desc){
+            string ip = GetLocalIPAddress();
+            EventLog eventLog = new EventLog(currUser, currUser.Id, desc, ip);
+            
+            await _context.EventLogs.AddAsync(eventLog);
+            int result = await _context.SaveChangesAsync();
+
+            return result;
         }
     }
 }
