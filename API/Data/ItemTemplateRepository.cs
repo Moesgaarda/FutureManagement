@@ -40,6 +40,9 @@ namespace API.Data
             await _context.ItemPropertyNames.AddAsync(propertyName);
             int result = await _context.SaveChangesAsync();
 
+            if(result > 0){
+                await _eventRepo.AddEventLogItemPropertyName(EventType.Created, propertyName);
+            }
             return result > 0;
         }
 

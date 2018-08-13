@@ -30,7 +30,7 @@ namespace API.Data
         public async Task<bool> AddEventLogCalendarEvent(EventType action, CalendarEvent calendarEvent)
         {
             User currUser = await GetCurrentUser();
-            string desc = $"Bruger {currUser.Username} {GetAction(action)} kalenderbegivenhed \"{calendarEvent.Name}\" med ID[{calendarEvent.Id}]";
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} kalenderbegivenhed \"{calendarEvent.Name}\" med ID[{calendarEvent.Id}]";
             
             int result = await WriteEvent(currUser, desc);
 
@@ -40,7 +40,7 @@ namespace API.Data
         public async Task<bool> AddEventLogCustomer(EventType action, Customer customer)
         {
             User currUser = await GetCurrentUser();
-            string desc = $"Bruger {currUser.Username} {GetAction(action)} kunde \"{customer.Name}\" med ID[{customer.Id}]";
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} kunde \"{customer.Name}\" med ID[{customer.Id}]";
             
             int result = await WriteEvent(currUser, desc);
 
@@ -50,7 +50,7 @@ namespace API.Data
         public async Task<bool> AddEventLogItem(EventType action, Item item)
         {
             User currUser = await GetCurrentUser();
-            string desc = $"Bruger {currUser.Username} {GetAction(action)} genstand \"{item.Template.Name}\" med ID[{item.Id}]";
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} genstand \"{item.Template.Name}\" med ID[{item.Id}]";
             
             int result = await WriteEvent(currUser, desc);
 
@@ -60,7 +60,16 @@ namespace API.Data
         public async Task<bool> AddEventLogItemTemplate(EventType action, ItemTemplate itemTemplate)
         {
             User currUser = await GetCurrentUser();
-            string desc = $"Bruger {currUser.Username} {GetAction(action)} skabelon \"{itemTemplate.Name}\" med ID[{itemTemplate.Id}]";
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} skabelon \"{itemTemplate.Name}\" med ID[{itemTemplate.Id}]";
+            
+            int result = await WriteEvent(currUser, desc);
+
+            return result < 0;
+        }
+        public async Task<bool> AddEventLogItemPropertyName(EventType action, ItemPropertyName itemPropertyName)
+        {
+            User currUser = await GetCurrentUser();
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} egenskaben \"{itemPropertyName.Name}\"";
             
             int result = await WriteEvent(currUser, desc);
 
@@ -70,7 +79,7 @@ namespace API.Data
         public async Task<bool> AddEventLogOrder(EventType action, Order order)
         {
             User currUser = await GetCurrentUser();
-            string desc = $"Bruger {currUser.Username} {GetAction(action)} ordre fra \"{order.Company}\" med købsnummer[{order.PurchaseNumber}]";
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} ordre fra \"{order.Company}\" med købsnummer[{order.PurchaseNumber}]";
             
             int result = await WriteEvent(currUser, desc);
 
@@ -80,7 +89,7 @@ namespace API.Data
         public async Task<bool> AddEventLogProject(EventType action, Project project)
         {
             User currUser = await GetCurrentUser();
-            string desc = $"Bruger {currUser.Username} {GetAction(action)} projekt for kunde \"{project.Customer.Name}\" med ID[{project.Id}]";
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} projekt for kunde \"{project.Customer.Name}\" med ID[{project.Id}]";
             
             int result = await WriteEvent(currUser, desc);
 
@@ -90,7 +99,7 @@ namespace API.Data
         public async Task<bool> AddEventLogUser(EventType action, User user)
         {
             User currUser = await GetCurrentUser();
-            string desc = $"Bruger {currUser.Username} {GetAction(action)} bruger \"{user.Username}\" med ID[{user.Id}]";
+            string desc = $"Bruger \"{currUser.Username}\" {GetAction(action)} bruger \"{user.Username}\" med ID[{user.Id}]";
             
             int result = await WriteEvent(currUser, desc);
 
