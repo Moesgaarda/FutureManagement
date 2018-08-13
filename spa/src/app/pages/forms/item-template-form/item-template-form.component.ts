@@ -81,7 +81,7 @@ export class ItemTemplateFormComponent implements OnInit {
     }
 
     this.templateToAdd.parts = this.templatePartsToAdd;
-    this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
+    //this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;
 
     this.templateService.addTemplate(this.templateToAdd).subscribe();
