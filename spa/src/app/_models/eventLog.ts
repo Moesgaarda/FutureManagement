@@ -6,5 +6,6 @@ export interface EventLog {
     user: User;
     description: string;
     date: Date;
+    localIP: string;
 
 }
