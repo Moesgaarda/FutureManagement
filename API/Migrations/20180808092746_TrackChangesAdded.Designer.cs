@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180808092746_TrackChangesAdded")]
+    partial class TrackChangesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,6 +77,24 @@ namespace API.Migrations
                     b.ToTable("CalendarEvents");
                 });
 
+            modelBuilder.Entity("API.Models.Change", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("Time");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Changes");
+                });
+
             modelBuilder.Entity("API.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -121,15 +141,7 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
-
-                    b.Property<DateTime>("Time");
-
-                    b.Property<int>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("EventLogs");
                 });
@@ -416,19 +428,19 @@ namespace API.Migrations
                         .HasForeignKey("CreatedById");
                 });
 
-            modelBuilder.Entity("API.Models.Customer", b =>
-                {
-                    b.HasOne("API.Models.CustomerType", "CustomerType")
-                        .WithMany()
-                        .HasForeignKey("CustomerTypeId");
-                });
-
-            modelBuilder.Entity("API.Models.EventLog", b =>
+            modelBuilder.Entity("API.Models.Change", b =>
                 {
                     b.HasOne("API.Models.User", "User")
                         .WithMany("Changes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("API.Models.Customer", b =>
+                {
+                    b.HasOne("API.Models.CustomerType", "CustomerType")
+                        .WithMany()
+                        .HasForeignKey("CustomerTypeId");
                 });
 
             modelBuilder.Entity("API.Models.Item", b =>

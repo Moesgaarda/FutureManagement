@@ -53,7 +53,7 @@ export class ItemTemplateDetailFormComponent implements OnInit {
     // og derefter enum strings som anden halvdel. Derfor skal første hjalvdel fjernes.
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
   }
-
+ 
   // + caster fra tekst til number
   async loadTemplate() {
     console.log('temp');
@@ -89,6 +89,15 @@ export class ItemTemplateDetailFormComponent implements OnInit {
       this.selectedTemplates.push(template);
     })
     return this.selectedTemplates;
+  }
+
+  checkBox(id) {
+    for (const propToCheck of this.propertiesToCheck){
+      if (propToCheck.id === id) {
+        return true;
+      }
+    }
+    return false;
   }
 
   printList() {

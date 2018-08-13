@@ -4,6 +4,10 @@ import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
+import { FileUploader } from 'ng2-file-upload';
+import { environment } from '../../../../environments/environment'
+
+const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
 @Component({
   selector: 'ngx-item-template-form',
@@ -20,7 +24,10 @@ export class ItemTemplateFormComponent implements OnInit {
   unitTypeEnumNumber = UnitType;
   templatePartsToAdd: ItemTemplatePart[] = [];
   partAmounts: number[] = [];
-  propertiesToAdd: ItemPropertyName[] = [];
+  propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
+  propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
+
+  public uploader: FileUploader = new FileUploader({url: URL});
 
   constructor(private templateService: ItemTemplateService) {
     this.getTemplates();
@@ -29,6 +36,11 @@ export class ItemTemplateFormComponent implements OnInit {
 
   ngOnInit() {
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+
+      console.log('ImageUpload:uploaded:', item, status);
+  };
   }
 
   async getTemplates() {
@@ -41,39 +53,42 @@ export class ItemTemplateFormComponent implements OnInit {
     })
   }
 
-  addTemplate() {
-    // this.templateService.
+  onCheckboxChange(prop, event) {
+    if (event.target.checked) {
+      this.propertiesToAdd.push(prop);
+    } else {
+      for (let i = 0; i < this.properties.length; i++) {
+        if (this.propertiesToAdd[i] === prop) {
+          this.propertiesToAdd.splice(i, 1);
+        }
+      }
+    }
   }
 
-  hej() {
-    console.log(this.selectedTemplates);
-    console.log(this.partAmounts);
-    console.log(this.properties);
-    // createTemplateToAdd
+  addExistingTemplateProperty() {
+  }
 
-    /*for (let i = 0; i < this.selectedTemplates.length; i++) {
+  addTemplate() {
+    console.log('added tempalte!');
+    console.log(this.templateToAdd);
+
+    for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
+        part: this.selectedTemplates[i],
         templateId: this.selectedTemplates[i].id,
         amount: this.partAmounts[i],
       });
-    }*/
+    }
 
-  // this.templateToAdd.parts = this.templatePartsToAdd;
+    this.templateToAdd.parts = this.templatePartsToAdd;
+    this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
+    this.templateToAdd.templateProperties = this.propertiesToAdd;
 
-  console.log(this.propertiesToAdd);
-  /*for (const prop of this.propertiesToAdd) {
-    console.log(prop.id);
-  }*/
-
-
-
-
-  this.templateToAdd.templateProperties = this.propertiesToAdd;
-
-
-    // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
-    console.log(this.templateToAdd);
-
+    this.templateService.addTemplate(this.templateToAdd).subscribe();
   }
 
+  async addTemplateProperty() {
+    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
+    this.loadAllTemplateProperties();
+  }
 }

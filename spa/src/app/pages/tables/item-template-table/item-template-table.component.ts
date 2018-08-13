@@ -15,7 +15,7 @@ import * as _ from 'underscore';
     }
   `],
 })
-export class ItemTemplateTableComponent  {
+export class ItemTemplateTableComponent {
   source: LocalDataSource;
   templates: ItemTemplate[];
   baseUrl = environment.spaUrl;
@@ -44,7 +44,16 @@ export class ItemTemplateTableComponent  {
       },
       unitType: {
         title: 'Mængdeenhed',
-        valuePrepareFunction: (value) => UnitType[value],
+        valuePrepareFunction: (value) => {
+          return UnitType[value];
+        },
+        filterFunction(temp?: any, search?: string): boolean {
+          if (UnitType[temp] == search || UnitType[temp] >= search || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
       description: {
         title: 'Beskrivelse',
@@ -77,7 +86,7 @@ export class ItemTemplateTableComponent  {
   deleteTemplate(templateToDelete) {
     if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
       this.templateService.deleteItemTemplate(templateToDelete.data.id).subscribe(() => {
-        this.templates.splice(_.findIndex(this.templates, {id: templateToDelete.data.id}), 1);
+        this.templates.splice(_.findIndex(this.templates, { id: templateToDelete.data.id }), 1);
         this.source.refresh();
       });
     }

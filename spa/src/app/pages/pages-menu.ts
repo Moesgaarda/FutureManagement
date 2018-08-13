@@ -1,4 +1,5 @@
 import { NbMenuItem } from '@nebular/theme';
+import { isDevMode } from '@angular/core';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -10,6 +11,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Projekter',
     icon: 'fa fa-th',
+    hidden: !isDevMode(),
     children: [
       {
         title: 'Projekter',
@@ -46,6 +48,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Kunder',
     icon: 'fa fa-user',
+    hidden: !isDevMode(),
     children: [
       {
         title: 'Kundetabel',
@@ -56,6 +59,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Bestillinger',
     icon: 'fa fa-shopping-cart',
+    hidden: !isDevMode(),
     children: [
       {
         title: 'Google Maps',
@@ -78,6 +82,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Brugere',
     icon: 'fa fa-id-badge',
+    hidden: !isDevMode(),
     children: [
       {
         title: 'Ansatte',
@@ -88,6 +93,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Midlertigig loginside', // menu title
     icon: 'fa fa-unlock', // menu icon
+    hidden: !isDevMode(),
     link: '/pages/new',
   },
+  {
+    title: 'Log', // menu title
+    icon: 'fa fa-history', // menu icon
+    hidden: !isDevMode(),
+    children: [
+      {
+        title: 'Alle',
+        link: '/pages/tables/event-log-table',
+      },
+    ],
+  },
 ];
+

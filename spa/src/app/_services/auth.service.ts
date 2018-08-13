@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
-    baseUrl = environment.apiUrl + '/api/auth/';
+    baseUrl = environment.apiUrl + 'auth/';
     userToken: any;
     decodedToken: any;
     jwtHelper: JwtHelper = new JwtHelper();

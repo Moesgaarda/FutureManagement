@@ -9,6 +9,7 @@ import { ItemTableComponent } from './item-table/item-table.component';
 import { ItemTemplateTableComponent } from './item-template-table/item-template-table.component';
 import { CustomerTableComponent } from './customer-table/customer-table.component';
 import { ProjectTableComponent } from './project-table/project-table.component';
+import { EventLogTableComponent } from './event-log-table/event-log-table.component';
 
 const routes: Routes = [{
   path: '',
@@ -34,6 +35,9 @@ const routes: Routes = [{
   }, {
     path: 'project-table',
     component: ProjectTableComponent,
+  }, {
+    path: 'event-log-table',
+    component: EventLogTableComponent,
   }],
   }]
 
@@ -52,4 +56,5 @@ export const routedComponents = [
   ProjectTableComponent,
   ItemTableComponent,
   InactiveItemTableComponent,
+  EventLogTableComponent,
 ];
