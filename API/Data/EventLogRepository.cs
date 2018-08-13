@@ -134,7 +134,7 @@ namespace API.Data
 
         public async Task<List<EventLog>> GetAllEventLogs()
         {
-            return await _context.EventLogs.ToListAsync();
+            return await _context.EventLogs.Include(x => x.User).ToListAsync();
             
         }
 
@@ -148,13 +148,13 @@ namespace API.Data
 
                 return user;
             }catch(NullReferenceException){
-                return new User(){ Username = "unauthorized user"};
+                return new User(){ Username = "Unauthorized User"};
             }
         }
 
         public async Task<List<EventLog>> GetEventLogs(int id)
         {
-            return await _context.EventLogs.Where(x => x.UserId == id).ToListAsync();
+            return await _context.EventLogs.Include(x => x.User).Where(x => x.UserId == id).ToListAsync();
         }
     }
 }
