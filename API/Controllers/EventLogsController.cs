@@ -32,6 +32,8 @@ namespace API.Controllers
 
         [HttpGet("myEventLogs/{id}", Name = "GetMyEventLogs")]
          public async Task<IActionResult> GetMyEventLogs(int id){
+            // TODO Fjern try-catch når det er påkrævet at være logged ind.
+            try{
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)){
                 return Unauthorized();
             }
@@ -40,7 +42,10 @@ namespace API.Controllers
                 var myEventLogs = await _repo.GetEventLogs(id);
                 return Ok(myEventLogs);
             }
-         }
+            }catch(NullReferenceException){
+                return Unauthorized();
+            }  
+        }
 
         [HttpGet("{id}", Name = "GetUserEventLogs")]
          public async Task<IActionResult> GetUserEventLog(int userId){
