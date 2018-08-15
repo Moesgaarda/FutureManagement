@@ -3,7 +3,7 @@ import { Item } from '../../../_models/Item';
 import { ItemTemplate } from '../../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemService } from '../../../_services/item.service';
-import { Observable } from '../../../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-item-form',

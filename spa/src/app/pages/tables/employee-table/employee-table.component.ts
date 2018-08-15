@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-
+import { UserService } from '../../../_services/user.service';
+import { User } from '../../../_models/User';
+import { environment } from '../../../../environments/environment';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
 
 @Component({
@@ -13,7 +15,6 @@ import { SmartTableService } from '../../../@core/data/smart-table.service';
   `],
 })
 export class EmployeeTableComponent {
-
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -52,12 +53,23 @@ export class EmployeeTableComponent {
       },
     },
   };
+  source: LocalDataSource;
+  users: User[];
+  baseUrl = environment.spaUrl;
 
-  source: LocalDataSource = new LocalDataSource();
+  constructor(private service: SmartTableService, private userService: UserService) {
+    this.source = new LocalDataSource();
+    this.loadItems();
+  }
 
-  constructor(private service: SmartTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
+  async loadItems() {
+    this.userService.getActiveUsers().subscribe(users => {
+      this.users = users;
+      this.source.load(users);
+      this.source.refresh;
+      console.log(users);
+    });
+    this.source.load(this.users);
   }
 
   onDeleteConfirm(event): void {
