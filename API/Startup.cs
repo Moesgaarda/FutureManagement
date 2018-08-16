@@ -48,6 +48,7 @@ namespace API
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemTemplateRepository, ItemTemplateRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

@@ -63,13 +63,11 @@ export class EmployeeTableComponent {
   }
 
   async loadItems() {
-    this.userService.getActiveUsers().subscribe(users => {
+    await this.userService.getActiveUsers().subscribe(users => {
       this.users = users;
       this.source.load(users);
       this.source.refresh;
-      console.log(users);
     });
-    this.source.load(this.users);
   }
 
   onDeleteConfirm(event): void {
