@@ -16,16 +16,17 @@ const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 })
 export class ItemTemplateFormComponent implements OnInit {
   templates: Observable<ItemTemplate[]>;
-  selectedTemplates: ItemTemplate[];
+  selectedTemplates: ItemTemplate[] = [] as ItemTemplate[];
   unitTypes = Object.keys(UnitType);
   properties: ItemPropertyName[];
   templateToAdd: ItemTemplate = {} as ItemTemplate;
   unitType: UnitType;
   unitTypeEnumNumber = UnitType;
-  templatePartsToAdd: ItemTemplatePart[] = [];
+  templatePartsToAdd: ItemTemplatePart[] = [] as ItemTemplatePart[];
   partAmounts: number[] = [];
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
+  fileNamesToAdd: string;
 
   public uploader: FileUploader = new FileUploader({url: URL});
 
@@ -69,7 +70,7 @@ export class ItemTemplateFormComponent implements OnInit {
   }
 
   addTemplate() {
-    console.log('added tempalte!');
+    console.log('added template!');
     console.log(this.templateToAdd);
 
     for (let i = 0; i < this.selectedTemplates.length; i++) {
@@ -79,7 +80,18 @@ export class ItemTemplateFormComponent implements OnInit {
         amount: this.partAmounts[i],
       });
     }
-
+    if (this.uploader.queue.length > 0) {
+      for (let i = 0; i < this.uploader.queue.length; i++) {
+        this.uploader.queue[i].file.name = 'ItemTemplateFiles/' + this.uploader.queue[i].file.name;
+        if ( i === 0) {
+          this.fileNamesToAdd = this.uploader.queue[i].file.name;
+        } else {
+          this.fileNamesToAdd = this.fileNamesToAdd + ' ; ' + this.uploader.queue[i].file.name;
+        }
+      }
+      this.templateToAdd.files = this.fileNamesToAdd;
+      this.uploader.uploadAll();
+    }
     this.templateToAdd.parts = this.templatePartsToAdd;
     // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;
