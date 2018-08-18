@@ -132,13 +132,14 @@ namespace API.Data
         {
             // Try-catch blok is here because the login is not fully implemented,
             // so it can not find the currently logged in user.
+            // TODO Implement this when login is implement  
             try{
                 int userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 User user = await _userRepo.GetUser(userId);
 
                 return user;
             }catch(NullReferenceException){
-                return new User(){ Username = "Unauthorized User"};
+                return await _userRepo.GetUser(1);
             }
         }
 
