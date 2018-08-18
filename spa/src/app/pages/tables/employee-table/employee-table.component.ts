@@ -4,6 +4,7 @@ import { UserService } from '../../../_services/user.service';
 import { User } from '../../../_models/User';
 import { environment } from '../../../../environments/environment';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'ngx-employee-table',
@@ -17,9 +18,7 @@ import { SmartTableService } from '../../../@core/data/smart-table.service';
 export class EmployeeTableComponent {
   settings = {
     add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      addButtonContent: 'Tilføj ny',
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -71,10 +70,19 @@ export class EmployeeTableComponent {
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm('Er du sikker på at du vil slette denne bruger?')) {
+    if (window.confirm('Er du sikker på at du vil slette denne forekomst?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
+    }
+  }
+
+  deleteUser(userToDelete): void {
+    if (window.confirm('Er du sikker på at du vil slette denne bruger?')) {
+      this.userService.deleteUser(userToDelete.data.id).subscribe(() => {
+        this.users.splice(_.findIndex(this.users, {id: userToDelete.data.id}), 1);
+        this.source.refresh();
+      });
     }
   }
 }

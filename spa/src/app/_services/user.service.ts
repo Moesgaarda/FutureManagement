@@ -21,4 +21,8 @@ export class UserService {
   getActiveUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'User/active');
   }
+  deleteUser(id: number) {
+    return this.http.post(this.baseUrl + 'User/delete/' + id, {})
+    .map(response => {});
+  }
 }
