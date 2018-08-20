@@ -22,6 +22,7 @@ import { ItemService } from './_services/item.service';
 import { EventLogService } from './_services/eventLog.service';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UserService } from './_services/user.service';
+import { ErrorInterceptorProvide } from './_services/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { UserService } from './_services/user.service';
     ItemService,
     EventLogService,
     UserService,
+    ErrorInterceptorProvide,
   ],
 })
 export class AppModule {
