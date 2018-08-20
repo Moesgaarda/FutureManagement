@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../../_models/User';
+import { UserService } from '../../../_services/user.service';
+import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'ngx-user-detail-form',
@@ -6,10 +9,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../form-inputs/form-inputs.component.scss'],
 })
 export class UserDetailFormComponent implements OnInit {
+  nameDisabled: boolean;
+  user: User;
 
-  constructor() { }
+  constructor(private userService: UserService, private route: ActivatedRoute) {
+   }
 
   ngOnInit() {
+    this.nameDisabled = true;
+    this.loadUser();
+    console.log('init: ' + this.user.username);
+  }
+  loadUser() {
+    this.userService.getUser(+this.route.snapshot.params['id'])
+    .subscribe((user: User) => {
+      this.user = user;
+      console.log('load: ' + this.user.username);
+    })
   }
 
+  enableName() {
+    if (this.nameDisabled) {
+      this.nameDisabled = false;
+    } else {
+      // indsæt i db
+      this.nameDisabled = true;
+    }
+  }
 }

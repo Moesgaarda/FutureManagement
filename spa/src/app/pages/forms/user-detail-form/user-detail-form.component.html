@@ -5,7 +5,19 @@
         Detaljer omkring bruger
       </nb-card-header>
       <nb-card-body>
-
+        <div class="form-group">
+          <label for="name">
+            Brugernavn
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Navn" id="name" class="form-control" value="{{user?.username}}" [disabled]="nameDisabled"/>
+            <span class="input-group-append">
+                <button class="btn btn-success input-group-text" (click)="enableName()">
+                  {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                </button>
+              </span>
+          </div>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>
