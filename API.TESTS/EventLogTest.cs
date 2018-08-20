@@ -108,8 +108,8 @@ namespace API.TESTS
             var userToInsert = context.Users.First(x => x.Id == 1);
 
             var eventLogs = new[]{
-                new EventLog(userToInsert, userToInsert.Id, "Dette er en test af EventLog"),
-                new EventLog(userToInsert, userToInsert.Id, "Dette er OGSÅ en test af eventLog")
+                new EventLog(userToInsert, userToInsert.Id, "Dette er en test af EventLog", "some IP address"),
+                new EventLog(userToInsert, userToInsert.Id, "Dette er OGSÅ en test af eventLog", "some IP address")
             };
             context.AddRange(eventLogs);
             context.SaveChangesAsync();
