@@ -5,5 +5,7 @@ export interface EventLog {
     id: number;
     user: User;
     description: string;
-    date: string;
+    date: Date;
+    localIP: string;
+
 }

@@ -28,23 +28,19 @@ export class EventLogTableComponent {
       user: {
         title: 'Bruger',
         valuePrepareFunction: (temp) => {
-          return temp.name.toString();
-        },
-        filterFunction(temp?: any, search?: string): boolean {
-          const match = temp.name.indexOf(search) > -1
-          if (match || search === '') {
-            return true;
-          } else {
-            return false;
-          }
-        },
+          return temp.username.toString();
+            }
       },
       description: {
         title: 'Beskrivelse',
         type: 'string',
       },
-      datetime: {
+      time: {
         title: 'Tidspunkt',
+        type: 'string',
+      },
+      ip: {
+        title: 'Lokal IP',
         type: 'string',
       },
     },
@@ -62,5 +58,5 @@ export class EventLogTableComponent {
       this.source.refresh();
     })
   }
-}
 
+}

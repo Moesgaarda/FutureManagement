@@ -86,7 +86,7 @@ namespace API.Controllers
             bool succes = await _repo.ActivateUser(userActivate);
             return succes ? StatusCode(200) : BadRequest();
         }
-        [HttpPost("delete")]
+        [HttpPost("delete/{id}", Name = "DeleteUser")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var userDel = await _repo.GetUser(id);

@@ -42,17 +42,9 @@
           </div>
 
         </div>
-
         <div class="form-group">
-          <label for="files">Tilknyttede filer</label>
-          <div class="form-group">
-            <input type="text" placeholder="Tilknyttede filer" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.files"
-            />
-            <small class="form-text">Har denne skabelon nogle filer der skal tilknyttes?
-            </small>
-          </div>
+          <button class="btn btn-success btn-rectangle input-group-text" (click)="addTemplate()">Tilføj skabelonen</button>
         </div>
-        <button class="btn btn-success btn-rectangle input-group-text" (click)="addTemplate()">Tilføj skabelonen</button>
       </nb-card-body>
     </nb-card>
   </div>
@@ -113,8 +105,6 @@
               <tr>
                 <th width="50%">Navn</th>
                 <th>Størrelse</th>
-                <th>Forløb</th>
-                <th>Status</th>
                 <th>Handlinger</th>
               </tr>
             </thead>
@@ -124,23 +114,8 @@
                   <strong>{{ item?.file?.name }}</strong>
                 </td>
                 <td>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                <td>
-                  <div class="progress" style="margin-bottom: 0;">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <span *ngIf="item.isSuccess">
-                    <i class="glyphicon glyphicon-ok"></i>
-                  </span>
-                  <span *ngIf="item.isError">
-                    <i class="glyphicon glyphicon-remove"></i>
-                  </span>
-                </td>
+                
                 <td nowrap>
-                  <button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                    <span class="glyphicon glyphicon-upload"></span> Upload
-                  </button>
                   <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
                     <span class="glyphicon glyphicon-trash"></span> Fjern
                   </button>
@@ -150,16 +125,6 @@
           </table>
 
           <div>
-            <div>
-              Kø fremskridt:
-              <div class="progress" style="">
-                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-              </div>
-            </div>
-
-            <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-              <span class="glyphicon glyphicon-upload"></span> Upload alle
-            </button>
             <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
               <span class="glyphicon glyphicon-trash"></span> Fjern alle
             </button>

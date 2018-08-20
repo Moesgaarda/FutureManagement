@@ -6,7 +6,7 @@ import { ItemService } from './item.service';
 describe('Service: Item', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ItemService]
+      providers: [ItemService],
     });
   });
 

@@ -6,7 +6,7 @@ import { EventLogService } from './eventLog.service';
 describe('Service: EventLog', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [EventLogService]
+      providers: [EventLogService],
     });
   });
 
