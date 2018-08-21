@@ -113,6 +113,8 @@ namespace API.Controllers
             var propertyNames = await _repo.GetPropertyNames();
             var PropertyNamesToReturn = _mapper.Map<List<ItemPropertyNameForGetDto>>(propertyNames);
 
+            PropertyNamesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
+
             return Ok(PropertyNamesToReturn);
         }
 
