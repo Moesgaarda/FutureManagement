@@ -25,6 +25,7 @@ import { UserService } from './_services/user.service';
 import { ErrorInterceptorProvide } from './_services/error.interceptor';
 import { NewModule } from './pages/new/new.module';
 import { AuthGuard } from './_guards/auth.guard';
+import { AlertifyService } from './_services/alertify.service';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { AuthGuard } from './_guards/auth.guard';
     UserService,
     ErrorInterceptorProvide,
     AuthGuard,
+    AlertifyService,
   ],
 })
 export class AppModule {
