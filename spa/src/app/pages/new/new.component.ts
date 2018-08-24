@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-new',
@@ -12,7 +13,7 @@ export class NewComponent implements OnInit {
   model: any = {};
   registerMode = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
   }
@@ -22,6 +23,8 @@ export class NewComponent implements OnInit {
       console.log('logged in successfully');
     }, error => {
       console.log('failed to login');
+    }, () => {
+      this.router.navigate(['']);
     })
   }
 
@@ -29,6 +32,7 @@ export class NewComponent implements OnInit {
     this.authService.userToken = null;
     localStorage.removeItem('token');
     console.log('logged out');
+    this.router.navigate(['/new']);
   }
 
   loggedIn() {

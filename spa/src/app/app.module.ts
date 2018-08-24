@@ -23,6 +23,8 @@ import { EventLogService } from './_services/eventLog.service';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UserService } from './_services/user.service';
 import { ErrorInterceptorProvide } from './_services/error.interceptor';
+import { NewModule } from './pages/new/new.module';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { ErrorInterceptorProvide } from './_services/error.interceptor';
     FormsModule,
     HttpModule,
     FileUploadModule,
+    NewModule,
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
