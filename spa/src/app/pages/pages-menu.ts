@@ -91,7 +91,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Midlertigig loginside', // menu title
+    title: 'Midlertidig loginside', // menu title
     icon: 'fa fa-unlock', // menu icon
     hidden: !isDevMode(),
     link: '/pages/new',
