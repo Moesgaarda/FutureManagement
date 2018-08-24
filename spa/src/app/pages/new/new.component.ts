@@ -32,7 +32,7 @@ export class NewComponent implements OnInit {
     this.authService.userToken = null;
     localStorage.removeItem('token');
     console.log('logged out');
-    this.router.navigate(['/new']);
+    this.router.navigate(['pages/new']);
   }
 
   loggedIn() {

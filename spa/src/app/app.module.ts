@@ -24,6 +24,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { UserService } from './_services/user.service';
 import { ErrorInterceptorProvide } from './_services/error.interceptor';
 import { NewModule } from './pages/new/new.module';
+import { AuthGuard } from './_guards/auth.guard';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { NewModule } from './pages/new/new.module';
     EventLogService,
     UserService,
     ErrorInterceptorProvide,
+    AuthGuard,
   ],
 })
 export class AppModule {
