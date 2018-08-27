@@ -78,7 +78,12 @@ namespace API.Data
 
         public async Task<User> GetUser(int id)
         {
-            return await _dbContext.Users.FirstAsync(x => x.Id == id);
+            User user = await _dbContext.Users
+                    .Where(x => x.Id == id)
+                    .Include(x => x.Role)
+                    .FirstOrDefaultAsync();
+
+            return user;
         }
 
         public Task<User> ShowDetails(User user)

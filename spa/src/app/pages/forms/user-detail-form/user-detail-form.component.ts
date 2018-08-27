@@ -22,7 +22,7 @@ export class UserDetailFormComponent implements OnInit {
     this.nameDisabled = true;
     const promise = this.loadUserOnInit();
     promise.then(() => {
-
+      console.log(this.user);
     });
   }
 

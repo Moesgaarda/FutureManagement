@@ -57,6 +57,45 @@
               </span>
           </div>
         </div>
+        <div class="form-group">
+          <label for="phone">
+            Telefonnummer
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Phone number" id="phone" class="form-control" value="{{user?.phone}}" [disabled]="nameDisabled"/>
+            <span class="input-group-append">
+                <button class="btn btn-success input-group-text" (click)="enableName()">
+                  {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                </button>
+              </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="birthday">
+            Fødselsdag
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Ikke opgivet" id="birthday" class="form-control" value="{{user?.birthdate}}" [disabled]="nameDisabled"/>
+            <span class="input-group-append">
+                <button class="btn btn-success input-group-text" (click)="enableName()">
+                  {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                </button>
+              </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="role">
+            Rolle
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Rolle" id="role" class="form-control" value="{{user?.role.name}}" [disabled]="nameDisabled"/>
+            <span class="input-group-append">
+                <button class="btn btn-success input-group-text" (click)="enableName()">
+                  {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                </button>
+              </span>
+          </div>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>
