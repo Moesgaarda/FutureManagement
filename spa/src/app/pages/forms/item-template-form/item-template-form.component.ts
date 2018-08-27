@@ -4,7 +4,7 @@ import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
-import { FileUploadComponent as FileUploader } from '../../../../file-upload/file-upload.component';
+import { FileUploadComponent } from '../../../../file-upload/file-upload.component';
 import { environment } from '../../../../environments/environment'
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 
@@ -28,8 +28,8 @@ export class ItemTemplateFormComponent implements OnInit {
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
-  uploader: FileUploader;
-  constructor(private templateService: ItemTemplateService, fileUploader: FileUploader) {
+  uploader: FileUploadComponent;
+  constructor(private templateService: ItemTemplateService, fileUploader: FileUploadComponent) {
     this.uploader = fileUploader;
     this.getTemplates();
     this.loadAllTemplateProperties();
@@ -76,7 +76,6 @@ export class ItemTemplateFormComponent implements OnInit {
       });
     }
 
-    
 
 /*    this.fileUploader.upload()
     if (this.fileUploader.queue.length > 0) {
@@ -92,6 +91,7 @@ export class ItemTemplateFormComponent implements OnInit {
       this.uploader.uploadAll();
     }
 */
+    this.uploader.upload();
     this.templateToAdd.parts = this.templatePartsToAdd;
     // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;

@@ -9,6 +9,6 @@ import { HttpClient} from '@angular/common/http';
   ],
   declarations: [FileUploadComponent],
   exports: [FileUploadComponent],
-  providers: [HttpClient],
+  providers: [HttpClient, FileUploadComponent],
 })
 export class FileUploadModule { }

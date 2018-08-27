@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
@@ -7,12 +7,12 @@ import { environment } from '../environments/environment';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css'],
 })
-
+@Injectable()
 export class FileUploadComponent {
   public progress: number;
   public message: string;
   public url: string;
-  public queuedFiles: any;
+  public queuedFiles: any [] = [];
   constructor(private http: HttpClient) { }
 
   queue(files) {
@@ -29,7 +29,7 @@ export class FileUploadComponent {
     const formData = new FormData();
 
     for (const file of this.queuedFiles){
-      formData.append(file.Name, file);
+      formData.append(file.name, file);
     }
 
     const uploadReq = new HttpRequest('POST', environment.apiUrl + '/FileInput/UploadFiles', formData, {
