@@ -5,9 +5,9 @@ export interface User {
     username: string;
     role: UserRole;
     name: string;
-    surName: string;
+    surname: string;
     birthdate: Date;
     isActive: boolean;
-    eMail: string;
+    email: string;
     phone: string;
 }

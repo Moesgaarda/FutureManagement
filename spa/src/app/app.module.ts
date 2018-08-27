@@ -23,6 +23,10 @@ import { EventLogService } from './_services/eventLog.service';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UserService } from './_services/user.service';
 import { ErrorInterceptorProvide } from './_services/error.interceptor';
+import { NewModule } from './pages/new/new.module';
+import { AuthGuard } from './_guards/auth.guard';
+import { AlertifyService } from './_services/alertify.service';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +40,7 @@ import { ErrorInterceptorProvide } from './_services/error.interceptor';
     FormsModule,
     HttpModule,
     FileUploadModule,
+    NewModule,
 
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
@@ -50,6 +55,8 @@ import { ErrorInterceptorProvide } from './_services/error.interceptor';
     EventLogService,
     UserService,
     ErrorInterceptorProvide,
+    AuthGuard,
+    AlertifyService,
   ],
 })
 export class AppModule {

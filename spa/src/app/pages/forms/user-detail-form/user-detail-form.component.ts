@@ -10,25 +10,27 @@ import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 })
 export class UserDetailFormComponent implements OnInit {
   nameDisabled: boolean;
+  userNameDisabled: boolean;
+  surnameDisabled: boolean;
+  emailDisabled: boolean;
   user: User;
 
   constructor(private userService: UserService, private route: ActivatedRoute) {
    }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.nameDisabled = true;
     const promise = this.loadUserOnInit();
     promise.then(() => {
-      console.log('init: ' + this.user.username)
+
     });
   }
 
   loadUserOnInit() {
     return new Promise(resolve => {
       this.userService.getUser(+this.route.snapshot.params['id'])
-      .subscribe((user: User) => {
+      .subscribe(user => {
         this.user = user;
-        console.log('load: ' + this.user.username);
         resolve();
       })
     })
