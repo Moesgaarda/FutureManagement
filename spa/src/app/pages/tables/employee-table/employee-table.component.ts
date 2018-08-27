@@ -17,6 +17,10 @@ import * as _ from 'underscore';
 })
 export class EmployeeTableComponent {
   settings = {
+    pager: {
+      perPage: 15,
+    },
+    mode: 'external',
     add: {
       addButtonContent: 'Tilføj ny',
     },
@@ -84,5 +88,15 @@ export class EmployeeTableComponent {
         this.source.refresh();
       });
     }
+  }
+  createUser(event): void {
+    if (window.confirm('xxxxxxxxxxxxxxxxx')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+  editUser(userToLoad): void {
+    location.href = this.baseUrl + 'pages/forms/user-detail/' + userToLoad.data.id;
   }
 }

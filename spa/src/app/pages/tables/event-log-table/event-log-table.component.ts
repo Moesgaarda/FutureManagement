@@ -39,7 +39,7 @@ export class EventLogTableComponent {
         title: 'Tidspunkt',
         type: 'string',
       },
-      ip: {
+      localIP: {
         title: 'Lokal IP',
         type: 'string',
       },

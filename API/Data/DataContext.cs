@@ -24,8 +24,9 @@ namespace API.Data
         public DbSet<Value> Values { get; set; }
         public DbSet<TemplatePropertyRelation> TemplatePropertyRelations { get; set; }
         public DbSet<ItemTemplatePart> ItemTemplateParts { get; set; }      
-        public DbSet<ItemItemRelation> ItemItemRelations { get; set; }      
-
+        public DbSet<ItemItemRelation> ItemItemRelations { get; set; }
+        public DbSet<FileData> FileData { get; set; }
+        public DbSet<TemplateFileDataRelation> TemplateFileDataRelations { get; set; }      
 
         /************************************************************
         * Overriding the OnModelCreating method allows us to create *
@@ -88,6 +89,19 @@ namespace API.Data
             modelBuilder.Entity<User>()
                 .Property(x => x.IsActive)
                 .HasDefaultValue(true);
+            
+            modelBuilder.Entity<TemplateFileDataRelation>()
+                .HasKey( t => new { t.TemplateId, t.FileDataId});
+            
+            modelBuilder.Entity<TemplateFileDataRelation>()
+                .HasOne( t => t.Template)
+                .WithMany( tf => tf.Files)
+                .HasForeignKey( ti => ti.TemplateId);
+            
+            modelBuilder.Entity<TemplateFileDataRelation>()
+                .HasOne( f => f.File)
+                .WithMany( ft => ft.Templates)
+                .HasForeignKey( fi => fi.FileDataId);
         }
     }
 }
