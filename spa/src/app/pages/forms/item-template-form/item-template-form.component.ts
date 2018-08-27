@@ -4,8 +4,9 @@ import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploadComponent as FileUploader } from '../../../../file-upload/file-upload.component';
 import { environment } from '../../../../environments/environment'
+import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -27,21 +28,15 @@ export class ItemTemplateFormComponent implements OnInit {
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
-
-  public uploader: FileUploader = new FileUploader({url: URL});
-
-  constructor(private templateService: ItemTemplateService) {
+  uploader: FileUploader;
+  constructor(private templateService: ItemTemplateService, fileUploader: FileUploader) {
+    this.uploader = fileUploader;
     this.getTemplates();
     this.loadAllTemplateProperties();
   }
 
   ngOnInit() {
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
-
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-
-      console.log('ImageUpload:uploaded:', item, status);
-  };
   }
 
   async getTemplates() {
@@ -80,7 +75,11 @@ export class ItemTemplateFormComponent implements OnInit {
         amount: this.partAmounts[i],
       });
     }
-    if (this.uploader.queue.length > 0) {
+
+    
+
+/*    this.fileUploader.upload()
+    if (this.fileUploader.queue.length > 0) {
       for (let i = 0; i < this.uploader.queue.length; i++) {
         this.uploader.queue[i].file.name = 'ItemTemplateFiles/' + this.uploader.queue[i].file.name;
         if ( i === 0) {
@@ -92,6 +91,7 @@ export class ItemTemplateFormComponent implements OnInit {
       this.templateToAdd.files = this.fileNamesToAdd;
       this.uploader.uploadAll();
     }
+*/
     this.templateToAdd.parts = this.templatePartsToAdd;
     // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;

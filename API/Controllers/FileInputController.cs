@@ -19,7 +19,7 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpPost("uploadfiles", Name = "UploadFiles")]
+        [HttpPost("uploadfiles", Name = "UploadFiles"), DisableRequestSizeLimit]
         public async Task<IActionResult> UploadFiles(){ 
             foreach (IFormFile file in Request.Form.Files){
                 if (file == null || file.Length == 0){

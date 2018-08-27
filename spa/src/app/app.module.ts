@@ -20,12 +20,12 @@ import { HttpModule } from '@angular/http';
 import { ItemTemplateService } from './_services/itemTemplate.service';
 import { ItemService } from './_services/item.service';
 import { EventLogService } from './_services/eventLog.service';
-import { FileUploadModule } from 'ng2-file-upload';
 import { UserService } from './_services/user.service';
 import { ErrorInterceptorProvide } from './_services/error.interceptor';
 import { NewModule } from './pages/new/new.module';
 import { AuthGuard } from './_guards/auth.guard';
 import { AlertifyService } from './_services/alertify.service';
+import { FileUploadModule } from '../file-upload/file-upload.module'
 
 
 @NgModule({
