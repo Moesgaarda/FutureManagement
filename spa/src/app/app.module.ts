@@ -26,6 +26,7 @@ import { NewModule } from './pages/new/new.module';
 import { AuthGuard } from './_guards/auth.guard';
 import { AlertifyService } from './_services/alertify.service';
 import { FileUploadModule } from '../file-upload/file-upload.module'
+import { OrderService } from './_services/order.service';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { FileUploadModule } from '../file-upload/file-upload.module'
     ItemService,
     EventLogService,
     UserService,
+    OrderService,
     ErrorInterceptorProvide,
     AuthGuard,
     AlertifyService,
