@@ -61,8 +61,8 @@ export class ItemFormComponent {
 
     this.itemToAdd.parts = this.selectedItemParts;
     console.log(this.templateDetails);
-    this.itemToAdd.template = this.templateDetails;
-    console.log(this.itemToAdd);*/
+    this.itemToAdd.template = this.templateDetails;*/
+    console.log(this.itemToAdd);
   }
 
   addItem() {
@@ -76,6 +76,7 @@ export class ItemFormComponent {
     this.itemToAdd.properties = this.propertyDescriptionsToAdd;
     this.itemToAdd.parts = this.selectedItemParts;
     this.itemToAdd.template = this.templateDetails;
+    this.itemToAdd.isActive = true;
     this.itemService.addItem(this.itemToAdd).subscribe();
   }
 

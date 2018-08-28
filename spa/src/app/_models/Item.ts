@@ -10,7 +10,7 @@ export interface Item {
     template: ItemTemplate;
     order: Order;
     createdBy: User;
-    isArchived: boolean;
+    isActive: boolean;
     parts: Item[];
     properties: ItemPropertyDescription[];
 }

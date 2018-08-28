@@ -41,6 +41,6 @@ export class ItemService {
     }
 
     addItem(item: Item): Observable<Item> {
-        return this.http.post<Item>(this.baseUrl + 'Item/add', item);
+        return this.http.post<Item>(this.baseUrl + 'Item/add', item, this.httpOptions);
     }
 }
