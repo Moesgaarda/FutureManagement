@@ -1,7 +1,7 @@
 import {ItemTemplate} from './ItemTemplate';
 import {User} from './User';
 import {Order} from './Order';
-import { ItemPropertyName } from './ItemPropertyName';
+import { ItemPropertyDescription } from './ItemPropertyDescription';
 
 export interface Item {
     id: number;
@@ -12,6 +12,6 @@ export interface Item {
     createdBy: User;
     isArchived: boolean;
     parts: Item[];
-    // properties: ItemPropertyDescription[];
+    properties: ItemPropertyDescription[];
 }
 

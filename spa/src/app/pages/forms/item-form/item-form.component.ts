@@ -4,6 +4,7 @@ import { ItemTemplate } from '../../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemService } from '../../../_services/item.service';
 import { Observable } from 'rxjs';
+import { ItemPropertyDescription } from '../../../_models/ItemPropertyDescription';
 
 @Component({
   selector: 'ngx-item-form',
@@ -16,6 +17,12 @@ export class ItemFormComponent {
   showCreatedBy: boolean;
   items: Observable<Item[]>;
   selectedItemParts: Item[] = [];
+  properties: ItemPropertyDescription[] =  [];
+  templateToGet: ItemTemplate = {} as ItemTemplate;
+  templateDetails: ItemTemplate = {} as ItemTemplate;
+  detailsReady: boolean;
+  propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
+  descriptionTextsToAdd: string[] = [] as string[];
 
   constructor(private templateService: ItemTemplateService, private itemService: ItemService) {
     this.getTemplates();
@@ -27,6 +34,14 @@ export class ItemFormComponent {
     await this.templateService.getItemTemplates().subscribe(templates => {
       this.templates = templates;
     })
+
+  }
+
+  async getTemplateDetails() {
+    await this.templateService.getItemTemplate(this.templateToGet.id).subscribe(template => {
+      this.templateDetails = template;
+    })
+    this.detailsReady = true;
   }
 
   async getItems() {
@@ -34,11 +49,33 @@ export class ItemFormComponent {
   }
 
   hej() {
+
+   /* for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
+      this.propertyDescriptionsToAdd.push({
+        description: this.descriptionTextsToAdd[i],
+        propertyName: this.templateDetails.templateProperties[i],
+      });
+    }
+
+    this.itemToAdd.properties = this.propertyDescriptionsToAdd;
+
     this.itemToAdd.parts = this.selectedItemParts;
-    console.log(this.itemToAdd);
+    console.log(this.templateDetails);
+    this.itemToAdd.template = this.templateDetails;
+    console.log(this.itemToAdd);*/
   }
 
   addItem() {
+    for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
+      this.propertyDescriptionsToAdd.push({
+        description: this.descriptionTextsToAdd[i],
+        propertyName: this.templateDetails.templateProperties[i],
+      });
+    }
+
+    this.itemToAdd.properties = this.propertyDescriptionsToAdd;
+    this.itemToAdd.parts = this.selectedItemParts;
+    this.itemToAdd.template = this.templateDetails;
     this.itemService.addItem(this.itemToAdd).subscribe();
   }
 
