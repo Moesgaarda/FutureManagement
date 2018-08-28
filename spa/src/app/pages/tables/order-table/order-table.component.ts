@@ -3,6 +3,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { environment } from '../../../../environments/environment';
 import { OrderService } from '../../../_services/order.service';
 import { Order } from '../../../_models/Order';
+import * as _ from 'underscore';
 
 @Component({
     selector: 'ngx-order-table',
@@ -73,5 +74,21 @@ export class OrderTableComponent {
         }
     }
 
+    addNewOrder() {
+        location.href = this.baseUrl + '/pages/forms/order';
+    }
+
+    editOrder(orderToLoad): void {
+        location.href = this.baseUrl + '/pages/forms/order-detail/' + orderToLoad.data.id;
+    }
+
+    deleteOrder(orderToDelete): void {
+        if (window.confirm('Er du sikker på at du vil slette denne bestilling?')) {
+          this.orderService.deleteOrder(orderToDelete.data.id).subscribe(() => {
+            this.orders.splice(_.findIndex(this.orders, {id: orderToDelete.data.id}), 1);
+            this.source.refresh();
+          });
+        }
+    }
 }
 

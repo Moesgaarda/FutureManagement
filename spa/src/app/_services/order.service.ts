@@ -14,4 +14,17 @@ export class OrderService {
     getAllOrders(): Observable<Order[]> {
         return this.http.get<Order[]>(this.baseUrl + 'Order/getAll');
     }
+
+    getOrder(id: number): Observable<Order> {
+        return this.http.get<Order>(this.baseUrl + 'Order/get/' + id);
+    }
+
+    deleteOrder(id: number) {
+        return this.http.post(this.baseUrl + 'Order/delete/' + id, {})
+        .map(response => {});
+    }
+
+    addOrder(order: Order): Observable<Order> {
+        return this.http.post<Order>(this.baseUrl + 'Order/add', order);
+    }
 }

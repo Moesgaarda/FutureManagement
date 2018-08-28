@@ -1,1 +1,57 @@
-Order form virker!
+<div class="row">
+    <div class="col-lg-6">
+      <nb-card>
+        <nb-card-header>Ny genstand til lageret</nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="company">Firma</label>
+            <div class="input-group">
+              <input type="text" placeholder="Firma" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.company"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="deliveryDate">Leveringstidspunkt</label>
+            <div class="input-group">
+              <input type="date" placeholder="Leveringstidspunkt" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.deliveryDate"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="height">Højde</label>
+            <div class="input-group">
+              <input type="text" placeholder="Højde" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.height"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="length">Længde</label>
+            <div class="input-group">
+              <input type="text" placeholder="Længde" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.length"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="width">Bredde</label>
+            <div class="input-group">
+              <input type="text" placeholder="Bredde" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.width"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mængdeenhed</label>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="orderToAdd && orderToAdd.unitType">
+              <option *ngFor="let enum of unitTypes" selected>{{enum}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="invoicePath">invoicePath</label>
+            <div class="input-group">
+              <input type="text" placeholder="invoicePath" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.invoicePath"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="purchaseNumber">Købsnummer</label>
+            <div class="input-group">
+              <input type="text" placeholder="Købsnummer" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.purchaseNumber"/>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+</div>

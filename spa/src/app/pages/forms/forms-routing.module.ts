@@ -35,7 +35,7 @@ const routes: Routes = [{
     path: 'item-detail/:id',
     component: ItemDetailFormComponent,
   }, {
-    path: 'order-detail',
+    path: 'order-detail/:id',
     component: OrderDetailFormComponent,
   }, {
     path: 'order',
