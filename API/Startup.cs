@@ -86,8 +86,8 @@ namespace API
                             await context.Response.WriteAsync(error.Error.Message);
                         }
                     });
-            });
-
+                });
+            }
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseAuthentication();
             app.UseMvc(routes =>
@@ -97,8 +97,7 @@ namespace API
                 )
                 );
             app.UseDefaultFiles();
-            app.UseStaticFiles();
-            }
+            app.UseStaticFiles();  
         }
     }
 }

@@ -69,27 +69,34 @@ namespace API.Data
         }
 
         public async Task<ItemTemplate> GetItemTemplate(int id){
+           
             ItemTemplate template = await _context.ItemTemplates
                     .Where(x => x.Id == id)
+                    .Include(x => x.Parts)
+                    .Include(x => x.TemplateProperties)
                     .FirstOrDefaultAsync();
+            
+            // ItemTemplate template = await _context.ItemTemplates
+            //         .Where(x => x.Id == id)
+            //         .FirstOrDefaultAsync();
 
-            _context.Entry(template).Collection( x => x.Parts )
-                    .Query()
-                    .Include(x => x.Part)
-                    .Load();
+            // _context.Entry(template).Collection( x => x.Parts )
+            //         .Query()
+            //         .Include(x => x.Part)
+            //         .Load();
 
-            _context.Entry(template).Collection( x => x.TemplateProperties )
-                    .Query()
-                    .Include(x => x.Property)
-                    .Load();
+            // _context.Entry(template).Collection( x => x.TemplateProperties )
+            //         .Query()
+            //         .Include(x => x.Property)
+            //         .Load();
 
-            template.PartOf = _context.ItemTemplateParts.Where(x => x.PartId == template.Id).ToList();
+            // template.PartOf = _context.ItemTemplateParts.Where(x => x.PartId == template.Id).ToList();
 
-            _context.Entry(template).Collection(x => x.PartOf)
-                    .Query()
-                    .Include(x => x.Template)
-                    .Load();
-
+            // _context.Entry(template).Collection(x => x.PartOf)
+            //         .Query()
+            //         .Include(x => x.Template)
+            //         .Load();
+             
             return template;
         }
 

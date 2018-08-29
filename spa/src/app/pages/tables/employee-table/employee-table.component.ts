@@ -15,7 +15,7 @@ import * as _ from 'underscore';
     }
   `],
 })
-export class EmployeeTableComponent {
+export class EmployeeTableComponent implements OnInit {
   settings = {
     pager: {
       perPage: 15,
@@ -38,11 +38,11 @@ export class EmployeeTableComponent {
         title: 'ID',
         type: 'number',
       },
-      firstName: {
+      name: {
         title: 'Fornavn',
         type: 'string',
       },
-      lastName: {
+      surname: {
         title: 'Efternavn',
         type: 'string',
       },
@@ -54,23 +54,53 @@ export class EmployeeTableComponent {
         title: 'E-mail',
         type: 'string',
       },
+      isActive: {
+        title: 'Aktive',
+        type: 'string',
+      },
     },
   };
   source: LocalDataSource;
-  users: User[];
+  allUsers: User[];
+  activeUsers: User[];
+  inactiveUsers: User[];
   baseUrl = environment.spaUrl;
 
+  showInactive: boolean;
+
   constructor(private service: SmartTableService, private userService: UserService) {
+
+  }
+  async ngOnInit() {
+    this.allUsers = [];
+    this.showInactive = false;
     this.source = new LocalDataSource();
-    this.loadItems();
+    this.loadUsers();
   }
 
-  async loadItems() {
-    await this.userService.getActiveUsers().subscribe(users => {
-      this.users = users;
-      this.source.load(users);
-      this.source.refresh;
+  loadUsers() {
+    this.userService.getActiveUsers().subscribe(users => {
+      this.activeUsers = users;
+      this.allUsers = this.activeUsers;
+      this.userService.getInactiveUsers().subscribe(inusers => {
+        this.inactiveUsers = inusers;
+        this.allUsers = this.allUsers.concat(this.inactiveUsers);
+        this.source.load(this.activeUsers);
+        this.source.refresh;
+      });
     });
+  }
+
+  toggleInactiveUsers() {
+    if (this.showInactive) {
+      this.showInactive = false;
+      this.source.load(this.activeUsers);
+      this.source.refresh;
+    } else {
+      this.showInactive = true;
+      this.source.load(this.allUsers);
+      this.source.refresh;
+    }
   }
 
   onDeleteConfirm(event): void {
@@ -84,11 +114,20 @@ export class EmployeeTableComponent {
   deleteUser(userToDelete): void {
     if (window.confirm('Er du sikker på at du vil slette denne bruger?')) {
       this.userService.deleteUser(userToDelete.data.id).subscribe(() => {
-        this.users.splice(_.findIndex(this.users, {id: userToDelete.data.id}), 1);
+        this.allUsers.splice(_.findIndex(this.allUsers, {id: userToDelete.data.id}), 1);
         this.source.refresh();
       });
     }
   }
+  deactivateUser(userToDeActivate) {
+    if (window.confirm('Er du sikker på at du vil deaktivere denne bruger?')) {
+      this.userService.deActivateUser(userToDeActivate.data.id).subscribe(() => {
+        this.allUsers.splice(_.findIndex(this.allUsers, {id: userToDeActivate.data.id}), 1);
+        this.source.refresh();
+      });
+    }
+  }
+
   createUser(event): void {
     if (window.confirm('xxxxxxxxxxxxxxxxx')) {
       event.confirm.resolve();
@@ -100,3 +139,18 @@ export class EmployeeTableComponent {
     location.href = this.baseUrl + 'pages/forms/user-detail/' + userToLoad.data.id;
   }
 }
+  /*
+  async loadActiveUsers() {
+    await this.userService.getActiveUsers().subscribe(users => {
+      this.activeUsers = users;
+    });
+  }
+  async loadInactiveUsers() {
+    console.log('Loading inactive users');
+    console.log(this.allUsers);
+    await this.userService.getInactiveUsers().subscribe(users => {
+      this.inactiveUsers = users;
+      console.log(this.allUsers);
+    })
+  }
+*/

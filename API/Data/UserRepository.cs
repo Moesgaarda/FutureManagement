@@ -82,7 +82,6 @@ namespace API.Data
                     .Where(x => x.Id == id)
                     .Include(x => x.Role)
                     .FirstOrDefaultAsync();
-
             return user;
         }
 

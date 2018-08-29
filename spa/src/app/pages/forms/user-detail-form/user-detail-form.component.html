@@ -13,7 +13,8 @@
             <input type="text" placeholder="Navn" id="username" class="form-control" value="{{user?.username}}" [disabled]="nameDisabled"/>
             <span class="input-group-append">
                 <button class="btn btn-success input-group-text" (click)="enableName()">
-                  {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  <div *ngIf="nameDisabled; then tempEditBox else tempSaveBox">
+                  </div>
                 </button>
               </span>
           </div>
@@ -100,3 +101,16 @@
     </nb-card>
   </div>
 </div>
+<ng-template #tempEditBox>
+    <button class="btn btn-success input-group-text" (click)="enableName()">
+        {{ nameDisabled ? 'Rediger' : 'Gem' }}
+    </button>
+</ng-template>
+<ng-template #tempSaveBox>
+    <button class="btn btn-success input-group-text" (click)="enableName()">
+        {{ nameDisabled ? 'Rediger' : 'Gem' }}
+    </button>
+    <button class="btn btn-success input-group-text" (click)="enableName()">
+        {{ nameDisabled ? 'Rediger' : 'Annuller' }}
+      </button>
+</ng-template>

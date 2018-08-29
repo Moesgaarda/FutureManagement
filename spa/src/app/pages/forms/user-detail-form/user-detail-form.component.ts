@@ -20,23 +20,15 @@ export class UserDetailFormComponent implements OnInit {
 
   ngOnInit() {
     this.nameDisabled = true;
-    const promise = this.loadUserOnInit();
-    promise.then(() => {
-      console.log(this.user);
-    });
+    this.loadUserOnInit();
   }
 
   loadUserOnInit() {
-    return new Promise(resolve => {
-      this.userService.getUser(+this.route.snapshot.params['id'])
+    this.userService.getUser(+this.route.snapshot.params['id'])
       .subscribe(user => {
         this.user = user;
-        resolve();
       })
-    })
   }
-
-
 
   enableName() {
     if (this.nameDisabled) {
