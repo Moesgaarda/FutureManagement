@@ -2,6 +2,7 @@ import {ItemTemplate} from './ItemTemplate';
 import {User} from './User';
 import {Order} from './Order';
 import { ItemPropertyDescription } from './ItemPropertyDescription';
+import { ItemItemRelation } from './ItemItemRelation';
 
 export interface Item {
     id: number;
@@ -11,7 +12,7 @@ export interface Item {
     order: Order;
     createdBy: User;
     isActive: boolean;
-    parts: Item[];
+    parts: ItemItemRelation[];
     properties: ItemPropertyDescription[];
 }
 

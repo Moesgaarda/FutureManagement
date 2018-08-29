@@ -31,19 +31,19 @@
         </div>
           <div class="form-group" *ngIf="showCreatedBy">
             <label for="madeBy">Lavet af</label>
-            <div class="input-group">
-              <input type="text" placeholder="Navn" class="form-control" [(ngModel)]="itemToAdd.createdBy"/>
-            </div>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="itemToAdd.createdBy">
+              <option *ngFor="let user of userList" [ngValue]="user">{{user.name}} - {{user.username}}</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="itemList">Genstandsliste</label>
             <div class="form-group">
               <ng-select
-                [items]="items | async"
+                [items]="items"
                 [multiple]="true"
                 [closeOnSelect]="false"
                 [hideSelected]="true"
-                bindLabel="template.name"
+                bindLabel="placement"
                 placeholder="Vælg genstande"
                 [(ngModel)]="selectedItemParts">               
               </ng-select>

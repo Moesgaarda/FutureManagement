@@ -39,6 +39,10 @@ namespace API.Data {
                 prop.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync (x => x.Id == prop.PropertyName.Id);
             }
 
+           /* foreach (var part in item.Parts){
+                part.Part = await _context.Items.FirstOrDefaultAsync(x => x.Id == part.PartId);
+            } */
+
             await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync ();
 
@@ -104,11 +108,13 @@ namespace API.Data {
                 .Include (x => x.Template)
                 .Include(x => x.CreatedBy)
                 .Include(x => x.Order)
+                .Include(x => x.Properties)
                 .FirstOrDefaultAsync ();
 
             _context.Entry(item).Collection (x => x.Parts)
                 .Query()
                 .Include(x => x.Part)
+                .Include(x => x.Part.Template)
                 .Load();
 
             item.PartOf = _context.ItemItemRelations.Where(x => x.PartId == item.Id).ToList();
