@@ -66,7 +66,7 @@ export class ItemTemplateFormComponent implements OnInit {
 
   addTemplate() {
     console.log('added template!');
-    console.log(this.templateToAdd);
+    console.log(this.properties);
 
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
@@ -95,6 +95,8 @@ export class ItemTemplateFormComponent implements OnInit {
     this.templateToAdd.parts = this.templatePartsToAdd;
     // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;
+
+    console.log(this.templateToAdd);
 
     this.templateService.addTemplate(this.templateToAdd).subscribe();
   }

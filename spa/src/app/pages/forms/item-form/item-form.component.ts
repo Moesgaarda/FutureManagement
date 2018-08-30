@@ -58,7 +58,8 @@ export class ItemFormComponent {
   async getItems() {
     await this.itemService.getActiveItems().subscribe(items => {
       this.items = items.map((name) => {
-        name.placement = name.template.name + ' - (' + name.placement + ') - Mængde: ' + name.amount + ' ' + name.template.unitType;
+        name.placement = name.template.name + ' - (' + name.placement + ') - Mængde: '
+          + name.amount + ' ' + name.template.unitType;
         return name;
       });
     })
