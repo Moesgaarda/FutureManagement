@@ -31,7 +31,7 @@ namespace API.Data
             }
 
             foreach(var prop in template.TemplateProperties){
-                prop.Property = await _context.ItemPropertyNames.FirstOrDefaultAsync(x => x.Id == prop.Property.Id);
+                prop.Property = await _context.ItemPropertyNames.FirstOrDefaultAsync(x => x.Id == prop.PropertyId);
             }
 
             await _context.ItemTemplates.AddAsync(template);

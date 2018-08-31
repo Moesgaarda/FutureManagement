@@ -93,7 +93,7 @@ export class ItemTemplateFormComponent implements OnInit {
 */
     this.uploader.upload();
     this.templateToAdd.parts = this.templatePartsToAdd;
-    // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
+    this.templateToAdd.unitType = this.unitType; // this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;
 
     console.log(this.templateToAdd);
