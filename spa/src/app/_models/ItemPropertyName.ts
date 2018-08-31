@@ -1,5 +1,4 @@
 export interface ItemPropertyName {
-    propertyId: number;
+    id: number;
     name: string;
-    testProperty: string;
 }

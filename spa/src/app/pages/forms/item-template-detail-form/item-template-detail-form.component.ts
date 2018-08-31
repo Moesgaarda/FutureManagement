@@ -93,7 +93,7 @@ export class ItemTemplateDetailFormComponent implements OnInit {
 
   checkBox(id) {
     for (const propToCheck of this.propertiesToCheck){
-      if (propToCheck.propertyId === id) {
+      if (propToCheck.id === id) {
         return true;
       }
     }
