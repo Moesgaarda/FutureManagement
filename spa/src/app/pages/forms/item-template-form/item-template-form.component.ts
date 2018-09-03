@@ -31,6 +31,7 @@ export class ItemTemplateFormComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   uploader: FileUploadComponent;
+
   constructor(private templateService: ItemTemplateService, fileUploader: FileUploadComponent, private router: Router,
      private alertify: AlertifyService) {
     this.uploader = fileUploader;
