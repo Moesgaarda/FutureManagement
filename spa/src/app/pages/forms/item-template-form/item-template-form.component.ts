@@ -79,7 +79,8 @@ export class ItemTemplateFormComponent implements OnInit {
       });
     }
     if (this.uploader.queuedFiles.length > 0) {
-      /*await this.uploader.upload().subscribe(result => this.templateToAdd.files = result);*/
+        const fileArray = await this.uploader.upload();
+        this.templateToAdd.files = fileArray;
     }
     console.log(this.templateToAdd.files);
     this.templateToAdd.parts = this.templatePartsToAdd;

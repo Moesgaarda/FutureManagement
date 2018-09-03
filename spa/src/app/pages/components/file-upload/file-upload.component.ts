@@ -26,21 +26,22 @@ export class FileUploadComponent {
   clearQueue() {
     this.queuedFiles.splice(0, this.queuedFiles.length);
   }
-  async upload() {
-    let promise: Promise<Object>;
-    if (this.queuedFiles.length === 0) {
-      return;
+  async upload(): Promise<number []> {
+    try {
+      if (this.queuedFiles.length === 0) {
+        return;
+      }
+      const formData = new FormData();
+      for (const file of this.queuedFiles){
+        formData.append(file.name, file);
+      }
+      const uploadReq = new HttpRequest('POST', this.baseUrl + 'FileInput/uploadfiles', formData, {
+        reportProgress: true,
+      });
+      const result = await this.http.post(this.baseUrl + 'FileInput/uploadfiles', formData).toPromise();
+      return result as number [];
+    } catch (error) {
+      console.log(error);
     }
-    const formData = new FormData();
-
-    for (const file of this.queuedFiles){
-      formData.append(file.name, file);
-    }
-
-    const uploadReq = new HttpRequest('POST', this.baseUrl + 'FileInput/uploadfiles', formData, {
-      reportProgress: true,
-  });
-    promise = this.http.post(this.baseUrl + 'FileInput/uploadfiles', formData).toPromise()
-    return
   }
 }
