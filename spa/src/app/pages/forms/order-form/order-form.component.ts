@@ -6,6 +6,8 @@ import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemPropertyDescription } from '../../../_models/ItemPropertyDescription';
 import { OrderService } from '../../../_services/order.service';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
+import { AlertifyService } from '../../../_services/alertify.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-order-form',
@@ -22,13 +24,15 @@ export class OrderFormComponent implements OnInit {
     templateToGet: ItemTemplate = {} as ItemTemplate;
     templateDetails: ItemTemplate = {} as ItemTemplate;
     detailsReady: boolean;
+    unitTypeForAmount: string;
     propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
     descriptionTextsToAdd: string[] = [] as string[];
 
-    constructor(private itemTemplateService: ItemTemplateService, private orderService: OrderService) {
+    constructor(private itemTemplateService: ItemTemplateService, private orderService: OrderService,
+      private alertify: AlertifyService, private router: Router) {
       this.getTemplates();
       this.templateDetails.templateProperties = [] as ItemPropertyName[];
-      this.orderToAdd.items = [] as Item[];
+      this.orderToAdd.products = [] as Item[];
       this.currentItem.template = {} as ItemTemplate;
     }
 
@@ -54,8 +58,13 @@ export class OrderFormComponent implements OnInit {
       this.detailsReady = true;
     }
 
+    getUnitTypeForTemplate() {
+      this.unitTypeForAmount = this.templateDetails.unitType.toString();
+      this.unitTypeForAmount = this.unitTypes[Number(this.unitTypeForAmount)];
+    }
+
     removeItemFromOrder(i: number) {
-      this.orderToAdd.items.splice(i, 1);
+      this.orderToAdd.products.splice(i, 1);
     }
 
     addItemToOrder() {
@@ -69,12 +78,26 @@ export class OrderFormComponent implements OnInit {
       this.currentItem.properties = this.propertyDescriptionsToAdd;
       this.currentItem.template = this.templateDetails;
       this.currentItem.isActive = true;
-      this.orderToAdd.items.push(this.currentItem);
+      this.orderToAdd.products.push(this.currentItem);
       this.changePage();
       console.log(this.orderToAdd);
       this.currentItem = {} as Item;
       this.propertyDescriptionsToAdd = [] as ItemPropertyDescription[];
       this.templateDetails = {} as ItemTemplate;
+      this.templateToGet = {} as ItemTemplate;
+    }
+
+    addOrder() {
+      this.orderService.addOrder(this.orderToAdd).subscribe(data => {
+        console.log('added order');
+        this.alertify.success('Tilføjede bestilling');
+        console.log(this.orderToAdd);
+      }, error => {
+        console.log('failed to add order');
+        this.alertify.error('kunne ikke tilføje bestillingen');
+      }, () => {
+        this.router.navigate(['pages/tables/order-table']);
+      });
     }
 
 }

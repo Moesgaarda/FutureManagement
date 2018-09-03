@@ -5,12 +5,14 @@ using API.Enums;
 
 namespace API.Models{
     public class Order{
-        public Order(){}
+        public Order(){
+            this.OrderDate = DateTime.Now;
+        }
         public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, 
             int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products){
 
             this.Company = company;
-            this.OrderDate = orderDate;
+            this.OrderDate = DateTime.Now;
             this.DeliveryDate = deliveryDate;
             this.OrderedBy = orderedBy;
             this.InvoicePath = invoicePath;
@@ -27,7 +29,7 @@ namespace API.Models{
 
             this.Id = id;
             this.Company = company;
-            this.OrderDate = orderDate;
+            this.OrderDate = DateTime.Now;
             this.DeliveryDate = deliveryDate;
             this.OrderedBy = orderedBy;
             this.InvoicePath = invoicePath;

@@ -12,5 +12,5 @@ export interface Order {
     length: number;
     height: number;
     unitType: string;
-    items: Item[];
+    products: Item[];
 }

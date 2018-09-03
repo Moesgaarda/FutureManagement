@@ -14,8 +14,10 @@ namespace API.Data
     public class OrderRepository : IOrderRepository
     {
         private readonly DataContext _context;
+        private readonly ItemRepository _itemRepo;
         public OrderRepository(DataContext context){
             _context = context;
+            _itemRepo = new ItemRepository(context);
         }
         public async Task<bool> AddOrder(Order order)
         {
@@ -24,6 +26,11 @@ namespace API.Data
             }
 
             await _context.Orders.AddAsync(order);
+            foreach(Item item in order.Products){
+                item.Order.Id = order.Id;
+                await _itemRepo.AddItem(item);
+            }
+            
             int result = await _context.SaveChangesAsync();
 
             return result > 0;

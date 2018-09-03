@@ -31,8 +31,8 @@ namespace API.Controllers{
         }
 
         [HttpPost("add", Name = "AddOrder")]
-        public async Task<IActionResult> AddOrder(Order order){
-            try{
+        public async Task<IActionResult> AddOrder([FromBody]Order order){
+            
             var orderToCreate = new Order(
                 order.Company,
                 order.OrderDate,
@@ -50,9 +50,7 @@ namespace API.Controllers{
 
             bool result = await _repo.AddOrder(orderToCreate);
             return result ? StatusCode(201) : BadRequest();
-            }catch(Exception){
-                return BadRequest();
-            }
+
 
             
         }

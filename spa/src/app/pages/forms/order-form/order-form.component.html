@@ -52,6 +52,13 @@
             <input type="text" placeholder="Købsnummer" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.purchaseNumber" />
           </div>
         </div>
+        <div class="form-group">
+          
+          <div _ngcontent-c21="" class="form-group">
+            <button _ngcontent-c21="" (click)="addOrder()" class="btn btn-success btn-rectangle input-group-text">Tilføj bestilling</button>
+          </div>
+
+        </div>
       </nb-card-body>
     </nb-card>
   </div>
@@ -61,7 +68,7 @@
       <nb-card-body>
         <div class="form-group">
             <ul class="list-group">
-            <div *ngFor="let item of orderToAdd.items; let i=index">
+            <div *ngFor="let item of orderToAdd.products; let i=index">
               <li class="list-group-item">{{item.template.name}} ({{item.amount}})
                 <button type="button" (click)="removeItemFromOrder(i)" class="close" aria-label="Close">
                     <span aria-hidden="false">&times;</span>
@@ -91,29 +98,28 @@
       <nb-card-header>Ny genstand til bestillingen</nb-card-header>
       <nb-card-body>
         <div class="form-group">
-          <label for="placement">Genstandens placering</label>
-          <div class="input-group">
-            <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="currentItem.placement" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="amount">Mængde</label>
-          <div class="input-group">
-            <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="currentItem.amount" />
-          </div>
-        </div>
-        <div class="form-group">
           <label>Vælg skabelon</label>
-          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails()">
+          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails() && getUnitTypeForTemplate()">
             <option *ngFor="let temp of templates" [ngValue]="temp">{{temp.name}}</option>
           </select>
         </div>
-        <div class="form-group">
-            <div _ngcontent-c21="" class="form-group">
-                <button _ngcontent-c21="" (click)="addItemToOrder()" class="btn btn-success btn-rectangle input-group-text">Tilføj genstand</button>
-              </div>
+        <div class="form-group" *ngIf="detailsReady">
+          <label for="placement">Genstandens placering</label>
+          <div class="input-group">
+            <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="currentItem.amount" />
+          </div>
         </div>
-      </nb-card-body>
+        <div class="form-group" *ngIf="detailsReady">
+            <label for="amount">Mængde ({{unitTypeForAmount}})</label>
+            <div class="input-group">
+              <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="currentItem.amount" />
+            </div>
+        </div>
+        <div class="btn-group">
+                <button _ngcontent-c21="" (click)="changePage()" class="btn btn-success btn-rectangle input-group-text">Tilbage</button>
+                <button _ngcontent-c21="" (click)="addItemToOrder()" [disabled]="!detailsReady" class="btn btn-success btn-rectangle input-group-text">Tilføj genstand</button>
+        </div>
+    </nb-card-body>
     </nb-card>
   </div>
 
