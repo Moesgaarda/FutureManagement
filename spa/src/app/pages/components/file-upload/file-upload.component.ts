@@ -1,6 +1,8 @@
 import { Component, Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { environment } from '../../../../environments/environment';
+import { HttpRequest, HttpClient, HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Response } from '@angular/http'
 
 @Component({
   selector: 'ngx-file-upload',
@@ -9,39 +11,36 @@ import { environment } from '../environments/environment';
 })
 @Injectable()
 export class FileUploadComponent {
+  baseUrl = environment.apiUrl;
   public progress: number;
   public message: string;
-  public url: string;
   public queuedFiles: any [] = [];
+  fileIds: number[];
   constructor(private http: HttpClient) { }
 
-  queue(files) {
-    this.queuedFiles.push(files);
+  queue(files: any []) {
+    for (const file of files){
+      this.queuedFiles.push(file);
+    }
   }
   clearQueue() {
     this.queuedFiles.splice(0, this.queuedFiles.length);
   }
-  upload() {
+  async upload() {
+    let promise: Promise<Object>;
     if (this.queuedFiles.length === 0) {
       return;
     }
-
     const formData = new FormData();
 
     for (const file of this.queuedFiles){
       formData.append(file.name, file);
     }
 
-    const uploadReq = new HttpRequest('POST', environment.apiUrl + '/FileInput/UploadFiles', formData, {
+    const uploadReq = new HttpRequest('POST', this.baseUrl + 'FileInput/uploadfiles', formData, {
       reportProgress: true,
-    });
-
-    this.http.request(uploadReq).subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        this.progress = Math.round(100 * event.loaded / event.total);
-      } else if ( event.type === HttpEventType.Response) {
-        this.message = event.body.toString();
-      }
-    });
+  });
+    promise = this.http.post(this.baseUrl + 'FileInput/uploadfiles', formData).toPromise()
+    return
   }
 }

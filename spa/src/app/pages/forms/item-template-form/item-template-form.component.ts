@@ -4,7 +4,7 @@ import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
-import { FileUploadComponent } from '../../../../file-upload/file-upload.component';
+import { FileUploadComponent } from '../../components/file-upload/file-upload.component';
 import { environment } from '../../../../environments/environment'
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 
@@ -64,7 +64,7 @@ export class ItemTemplateFormComponent implements OnInit {
   addExistingTemplateProperty() {
   }
 
-  addTemplate() {
+  async addTemplate() {
     console.log('added template!');
     console.log(this.properties);
 
@@ -75,23 +75,10 @@ export class ItemTemplateFormComponent implements OnInit {
         amount: this.partAmounts[i],
       });
     }
-
-
-/*    this.fileUploader.upload()
-    if (this.fileUploader.queue.length > 0) {
-      for (let i = 0; i < this.uploader.queue.length; i++) {
-        this.uploader.queue[i].file.name = 'ItemTemplateFiles/' + this.uploader.queue[i].file.name;
-        if ( i === 0) {
-          this.fileNamesToAdd = this.uploader.queue[i].file.name;
-        } else {
-          this.fileNamesToAdd = this.fileNamesToAdd + ' ; ' + this.uploader.queue[i].file.name;
-        }
-      }
-      this.templateToAdd.files = this.fileNamesToAdd;
-      this.uploader.uploadAll();
+    if (this.uploader.queuedFiles.length > 0) {
+      /*await this.uploader.upload().subscribe(result => this.templateToAdd.files = result);*/
     }
-*/
-    this.uploader.upload();
+    console.log(this.templateToAdd.files);
     this.templateToAdd.parts = this.templatePartsToAdd;
     // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;

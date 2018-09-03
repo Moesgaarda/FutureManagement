@@ -25,13 +25,15 @@ import { ErrorInterceptorProvide } from './_services/error.interceptor';
 import { NewModule } from './pages/new/new.module';
 import { AuthGuard } from './_guards/auth.guard';
 import { AlertifyService } from './_services/alertify.service';
-import { FileUploadModule } from '../file-upload/file-upload.module'
 import { OrderService } from './_services/order.service';
+import {FileUploadComponent} from './pages/components/file-upload/file-upload.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    FileUploadComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,6 @@ import { OrderService } from './_services/order.service';
     AppRoutingModule,
     FormsModule,
     HttpModule,
-    FileUploadModule,
     NewModule,
 
     NgbModule.forRoot(),
@@ -59,6 +60,7 @@ import { OrderService } from './_services/order.service';
     ErrorInterceptorProvide,
     AuthGuard,
     AlertifyService,
+    FileUploadComponent,
   ],
 })
 export class AppModule {

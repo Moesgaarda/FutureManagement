@@ -41,7 +41,8 @@ namespace API
             services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("SqlConn")));
             services.AddSingleton<IFileProvider>(  
             new PhysicalFileProvider(  
-                Path.Combine(Directory.GetCurrentDirectory())));  
+                Path.Combine(Directory.GetCurrentDirectory())));
+
             services.AddMvc()
                     .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
@@ -53,6 +54,7 @@ namespace API
             services.AddScoped<IItemTemplateRepository, ItemTemplateRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IFileInputRepository, FileInputRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
