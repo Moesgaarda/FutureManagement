@@ -48,12 +48,17 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-
+            List<TemplatePropertyRelation> propertiesToAdd = new List<TemplatePropertyRelation>();
+            foreach(ItemPropertyNameForGetDto prop in templateDto.TemplateProperties){
+                propertiesToAdd.Add(new TemplatePropertyRelation{
+                    PropertyId = prop.Id
+                });
+            }
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
                 templateDto.UnitType,
                 templateDto.Description,
-                templateDto.TemplateProperties,
+                propertiesToAdd,
                 templateDto.Parts,
                 templateDto.PartOf,
                 templateDto.Files
