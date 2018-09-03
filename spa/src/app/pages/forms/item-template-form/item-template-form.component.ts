@@ -4,8 +4,11 @@ import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploadComponent } from '../../components/file-upload/file-upload.component';
 import { environment } from '../../../../environments/environment'
+import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AlertifyService } from '../../../_services/alertify.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -27,21 +30,16 @@ export class ItemTemplateFormComponent implements OnInit {
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
-
-  public uploader: FileUploader = new FileUploader({url: URL});
-
-  constructor(private templateService: ItemTemplateService) {
+  uploader: FileUploadComponent;
+  constructor(private templateService: ItemTemplateService, fileUploader: FileUploadComponent, private router: Router,
+     private alertify: AlertifyService) {
+    this.uploader = fileUploader;
     this.getTemplates();
     this.loadAllTemplateProperties();
   }
 
   ngOnInit() {
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
-
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-
-      console.log('ImageUpload:uploaded:', item, status);
-  };
   }
 
   async getTemplates() {
@@ -69,9 +67,9 @@ export class ItemTemplateFormComponent implements OnInit {
   addExistingTemplateProperty() {
   }
 
-  addTemplate() {
+  async addTemplate() {
     console.log('added template!');
-    console.log(this.templateToAdd);
+    console.log(this.properties);
 
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
@@ -80,23 +78,25 @@ export class ItemTemplateFormComponent implements OnInit {
         amount: this.partAmounts[i],
       });
     }
-    if (this.uploader.queue.length > 0) {
-      for (let i = 0; i < this.uploader.queue.length; i++) {
-        this.uploader.queue[i].file.name = 'ItemTemplateFiles/' + this.uploader.queue[i].file.name;
-        if ( i === 0) {
-          this.fileNamesToAdd = this.uploader.queue[i].file.name;
-        } else {
-          this.fileNamesToAdd = this.fileNamesToAdd + ' ; ' + this.uploader.queue[i].file.name;
-        }
-      }
-      this.templateToAdd.files = this.fileNamesToAdd;
-      this.uploader.uploadAll();
+    if (this.uploader.queuedFiles.length > 0) {
+      /*await this.uploader.upload().subscribe(result => this.templateToAdd.files = result);*/
     }
+    console.log(this.templateToAdd.files);
     this.templateToAdd.parts = this.templatePartsToAdd;
-    // this.templateToAdd.unitType = this.unitTypeEnumNumber[this.unitType];
+    this.templateToAdd.unitType = this.unitType; // this.unitTypeEnumNumber[this.unitType];
     this.templateToAdd.templateProperties = this.propertiesToAdd;
 
-    this.templateService.addTemplate(this.templateToAdd).subscribe();
+    console.log(this.templateToAdd);
+
+    this.templateService.addTemplate(this.templateToAdd).subscribe(data => {
+      console.log('added template');
+      this.alertify.success('Tilføjede skabelon');
+    }, error => {
+      console.log('failed to add template');
+      this.alertify.error('kunne ikke tilføje skabelon');
+    }, () => {
+      this.router.navigate(['pages/tables/item-template-table']);
+    });
   }
 
   async addTemplateProperty() {

@@ -261,7 +261,7 @@ namespace API.TESTS
                     }, 
                     new List<ItemTemplatePart>(),
                     new List<ItemTemplatePart>(),
-                    "Gavl.pdf"
+                    new List<TemplateFileDataRelation>(){}
                 ),
                 new ItemTemplate(
                     "Stang", 
@@ -277,7 +277,7 @@ namespace API.TESTS
                     }, 
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
-                    "Stang.pdf"
+                    new List<TemplateFileDataRelation>(){}
                 ),
                 new ItemTemplate(
                     "Tagplade", 
@@ -293,7 +293,7 @@ namespace API.TESTS
                     },
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
-                    "Tagplade.pdf"
+                    new List<TemplateFileDataRelation>(){}
                 )
             };
             context.ItemTemplates.AddRange(itemTemplates);

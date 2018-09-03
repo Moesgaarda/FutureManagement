@@ -62,20 +62,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     hidden: !isDevMode(),
     children: [
       {
-        title: 'Google Maps',
-        link: '/pages/maps/gmaps',
+        title: 'Tilføj ny',
+        link: '/pages/forms/order',
       },
       {
-        title: 'Leaflet Maps',
-        link: '/pages/maps/leaflet',
-      },
-      {
-        title: 'Bubble Maps',
-        link: '/pages/maps/bubble',
-      },
-      {
-        title: 'Search Maps',
-        link: '/pages/maps/searchmap',
+        title: 'Alle',
+        link: '/pages/tables/order-table',
       },
     ],
   },

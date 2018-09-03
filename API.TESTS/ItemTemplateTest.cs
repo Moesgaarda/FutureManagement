@@ -111,7 +111,7 @@ namespace API.TESTS
                 listTP,
                 new List<ItemTemplatePart>() { },
                 new List<ItemTemplatePart>() { },
-                "file/string/path"
+                new List<TemplateFileDataRelation>(){}
             );
             //When
             await controller.AddItemTemplate(_mapper.Map<ItemTemplateForAddDto>(template));
@@ -132,7 +132,7 @@ namespace API.TESTS
                 new List<TemplatePropertyRelation>() { },
                 new List<ItemTemplatePart>() { },
                 new List<ItemTemplatePart>() { },
-                "file/string/path"
+                new List<TemplateFileDataRelation>(){}
             );
             //When
             var status = await controller.AddItemTemplate(_mapper.Map<ItemTemplateForAddDto>(template));
@@ -243,7 +243,7 @@ namespace API.TESTS
                     listTP,
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>() { },
-                    "file/string/path"
+                    new List<TemplateFileDataRelation>(){}
                 ),
                 new ItemTemplate(
                     "stang",
@@ -252,7 +252,7 @@ namespace API.TESTS
                     listTP,
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>() { },
-                    "file/string/path"
+                    new List<TemplateFileDataRelation>(){}
                 ),
                 new ItemTemplate(
                     "tagplade",
@@ -261,7 +261,7 @@ namespace API.TESTS
                     listTP,
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>() { },
-                    "file/string/path"
+                    new List<TemplateFileDataRelation>(){}
                 )
             };
             context.ItemTemplates.AddRange(itemTemplates);

@@ -1,7 +1,8 @@
 import {ItemTemplate} from './ItemTemplate';
 import {User} from './User';
 import {Order} from './Order';
-import { ItemPropertyName } from './ItemPropertyName';
+import { ItemPropertyDescription } from './ItemPropertyDescription';
+import { ItemItemRelation } from './ItemItemRelation';
 
 export interface Item {
     id: number;
@@ -10,8 +11,8 @@ export interface Item {
     template: ItemTemplate;
     order: Order;
     createdBy: User;
-    isArchived: boolean;
-    parts: Item[];
-    // properties: ItemPropertyDescription[];
+    isActive: boolean;
+    parts: ItemItemRelation[];
+    properties: ItemPropertyDescription[];
 }
 
