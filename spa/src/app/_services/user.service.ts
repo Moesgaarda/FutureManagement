@@ -21,8 +21,9 @@ export class UserService {
   getActiveUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'User/active');
   }
-
-  test: User;
+  getInactiveUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'User/inactive');
+  }
 
   getUser(id: number): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'User/get/' + id);
@@ -31,5 +32,8 @@ export class UserService {
   deleteUser(id: number) {
     return this.http.post(this.baseUrl + 'User/delete/' + id, {})
     .map(response => {});
+  }
+  deActivateUser(id: number) {
+    return this.http.post(this.baseUrl + 'User/deactivate/' + id, {});
   }
 }

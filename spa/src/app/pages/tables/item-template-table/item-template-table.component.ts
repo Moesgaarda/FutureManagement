@@ -48,7 +48,7 @@ export class ItemTemplateTableComponent {
           return UnitType[value];
         },
         filterFunction(temp?: any, search?: string): boolean {
-          if (UnitType[temp] == search || UnitType[temp] >= search || search === '') {
+          if (UnitType[temp] === search || UnitType[temp] >= search || search === '') {
             return true;
           } else {
             return false;

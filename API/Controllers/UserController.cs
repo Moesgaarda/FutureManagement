@@ -70,7 +70,7 @@ namespace API.Controllers
 
         }
         
-        [HttpPost("deactivate")]
+        [HttpPost("deactivate/{id}", Name = "DeactivateUser")]
         public async Task<IActionResult> DeactivateUser(int id)
         {
             var user = await _repo.GetUser(id);
