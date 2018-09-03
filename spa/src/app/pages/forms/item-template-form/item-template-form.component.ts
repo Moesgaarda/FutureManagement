@@ -7,6 +7,8 @@ import { ItemTemplatePart } from '../../../_models/ItemTemplatePart';
 import { FileUploadComponent } from '../../components/file-upload/file-upload.component';
 import { environment } from '../../../../environments/environment'
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AlertifyService } from '../../../_services/alertify.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -29,7 +31,8 @@ export class ItemTemplateFormComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   uploader: FileUploadComponent;
-  constructor(private templateService: ItemTemplateService, fileUploader: FileUploadComponent) {
+  constructor(private templateService: ItemTemplateService, fileUploader: FileUploadComponent, private router: Router,
+     private alertify: AlertifyService) {
     this.uploader = fileUploader;
     this.getTemplates();
     this.loadAllTemplateProperties();
@@ -85,7 +88,15 @@ export class ItemTemplateFormComponent implements OnInit {
 
     console.log(this.templateToAdd);
 
-    this.templateService.addTemplate(this.templateToAdd).subscribe();
+    this.templateService.addTemplate(this.templateToAdd).subscribe(data => {
+      console.log('added template');
+      this.alertify.success('Tilføjede skabelon');
+    }, error => {
+      console.log('failed to add template');
+      this.alertify.error('kunne ikke tilføje skabelon');
+    }, () => {
+      this.router.navigate(['pages/tables/item-template-table']);
+    });
   }
 
   async addTemplateProperty() {

@@ -54,9 +54,14 @@ export class OrderFormComponent implements OnInit {
     async getTemplateDetails() {
       await this.itemTemplateService.getItemTemplate(this.templateToGet.id).subscribe(template => {
         this.templateDetails = template;
-      })
-      this.detailsReady = true;
+      }, error => {
+        this.alertify.error('kunne ikke hente skabelon');
+      }, () => {
+        this.detailsReady = true;
+        this.getUnitTypeForTemplate();
+      });
     }
+
 
     getUnitTypeForTemplate() {
       this.unitTypeForAmount = this.templateDetails.unitType.toString();
