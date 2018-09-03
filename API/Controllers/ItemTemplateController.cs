@@ -36,7 +36,7 @@ namespace API.Controllers
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
 
             ItemTemplateForGetDto itemTemplateToReturn = _mapper.Map<ItemTemplateForGetDto>(itemTemplate);
-            itemTemplateToReturn.Parts = _mapper.Map<List<ItemTemplatePartDto>>(itemTemplate.Parts);            
+            itemTemplateToReturn.Parts = _mapper.Map<List<ItemTemplatePartDto>>(itemTemplate.Parts);
             itemTemplateToReturn.TemplateProperties = _mapper.Map<List<TemplatePropertyForGetDto>>(itemTemplate.TemplateProperties);
             itemTemplateToReturn.PartOf = _mapper.Map<List<ItemTemplatePartOfDto>>(itemTemplate.PartOf);
 
@@ -48,12 +48,17 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-
+            List<TemplatePropertyRelation> propertiesToAdd = new List<TemplatePropertyRelation>();
+            foreach(ItemPropertyNameForGetDto prop in templateDto.TemplateProperties){
+                propertiesToAdd.Add(new TemplatePropertyRelation{
+                    PropertyId = prop.Id
+                });
+            }
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
                 templateDto.UnitType,
                 templateDto.Description,
-                templateDto.TemplateProperties,
+                propertiesToAdd,
                 templateDto.Parts,
                 templateDto.PartOf,
                 templateDto.Files
@@ -82,7 +87,7 @@ namespace API.Controllers
             if(id == 0){
                 ModelState.AddModelError("Item Template Error","Can not delete template with id 0.");
             }
-            
+
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
@@ -131,7 +136,7 @@ namespace API.Controllers
             if(id == 0){
                 ModelState.AddModelError("Item Template Error","Can not activate template with id 0.");
             }
-            
+
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
@@ -147,7 +152,7 @@ namespace API.Controllers
             if(id == 0){
                 ModelState.AddModelError("Item Template Error","Can not deactivate template with id 0.");
             }
-            
+
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }

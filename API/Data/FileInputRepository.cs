@@ -3,6 +3,7 @@ using API.Models;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace API.Data
 {
@@ -26,7 +27,13 @@ namespace API.Data
 
         public async Task<bool> IsFileUploaded(byte[] fileHash)
         {
-            return await _context.FileData.FirstOrDefaultAsync(x => x.FileHash == fileHash) == null; 
+            FileData file = await _context.FileData.FirstOrDefaultAsync(x => x.FileHash == fileHash);
+            
+            if (file == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

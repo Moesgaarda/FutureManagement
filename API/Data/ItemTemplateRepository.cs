@@ -26,6 +26,14 @@ namespace API.Data
 
         public async Task<bool> AddItemTemplate(ItemTemplate template)
         {
+            foreach(var part in template.Parts){
+                part.Part = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == part.Part.Id);
+            }
+
+            foreach(var prop in template.TemplateProperties){
+                prop.Property = await _context.ItemPropertyNames.FirstOrDefaultAsync(x => x.Id == prop.PropertyId);
+            }
+
             await _context.ItemTemplates.AddAsync(template);
             int result = await _context.SaveChangesAsync();
 

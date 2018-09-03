@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../form-inputs/form-inputs.component.scss'],
   templateUrl: './order-detail-form.component.html',
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailFormComponent implements OnInit {
   orderIdDisabled: boolean;
   companyDisabled: boolean;
   orderDateDisabled: boolean;

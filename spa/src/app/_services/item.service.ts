@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Item } from '../_models/Item';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable()
 export class ItemService {
 
     baseUrl = environment.apiUrl;
+
+    httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Access-Control-Allow-Origin': '*',
+        }),
+      };
 
     constructor(private http: HttpClient) {}
 
@@ -34,6 +41,6 @@ export class ItemService {
     }
 
     addItem(item: Item): Observable<Item> {
-        return this.http.post<Item>(this.baseUrl + 'Item/add', item);
+        return this.http.post<Item>(this.baseUrl + 'Item/add', item, this.httpOptions);
     }
 }

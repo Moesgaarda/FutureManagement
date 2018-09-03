@@ -20,17 +20,20 @@ import { HttpModule } from '@angular/http';
 import { ItemTemplateService } from './_services/itemTemplate.service';
 import { ItemService } from './_services/item.service';
 import { EventLogService } from './_services/eventLog.service';
-import { FileUploadModule } from 'ng2-file-upload';
 import { UserService } from './_services/user.service';
 import { ErrorInterceptorProvide } from './_services/error.interceptor';
 import { NewModule } from './pages/new/new.module';
 import { AuthGuard } from './_guards/auth.guard';
 import { AlertifyService } from './_services/alertify.service';
+import { OrderService } from './_services/order.service';
+import {FileUploadComponent} from './pages/components/file-upload/file-upload.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    FileUploadComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,6 @@ import { AlertifyService } from './_services/alertify.service';
     AppRoutingModule,
     FormsModule,
     HttpModule,
-    FileUploadModule,
     NewModule,
 
     NgbModule.forRoot(),
@@ -54,9 +56,11 @@ import { AlertifyService } from './_services/alertify.service';
     ItemService,
     EventLogService,
     UserService,
+    OrderService,
     ErrorInterceptorProvide,
     AuthGuard,
     AlertifyService,
+    FileUploadComponent,
   ],
 })
 export class AppModule {

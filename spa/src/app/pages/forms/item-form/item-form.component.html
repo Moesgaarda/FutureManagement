@@ -16,8 +16,8 @@
           </div>
           <div class="form-group">
             <label>Vælg skabelon</label>
-            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="itemToAdd.template">
-              <option *ngFor="let temp of templates">{{temp.name}}</option>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails()">
+              <option *ngFor="let temp of templates" [ngValue]="temp">{{temp.name}}</option>
             </select>
           </div>
 
@@ -31,19 +31,19 @@
         </div>
           <div class="form-group" *ngIf="showCreatedBy">
             <label for="madeBy">Lavet af</label>
-            <div class="input-group">
-              <input type="text" placeholder="Navn" class="form-control" [(ngModel)]="itemToAdd.createdBy"/>
-            </div>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="itemToAdd.createdBy">
+              <option *ngFor="let user of userList" [ngValue]="user">{{user.name}} - {{user.username}}</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="itemList">Genstandsliste</label>
             <div class="form-group">
               <ng-select
-                [items]="items | async"
+                [items]="items"
                 [multiple]="true"
                 [closeOnSelect]="false"
                 [hideSelected]="true"
-                bindLabel="template.name"
+                bindLabel="placement"
                 placeholder="Vælg genstande"
                 [(ngModel)]="selectedItemParts">               
               </ng-select>
@@ -60,18 +60,15 @@
     <div class="col-lg-6">
   
       <nb-card>
-        <nb-card-header>Egenskaber</nb-card-header>
+        <nb-card-header>Egenskaber der ligger på den valgte skabelon</nb-card-header>
         <nb-card-body>
-          <div class="form-group">
-            <label for="name">Malingsfarve</label>
-            <div class="input-group">
-              <input type="text" placeholder="Malingsfarve" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="name">Behandling</label>
-            <div class="input-group">
-              <input type="text" placeholder="Behandling" class="form-control"/>
+          <div *ngIf="detailsReady">
+            <div *ngFor="let prop of templateDetails.templateProperties; let i=index">
+              {{prop.name}}
+              <br>
+              <br>
+              <input type="text" placeholder="{{prop.name}}" class="form-control" [(ngModel)]="descriptionTextsToAdd[i]">
+              <br>
             </div>
           </div>
         </nb-card-body>

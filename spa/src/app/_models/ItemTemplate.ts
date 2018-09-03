@@ -7,7 +7,7 @@ export interface ItemTemplate {
     id: number;
     name: string;
     unitType: UnitType;
-    files: string;
+    files: any;
     templateProperties: ItemPropertyName[];
     parts: ItemTemplatePart[];
     description: string;
