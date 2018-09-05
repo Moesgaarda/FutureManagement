@@ -65,9 +65,6 @@ export class ItemTemplateFormComponent implements OnInit {
     }
   }
 
-  addExistingTemplateProperty() {
-  }
-
   async addTemplate() {
     console.log('added template!');
     console.log(this.properties);
@@ -102,7 +99,12 @@ export class ItemTemplateFormComponent implements OnInit {
   }
 
   async addTemplateProperty() {
-    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
-    this.loadAllTemplateProperties();
+    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe(data => {
+      this.alertify.success('Tilføjede egenskab!');
+    }, error => {
+      this.alertify.error('Kunne ikke tilføje egenskab');
+    }, () => {
+      this.loadAllTemplateProperties();
+    });
   }
 }
