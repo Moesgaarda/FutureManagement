@@ -31,7 +31,7 @@ namespace API.Controllers
             bool isUploaded;
             foreach (IFormFile file in Request.Form.Files){
                 if (file == null || file.Length == 0){
-                    return NoContent();
+                    continue;
                 }
 
                 var fileHash = MD5.Create().ComputeHash(file.OpenReadStream());

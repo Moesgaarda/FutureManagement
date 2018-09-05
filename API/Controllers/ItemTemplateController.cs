@@ -54,6 +54,12 @@ namespace API.Controllers
                     PropertyId = prop.Id
                 });
             }
+            List<TemplateFileDataRelation> filesToAdd = new List<TemplateFileDataRelation>();
+            foreach(int id in templateDto.Files){
+                filesToAdd.Add(new TemplateFileDataRelation{
+                    FileDataId = id
+                });
+            }
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
                 templateDto.UnitType,
@@ -61,7 +67,7 @@ namespace API.Controllers
                 propertiesToAdd,
                 templateDto.Parts,
                 templateDto.PartOf,
-                templateDto.Files
+                filesToAdd
             );
 
             bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);
