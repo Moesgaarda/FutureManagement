@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
@@ -31,6 +31,7 @@ export class ItemTemplateFormComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   uploader: FileUploadComponent;
+  currentPage: number = 1;
 
   constructor(private templateService: ItemTemplateService, fileUploader: FileUploadComponent, private router: Router,
      private alertify: AlertifyService) {
