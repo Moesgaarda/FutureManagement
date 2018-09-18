@@ -45,7 +45,7 @@ namespace API.Controllers
                     fileIds.Add(await _repo.GetFileId(fileHash));
                 }
                 else{
-                    using(var stream = new FileStream(file.FileName, FileMode.Create)){
+                    using(var stream = new FileStream(path + file.FileName, FileMode.Create)){
                         await file.CopyToAsync(stream);
                     }
                     FileData fileToAdd = new FileData(){
