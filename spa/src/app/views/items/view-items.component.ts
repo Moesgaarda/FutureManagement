@@ -43,7 +43,7 @@ export class ViewItemsComponent {
           return temp.name.toString();
         },
         filterFunction(temp?: any, search?: string): boolean {
-          const match = temp.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+          const match = temp.name.toLowerCase().indexOf(search.toLowerCase()) > -1;
           if (match || search === '') {
             return true;
           } else {
@@ -62,10 +62,10 @@ export class ViewItemsComponent {
       order: {
         title: 'Købt fra eller lavet af',
         valuePrepareFunction: (order) => {
-          return order.company.toString()
+          return order.company.toString();
         },
         filterFunction(order?: any, search?: string): boolean {
-          const match = order.company.indexOf(search) > -1
+          const match = order.company.indexOf(search) > -1;
           if (match || search === '') {
             return true;
           } else {
@@ -86,7 +86,7 @@ export class ViewItemsComponent {
       this.items = items;
       this.source.load(items);
       this.source.refresh();
-    })
+    });
   }
 
   onDeleteConfirm(event): void {
