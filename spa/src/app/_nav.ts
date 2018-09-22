@@ -11,7 +11,7 @@ export const navItems = [
   {
     name: 'Projekter',
     icon: 'fa fa-folder-o',
-    url: '/base',
+    url: '/projects',
     children: [
       {
         name: 'Vis projekter',
@@ -28,7 +28,7 @@ export const navItems = [
   {
     name: 'Lagerhåndtering',
     icon: 'fa fa-barcode',
-    url: '/base',
+    url: '/items',
     children: [
       {
         name: 'Vis lagerbeholdning',
