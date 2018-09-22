@@ -55,7 +55,7 @@ export const navItems = [
   {
     name: 'Kunder',
     icon: 'fa fa-child',
-    url: '/base',
+    url: '/customers',
     children: [
       {
         name: 'Vis kunder',
