@@ -37,7 +37,7 @@ namespace API.Controllers
         }
 
         [HttpPost("addCalendar")]
-        public async Task<IActionResult> AddCalendar(){
+        public Task<IActionResult> AddCalendar(){
             throw new NotImplementedException();
         }
     }
