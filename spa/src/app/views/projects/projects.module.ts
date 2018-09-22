@@ -1,20 +1,15 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
-import { ProjectsComponent } from './projects.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ViewProjectsComponent } from './view-projects.component';
+
 import { ProjectsRoutingModule } from './projects-routing.module';
 
 @NgModule({
   imports: [
-    FormsModule,
     ProjectsRoutingModule,
-    ChartsModule,
-    BsDropdownModule,
-    ButtonsModule.forRoot()
+    Ng2SmartTableModule,
   ],
-  declarations: [ ProjectsComponent ]
+  declarations: [ ViewProjectsComponent ]
 })
-export class DashboardModule { }
+export class ProjectsModule { }

@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
-import { Routes,
-     RouterModule } from '@angular/router';
-
-import { ProjectsComponent } from './projects.component';
+import { Routes, RouterModule } from '@angular/router';
+import { ViewProjectsComponent } from './view-projects.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProjectsComponent,
     data: {
       title: 'Projekter'
-    }
+    },
+    children: [
+      {
+        path: 'view',
+        component: ViewProjectsComponent,
+        data: {
+          title: 'Vis projekter'
+        }
+      }
+    ]
   }
 ];
 
