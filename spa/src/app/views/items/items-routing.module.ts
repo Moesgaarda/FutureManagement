@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewItemsComponent } from './view-items.component';
+import { AddItemsComponent } from './new-items.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,13 @@ const routes: Routes = [
         component: ViewItemsComponent,
         data: {
           title: 'Vis genstande'
+        }
+      },
+      {
+        path: 'new',
+        component: AddItemsComponent,
+        data: {
+          title: 'Tilføj ny genstand'
         }
       }
     ]

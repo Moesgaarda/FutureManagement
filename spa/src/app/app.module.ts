@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -43,6 +45,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { ItemService } from './_services/item.service';
 import { ItemTemplateService } from './_services/itemTemplate.service';
+import { UserService } from './_services/user.service';
 
 @NgModule({
   imports: [
@@ -58,6 +61,8 @@ import { ItemTemplateService } from './_services/itemTemplate.service';
     TabsModule.forRoot(),
     ChartsModule,
     HttpClientModule,
+    FormsModule,
+    NgSelectModule,
   ],
   declarations: [
     AppComponent,
@@ -73,6 +78,7 @@ import { ItemTemplateService } from './_services/itemTemplate.service';
   },
   ItemService,
   ItemTemplateService,
+  UserService,
   ],
   bootstrap: [ AppComponent ]
 })
