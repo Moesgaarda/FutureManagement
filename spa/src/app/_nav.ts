@@ -10,97 +10,97 @@ export const navItems = [
   },
   {
     name: 'Projekter',
-    icon: 'icon-bell',
+    icon: 'fa fa-folder-o',
     url: '/base',
     children: [
       {
         name: 'Vis projekter',
         url: '/projects/view',
-        icon: 'icon-bell',
+        icon: 'fa fa-folder-o',
       },
       {
         name: 'Tilføj nyt projekt',
         url: '/projects/new',
-        icon: 'icon-bell'
+        icon: 'fa fa-folder-o'
       }
     ]
   },
   {
     name: 'Lagerhåndtering',
-    icon: 'icon-bell',
+    icon: 'fa fa-barcode',
     url: '/base',
     children: [
       {
         name: 'Vis lagerbeholdning',
         url: '/items/view',
-        icon: 'icon-bell',
+        icon: 'fa fa-barcode',
       },
       {
         name: 'Tilføj ny genstand',
         url: '/items/new',
-        icon: 'icon-bell'
+        icon: 'fa fa-barcode'
       },
       {
         name: 'Vis skabeloner',
         url: '/item-templates/view',
-        icon: 'icon-bell'
+        icon: 'fa fa-barcode'
       },
       {
         name: 'Tilføj skabelon',
         url: '/item-templates/new',
-        icon: 'icon-bell'
+        icon: 'fa fa-barcode'
       }
     ]
   },
   {
     name: 'Kunder',
-    icon: 'icon-bell',
+    icon: 'fa fa-child',
     url: '/base',
     children: [
       {
         name: 'Vis kunder',
         url: '/customers/view',
-        icon: 'icon-bell',
+        icon: 'fa fa-child',
       }
     ]
   },
   {
     name: 'Bestillinger',
-    icon: 'icon-bell',
+    icon: 'fa fa-envelope-o',
     url: '/base',
     children: [
       {
         name: 'Vis bestillinger',
         url: '/orders/view',
-        icon: 'icon-bell',
+        icon: 'fa fa-envelope-o',
       },
       {
         name: 'Tilføj ny bestilling',
         url: '/orders/new',
-        icon: 'icon-bell'
+        icon: 'fa fa-envelope-o'
       }
     ]
   },
   {
     name: 'Brugere',
-    icon: 'icon-bell',
+    icon: 'fa fa-user-o',
     url: '/base',
     children: [
       {
         name: 'Vis brugere',
         url: '/users/view',
-        icon: 'icon-bell',
+        icon: 'fa fa-user-o',
       },
       {
         name: 'Tilføj ny bruger',
         url: '/users/new',
-        icon: 'icon-bell'
+        icon: 'fa fa-user-o'
       }
     ]
   },
   {
     name: 'Log',
-    icon: 'icon-bell',
+    icon: 'fa fa-sticky-note-o',
     url: '/log/show'
   },
   {
