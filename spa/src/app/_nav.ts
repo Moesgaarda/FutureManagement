@@ -28,7 +28,7 @@ export const navItems = [
   {
     name: 'Lagerhåndtering',
     icon: 'fa fa-barcode',
-    url: '/items',
+    url: '/base',
     children: [
       {
         name: 'Vis lagerbeholdning',
@@ -42,7 +42,7 @@ export const navItems = [
       },
       {
         name: 'Vis skabeloner',
-        url: '/item-templates/view',
+        url: '/itemTemplates/view',
         icon: 'fa fa-barcode'
       },
       {
