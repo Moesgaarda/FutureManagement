@@ -15,3 +15,4 @@ export interface Item {
     parts: ItemItemRelation[];
     properties: ItemPropertyDescription[];
 }
+
