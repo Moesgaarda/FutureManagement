@@ -42,6 +42,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { ItemService } from './_services/item.service';
+import { ItemTemplateService } from './_services/itemTemplate.service';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { ItemService } from './_services/item.service';
     useClass: HashLocationStrategy
   },
   ItemService,
+  ItemTemplateService,
   ],
   bootstrap: [ AppComponent ]
 })
