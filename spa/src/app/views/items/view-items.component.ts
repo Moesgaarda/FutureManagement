@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ItemService } from '../../../_services/item.service';
-import { environment } from '../../../../environments/environment';
+import { ItemService } from '../../_services/item.service';
+import { environment } from '../../../environments/environment';
 import * as _ from 'underscore';
-import { Item } from '../../../_models/Item';
+import { Item } from '../../_models/Item';
 
 @Component({
   templateUrl: './view-items.component.html',
