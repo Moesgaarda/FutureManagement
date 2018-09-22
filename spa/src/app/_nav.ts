@@ -1,40 +1,204 @@
 export const navItems = [
   {
-    name: 'Dashboard',
+    title: true,
+    name: 'Navigation'
+  },
+  {
+    name: 'Forside',
     url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
+    icon: 'icon-home',
   },
   {
-    title: true,
-    name: 'Theme'
+    name: 'Projekter',
+    icon: 'icon-bell',
+    url: '/base',
+    children: [
+      {
+        name: 'Vis projekter',
+        url: '/projects/view',
+        icon: 'icon-bell',
+      },
+      {
+        name: 'Tilføj nyt projekt',
+        url: '/projects/new',
+        icon: 'icon-bell'
+      }
+    ]
   },
   {
-    name: 'Colors',
-    url: '/theme/colors',
-    icon: 'icon-drop'
+    name: 'Lagerhåndtering',
+    icon: 'icon-bell',
+    url: '/base',
+    children: [
+      {
+        name: 'Vis lagerbeholdning',
+        url: '/items/view',
+        icon: 'icon-bell',
+      },
+      {
+        name: 'Tilføj ny genstand',
+        url: '/items/new',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Vis skabeloner',
+        url: '/item-templates/view',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Tilføj skabelon',
+        url: '/item-templates/new',
+        icon: 'icon-bell'
+      }
+    ]
   },
   {
-    name: 'Typography',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
+    name: 'Kunder',
+    icon: 'icon-bell',
+    url: '/base',
+    children: [
+      {
+        name: 'Vis kunder',
+        url: '/customers/view',
+        icon: 'icon-bell',
+      }
+    ]
   },
   {
-    title: true,
-    name: 'Components'
+    name: 'Bestillinger',
+    icon: 'icon-bell',
+    url: '/base',
+    children: [
+      {
+        name: 'Vis bestillinger',
+        url: '/orders/view',
+        icon: 'icon-bell',
+      },
+      {
+        name: 'Tilføj ny bestilling',
+        url: '/orders/new',
+        icon: 'icon-bell'
+      }
+    ]
   },
   {
-    name: 'Base',
+    name: 'Brugere',
+    icon: 'icon-bell',
+    url: '/base',
+    children: [
+      {
+        name: 'Vis brugere',
+        url: '/users/view',
+        icon: 'icon-bell',
+      },
+      {
+        name: 'Tilføj ny bruger',
+        url: '/users/new',
+        icon: 'icon-bell'
+      }
+    ]
+  },
+  {
+    name: 'Log',
+    icon: 'icon-bell',
+    url: '/log/show'
+  },
+  {
+    divider: true
+  },
+  {
+    name: 'CoreUI Features',
     url: '/base',
     icon: 'icon-puzzle',
+    class: 'mt-auto',
     children: [
+      {
+        name: 'Widgets',
+        url: '/widgets',
+        icon: 'icon-calculator',
+      },
+      {
+        name: 'Alerts',
+        url: '/notifications/alerts',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Badges',
+        url: '/notifications/badges',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Modals',
+        url: '/notifications/modals',
+        icon: 'icon-bell'
+      },
+      {
+        name: 'Icons',
+        url: '/icons',
+        icon: 'icon-star',
+      },
+      {
+        name: 'CoreUI Icons',
+        url: '/icons/coreui-icons',
+        icon: 'icon-star',
+        badge: {
+          variant: 'success',
+          text: 'NEW'
+        }
+      },
+      {
+        name: 'Flags',
+        url: '/icons/flags',
+        icon: 'icon-star'
+      },
+      {
+        name: 'Font Awesome',
+        url: '/icons/font-awesome',
+        icon: 'icon-star',
+        badge: {
+          variant: 'secondary',
+          text: '4.7'
+        }
+      },
+      {
+        name: 'Simple Line Icons',
+        url: '/icons/simple-line-icons',
+        icon: 'icon-star'
+      },
+      {
+        name: 'Charts',
+        url: '/charts',
+        icon: 'icon-pie-chart'
+      },
+      {
+        name: 'Buttons',
+        url: '/buttons/buttons',
+        icon: 'icon-cursor'
+      },
+      {
+        name: 'Dropdowns',
+        url: '/buttons/dropdowns',
+        icon: 'icon-cursor'
+      },
+      {
+        name: 'Brand Buttons',
+        url: '/buttons/brand-buttons',
+        icon: 'icon-cursor'
+      },
       {
         name: 'Cards',
         url: '/base/cards',
         icon: 'icon-puzzle'
+      },
+      {
+        name: 'Colors',
+        url: '/theme/colors',
+        icon: 'icon-drop'
+      },
+      {
+        name: 'Typography',
+        url: '/theme/typography',
+        icon: 'icon-pencil'
       },
       {
         name: 'Carousels',
@@ -89,143 +253,13 @@ export const navItems = [
     ]
   },
   {
-    name: 'Buttons',
-    url: '/buttons',
-    icon: 'icon-cursor',
-    children: [
-      {
-        name: 'Buttons',
-        url: '/buttons/buttons',
-        icon: 'icon-cursor'
-      },
-      {
-        name: 'Dropdowns',
-        url: '/buttons/dropdowns',
-        icon: 'icon-cursor'
-      },
-      {
-        name: 'Brand Buttons',
-        url: '/buttons/brand-buttons',
-        icon: 'icon-cursor'
-      }
-    ]
-  },
-  {
-    name: 'Charts',
-    url: '/charts',
-    icon: 'icon-pie-chart'
-  },
-  {
-    name: 'Icons',
-    url: '/icons',
-    icon: 'icon-star',
-    children: [
-      {
-        name: 'CoreUI Icons',
-        url: '/icons/coreui-icons',
-        icon: 'icon-star',
-        badge: {
-          variant: 'success',
-          text: 'NEW'
-        }
-      },
-      {
-        name: 'Flags',
-        url: '/icons/flags',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Font Awesome',
-        url: '/icons/font-awesome',
-        icon: 'icon-star',
-        badge: {
-          variant: 'secondary',
-          text: '4.7'
-        }
-      },
-      {
-        name: 'Simple Line Icons',
-        url: '/icons/simple-line-icons',
-        icon: 'icon-star'
-      }
-    ]
-  },
-  {
-    name: 'Notifications',
-    url: '/notifications',
-    icon: 'icon-bell',
-    children: [
-      {
-        name: 'Alerts',
-        url: '/notifications/alerts',
-        icon: 'icon-bell'
-      },
-      {
-        name: 'Badges',
-        url: '/notifications/badges',
-        icon: 'icon-bell'
-      },
-      {
-        name: 'Modals',
-        url: '/notifications/modals',
-        icon: 'icon-bell'
-      }
-    ]
-  },
-  {
-    name: 'Widgets',
-    url: '/widgets',
-    icon: 'icon-calculator',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
-  },
-  {
     divider: true
   },
   {
-    title: true,
-    name: 'Extras',
-  },
-  {
-    name: 'Pages',
-    url: '/pages',
-    icon: 'icon-star',
-    children: [
-      {
-        name: 'Login',
-        url: '/login',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Register',
-        url: '/register',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 404',
-        url: '/404',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 500',
-        url: '/500',
-        icon: 'icon-star'
-      }
-    ]
-  },
-  {
-    name: 'Download CoreUI',
-    url: 'http://coreui.io/angular/',
+    name: 'Log ind',
+    url: '/login',
     icon: 'icon-cloud-download',
     class: 'mt-auto',
     variant: 'success'
-  },
-  {
-    name: 'Try CoreUI PRO',
-    url: 'http://coreui.io/pro/angular/',
-    icon: 'icon-layers',
-    variant: 'danger'
   }
 ];
