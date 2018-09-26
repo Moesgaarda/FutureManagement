@@ -71,6 +71,10 @@ export const routes: Routes = [
         loadChildren: './views/itemTemplates/itemTemplates.module#ItemTemplatesModule'
       },
       {
+        path: 'users',
+        loadChildren: './views/users/users.module#UsersModule'
+      },
+      {
         path: 'buttons',
         loadChildren: './views/buttons/buttons.module#ButtonsModule'
       },
