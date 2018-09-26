@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">Detaljer omkring genstanden</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="templateUsed">Anvendt skabelon</label>
+          <div class="input-group">
+            <input type="text" placeholder="Anvendt skabelon" id="templateUsed" class="form-control" value="Skabelon 1"
+              [disabled]="templateDisabled">
+            <span class="input-group-append">
+              <button class="btn btn-success input-group-text" (click)="enableTemplate()">
+                {{ templateDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="placement">Genstandens placering</label>
+          <div class="input-group">
+            <input type="text" placeholder="Genstandens placering" class="form-control" id="placement" value="{{item?.placement}}"
+              id="placement" [disabled]="placementDisabled" />
+            <span class="input-group-append">
+              <button class="btn btn-success input-group-text" (click)="enablePlacement()">
+                {{ placementDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="amount">Mængde</label>
+          <div class="input-group">
+            <input type="text" placeholder="Mængde" class="form-control" id="amount" value="{{item?.amount}}"
+              [disabled]="amountDisabled" />
+            <span class="input-group-append">
+              <button class="btn btn-success input-group-text" (click)="enableAmount()">
+                {{ amountDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="order">Oprindelsesordre</label>
+          <div class="input-group">
+            <input type="text" placeholder="Oprindelsesordre" id="order" value="{{item?.order.company}} - {{item?.order.orderDate}}"
+              class="form-control" disabled>
+            <span class="input-group-append">
+              <button class="btn btn-success input-group-text" (click)="routeToOrderDetail()">
+                Detaljer
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="madeBy">Lavet af</label>
+          <div class="input-group">
+            <input type="text" placeholder="Lavet af" id="madeBy" class="form-control" value="{{item?.createdBy.username}}"
+              disabled>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="itemList">Liste af dele</label>
+          <input type="text" placeholder="Genstandsliste" class="form-control" disabled />
+          <small class="form-text">En liste af genstande der blev anvendt til at fremstille denne genstand </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+
+    <div class="card">
+      <div class="card-header">Valgte egenskaber</div>
+      <div class="card-body">
+        <div class="row demo-checkboxes-radio">
+          <div class="demo-checkboxes col-sm-4">
+            checkbox Malingsfarve
+            checkbox Behandling
+            checkbox Egenskab3
+            checkbox Egenskab4
+            checkbox Egenskab5
+            checkbox Egenskab6
+          </div>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Tilføj ny egenskab" class="form-control" />
+          <span class="input-group-append">
+            <button class="btn btn-success input-group-text">
+              Tilføj
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
