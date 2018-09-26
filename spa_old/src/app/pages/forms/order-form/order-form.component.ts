@@ -64,8 +64,7 @@ export class OrderFormComponent implements OnInit {
 
 
     getUnitTypeForTemplate() {
-      this.unitTypeForAmount = this.templateDetails.unitType.toString();
-      this.unitTypeForAmount = this.unitTypes[Number(this.unitTypeForAmount)];
+      this.unitTypeForAmount = UnitType[this.templateDetails.unitType];
     }
 
     removeItemFromOrder(i: number) {

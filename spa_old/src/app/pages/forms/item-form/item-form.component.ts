@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Item } from '../../../_models/Item';
-import { ItemTemplate } from '../../../_models/ItemTemplate';
+import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemService } from '../../../_services/item.service';
 import { UserService } from '../../../_services/user.service';
@@ -58,8 +58,8 @@ export class ItemFormComponent {
   async getItems() {
     await this.itemService.getActiveItems().subscribe(items => {
       this.items = items.map((name) => {
-        name.placement = name.template.name + ' - (' + name.placement + ') - Mængde: '
-          + name.amount + ' ' + name.template.unitType;
+        name.placement = name.template.name + ' (' + name.placement + ') - '
+          + name.amount + ' ' + UnitType[name.template.unitType];
         return name;
       });
     })
@@ -69,25 +69,6 @@ export class ItemFormComponent {
     await this.userService.getActiveUsers().subscribe(users => {
       this.userList = users;
     });
-  }
-
-  hej() {
-
-   /* for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
-      this.propertyDescriptionsToAdd.push({
-        description: this.descriptionTextsToAdd[i],
-        propertyName: this.templateDetails.templateProperties[i],
-      });
-    }
-
-    this.itemToAdd.properties = this.propertyDescriptionsToAdd;
-
-    this.itemToAdd.parts = this.selectedItemParts;
-    console.log(this.templateDetails);
-    this.itemToAdd.template = this.templateDetails;*/
-    console.log(this.items);
-console.log(this.selectedItemParts);
-console.log(this.itemNamesToShow);
   }
 
   addItem() {

@@ -5,6 +5,7 @@ import { FormsRoutingModule, routedComponents } from './forms-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploader } from 'ng2-file-upload';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { FileUploader } from 'ng2-file-upload';
     FormsRoutingModule,
     NgSelectModule,
     FileUploadModule,
+    NgxPaginationModule,
   ],
   declarations: [
     ...routedComponents,
