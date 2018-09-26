@@ -26,7 +26,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'details',
+        path: 'details/:id',
         component: DetailsCustomerComponent,
         data: {
           title: 'Detaljer for kunde'
