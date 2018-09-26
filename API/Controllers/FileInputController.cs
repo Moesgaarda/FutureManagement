@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Primitives;
 
 namespace API.Controllers
 {
@@ -29,9 +30,13 @@ namespace API.Controllers
         public async Task<IActionResult> UploadFiles(){
             List<int> fileIds = new List<int>();
             bool isUploaded;
+            StringValues origin;
+            Request.Form.TryGetValue("origin", out origin);
+
+            string path = origin.ToArray()[0] + "/";
             foreach (IFormFile file in Request.Form.Files){
                 if (file == null || file.Length == 0){
-                    return NoContent();
+                    continue;
                 }
 
                 var fileHash = MD5.Create().ComputeHash(file.OpenReadStream());
@@ -40,12 +45,12 @@ namespace API.Controllers
                     fileIds.Add(await _repo.GetFileId(fileHash));
                 }
                 else{
-                    using(var stream = new FileStream(file.FileName, FileMode.Create)){
+                    using(var stream = new FileStream(path + file.FileName, FileMode.Create)){
                         await file.CopyToAsync(stream);
                     }
                     FileData fileToAdd = new FileData(){
                         FileHash = fileHash,
-                        FilePath = file.FileName
+                        FilePath = path + file.FileName
                     };
                     fileIds.Add(await _repo.AddFile(fileToAdd));
                 }
