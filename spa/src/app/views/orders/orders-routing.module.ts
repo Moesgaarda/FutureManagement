@@ -19,7 +19,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'details',
+        path: 'details/:id',
         component: DetailsOrderComponent,
         data: {
           title: 'Detaljer for bestilling'
