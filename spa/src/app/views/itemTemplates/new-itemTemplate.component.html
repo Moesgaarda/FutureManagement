@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="card">
-      <div class="header">Ny skabelon</div>
+      <div class="card-header">Ny skabelon</div>
       <div class="card-body">
         <div class="form-group">
           <label for="name">Navn på skabelonen</label>
@@ -43,8 +43,7 @@
           <label for="name">Vælg mængder til de forskellige skabeloner</label>
           <div class="input-group" *ngFor="let temp of selectedTemplates; let i=index">
             <label>{{temp.name}}: </label>
-            <input type="number" placeholder="{{temp.name}}" class="form-control col-lg-8" name="amount{{i}}" [(ngModel)]="partAmounts[i]"
-            />
+            <input type="number" placeholder="{{temp.name}}" class="form-control col-lg-8" name="amount{{i}}" [(ngModel)]="partAmounts[i]"/>
           </div>
 
         </div>
