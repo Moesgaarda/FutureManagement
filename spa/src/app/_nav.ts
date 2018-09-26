@@ -47,7 +47,7 @@ export const navItems = [
       },
       {
         name: 'Tilføj skabelon',
-        url: '/item-templates/new',
+        url: '/itemTemplates/new',
         icon: 'fa fa-barcode'
       }
     ]
