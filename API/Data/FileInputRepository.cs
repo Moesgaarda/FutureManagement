@@ -15,7 +15,8 @@ namespace API.Data
         }
         public async Task<int> AddFile(FileData file)
         {
-            var fileToAdd = await _context.AddAsync(file);
+            var fileToAdd = await _context.FileData.AddAsync(file);
+            await _context.SaveChangesAsync();
             return fileToAdd.Entity.Id;
         }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { ItemTemplateService } from '../../../_services/itemTemplate.service';
 import { ItemTemplate, UnitType } from '../../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../../_models/ItemPropertyName';
@@ -31,6 +31,8 @@ export class ItemTemplateFormComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   uploader: FileUploadComponent;
+  currentPage: number = 1;
+
   constructor(private templateService: ItemTemplateService, fileUploader: FileUploadComponent, private router: Router,
      private alertify: AlertifyService) {
     this.uploader = fileUploader;
@@ -64,9 +66,6 @@ export class ItemTemplateFormComponent implements OnInit {
     }
   }
 
-  addExistingTemplateProperty() {
-  }
-
   async addTemplate() {
     console.log('added template!');
     console.log(this.properties);
@@ -79,7 +78,8 @@ export class ItemTemplateFormComponent implements OnInit {
       });
     }
     if (this.uploader.queuedFiles.length > 0) {
-      /*await this.uploader.upload().subscribe(result => this.templateToAdd.files = result);*/
+        const fileArray = await this.uploader.upload('ItemTemplateFiles');
+        this.templateToAdd.files = fileArray;
     }
     console.log(this.templateToAdd.files);
     this.templateToAdd.parts = this.templatePartsToAdd;
@@ -100,7 +100,12 @@ export class ItemTemplateFormComponent implements OnInit {
   }
 
   async addTemplateProperty() {
-    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe();
-    this.loadAllTemplateProperties();
+    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe(data => {
+      this.alertify.success('Tilføjede egenskab!');
+    }, error => {
+      this.alertify.error('Kunne ikke tilføje egenskab');
+    }, () => {
+      this.loadAllTemplateProperties();
+    });
   }
 }
