@@ -138,7 +138,7 @@ namespace API.Data
                 User user = await _userRepo.GetUser(userId);
 
                 return user;
-            }catch(NullReferenceException){
+            }catch(Exception e){
                 return await _userRepo.GetUser(1);
             }
         }
