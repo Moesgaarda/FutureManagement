@@ -101,7 +101,7 @@ export const navItems = [
   {
     name: 'Log',
     icon: 'fa fa-sticky-note-o',
-    url: '/log/show'
+    url: '/logs/view'
   },
   {
     divider: true
