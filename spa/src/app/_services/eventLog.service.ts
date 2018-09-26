@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { EventLog } from '../_models/eventLog';
+import { EventLog } from '../_models/EventLog';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
