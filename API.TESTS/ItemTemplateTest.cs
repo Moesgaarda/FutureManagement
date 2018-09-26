@@ -111,7 +111,7 @@ namespace API.TESTS
                 listTP,
                 new List<ItemTemplatePart>() { },
                 new List<ItemTemplatePart>() { },
-                new List<TemplateFileDataRelation>(){}
+                new List<TemplateFileName>(){}
             );
             //When
             await controller.AddItemTemplate(_mapper.Map<ItemTemplateForAddDto>(template));
@@ -132,7 +132,7 @@ namespace API.TESTS
                 new List<TemplatePropertyRelation>() { },
                 new List<ItemTemplatePart>() { },
                 new List<ItemTemplatePart>() { },
-                new List<TemplateFileDataRelation>(){}
+                new List<TemplateFileName>(){}
             );
             //When
             var status = await controller.AddItemTemplate(_mapper.Map<ItemTemplateForAddDto>(template));
@@ -243,7 +243,7 @@ namespace API.TESTS
                     listTP,
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>() { },
-                    new List<TemplateFileDataRelation>(){}
+                    new List<TemplateFileName>(){}
                 ),
                 new ItemTemplate(
                     "stang",
@@ -252,7 +252,7 @@ namespace API.TESTS
                     listTP,
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>() { },
-                    new List<TemplateFileDataRelation>(){}
+                    new List<TemplateFileName>(){}                
                 ),
                 new ItemTemplate(
                     "tagplade",
@@ -260,8 +260,8 @@ namespace API.TESTS
                     "Dette er en tagplade",
                     listTP,
                     new List<ItemTemplatePart>(){},
-                    new List<ItemTemplatePart>() { },
-                    new List<TemplateFileDataRelation>(){}
+                    new List<ItemTemplatePart>() {},
+                    new List<TemplateFileName>(){}
                 )
             };
             context.ItemTemplates.AddRange(itemTemplates);
