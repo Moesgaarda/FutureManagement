@@ -26,7 +26,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'details',
+        path: 'details/:id',
         component: DetailsItemComponent,
         data: {
           title: 'Detaljer om genstand'

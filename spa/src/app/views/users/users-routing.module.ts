@@ -29,14 +29,14 @@ const routes: Routes = [
         }
       },
       {
-        path: 'edit',
+        path: 'edit/:id',
         component: EditUserComponent,
         data: {
             title: 'Rediger bruger'
         }
       },
       {
-        path: 'details',
+        path: 'details/:id',
         component: DetailsUserComponent,
         data: {
           title: 'Detaljer om bruger'
