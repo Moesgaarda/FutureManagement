@@ -5,9 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
+
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {FileUploadComponent} from './_components/file-upload/file-upload.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -70,6 +72,7 @@ import { UserService } from './_services/user.service';
     P404Component,
     P500Component,
     LoginComponent,
+    FileUploadComponent,
     RegisterComponent
   ],
   providers: [{
