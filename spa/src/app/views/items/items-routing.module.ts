@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewItemsComponent } from './view-items.component';
 import { AddItemsComponent } from './new-items.component';
+import { DetailsItemComponent } from './details-item.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,13 @@ const routes: Routes = [
         component: AddItemsComponent,
         data: {
           title: 'Tilføj ny genstand'
+        }
+      },
+      {
+        path: 'details',
+        component: DetailsItemComponent,
+        data: {
+          title: 'Detaljer om genstand'
         }
       }
     ]

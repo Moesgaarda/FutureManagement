@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewItemTemplatesComponent } from './view-itemTemplates.component';
 import { NewItemTemplateComponent } from './new-itemTemplate.component';
+import { DetailsItemTemplateComponent } from './details-itemTemplate.component';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Genstande'
+      title: 'Skabeloner'
     },
     children: [
       {
@@ -22,6 +23,13 @@ const routes: Routes = [
         component: NewItemTemplateComponent,
         data: {
           title: 'Tilføj skabelon'
+        }
+      },
+      {
+        path: 'details',
+        component: DetailsItemTemplateComponent,
+        data: {
+          title: 'Vis detaljer'
         }
       }
     ]

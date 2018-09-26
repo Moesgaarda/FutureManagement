@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ViewItemTemplatesComponent } from './view-itemTemplates.component';
-
 import { ItemTemplatesRoutingModule } from './itemTemplates-routing.module';
+
+import { DetailsItemTemplateComponent } from './details-itemTemplate.component';
+import { ViewItemTemplatesComponent } from './view-itemTemplates.component';
 import { NewItemTemplateComponent } from './new-itemTemplate.component';
 
 import { FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   declarations: [
     ViewItemTemplatesComponent,
-    NewItemTemplateComponent ]
+    NewItemTemplateComponent,
+    DetailsItemTemplateComponent ]
 })
 export class ItemTemplatesModule { }
