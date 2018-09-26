@@ -7,7 +7,6 @@ import { Response } from '@angular/http';
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.css'],
 })
 @Injectable()
 export class FileUploadComponent {
@@ -19,7 +18,7 @@ export class FileUploadComponent {
   constructor(private http: HttpClient) { }
 
   queue(files: File []) {
-    for (const file of files){
+    for (const file of files) {
       this.queuedFiles.push(file);
     }
   }
@@ -33,7 +32,7 @@ export class FileUploadComponent {
       }
       const formData = new FormData();
       formData.append('origin', origin);
-      for (const file of this.queuedFiles){
+      for (const file of this.queuedFiles) {
         formData.append(file.name, file);
       }
       const uploadReq = new HttpRequest('POST', this.baseUrl + 'FileInput/uploadfiles', formData, {

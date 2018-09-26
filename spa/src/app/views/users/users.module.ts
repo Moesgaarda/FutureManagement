@@ -16,13 +16,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     Ng2SmartTableModule,
     FormsModule,
     CommonModule,
-    NgSelectModule,
+    NgSelectModule
   ],
   declarations: [
     ViewUsersComponent,
     NewUserComponent,
     EditUserComponent,
     DetailsUserComponent
-   ]
+  ]
 })
-export class UsersModule { }
+export class UsersModule {}
