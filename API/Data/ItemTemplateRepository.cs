@@ -34,7 +34,7 @@ namespace API.Data
                 prop.Property = await _context.ItemPropertyNames.FirstOrDefaultAsync(x => x.Id == prop.PropertyId);
             }
             foreach(var file in template.Files){
-                file.File = await _context.FileData.FirstOrDefaultAsync(x => x.Id == file.FileDataId);
+                file.FileData = await _context.FileData.FirstOrDefaultAsync(x => x.Id == file.FileData.Id);
             }
             await _context.ItemTemplates.AddAsync(template);
             int result = await _context.SaveChangesAsync();

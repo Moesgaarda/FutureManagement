@@ -54,10 +54,14 @@ namespace API.Controllers
                     PropertyId = prop.Id
                 });
             }
-            List<TemplateFileDataRelation> filesToAdd = new List<TemplateFileDataRelation>();
-            foreach(int id in templateDto.Files){
-                filesToAdd.Add(new TemplateFileDataRelation{
-                    FileDataId = id
+            List<TemplateFileName> filesToAdd = new List<TemplateFileName>();
+            for(int i = 0; i < templateDto.Files.Length; i++){
+                filesToAdd.Add(new TemplateFileName{
+                    FileData = new FileData{
+                        Id = templateDto.Files[i]
+                    },
+                    FileName = templateDto.FileNames[i]
+                    
                 });
             }
             var itemTemplateToCreate = new ItemTemplate(
