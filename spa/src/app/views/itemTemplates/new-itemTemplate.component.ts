@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
+import { FileUploadService } from '../../_services/fileUpload.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -28,7 +29,7 @@ export class NewItemTemplateComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   constructor(private templateService: ItemTemplateService, private router: Router,
-     private alertify: AlertifyService) {
+     private alertify: AlertifyService, private uploader: FileUploadService) {
     this.getTemplates();
     this.loadAllTemplateProperties();
   }
@@ -73,7 +74,13 @@ export class NewItemTemplateComponent implements OnInit {
         amount: this.partAmounts[i],
       });
     }
-
+    if (this.uploader.queuedFiles.length > 0) {
+      const fileArray = await this.uploader.upload('ItemTemplateFiles');
+      this.templateToAdd.files = fileArray;
+      for (const file of this.uploader.queuedFiles) {
+        this.templateToAdd.fileNames.push(file.name);
+      }
+    }
     console.log(this.templateToAdd.files);
     this.templateToAdd.parts = this.templatePartsToAdd;
     this.templateToAdd.unitType = this.unitType;

@@ -9,7 +9,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import {FileUploadComponent} from './_components/file-upload/file-upload.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -48,6 +47,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ItemService } from './_services/item.service';
 import { ItemTemplateService } from './_services/itemTemplate.service';
 import { UserService } from './_services/user.service';
+import { FileUploadService} from './_services/fileUpload.service';
 
 @NgModule({
   imports: [
@@ -72,7 +72,6 @@ import { UserService } from './_services/user.service';
     P404Component,
     P500Component,
     LoginComponent,
-    FileUploadComponent,
     RegisterComponent
   ],
   providers: [{
@@ -82,6 +81,7 @@ import { UserService } from './_services/user.service';
   ItemService,
   ItemTemplateService,
   UserService,
+  FileUploadService,
   ],
   bootstrap: [ AppComponent ]
 })
