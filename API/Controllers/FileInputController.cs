@@ -45,12 +45,12 @@ namespace API.Controllers
                     fileIds.Add(await _repo.GetFileId(fileHash));
                 }
                 else{
-                    using(var stream = new FileStream(path + file.FileName, FileMode.Create)){
+                    using(var stream = new FileStream(path + fileHash, FileMode.Create)){
                         await file.CopyToAsync(stream);
                     }
                     FileData fileToAdd = new FileData(){
                         FileHash = fileHash,
-                        FilePath = path + file.FileName
+                        FilePath = path + fileHash
                     };
                     fileIds.Add(await _repo.AddFile(fileToAdd));
                 }
