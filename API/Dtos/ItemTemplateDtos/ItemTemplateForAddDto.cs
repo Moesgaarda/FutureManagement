@@ -20,7 +20,8 @@ namespace API.Dtos
         public ICollection<ItemPropertyNameForGetDto> TemplateProperties { get; set; }
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
-        public ICollection<TemplateFileDataRelation> Files { get; set; }
+        public int[] Files { get; set; }
+        public string[] FileNames { get; set;}
         public bool IsActive { get; set; }
     }
 }

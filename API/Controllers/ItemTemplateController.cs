@@ -54,6 +54,16 @@ namespace API.Controllers
                     PropertyId = prop.Id
                 });
             }
+            List<TemplateFileName> filesToAdd = new List<TemplateFileName>();
+            for(int i = 0; i < templateDto.Files.Length; i++){
+                filesToAdd.Add(new TemplateFileName{
+                    FileData = new FileData{
+                        Id = templateDto.Files[i]
+                    },
+                    FileName = templateDto.FileNames[i]
+                    
+                });
+            }
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
                 templateDto.UnitType,
@@ -61,7 +71,7 @@ namespace API.Controllers
                 propertiesToAdd,
                 templateDto.Parts,
                 templateDto.PartOf,
-                templateDto.Files
+                filesToAdd
             );
 
             bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);

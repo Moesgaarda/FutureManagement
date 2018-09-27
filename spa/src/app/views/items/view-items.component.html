@@ -1,0 +1,10 @@
+<div class="card">
+  <div class="card-header">
+    Genstande
+  </div>
+
+  <div class="card-body">
+    <ng2-smart-table [settings]="settings" [source]="source" (edit)="editItem($event)" (deleteConfirm)="onDeleteConfirm($event)" (create)="addNewItem()" (delete)="deleteItem($event)">
+    </ng2-smart-table>
+  </div>
+</div>

@@ -344,17 +344,24 @@ namespace API.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("API.Models.TemplateFileDataRelation", b =>
+            modelBuilder.Entity("API.Models.TemplateFileName", b =>
                 {
-                    b.Property<int>("TemplateId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int>("FileDataId");
+                    b.Property<int?>("FileDataId");
 
-                    b.HasKey("TemplateId", "FileDataId");
+                    b.Property<string>("FileName");
+
+                    b.Property<int?>("ItemTemplateId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("FileDataId");
 
-                    b.ToTable("TemplateFileDataRelation");
+                    b.HasIndex("ItemTemplateId");
+
+                    b.ToTable("TemplateFileNames");
                 });
 
             modelBuilder.Entity("API.Models.TemplatePropertyRelation", b =>
@@ -533,17 +540,15 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("API.Models.TemplateFileDataRelation", b =>
+            modelBuilder.Entity("API.Models.TemplateFileName", b =>
                 {
-                    b.HasOne("API.Models.FileData", "File")
-                        .WithMany("Templates")
-                        .HasForeignKey("FileDataId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("API.Models.FileData", "FileData")
+                        .WithMany("FileNames")
+                        .HasForeignKey("FileDataId");
 
-                    b.HasOne("API.Models.ItemTemplate", "Template")
+                    b.HasOne("API.Models.ItemTemplate", "ItemTemplate")
                         .WithMany("Files")
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ItemTemplateId");
                 });
 
             modelBuilder.Entity("API.Models.TemplatePropertyRelation", b =>

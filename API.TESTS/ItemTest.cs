@@ -261,7 +261,7 @@ namespace API.TESTS
                     }, 
                     new List<ItemTemplatePart>(),
                     new List<ItemTemplatePart>(),
-                    new List<TemplateFileDataRelation>(){}
+                    new List<TemplateFileName>(){}
                 ),
                 new ItemTemplate(
                     "Stang", 
@@ -277,7 +277,7 @@ namespace API.TESTS
                     }, 
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
-                    new List<TemplateFileDataRelation>(){}
+                    new List<TemplateFileName>(){}
                 ),
                 new ItemTemplate(
                     "Tagplade", 
@@ -293,8 +293,8 @@ namespace API.TESTS
                     },
                     new List<ItemTemplatePart>(){},
                     new List<ItemTemplatePart>(){},
-                    new List<TemplateFileDataRelation>(){}
-                )
+                    new List<TemplateFileName>(){}
+                 )
             };
             context.ItemTemplates.AddRange(itemTemplates);
             context.SaveChanges();

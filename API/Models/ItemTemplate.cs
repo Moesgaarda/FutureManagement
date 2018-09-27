@@ -9,7 +9,7 @@ namespace API.Models{
     public class ItemTemplate{
         public ItemTemplate(){}
         public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
-                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, ICollection<TemplateFileDataRelation> files){
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, ICollection<TemplateFileName> files){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
@@ -21,7 +21,7 @@ namespace API.Models{
         }
 
         public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
-                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, ICollection<TemplateFileDataRelation> files){
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, ICollection<TemplateFileName> files){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
@@ -40,6 +40,6 @@ namespace API.Models{
         public bool? IsActive { get; set; }
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
-        public ICollection<TemplateFileDataRelation> Files { get; set; }
+        public ICollection<TemplateFileName> Files { get; set; }
     }
 }

@@ -1,67 +1,88 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
-import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { CoreModule } from './@core/core.module';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {FileUploadComponent} from './_components/file-upload/file-upload.component';
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { ThemeModule } from './@theme/theme.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from './pages/forms/forms.module';
-import { AuthService } from './_services/auth.service';
-import { HttpModule } from '@angular/http';
-import { ItemTemplateService } from './_services/itemTemplate.service';
-import { ItemService } from './_services/item.service';
-import { EventLogService } from './_services/eventLog.service';
-import { UserService } from './_services/user.service';
-import { ErrorInterceptorProvide } from './_services/error.interceptor';
-import { NewModule } from './pages/new/new.module';
-import { AuthGuard } from './_guards/auth.guard';
-import { AlertifyService } from './_services/alertify.service';
-import { OrderService } from './_services/order.service';
-import {FileUploadComponent} from './pages/components/file-upload/file-upload.component';
 
+// Import containers
+import { DefaultLayoutComponent } from './containers';
+
+import { P404Component } from './views/error/404.component';
+import { P500Component } from './views/error/500.component';
+import { LoginComponent } from './views/login/login.component';
+import { RegisterComponent } from './views/register/register.component';
+
+const APP_CONTAINERS = [
+  DefaultLayoutComponent
+];
+
+import {
+  AppAsideModule,
+  AppBreadcrumbModule,
+  AppHeaderModule,
+  AppFooterModule,
+  AppSidebarModule,
+} from '@coreui/angular';
+
+// Import routing module
+import { AppRoutingModule } from './app.routing';
+
+// Import 3rd party components
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
+import { ItemService } from './_services/item.service';
+import { ItemTemplateService } from './_services/itemTemplate.service';
+import { UserService } from './_services/user.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FileUploadComponent,
-
-  ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
     AppRoutingModule,
+    AppAsideModule,
+    AppBreadcrumbModule.forRoot(),
+    AppFooterModule,
+    AppHeaderModule,
+    AppSidebarModule,
+    PerfectScrollbarModule,
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    ChartsModule,
+    HttpClientModule,
     FormsModule,
-    HttpModule,
-    NewModule,
-
-    NgbModule.forRoot(),
-    ThemeModule.forRoot(),
-    CoreModule.forRoot(),
+    NgSelectModule,
   ],
-  bootstrap: [AppComponent],
-  providers: [
-    { provide: APP_BASE_HREF, useValue: '/' },
-    AuthService,
-    ItemTemplateService,
-    ItemService,
-    EventLogService,
-    UserService,
-    OrderService,
-    ErrorInterceptorProvide,
-    AuthGuard,
-    AlertifyService,
+  declarations: [
+    AppComponent,
+    ...APP_CONTAINERS,
+    P404Component,
+    P500Component,
+    LoginComponent,
     FileUploadComponent,
+    RegisterComponent
   ],
+  providers: [{
+    provide: LocationStrategy,
+    useClass: HashLocationStrategy
+  },
+  ItemService,
+  ItemTemplateService,
+  UserService,
+  ],
+  bootstrap: [ AppComponent ]
 })
-export class AppModule {
-}
+export class AppModule { }
