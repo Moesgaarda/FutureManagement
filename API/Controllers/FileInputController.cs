@@ -31,7 +31,12 @@ namespace API.Controllers
             List<int> fileIds = new List<int>();
             bool isUploaded;
             StringValues origin;
-            Request.Form.TryGetValue("origin", out origin);
+            try{
+                Request.Form.TryGetValue("origin", out origin);
+            }
+            catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
 
             string path = origin.ToArray()[0] + "/";
             foreach (IFormFile file in Request.Form.Files){
@@ -45,12 +50,13 @@ namespace API.Controllers
                     fileIds.Add(await _repo.GetFileId(fileHash));
                 }
                 else{
-                    using(var stream = new FileStream(path + fileHash, FileMode.Create)){
+                    var fileName = BitConverter.ToString(fileHash).Replace("-", string.Empty);
+                    using(var stream = new FileStream(path + fileName, FileMode.Create)){
                         await file.CopyToAsync(stream);
                     }
                     FileData fileToAdd = new FileData(){
                         FileHash = fileHash,
-                        FilePath = path + fileHash
+                        FilePath = path + fileName
                     };
                     fileIds.Add(await _repo.AddFile(fileToAdd));
                 }

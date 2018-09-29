@@ -66,6 +66,7 @@ export class NewItemTemplateComponent implements OnInit {
   async addTemplate() {
     console.log('added template!');
     console.log(this.properties);
+    console.log('API URL = ' + environment.apiUrl);
 
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
@@ -77,6 +78,7 @@ export class NewItemTemplateComponent implements OnInit {
     if (this.uploader.queuedFiles.length > 0) {
       const fileArray = await this.uploader.upload('ItemTemplateFiles');
       this.templateToAdd.files = fileArray;
+      this.templateToAdd.fileNames = [];
       for (const file of this.uploader.queuedFiles) {
         this.templateToAdd.fileNames.push(file.name);
       }
