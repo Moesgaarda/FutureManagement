@@ -1,9 +1,44 @@
-import { Component } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../../_models/User';
+import { UserService } from '../../_services/user.service';
+import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   templateUrl: './edit-user.component.html'
 })
+export class EditUserComponent implements OnInit {
+  nameDisabled: boolean;
+  userNameDisabled: boolean;
+  surnameDisabled: boolean;
+  emailDisabled: boolean;
+  user: User;
+  baseUrl = environment.spaUrl;
 
-export class EditUserComponent {
+  constructor(private userService: UserService, private route: ActivatedRoute) {
+   }
+
+  ngOnInit() {
+    this.nameDisabled = true;
+    this.loadUserOnInit();
+  }
+
+  loadUserOnInit() {
+    this.userService.getUser(+this.route.snapshot.params['id'])
+      .subscribe(user => {
+        this.user = user;
+      });
+  }
+
+  enableName() {
+    if (this.nameDisabled) {
+      this.nameDisabled = false;
+    } else {
+      // indsæt i db
+      this.nameDisabled = true;
+    }
+  }
+  goToUserTable() {
+    location.href = this.baseUrl + '/users/view/';
+  }
 }
