@@ -1,116 +1,92 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import * as _ from 'underscore';
 import { Order } from '../../_models/Order';
-import { UnitType, ItemTemplate } from '../../_models/ItemTemplate';
-import { Item } from '../../_models/Item';
-import { ItemTemplateService } from '../../_services/itemTemplate.service';
-import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
-import { OrderService } from '../../_services/order.service';
-import { ItemPropertyName } from '../../_models/ItemPropertyName';
-import { AlertifyService } from '../../_services/alertify.service';
-import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { OrderService } from '../../_services/order.service';
 
 @Component({
-  templateUrl: './view-orders.component.html'
-})
-export class ViewOrdersComponent implements OnInit {
-  orderToAdd: Order = {} as Order;
-  unitTypes = Object.keys(UnitType);
-  currentItem: Item = {} as Item;
-  templates: ItemTemplate[] = [];
-  onOrderPage: boolean = true;
-  templateToGet: ItemTemplate = {} as ItemTemplate;
-  templateDetails: ItemTemplate = {} as ItemTemplate;
-  detailsReady: boolean;
-  unitTypeForAmount: string;
-  propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
-  descriptionTextsToAdd: string[] = [] as string[];
+    templateUrl: './view-orders.component.html',
+    styles: [`
+      nb-card {
+        transform: translate3d(0, 0, 0);
+      }
+    `],
+  })
+export class ViewOrdersComponent {
+    baseUrl = environment.spaUrl;
+    source: LocalDataSource;
+    orders: Order[];
 
-  constructor(
-    private itemTemplateService: ItemTemplateService,
-    private orderService: OrderService,
-    private alertify: AlertifyService,
-    private router: Router
-  ) {
-    this.getTemplates();
-    this.templateDetails.templateProperties = [] as ItemPropertyName[];
-    this.orderToAdd.products = [] as Item[];
-    this.currentItem.template = {} as ItemTemplate;
-  }
-
-  ngOnInit() {
-    this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
-  }
-
-  changePage() {
-    this.onOrderPage = !this.onOrderPage;
-  }
-
-  async getTemplates() {
-    await this.itemTemplateService.getItemTemplates().subscribe(templates => {
-      this.templates = templates;
-    });
-  }
-
-  async getTemplateDetails() {
-    await this.itemTemplateService
-      .getItemTemplate(this.templateToGet.id)
-      .subscribe(
-        template => {
-          this.templateDetails = template;
+    settings = {
+        pager: {
+          perPage: 15,
         },
-        error => {
-          this.alertify.error('kunne ikke hente skabelon');
+        mode: 'external',
+        delete: {
+          deleteButtonContent: '<i class="nb-trash"></i>',
+          confirmDelete: true,
         },
-        () => {
-          this.detailsReady = true;
-          this.getUnitTypeForTemplate();
-        }
-      );
-  }
+        add: {
+          addButtonContent: 'Tilføj ny',
+        },
+        edit: {
+          editButtonContent: '<i class="nb-edit"></i>',
+          saveButtonContent: '<i class="nb-checkmark"></i>',
+          cancelButtonContent: '<i class="nb-close"></i>',
+        },
+        columns: {
+            company: {
+                title: 'Firma',
+                type: 'string',
+            },
+            deliveryDate: {
+                title: 'Levering',
+                type: 'string',
+            },
+            purchaseNumber: {
+                title: 'Købsnummer',
+                type: 'number',
+            },
+        },
+    };
 
-  getUnitTypeForTemplate() {
-    this.unitTypeForAmount = UnitType[this.templateDetails.unitType];
-  }
-
-  removeItemFromOrder(i: number) {
-    this.orderToAdd.products.splice(i, 1);
-  }
-
-  addItemToOrder() {
-    for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
-      this.propertyDescriptionsToAdd.push({
-        description: this.descriptionTextsToAdd[i],
-        propertyName: this.templateDetails.templateProperties[i]
-      });
+    constructor(private orderService: OrderService) {
+        this.source = new LocalDataSource();
+        this.loadOrders();
     }
 
-    this.currentItem.properties = this.propertyDescriptionsToAdd;
-    this.currentItem.template = this.templateDetails;
-    this.currentItem.isActive = true;
-    this.orderToAdd.products.push(this.currentItem);
-    this.changePage();
-    console.log(this.orderToAdd);
-    this.currentItem = {} as Item;
-    this.propertyDescriptionsToAdd = [] as ItemPropertyDescription[];
-    this.templateDetails = {} as ItemTemplate;
-    this.templateToGet = {} as ItemTemplate;
-  }
+    async loadOrders() {
+        await this.orderService.getAllOrders().subscribe(orders => {
+          this.orders = orders;
+          this.source.load(orders);
+          this.source.refresh();
+        });
+    }
 
-  addOrder() {
-    this.orderService.addOrder(this.orderToAdd).subscribe(
-      data => {
-        console.log('added order');
-        this.alertify.success('Tilføjede bestilling');
-        console.log(this.orderToAdd);
-      },
-      error => {
-        console.log('failed to add order');
-        this.alertify.error('kunne ikke tilføje bestillingen');
-      },
-      () => {
-        this.router.navigate(['pages/tables/order-table']);
-      }
-    );
-  }
+    onDeleteConfirm(event): void {
+        if (window.confirm('Er du sikker på at du vil slette denne forekomst?')) {
+          event.confirm.resolve();
+        } else {
+          event.confirm.reject();
+        }
+    }
+
+    addNewOrder() {
+        location.href = this.baseUrl + '/pages/forms/order';
+    }
+
+    editOrder(orderToLoad): void {
+        location.href = this.baseUrl + '/pages/forms/order-detail/' + orderToLoad.data.id;
+    }
+
+    deleteOrder(orderToDelete): void {
+        if (window.confirm('Er du sikker på at du vil slette denne bestilling?')) {
+          this.orderService.deleteOrder(orderToDelete.data.id).subscribe(() => {
+            this.orders.splice(_.findIndex(this.orders, {id: orderToDelete.data.id}), 1);
+            this.source.refresh();
+          });
+        }
+    }
 }
+
