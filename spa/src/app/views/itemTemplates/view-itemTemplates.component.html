@@ -1,14 +1,36 @@
-
 <div class="card">
   <div class="card-header">
-    Genstande
+    Skabeloner
   </div>
 
-  <div class="card-body">   
-      <ng2-smart-table [settings]="settings" [source]="source" (edit)="editTemplate($event)" (delete)="deleteTemplate($event)" (create)="addNewTemplate()">
-      </ng2-smart-table>
+  <div class="card-body">
+    <table class="table table-bordered table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Navn (Revision)</th>
+          <th>Enhedstype</th>
+          <th>Beskrivelse</th>
+          <th>Handlinger</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let template of templates">
+          <td>{{template.name}}</td>
+          <td>{{template.unitType}}</td>
+          <td>{{template.description}}</td>
+          <td>
+            <span class="badge badge-success">Active</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav>
+      <ul class="pagination">
+        <div class="col-xs-12 col-12">
+          <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize" class="pagination-sm"
+            previousText="&lsaquo;" nextText="&rsaquo;" [boundaryLinks]="true"></pagination>
+        </div>
+      </ul>
+    </nav>
   </div>
 </div>
-
-
-
