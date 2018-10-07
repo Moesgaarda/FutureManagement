@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let template of templates">
+        <tr *ngFor="let template of templatesToShow">
           <td>{{template.name}}</td>
           <td>{{template.unitType}}</td>
           <td>{{template.description}}</td>
@@ -27,8 +27,8 @@
     <nav>
       <ul class="pagination">
         <div class="col-xs-12 col-12">
-          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"
-            [maxSize]="6" previousText="&lsaquo;" nextText="&rsaquo;" firstText="Første" lastText="Sidste"></pagination>
+          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm" [itemsPerPage]="15"
+          (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="Første" lastText="Sidste"></pagination>
         </div>
       </ul>
     </nav>
