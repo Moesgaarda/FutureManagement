@@ -88,7 +88,7 @@ export class NewItemTemplateComponent implements OnInit {
       console.log('failed to add template');
       this.alertify.error('kunne ikke tilføje skabelon');
     }, () => {
-      this.router.navigate(['pages/tables/item-template-table']);
+      this.router.navigate(['itemTemplates/view']);
     });
   }
 

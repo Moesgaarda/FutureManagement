@@ -80,7 +80,7 @@ export class ViewItemTemplatesComponent {
   }
 
   editTemplate(templateToLoad) {
-    location.href = this.baseUrl + '/pages/forms/item-template-detail/' + templateToLoad.data.id;
+    location.href = this.baseUrl + 'itemTemplates/details/' + templateToLoad.data.id;
   }
 
   deleteTemplate(templateToDelete) {
@@ -93,6 +93,6 @@ export class ViewItemTemplatesComponent {
   }
 
   addNewTemplate() {
-    location.href = this.baseUrl + '/pages/forms/item-template';
+    location.href = this.baseUrl + 'itemTemplates/new';
   }
 }

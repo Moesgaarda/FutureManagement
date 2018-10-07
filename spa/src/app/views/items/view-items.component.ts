@@ -101,7 +101,7 @@ export class ViewItemsComponent {
   }
 
   editItem(itemToLoad): void {
-    location.href = this.baseUrl + '/pages/forms/item-detail/' + itemToLoad.data.id;
+    location.href = this.baseUrl + 'items/details/' + itemToLoad.data.id;
   }
 
   deleteItem(itemToDelete): void {
@@ -114,6 +114,6 @@ export class ViewItemsComponent {
   }
 
   addNewItem() {
-    location.href = this.baseUrl + '/pages/forms/item';
+    location.href = this.baseUrl + 'items/new';
   }
 }
