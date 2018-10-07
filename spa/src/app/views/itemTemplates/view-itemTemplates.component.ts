@@ -15,20 +15,12 @@ export class ViewItemTemplatesComponent {
   templates: ItemTemplate[];
   baseUrl = environment.spaUrl;
 
+  totalItems: number;
+  currentPage: number;
+
   constructor(private templateService: ItemTemplateService) {
     this.loadTemplates();
   }
-
-  totalItems: number = 25;
-  currentPage: number = 1;
-  smallnumPages: number = 0;
-
-  maxSize: number = 5;
-  bigTotalItems: number = 675;
-  bigCurrentPage: number = 1;
-  numPages: number = 0;
-
-  currentPager: number = 4;
 
   setPage(pageNo: number): void {
     this.currentPage = pageNo;
@@ -39,9 +31,10 @@ export class ViewItemTemplatesComponent {
     console.log('Number items per page: ' + event.itemsPerPage);
   }
 
-  async loadTemplates() {
-    await this.templateService.getItemTemplates().subscribe(templates => {
+  loadTemplates() {
+    this.templateService.getItemTemplates().subscribe(templates => {
       this.templates = templates;
+      this.totalItems = this.templates.length;
     });
   }
 

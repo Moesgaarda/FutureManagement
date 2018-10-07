@@ -15,7 +15,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   imports: [
     ItemTemplatesRoutingModule,
-    PaginationModule,
+    PaginationModule.forRoot(),
     FormsModule,
     CommonModule,
     NgSelectModule
