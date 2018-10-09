@@ -39,11 +39,15 @@ export class EditUserComponent implements OnInit {
       this.nameDisabled = true;
     }
   }
-  enableUserName() {
+  enableUserName(save: boolean, str: string) {
     if (this.userNameDisabled) {
       this.userNameDisabled = false;
     } else {
-      // indsæt i db
+      if (save) {
+        console.log('vi kom så langt gutter');
+        this.user.username = str;
+        this.userService.editUser(this.user).subscribe(r => {});
+      }
       this.userNameDisabled = true;
     }
   }

@@ -36,4 +36,7 @@ export class UserService {
   deActivateUser(id: number) {
     return this.http.post(this.baseUrl + 'User/deactivate/' + id, {});
   }
+  editUser(user: User) {
+    return this.http.post<User>(this.baseUrl + 'User/edit', user);
+  }
 }
