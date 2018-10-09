@@ -20,6 +20,7 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit() {
     this.nameDisabled = true;
+    this.userNameDisabled = true;
     this.loadUserOnInit();
   }
 
@@ -36,6 +37,14 @@ export class EditUserComponent implements OnInit {
     } else {
       // indsæt i db
       this.nameDisabled = true;
+    }
+  }
+  enableUserName() {
+    if (this.userNameDisabled) {
+      this.userNameDisabled = false;
+    } else {
+      // indsæt i db
+      this.userNameDisabled = true;
     }
   }
   goToUserTable() {
