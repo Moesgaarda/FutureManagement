@@ -87,7 +87,6 @@ export class ViewItemsComponent {
           if (createdBy == null) {
             return 'Denne genstand er indkøbt';
           }
-          console.log(createdBy);
           return createdBy.username;
         },
       }

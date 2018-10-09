@@ -19,21 +19,24 @@ export class ViewOrdersComponent {
     orders: Order[];
 
     settings = {
+        attr: {
+            class: 'table table-striped pagination'
+        },
         pager: {
           perPage: 15,
         },
         mode: 'external',
         delete: {
-          deleteButtonContent: '<i class="nb-trash"></i>',
+          deleteButtonContent: '<i class="btn btn-sm btn-danger fa fa-trash"> Slet </i>',
           confirmDelete: true,
         },
         add: {
-          addButtonContent: 'Tilføj ny',
+          addButtonContent: 'Tilføj ny genstand'
         },
         edit: {
-          editButtonContent: '<i class="nb-edit"></i>',
-          saveButtonContent: '<i class="nb-checkmark"></i>',
-          cancelButtonContent: '<i class="nb-close"></i>',
+          editButtonContent: '<i class="btn btn-sm btn-primary fa fa-edit"> Rediger </i>',
+          saveButtonContent: '<i class="btn btn-sm btn-info fa fa-save"> Gem </i>',
+          cancelButtonContent: '<i class="btn btn-sm btn-warning fa fa-trash"> Fortryd </i>',
         },
         columns: {
             company: {
