@@ -32,6 +32,19 @@ export class ViewItemTemplatesComponent {
 
   private data: Array<any> = [];
 
+  constructor(private templateService: ItemTemplateService) {
+    this.length = this.data.length;
+    this.loadTemplates();
+  }
+
+  loadTemplates() {
+    this.templateService.getItemTemplates().subscribe(templates => {
+      this.rows = templates;
+      this.data = templates;
+      this.onChangeTable(this.config);
+    });
+  }
+
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
@@ -112,22 +125,5 @@ export class ViewItemTemplatesComponent {
 
   public onCellClick(data: any): any {
     console.log(data);
-  }
-
-  constructor(private templateService: ItemTemplateService) {
-    this.length = this.data.length;
-    this.loadTemplates();
-  }
-
-  loadTemplates() {
-    this.templateService.getItemTemplates().subscribe(templates => {
-      this.rows = templates;
-      this.data = templates;
-      this.onChangeTable(this.config);
-    });
-  }
-
-  addNewTemplate() {
-    location.href = this.baseUrl + '/pages/forms/item-template';
   }
 }
