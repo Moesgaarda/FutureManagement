@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using API.Data;
+using API.Dtos.FileDtos;
 using API.Models;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Cors;
@@ -20,6 +22,7 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IFileInputRepository _repo;
+
         public FileInputController(IFileInputRepository repo, DataContext context){
             _repo = repo;
             _context = context;
@@ -31,12 +34,8 @@ namespace API.Controllers
             List<int> fileIds = new List<int>();
             bool isUploaded;
             StringValues origin;
-            try{
-                Request.Form.TryGetValue("origin", out origin);
-            }
-            catch(Exception e){
-                Console.WriteLine(e.Message);
-            }
+            Request.Form.TryGetValue("origin", out origin);
+            
 
             string path = origin.ToArray()[0] + "/";
             foreach (IFormFile file in Request.Form.Files){
@@ -62,6 +61,16 @@ namespace API.Controllers
                 }
             }
             return Ok(fileIds);
+        }
+
+        [HttpGet("downloadfile", Name = "DownloadFile")]
+        public async Task<IActionResult> Download([FromBody] FileForGetDto fileDto){
+            var fileName = await _repo.GetFile(fileDto);
+            var bytes = System.IO.File.ReadAllBytes(fileName.FileData.FilePath);
+            return new FileContentResult(bytes, MediaTypeNames.Application.Octet)
+            {
+                FileDownloadName = fileName.FileName
+            };
         }
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

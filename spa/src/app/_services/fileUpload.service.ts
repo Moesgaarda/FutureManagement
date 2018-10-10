@@ -19,6 +19,9 @@ export class FileUploadService {
   clearQueue() {
     this.queuedFiles.splice(0, this.queuedFiles.length);
   }
+  removeFromQueue(file: File){
+    this.queuedFiles.splice(this.queuedFiles.indexOf(file), 1);
+  }
   async upload(origin: string): Promise<number []> {
     try {
       if (this.queuedFiles.length === 0) {

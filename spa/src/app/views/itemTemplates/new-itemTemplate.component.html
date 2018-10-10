@@ -118,6 +118,11 @@
                   <strong>{{ item.name}}</strong>
                 </td>
                 <td>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-s" (click)="uploader.removeFromQueue(file)">
+                      <span class="glyphicon glyphicon-trash"></span> Fjern
+                    </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -125,7 +130,7 @@
 
 
           <div>
-            <button type="button" class="btn btn-danger btn-s" [disabled]="!uploader.queuedFiles.length">
+            <button type="button" class="btn btn-danger btn-s"(click)="uploader.clearQueue()" [disabled]="!uploader.queuedFiles.length">
               <span class="glyphicon glyphicon-trash"></span> Fjern alle
             </button>
           </div>
