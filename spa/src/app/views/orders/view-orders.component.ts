@@ -76,11 +76,11 @@ export class ViewOrdersComponent {
     }
 
     addNewOrder() {
-        location.href = this.baseUrl + '/pages/forms/order';
+        location.href = this.baseUrl + '/orders/new/';
     }
 
     editOrder(orderToLoad): void {
-        location.href = this.baseUrl + '/pages/forms/order-detail/' + orderToLoad.data.id;
+        location.href = this.baseUrl + '/orders/details/' + orderToLoad.data.id;
     }
 
     deleteOrder(orderToDelete): void {
