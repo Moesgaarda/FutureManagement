@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpRequest, HttpClient } from '@angular/common/http';
+import { ResponseType } from '@angular/http';
+import { saveAs } from 'file-saver';
 
 @Injectable()
 export class FileUploadService {
@@ -19,7 +21,7 @@ export class FileUploadService {
   clearQueue() {
     this.queuedFiles.splice(0, this.queuedFiles.length);
   }
-  removeFromQueue(file: File){
+  removeFromQueue(file: File) {
     this.queuedFiles.splice(this.queuedFiles.indexOf(file), 1);
   }
   async upload(origin: string): Promise<number []> {
@@ -41,4 +43,5 @@ export class FileUploadService {
       console.log(error);
     }
   }
+  async download(id: number, origin: string) {}
 }

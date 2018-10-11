@@ -28,10 +28,12 @@ export class NewItemTemplateComponent implements OnInit {
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
+  uploader: FileUploadService;
   constructor(private templateService: ItemTemplateService, private router: Router,
-     private alertify: AlertifyService, private uploader: FileUploadService) {
+     private alertify: AlertifyService, private uploaderParameter: FileUploadService) {
     this.getTemplates();
     this.loadAllTemplateProperties();
+    this.uploader = uploaderParameter;
   }
 
   ngOnInit() {

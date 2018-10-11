@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Dtos;
+using API.Dtos.FileDtos;
 using API.Enums;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -139,6 +140,10 @@ namespace API.Data
             var result = await _context.SaveChangesAsync();
 
             return result > 0;
+        }
+         public async Task<List<TemplateFileName>> GetFiles(int id){
+            List<TemplateFileName> files = await _context.TemplateFileNames.Where(x => x.ItemTemplate.Id == id).ToListAsync();
+            return files;
         }
     }
 }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using API.Models;
 using API.Dtos;
+using API.Dtos.FileDtos;
 
 namespace API.Helpers
 {
@@ -31,6 +32,10 @@ namespace API.Helpers
             CreateMap<ItemItemRelation, ItemItemRelationForGet>()
                 .ForMember(x => x.Template, opt => opt.MapFrom(src => src.Part.Template));
             CreateMap<User, UserForGetDto>();
+            CreateMap<TemplateFileName, FileForTableGetDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember( x => x.FileName, opt => opt.MapFrom(src => src.FileName));
+            
         }
     }
 }
