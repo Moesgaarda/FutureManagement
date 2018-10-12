@@ -63,13 +63,9 @@ export class ViewItemsComponent {
         type: 'string',
       },
       order: {
-        title: 'Ordre',
-        type: 'html',
+        title: 'Købt fra eller lavet af',
         valuePrepareFunction: (order) => {
-          if (order == null) {
-            return 'Ikke indkøbt';
-          }
-          return `<a href="/#/orders/details/${order.id}">${order.company}</a>`;
+          return order.company.toString();
         },
         filterFunction(order?: any, search?: string): boolean {
           const match = order.company.indexOf(search) > -1;
@@ -80,16 +76,6 @@ export class ViewItemsComponent {
           }
         },
       },
-      createdBy: {
-        title: 'Lavet af',
-        type: 'string',
-        valuePrepareFunction: (createdBy) => {
-          if (createdBy == null) {
-            return 'Denne genstand er indkøbt';
-          }
-          return createdBy.username;
-        },
-      }
     },
   };
 

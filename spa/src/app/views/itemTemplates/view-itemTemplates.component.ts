@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
 
 import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
@@ -7,129 +8,91 @@ import * as _ from 'underscore';
 
 @Component({
   templateUrl: './view-itemTemplates.component.html',
+  styles: [`
+    nb-card {
+      transform: translate3d(0, 0, 0);
+    }
+  `],
 })
 
 export class ViewItemTemplatesComponent {
+  source: LocalDataSource;
+  templates: ItemTemplate[];
   baseUrl = environment.spaUrl;
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    {title: 'Navn', name: 'name'},
-    {title: 'UnitType', name: 'unitType'},
-    {title: 'Beskrivelse', name: 'description'},
-  ];
-  public page: number = 1;
-  public itemsPerPage: number = 5;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
 
-  public config: any = {
-    paging: true,
-    sorting: {columns: this.columns},
-    filtering: {filterString: ''},
-    className: ['table-striped', 'table-bordered']
+  settings = {
+    pager: {
+      perPage: 15,
+    },
+    mode: 'external',
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
+    add: {
+      addButtonContent: 'Tilføj ny',
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+    columns: {
+      name: {
+        title: 'Navn',
+        type: 'string',
+      },
+      unitType: {
+        title: 'Mængdeenhed',
+        valuePrepareFunction: (value) => {
+          return UnitType[value];
+        },
+        filterFunction(temp?: any, search?: string): boolean {
+          if (UnitType[temp] === search || UnitType[temp] >= search || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+      description: {
+        title: 'Beskrivelse',
+        type: 'string',
+      },
+      files: {
+        title: 'Fil',
+        type: 'string',
+      },
+    },
   };
 
-  private data: Array<any> = [];
-
   constructor(private templateService: ItemTemplateService) {
-    this.length = this.data.length;
+    this.source = new LocalDataSource();
     this.loadTemplates();
   }
 
-  loadTemplates() {
-    this.templateService.getItemTemplates().subscribe(templates => {
-      this.rows = templates;
-      this.data = templates;
-      this.onChangeTable(this.config);
-    });
+  async loadTemplates() {
+    await this.templateService.getItemTemplates().subscribe(templates => {
+      this.templates = templates;
+      this.source.load(templates);
+      this.source.refresh();
+    })
   }
 
   editTemplate(templateToLoad) {
     location.href = this.baseUrl + 'itemTemplates/details/' + templateToLoad.data.id;
   }
-  public changePage(page: any, data: Array<any> = this.data): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-    return data.slice(start, end);
-  }
 
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
-  public changeFilter(data: any, config: any): any {
-    let filteredData: Array<any> = data;
-    this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        filteredData = filteredData.filter((item: any) => {
-          return item[column.name].match(column.filtering.filterString);
-        });
-      }
-    });
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if ((item[column.name].toString().toLowerCase()).match(this.config.filtering.filterString.toLowerCase())) {
-          flag = true;
-        }
+  deleteTemplate(templateToDelete) {
+    if (window.confirm('Er du sikker på at du vil slette denne skabelon?')) {
+      this.templateService.deleteItemTemplate(templateToDelete.data.id).subscribe(() => {
+        this.templates.splice(_.findIndex(this.templates, { id: templateToDelete.data.id }), 1);
+        this.source.refresh();
       });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
-
-    return filteredData;
-  }
-
-  public onChangeTable(config: any, page: any = {page: this.page, itemsPerPage: this.itemsPerPage}): any {
-    if (config.filtering) {
-      Object.assign(this.config.filtering, config.filtering);
     }
-
-    if (config.sorting) {
-      Object.assign(this.config.sorting, config.sorting);
-    }
-
-    let filteredData = this.changeFilter(this.data, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
   }
 
   addNewTemplate() {
     location.href = this.baseUrl + 'itemTemplates/new';
-  }
-  public onCellClick(data: any): any {
-    console.log(data);
   }
 }
