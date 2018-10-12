@@ -28,7 +28,7 @@ export class NewItemTemplateComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   constructor(private templateService: ItemTemplateService, private router: Router,
-    private alertify: AlertifyService) {
+     private alertify: AlertifyService) {
     this.getTemplates();
     this.loadAllTemplateProperties();
   }
@@ -88,7 +88,7 @@ export class NewItemTemplateComponent implements OnInit {
       console.log('failed to add template');
       this.alertify.error('kunne ikke tilføje skabelon');
     }, () => {
-      this.router.navigate(['pages/tables/item-template-table']);
+      this.router.navigate(['itemTemplates/view']);
     });
   }
 
