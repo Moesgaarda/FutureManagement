@@ -27,8 +27,8 @@ namespace API.Data
             switch (fileForGet.Origin){
                 case "Template":
                     fileName = await _context.TemplateFileNames.Where(x => x.Id == fileForGet.Id)
-                                                         .Include(f => f.FileData)
-                                                         .FirstOrDefaultAsync();
+                                                               .Include(f => f.FileData)
+                                                               .FirstOrDefaultAsync();
                     break;
                 default:
                     fileName = null;
