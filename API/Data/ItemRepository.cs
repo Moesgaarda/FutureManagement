@@ -99,7 +99,7 @@ namespace API.Data {
         }
 
         public async Task<List<Item>> GetAllItems () {
-            return await _context.Items.Include (x => x.Template).Include(x => x.Order).ToListAsync ();
+            return await _context.Items.Include (x => x.Template).Include(x => x.Order).Include(x => x.CreatedBy).ToListAsync();
         }
 
         public async Task<Item> GetItem (int id) {
