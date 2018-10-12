@@ -48,11 +48,6 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { ItemService } from './_services/item.service';
 import { ItemTemplateService } from './_services/itemTemplate.service';
 import { UserService } from './_services/user.service';
-import { OrderService } from './_services/order.service';
-import { AlertifyService } from './_services/alertify.service';
-import { CustomerService } from './_services/customer.service';
-import { EventLogService } from './_services/eventLog.service';
-import { AuthService } from './_services/auth.service';
 
 @NgModule({
   imports: [
@@ -87,11 +82,6 @@ import { AuthService } from './_services/auth.service';
   ItemService,
   ItemTemplateService,
   UserService,
-  OrderService,
-  CustomerService,
-  EventLogService,
-  AuthService,
-  AlertifyService,
   ],
   bootstrap: [ AppComponent ]
 })
