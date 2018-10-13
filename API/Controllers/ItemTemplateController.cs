@@ -120,6 +120,10 @@ namespace API.Controllers
 
             bool result = await _repo.AddPropertyName(itemPropertyName);
 
+            if(propertyDto.Name == null){
+                return BadRequest("Property name cannot be null.");
+            }
+
             return result ? StatusCode(201) : BadRequest();
         }
 
