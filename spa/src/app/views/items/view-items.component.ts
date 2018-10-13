@@ -63,13 +63,9 @@ export class ViewItemsComponent {
         type: 'string',
       },
       order: {
-        title: 'Ordre',
-        type: 'html',
+        title: 'Købt fra eller lavet af',
         valuePrepareFunction: (order) => {
-          if (order == null) {
-            return 'Ikke indkøbt';
-          }
-          return `<a href="/#/orders/details/${order.id}">${order.company}</a>`;
+          return order.company.toString();
         },
         filterFunction(order?: any, search?: string): boolean {
           const match = order.company.indexOf(search) > -1;
@@ -80,16 +76,6 @@ export class ViewItemsComponent {
           }
         },
       },
-      createdBy: {
-        title: 'Lavet af',
-        type: 'string',
-        valuePrepareFunction: (createdBy) => {
-          if (createdBy == null) {
-            return 'Denne genstand er indkøbt';
-          }
-          return createdBy.username;
-        },
-      }
     },
   };
 
@@ -115,7 +101,7 @@ export class ViewItemsComponent {
   }
 
   editItem(itemToLoad): void {
-    location.href = this.baseUrl + '/pages/forms/item-detail/' + itemToLoad.data.id;
+    location.href = this.baseUrl + 'items/details/' + itemToLoad.data.id;
   }
 
   deleteItem(itemToDelete): void {
@@ -128,6 +114,6 @@ export class ViewItemsComponent {
   }
 
   addNewItem() {
-    location.href = this.baseUrl + '/pages/forms/item';
+    location.href = this.baseUrl + 'items/new';
   }
 }

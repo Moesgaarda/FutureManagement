@@ -100,7 +100,7 @@ export class NewProjectComponent implements OnInit {
         console.log('failed to add order');
         this.alertify.error('kunne ikke tilføje bestillingen');
       }, () => {
-        this.router.navigate(['pages/tables/order-table']);
+        this.router.navigate(['projects/view']);
       });
     }
 }
