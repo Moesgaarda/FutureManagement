@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using API.Dtos.FileDtos;
 using API.Models;
 
 namespace API.Data
@@ -8,5 +9,6 @@ namespace API.Data
         Task<bool> IsFileUploaded(byte[] fileHash);
         Task<int> AddFile(FileData file);
         Task<int> GetFileId(byte[] fileHash);
+        Task<IFileName> GetFile(FileForGetDto fileForGet);
     }
 }
