@@ -4,6 +4,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { User } from '../_models/User';
+import { Jsonp } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 
 
 @Injectable()
@@ -38,5 +40,13 @@ export class UserService {
   }
   editUser(user: User) {
     return this.http.post<User>(this.baseUrl + 'User/edit', user);
+  }
+  addUserRole(newRole: string) {
+    const param = new URLSearchParams();
+    param.append('name', newRole);
+    return this.http.post<string>(this.baseUrl + 'User/addRole', `\"${newRole}\"`, { headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }), responseType: 'blob',
+      });
   }
 }

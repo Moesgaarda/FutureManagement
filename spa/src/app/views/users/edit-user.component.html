@@ -100,10 +100,10 @@
               Rolle
             </label>
             <div class="input-group">
-              <input type="text" placeholder="Rolle" id="role" class="form-control" value="{{user?.role.name}}" [disabled]="nameDisabled"/>
+              <input type="text" placeholder="Rolle" id="role" class="form-control" value="{{user?.role.name}}" [disabled]="roleDisabled"/>
               <span class="input-group-append">
-                  <button class="btn btn-success input-group-text" (click)="enableName()">
-                    {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  <button class="btn btn-success input-group-text" (click)="roleDisabled = false; addUserRole('asd')">
+                    test
                   </button>
                 </span>
             </div>

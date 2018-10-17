@@ -12,6 +12,7 @@ export class EditUserComponent implements OnInit {
   userNameDisabled: boolean;
   surnameDisabled: boolean;
   emailDisabled: boolean;
+  roleDisabled: boolean;
   user: User;
   baseUrl = environment.spaUrl;
 
@@ -21,6 +22,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
     this.nameDisabled = true;
     this.userNameDisabled = true;
+    this.roleDisabled = true;
     this.loadUserOnInit();
   }
 
@@ -44,7 +46,6 @@ export class EditUserComponent implements OnInit {
       this.userNameDisabled = false;
     } else {
       if (save) {
-        console.log('vi kom så langt gutter');
         this.user.username = str;
         this.userService.editUser(this.user).subscribe(r => {});
       }
@@ -53,5 +54,9 @@ export class EditUserComponent implements OnInit {
   }
   goToUserTable() {
     location.href = this.baseUrl + '/users/view/';
+  }
+  addUserRole(newRoleName: string) {
+    console.log('asdadsasd');
+    this.userService.addUserRole(newRoleName).subscribe(r => {});
   }
 }
