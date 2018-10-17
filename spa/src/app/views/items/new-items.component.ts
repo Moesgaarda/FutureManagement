@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Item } from '../../_models/Item';
-import { ItemTemplate } from '../../_models/ItemTemplate';
+import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
 import { UserService } from '../../_services/user.service';
@@ -17,7 +17,6 @@ import { environment } from '../../../environments/environment';
 export class AddItemsComponent {
   itemToAdd: Item = {} as Item;
   templates: ItemTemplate[] = [];
-  showCreatedBy: boolean;
   items: Item[] = [];
   selectedItemParts: Item[] = [];
   properties: ItemPropertyDescription[] =  [];
@@ -39,7 +38,6 @@ export class AddItemsComponent {
     this.getTemplates();
     this.getItems();
     this.getUsers();
-    this.showCreatedBy = false;
   }
 
   async getTemplates() {
@@ -59,7 +57,7 @@ export class AddItemsComponent {
     await this.itemService.getActiveItems().subscribe(items => {
       this.items = items.map((name) => {
         name.placement = name.template.name + ' - (' + name.placement + ') - Mængde: '
-          + name.amount + ' ' + name.template.unitType;
+          + name.amount + ' ' + UnitType[name.template.unitType];
         return name;
       });
     });
@@ -93,7 +91,7 @@ export class AddItemsComponent {
     this.itemToAdd.isActive = true;
     this.itemService.addItem(this.itemToAdd).subscribe();
 
-    location.href = this.baseUrl + 'items/new';
+    location.href = this.baseUrl + 'items/view';
   }
 
 }

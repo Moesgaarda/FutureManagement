@@ -1,7 +1,8 @@
 <div class="row">
         <div class="col-lg-6">
-            <div class="header">Ny genstand til lageret</div>
-            <div class="body">
+          <div class="card">
+            <div class="card-header">Ny genstand til lageret</div>
+            <div class="card-body">
               <div class="form-group">
                 <label for="placement">Genstandens placering</label>
                 <div class="input-group">
@@ -19,21 +20,13 @@
                   <option *ngFor="let temp of templates" [ngValue]="temp">{{temp.name}}</option>
                 </select>
               </div>
-    
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="item-checkbox">
-                <label class="custom-control-label" for="item-checkbox">Er genstanden bestilt?</label>
-              </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="created-checkbox" [(ngModel)]="showCreatedBy">
-              <label class="custom-control-label" for="created-checkbox">Er genstanden fremstillet?</label>
-            </div>
-              <div class="form-group" *ngIf="showCreatedBy">
+              <div class="form-group">
                 <label for="madeBy">Lavet af</label>
                 <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="itemToAdd.createdBy">
                   <option *ngFor="let user of userList" [ngValue]="user">{{user.name}} - {{user.username}}</option>
                 </select>
               </div>
+              <br>
               <div class="form-group">
                 <label for="itemList">Genstandsliste</label>
                 <div class="form-group">
@@ -50,18 +43,21 @@
                   </small>
                 </div>
               </div>
-              <button (click)="addItem()">Tilføj genstand</button>
+              <button class="btn btn-success btn-rectangle input-group-text" (click)="addItem()">Tilføj genstand</button>
             </div>
         </div>
+      </div>
       
-        <div class="col-lg-6">
-      
-            <div class="header">Egenskaber der ligger på den valgte skabelon</div>
-            <div class="body">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header">Egenskaber der ligger på den valgte skabelon</div>
+            <div class="card-body">
+              <div *ngIf="!detailsReady">
+                Vælg en skabelon til venstre og dennes egenskaber vil vises
+              </div>
               <div *ngIf="detailsReady">
                 <div *ngFor="let prop of templateDetails.templateProperties; let i=index">
                   {{prop.name}}
-                  <br>
                   <br>
                   <input type="text" placeholder="{{prop.name}}" class="form-control" [(ngModel)]="descriptionTextsToAdd[i]">
                   <br>
@@ -70,4 +66,5 @@
             </div>
         </div>
       </div>
+</div>
       
