@@ -14,9 +14,9 @@ export class ViewItemTemplatesComponent {
   public rows: Array<any> = [];
   public columns: Array<any> = [
     {title: 'Navn', name: 'name'},
-    {title: 'Revision', name: 'revisionId'},
-    {title: 'Oprettet', name: 'created'},
-  ];
+    {title: 'Revision', name: 'id'},
+    {title: 'Beskrivelse', name: 'description'},
+];
   public page: number = 1;
   public itemsPerPage: number = 5;
   public maxSize: number = 5;
