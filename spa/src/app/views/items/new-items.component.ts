@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
 import { User } from '../../_models/User';
 import { ItemItemRelation } from '../../_models/ItemItemRelation';
-import { environment } from '../../../environments/environment';
 
 @Component({
   templateUrl: './new-items.component.html',
@@ -32,7 +31,6 @@ export class AddItemsComponent {
   selectTemplateName: string[] = [];
   selectTextToDisplay: string[] = [];
   itemNamesToShow: Item[] = [];
-  baseUrl = environment.spaUrl;
 
   constructor(private templateService: ItemTemplateService,
   private itemService: ItemService, private userService: UserService) {
@@ -92,8 +90,6 @@ export class AddItemsComponent {
     this.itemToAdd.template = this.templateDetails;
     this.itemToAdd.isActive = true;
     this.itemService.addItem(this.itemToAdd).subscribe();
-
-    location.href = this.baseUrl + 'items/new';
   }
 
 }

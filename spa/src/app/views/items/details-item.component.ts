@@ -14,7 +14,6 @@ export class DetailsItemComponent implements OnInit {
   templateDisabled: boolean;
   amountDisabled: boolean;
   item: Item;
-  idForOrderDetail: number;
   baseUrl = environment.spaUrl;
 
   constructor(
@@ -35,7 +34,6 @@ export class DetailsItemComponent implements OnInit {
       .getItem(+this.route.snapshot.params['id'])
       .subscribe((item: Item) => {
         this.item = item;
-        this.idForOrderDetail = item.order.purchaseNumber;
         console.log(this.item);
       });
   }
@@ -68,6 +66,6 @@ export class DetailsItemComponent implements OnInit {
   }
 
   routeToOrderDetail() {
-    location.href = this.baseUrl + 'orders/details/:idForOrderDetail';
+    location.href = this.baseUrl + 'pages/forms/order-detail';
   }
 }

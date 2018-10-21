@@ -3,7 +3,6 @@ using API.Dtos;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using API.Dtos.FileDtos;
 
 namespace API.Data
 {
@@ -19,6 +18,6 @@ namespace API.Data
         Task<bool> DeactivateItemTemplate(ItemTemplate template);
         Task<ItemPropertyName> GetPropertyName(int id);
         Task<List<ItemPropertyName>> GetPropertyNames();
-        Task<List<TemplateFileName>> GetFiles(int id);
+
     }
 }

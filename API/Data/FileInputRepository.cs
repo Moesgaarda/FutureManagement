@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System;
-using API.Dtos.FileDtos;
 
 namespace API.Data
 {
@@ -19,22 +18,6 @@ namespace API.Data
             var fileToAdd = await _context.FileData.AddAsync(file);
             await _context.SaveChangesAsync();
             return fileToAdd.Entity.Id;
-        }
-
-        public async Task<IFileName> GetFile(FileForGetDto fileForGet)
-        {
-            IFileName fileName;
-            switch (fileForGet.Origin){
-                case "Template":
-                    fileName = await _context.TemplateFileNames.Where(x => x.Id == fileForGet.Id)
-                                                               .Include(f => f.FileData)
-                                                               .FirstOrDefaultAsync();
-                    break;
-                default:
-                    fileName = null;
-                    break;
-            }
-            return fileName;
         }
 
         public async Task<int> GetFileId(byte[] fileHash)
@@ -53,6 +36,5 @@ namespace API.Data
             }
             return true;
         }
-        
     }
 }

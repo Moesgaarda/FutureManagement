@@ -8,7 +8,6 @@ export interface ItemTemplate {
     name: string;
     unitType: UnitType;
     files: any;
-    fileNames: string[];
     templateProperties: ItemPropertyName[];
     parts: ItemTemplatePart[];
     description: string;

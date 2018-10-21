@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
-import { FileUploadService } from '../../_services/fileUpload.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -28,12 +27,10 @@ export class NewItemTemplateComponent implements OnInit {
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
-  uploader: FileUploadService;
   constructor(private templateService: ItemTemplateService, private router: Router,
-     private alertify: AlertifyService, private uploaderParameter: FileUploadService) {
+    private alertify: AlertifyService) {
     this.getTemplates();
     this.loadAllTemplateProperties();
-    this.uploader = uploaderParameter;
   }
 
   ngOnInit() {
@@ -68,7 +65,6 @@ export class NewItemTemplateComponent implements OnInit {
   async addTemplate() {
     console.log('added template!');
     console.log(this.properties);
-    console.log('API URL = ' + environment.apiUrl);
 
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
@@ -77,14 +73,7 @@ export class NewItemTemplateComponent implements OnInit {
         amount: this.partAmounts[i],
       });
     }
-    if (this.uploader.queuedFiles.length > 0) {
-      const fileArray = await this.uploader.upload('ItemTemplateFiles');
-      this.templateToAdd.files = fileArray;
-      this.templateToAdd.fileNames = [];
-      for (const file of this.uploader.queuedFiles) {
-        this.templateToAdd.fileNames.push(file.name);
-      }
-    }
+
     console.log(this.templateToAdd.files);
     this.templateToAdd.parts = this.templatePartsToAdd;
     this.templateToAdd.unitType = this.unitType;
@@ -99,7 +88,7 @@ export class NewItemTemplateComponent implements OnInit {
       console.log('failed to add template');
       this.alertify.error('kunne ikke tilføje skabelon');
     }, () => {
-      this.router.navigate(['itemTemplates/view']);
+      this.router.navigate(['pages/tables/item-template-table']);
     });
   }
 

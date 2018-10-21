@@ -59,27 +59,14 @@
           </div>
         </div>
         <div class="form-group">
-          <div class="card-header">Filer</div>
-          <div class="card-body">
-            <div class="col-lg-12" style="margin-bottom: 40px">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th width="50%">Navn</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of files">
-                    <td>
-                      <strong>{{ item.fileName }}</strong>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <label for="file">Fil</label>
+          <div class="input-group">
+            <input type="text" placeholder="Fil" value="{{template?.files}}" id="file" class="form-control" [disabled]="fileDisabled">
+            <span class="input-group-append">
+              <button class="btn btn-success input-group-text" (click)="enableFile()">
+                {{ fileDisabled ? 'Rediger' : 'Gem' }}
+              </button>
+            </span>
           </div>
         </div>
         <button (click)="printList()">med</button>

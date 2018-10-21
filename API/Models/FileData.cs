@@ -7,5 +7,6 @@ namespace API.Models
         public int Id { get; set; }
         public byte[] FileHash {get; set; }
         public string FilePath { get; set; }
+        public ICollection<TemplateFileName> FileNames { get; set; }
     }
 }

@@ -10,7 +10,13 @@
               Brugernavn
             </label>
             <div class="input-group">
-              <input type="text" placeholder="Navn" id="username" class="form-control" value="{{user?.username}}" />
+              <input type="text" placeholder="Navn" id="username" class="form-control" value="{{user?.username}}" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                    <div *ngIf="nameDisabled; then tempEditBox else tempSaveBox">
+                    </div>
+                  </button>
+                </span>
             </div>
           </div>
           <div class="form-group">
@@ -18,7 +24,12 @@
               Fornavn
             </label>
             <div class="input-group">
-              <input type="text" placeholder="Navn" id="name" class="form-control" value="{{this.user?.name}}" />
+              <input type="text" placeholder="Navn" id="name" class="form-control" value="{{this.user?.name}}" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                    {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </span>
             </div>
           </div>
           <div class="form-group">
@@ -26,7 +37,12 @@
               Efternavn
             </label>
             <div class="input-group">
-              <input type="text" placeholder="Navn" id="surName" class="form-control" value="{{this.user?.surname}}" />
+              <input type="text" placeholder="Navn" id="surName" class="form-control" value="{{this.user?.surname}}" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                    {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </span>
             </div>
           </div>
           <div class="form-group">
@@ -34,7 +50,12 @@
               E-mail
             </label>
             <div class="input-group">
-              <input type="text" placeholder="E-mail" id="eMail" class="form-control" value="{{user?.email}}" />
+              <input type="text" placeholder="E-mail" id="eMail" class="form-control" value="{{user?.email}}" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                    {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </span>
             </div>
           </div>
           <div class="form-group">
@@ -42,7 +63,12 @@
               Telefonnummer
             </label>
             <div class="input-group">
-              <input type="text" placeholder="Phone number" id="phone" class="form-control" value="{{user?.phone}}" />
+              <input type="text" placeholder="Phone number" id="phone" class="form-control" value="{{user?.phone}}" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                    {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </span>
             </div>
           </div>
           <div class="form-group">
@@ -50,7 +76,12 @@
               Fødselsdag
             </label>
             <div class="input-group">
-              <input type="text" placeholder="Ikke opgivet" id="birthday" class="form-control" value="{{user?.birthdate}}" />
+              <input type="text" placeholder="Ikke opgivet" id="birthday" class="form-control" value="{{user?.birthdate}}" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                    {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </span>
             </div>
           </div>
           <div class="form-group">
@@ -58,12 +89,29 @@
               Rolle
             </label>
             <div class="input-group">
-              <input type="text" placeholder="Rolle" id="role" class="form-control" value="{{user?.role.name}}" />
+              <input type="text" placeholder="Rolle" id="role" class="form-control" value="{{user?.role.name}}" [disabled]="nameDisabled"/>
+              <span class="input-group-append">
+                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                    {{ nameDisabled ? 'Rediger' : 'Gem' }}
+                  </button>
+                </span>
             </div>
           </div>
         </div>
     </div>
     </div>
-    <button type="button" (click)="goToUserTable()">
-      Tilbage
-    </button>
+  </div>
+  <ng-template #tempEditBox>
+      <button class="btn btn-success input-group-text" (click)="enableName()">
+          {{ nameDisabled ? 'Rediger' : 'Gem' }}
+      </button>
+  </ng-template>
+  <ng-template #tempSaveBox>
+      <button class="btn btn-success input-group-text" (click)="enableName()">
+          {{ nameDisabled ? 'Rediger' : 'Gem' }}
+      </button>
+      <button class="btn btn-success input-group-text" (click)="enableName()">
+          {{ nameDisabled ? 'Rediger' : 'Annuller' }}
+        </button>
+  </ng-template>
+  

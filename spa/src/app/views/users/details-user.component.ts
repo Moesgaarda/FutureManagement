@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 import { ActivatedRoute } from '../../../../node_modules/@angular/router';
-import { environment } from '../../../environments/environment';
-
 
 @Component({
   templateUrl: './details-user.component.html'
@@ -14,7 +12,6 @@ export class DetailsUserComponent implements OnInit {
   surnameDisabled: boolean;
   emailDisabled: boolean;
   user: User;
-  baseUrl = environment.spaUrl;
 
   constructor(private userService: UserService, private route: ActivatedRoute) {
    }
@@ -31,7 +28,12 @@ export class DetailsUserComponent implements OnInit {
       });
   }
 
-  goToUserTable() {
-    location.href = this.baseUrl + '/users/view/';
+  enableName() {
+    if (this.nameDisabled) {
+      this.nameDisabled = false;
+    } else {
+      // indsæt i db
+      this.nameDisabled = true;
+    }
   }
 }

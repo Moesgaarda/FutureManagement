@@ -6,8 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
-import { DetailFile } from '../../_models/DetailFile';
-import { FileUploadService } from '../../_services/fileUpload.service';
 
 @Component({
   templateUrl: './details-itemTemplate.component.html'
@@ -28,28 +26,21 @@ export class DetailsItemTemplateComponent implements OnInit {
   templatesToGet: ItemTemplatePart[] = [];
   usedTemplates: ItemTemplatePart[] = [];
   templatesToShow: ItemTemplate[];
-  files: DetailFile[];
   unitTypes = Object.keys(UnitType);
-  fileService: FileUploadService;
 
   constructor(
     private templateService: ItemTemplateService,
-    private route: ActivatedRoute,
-    private fileUploadService: FileUploadService
+    private route: ActivatedRoute
   ) {
-    this.fileService = fileUploadService;
     this.asyncSetup();
   }
 
   async asyncSetup() {
     await this.loadTemplate();
     await this.loadAllTemplateProperties();
-    await this.loadFiles();
     this.delay(15000);
     this.delay(15000);
     await this.loadTemplates();
-    this.delay(15000);
-    this.delay(15000);
     this.delay(15000);
   }
 
@@ -78,7 +69,6 @@ export class DetailsItemTemplateComponent implements OnInit {
       });
   }
 
-
   async loadTemplates() {
     console.log('temps');
     await this.templateService.getItemTemplates().subscribe(templates => {
@@ -86,11 +76,6 @@ export class DetailsItemTemplateComponent implements OnInit {
     });
   }
 
-  async loadFiles() {
-    await this.templateService.getFiles(+this.route.snapshot.params['id']).subscribe( files => {
-      this.files = files;
-    });
-  }
   async loadAllTemplateProperties() {
     console.log('props');
     await this.templateService
