@@ -9,7 +9,8 @@ namespace API.Models{
     public class ItemTemplate{
         public ItemTemplate(){}
         public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
-                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, ICollection<TemplateFileName> files){
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, DateTime created, 
+                            ItemTemplate revisionedFrom, ICollection<TemplateFileName> files){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
@@ -18,10 +19,14 @@ namespace API.Models{
             this.Parts = parts;
             this.PartOf = partOf;
             this.Files = files;
+            this.RevisionID = revisionId;
+            this.Created = created;
+            this.RevisionedFrom = revisionedFrom;
         }
 
         public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
-                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, ICollection<TemplateFileName> files){
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, 
+                            DateTime created, ItemTemplate revisionedFrom, ICollection<TemplateFileName> files){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
@@ -29,15 +34,21 @@ namespace API.Models{
             this.Parts = parts;
             this.PartOf = partOf;
             this.Files = files;
+            this.RevisionID = revisionId;
+            this.Created = created;
+            this.RevisionedFrom = revisionedFrom;
         }
         
         [Key]
         public int Id { get;  set; }
         public string Name { get; set; }
+        public int RevisionID { get; set; }
+        public DateTime Created { get; set; }
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
-        public ICollection<TemplatePropertyRelation> TemplateProperties { get; set; }
         public bool? IsActive { get; set; }
+        public ICollection<TemplatePropertyRelation> TemplateProperties { get; set; }
+        public ItemTemplate RevisionedFrom { get; set; }
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
         public ICollection<TemplateFileName> Files { get; set; }

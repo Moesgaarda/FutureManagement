@@ -19,6 +19,17 @@ export class ViewItemTemplatesComponent {
   source: LocalDataSource;
   templates: ItemTemplate[];
   baseUrl = environment.spaUrl;
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    {title: 'Navn', name: 'name'},
+    {title: 'Revision', name: 'revisionId'},
+    {title: 'Oprettet', name: 'created'},
+  ];
+  public page: number = 1;
+  public itemsPerPage: number = 5;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
 
   settings = {
     pager: {
