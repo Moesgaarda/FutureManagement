@@ -1,95 +1,116 @@
-import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import * as _ from 'underscore';
+import { Component, OnInit } from '@angular/core';
 import { Order } from '../../_models/Order';
-import { environment } from '../../../environments/environment';
+import { UnitType, ItemTemplate } from '../../_models/ItemTemplate';
+import { Item } from '../../_models/Item';
+import { ItemTemplateService } from '../../_services/itemTemplate.service';
+import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
 import { OrderService } from '../../_services/order.service';
+import { ItemPropertyName } from '../../_models/ItemPropertyName';
+import { AlertifyService } from '../../_services/alertify.service';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
-    templateUrl: './view-orders.component.html',
-    styles: [`
-      nb-card {
-        transform: translate3d(0, 0, 0);
+  templateUrl: './view-orders.component.html'
+})
+export class ViewOrdersComponent implements OnInit {
+  orderToAdd: Order = {} as Order;
+  unitTypes = Object.keys(UnitType);
+  currentItem: Item = {} as Item;
+  templates: ItemTemplate[] = [];
+  onOrderPage: boolean = true;
+  templateToGet: ItemTemplate = {} as ItemTemplate;
+  templateDetails: ItemTemplate = {} as ItemTemplate;
+  detailsReady: boolean;
+  unitTypeForAmount: string;
+  propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
+  descriptionTextsToAdd: string[] = [] as string[];
+
+  constructor(
+    private itemTemplateService: ItemTemplateService,
+    private orderService: OrderService,
+    private alertify: AlertifyService,
+    private router: Router
+  ) {
+    this.getTemplates();
+    this.templateDetails.templateProperties = [] as ItemPropertyName[];
+    this.orderToAdd.products = [] as Item[];
+    this.currentItem.template = {} as ItemTemplate;
+  }
+
+  ngOnInit() {
+    this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
+  }
+
+  changePage() {
+    this.onOrderPage = !this.onOrderPage;
+  }
+
+  async getTemplates() {
+    await this.itemTemplateService.getItemTemplates().subscribe(templates => {
+      this.templates = templates;
+    });
+  }
+
+  async getTemplateDetails() {
+    await this.itemTemplateService
+      .getItemTemplate(this.templateToGet.id)
+      .subscribe(
+        template => {
+          this.templateDetails = template;
+        },
+        error => {
+          this.alertify.error('kunne ikke hente skabelon');
+        },
+        () => {
+          this.detailsReady = true;
+          this.getUnitTypeForTemplate();
+        }
+      );
+  }
+
+  getUnitTypeForTemplate() {
+    this.unitTypeForAmount = UnitType[this.templateDetails.unitType];
+  }
+
+  removeItemFromOrder(i: number) {
+    this.orderToAdd.products.splice(i, 1);
+  }
+
+  addItemToOrder() {
+    for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
+      this.propertyDescriptionsToAdd.push({
+        description: this.descriptionTextsToAdd[i],
+        propertyName: this.templateDetails.templateProperties[i]
+      });
+    }
+
+    this.currentItem.properties = this.propertyDescriptionsToAdd;
+    this.currentItem.template = this.templateDetails;
+    this.currentItem.isActive = true;
+    this.orderToAdd.products.push(this.currentItem);
+    this.changePage();
+    console.log(this.orderToAdd);
+    this.currentItem = {} as Item;
+    this.propertyDescriptionsToAdd = [] as ItemPropertyDescription[];
+    this.templateDetails = {} as ItemTemplate;
+    this.templateToGet = {} as ItemTemplate;
+  }
+
+  addOrder() {
+    this.orderService.addOrder(this.orderToAdd).subscribe(
+      data => {
+        console.log('added order');
+        this.alertify.success('Tilføjede bestilling');
+        console.log(this.orderToAdd);
+      },
+      error => {
+        console.log('failed to add order');
+        this.alertify.error('kunne ikke tilføje bestillingen');
+      },
+      () => {
+        this.router.navigate(['pages/tables/order-table']);
       }
-    `],
-  })
-export class ViewOrdersComponent {
-    baseUrl = environment.spaUrl;
-    source: LocalDataSource;
-    orders: Order[];
-
-    settings = {
-        attr: {
-            class: 'table table-striped pagination'
-        },
-        pager: {
-          perPage: 15,
-        },
-        mode: 'external',
-        delete: {
-          deleteButtonContent: '<i class="btn btn-sm btn-danger fa fa-trash"> Slet </i>',
-          confirmDelete: true,
-        },
-        add: {
-          addButtonContent: 'Tilføj ny genstand'
-        },
-        edit: {
-          editButtonContent: '<i class="btn btn-sm btn-primary fa fa-edit"> Rediger </i>',
-          saveButtonContent: '<i class="btn btn-sm btn-info fa fa-save"> Gem </i>',
-          cancelButtonContent: '<i class="btn btn-sm btn-warning fa fa-trash"> Fortryd </i>',
-        },
-        columns: {
-            company: {
-                title: 'Firma',
-                type: 'string',
-            },
-            deliveryDate: {
-                title: 'Levering',
-                type: 'string',
-            },
-            purchaseNumber: {
-                title: 'Købsnummer',
-                type: 'number',
-            },
-        },
-    };
-
-    constructor(private orderService: OrderService) {
-        this.source = new LocalDataSource();
-        this.loadOrders();
-    }
-
-    async loadOrders() {
-        await this.orderService.getAllOrders().subscribe(orders => {
-          this.orders = orders;
-          this.source.load(orders);
-          this.source.refresh();
-        });
-    }
-
-    onDeleteConfirm(event): void {
-        if (window.confirm('Er du sikker på at du vil slette denne forekomst?')) {
-          event.confirm.resolve();
-        } else {
-          event.confirm.reject();
-        }
-    }
-
-    addNewOrder() {
-        location.href = this.baseUrl + '/orders/new/';
-    }
-
-    editOrder(orderToLoad): void {
-        location.href = this.baseUrl + '/orders/details/' + orderToLoad.data.id;
-    }
-
-    deleteOrder(orderToDelete): void {
-        if (window.confirm('Er du sikker på at du vil slette denne bestilling?')) {
-          this.orderService.deleteOrder(orderToDelete.data.id).subscribe(() => {
-            this.orders.splice(_.findIndex(this.orders, {id: orderToDelete.data.id}), 1);
-            this.source.refresh();
-          });
-        }
-    }
+    );
+  }
 }
-

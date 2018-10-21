@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ItemTemplatesRoutingModule } from './itemTemplates-routing.module';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
 
 import { DetailsItemTemplateComponent } from './details-itemTemplate.component';
 import { ViewItemTemplatesComponent } from './view-itemTemplates.component';
@@ -16,11 +15,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   imports: [
     ItemTemplatesRoutingModule,
-    PaginationModule.forRoot(),
+    Ng2SmartTableModule,
     FormsModule,
     CommonModule,
-    NgSelectModule,
-    Ng2TableModule
+    NgSelectModule
   ],
   declarations: [
     ViewItemTemplatesComponent,

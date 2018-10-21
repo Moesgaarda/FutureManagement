@@ -3,8 +3,9 @@ import { environment } from '../../environments/environment';
 import { ItemTemplate } from '../_models/ItemTemplate';
 import { Observable } from 'rxjs';
 import { ItemPropertyName } from '../_models/ItemPropertyName';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { DetailFile } from '../_models/DetailFile';
 
 @Injectable()
 export class ItemTemplateService {
@@ -41,6 +42,10 @@ export class ItemTemplateService {
 
     addTemplateProperty(property: ItemPropertyName): Observable<ItemPropertyName> {
         return this.http.post<ItemPropertyName>(this.baseUrl + 'ItemTemplate/addProperty', property, this.httpOptions);
+    }
+
+    getFiles(id: number): Observable<DetailFile[]> {
+        return this.http.get<DetailFile[]>(this.baseUrl + 'ItemTemplate/getFiles/' + id);
     }
 
 

@@ -130,7 +130,7 @@ export class ViewUsersComponent implements OnInit {
     }
   }
   editUser(userToLoad): void {
-    location.href = this.baseUrl + 'pages/forms/user-detail/' + userToLoad.data.id;
+    location.href = this.baseUrl + 'users/details/' + userToLoad.data.id;
   }
 }
   /*

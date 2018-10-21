@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
 using API.Dtos;
+using API.Dtos.FileDtos;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -125,6 +126,10 @@ namespace API.Controllers
 
             bool result = await _repo.AddPropertyName(itemPropertyName);
 
+            if(propertyDto.Name == null){
+                return BadRequest("Property name cannot be null.");
+            }
+
             return result ? StatusCode(201) : BadRequest();
         }
 
@@ -177,6 +182,18 @@ namespace API.Controllers
             bool result = await _repo.DeactivateItemTemplate(template);
 
             return result ? StatusCode(200) : BadRequest();
+        }
+        [HttpGet("getFiles/{id}", Name = "GetFiles")]
+        public async Task<IActionResult> GetFiles(int id){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            
+            var files = await _repo.GetFiles(id);
+            var filesToReturn = _mapper.Map<List<FileForTableGetDto>>(files);
+
+            return Ok(filesToReturn);
+
         }
     }
 }
