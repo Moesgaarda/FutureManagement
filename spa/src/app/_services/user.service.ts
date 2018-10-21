@@ -46,7 +46,7 @@ export class UserService {
     param.append('name', newRole);
     return this.http.post<string>(this.baseUrl + 'User/addRole', `\"${newRole}\"`, { headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      }), responseType: 'blob',
+      }), responseType: 'json',
       });
   }
 }
