@@ -6,4 +6,9 @@ import { environment } from '../../../environments/environment';
 })
 
 export class NewUserComponent {
+  baseUrl = environment.spaUrl;
+
+  goToUserTable() {
+    location.href = this.baseUrl + '/users/view/';
+  }
 }

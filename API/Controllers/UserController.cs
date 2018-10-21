@@ -6,6 +6,7 @@ using API.Dtos;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace API.Controllers
 {
@@ -46,9 +47,14 @@ namespace API.Controllers
 
             return Ok(userToReturn);            
         }
-                [HttpPost("addRole")]
-             public async Task<IActionResult> AddNewRole(string name)
-        {
+        [HttpPost("addRole")]
+             public async Task<IActionResult> AddNewRole([FromBody]string name)
+        {   
+            //string name = (string)jObj.SelectToken("name");
+            if (String.IsNullOrEmpty(name))
+            {
+                return BadRequest();
+            }
             var newRole = new UserRole(name);
             bool succes = await _repo.AddRole(newRole);
 
