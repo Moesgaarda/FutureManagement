@@ -10,7 +10,7 @@ namespace API.Models{
         public ItemTemplate(){}
         public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
                             ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, DateTime created, 
-                            ICollection<ItemTemplate> relatedRevisions, ICollection<TemplateFileName> files){
+                            ItemTemplate revisionedFrom, ICollection<TemplateFileName> files){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
@@ -21,12 +21,12 @@ namespace API.Models{
             this.Files = files;
             this.RevisionID = revisionId;
             this.Created = created;
-            this.RelatedRevisions = relatedRevisions;
+            this.RevisionedFrom = revisionedFrom;
         }
 
         public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
                             ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, 
-                            DateTime created, ICollection<ItemTemplate> relatedRevisions, ICollection<TemplateFileName> files){
+                            DateTime created, ItemTemplate revisionedFrom, ICollection<TemplateFileName> files){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
@@ -36,7 +36,7 @@ namespace API.Models{
             this.Files = files;
             this.RevisionID = revisionId;
             this.Created = created;
-            this.RelatedRevisions = relatedRevisions;
+            this.RevisionedFrom = revisionedFrom;
         }
         
         [Key]
@@ -48,7 +48,7 @@ namespace API.Models{
         public string Description { get; set; }
         public bool? IsActive { get; set; }
         public ICollection<TemplatePropertyRelation> TemplateProperties { get; set; }
-        public ICollection<ItemTemplate> RelatedRevisions { get; set; }
+        public ItemTemplate RevisionedFrom { get; set; }
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
         public ICollection<TemplateFileName> Files { get; set; }

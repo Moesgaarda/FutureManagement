@@ -14,8 +14,8 @@ export class ViewItemTemplatesComponent {
   public rows: Array<any> = [];
   public columns: Array<any> = [
     {title: 'Navn', name: 'name'},
-    {title: 'UnitType', name: 'unitType'},
-    {title: 'Beskrivelse', name: 'description'},
+    {title: 'Revision', name: 'revisionId'},
+    {title: 'Oprettet', name: 'created'},
   ];
   public page: number = 1;
   public itemsPerPage: number = 5;

@@ -64,6 +64,8 @@ namespace API.Controllers
                     
                 });
             }
+
+            // TODO: Update to new model
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
                 templateDto.UnitType,
@@ -71,6 +73,9 @@ namespace API.Controllers
                 propertiesToAdd,
                 templateDto.Parts,
                 templateDto.PartOf,
+                templateDto.RevisionId,
+                templateDto.Created,
+                templateDto.RevisionedFrom,
                 filesToAdd
             );
 
