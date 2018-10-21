@@ -122,6 +122,18 @@ namespace API.Controllers
 
         [HttpPost("add", Name = "AddItem")]
         public async Task<IActionResult> AddItem([FromBody]ItemForAddDto item){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            List<ItemItemRelation> partsToAdd = new List<ItemItemRelation>();
+            foreach(ItemItemRelationPartOfForGet part in item.Parts){
+                partsToAdd.Add(new ItemItemRelation{
+                    PartId = part.ItemId,
+                    Amount = part.Amount
+                });
+            }
+
             var itemToCreate = new Item(
                 item.Placement,
                 item.Amount,
@@ -129,7 +141,7 @@ namespace API.Controllers
                 item.Order,
                 item.CreatedBy,
                 item.Properties,
-                item.Parts,
+                partsToAdd,
                 item.PartOf,
                 item.IsActive
             );

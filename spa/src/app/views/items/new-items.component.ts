@@ -19,6 +19,7 @@ export class AddItemsComponent {
   templates: ItemTemplate[] = [];
   items: Item[] = [];
   selectedItemParts: Item[] = [];
+  selectedItemPartAmounts: number[] = [];
   properties: ItemPropertyDescription[] =  [];
   templateToGet: ItemTemplate = {} as ItemTemplate;
   templateDetails: ItemTemplate = {} as ItemTemplate;
@@ -79,7 +80,7 @@ export class AddItemsComponent {
 
     for ( let i = 0; i < this.selectedItemParts.length; i++) {
       this.itemItemRelations.push({
-        amount: this.selectedItemParts[i].amount,
+        amount: this.selectedItemPartAmounts[i],
         partId: this.selectedItemParts[i].id,
       });
     }
@@ -91,7 +92,7 @@ export class AddItemsComponent {
     this.itemToAdd.isActive = true;
     this.itemService.addItem(this.itemToAdd).subscribe();
 
-    location.href = this.baseUrl + 'items/view';
+    // location.href = this.baseUrl + 'items/view';
   }
 
 }

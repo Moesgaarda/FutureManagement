@@ -8,7 +8,8 @@
                 <div class="input-group">
                   <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="itemToAdd.placement"/>
                 </div>
-              </div><div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="amount">Mængde</label>
                 <div class="input-group">
                   <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="itemToAdd.amount"/>
@@ -43,6 +44,14 @@
                   </small>
                 </div>
               </div>
+              <div class="form-group">
+                <label for="amount">Hvor mange af de forskellige genstande er brugt?</label>
+                <div *ngFor="let part of selectedItemParts; let i=index"> 
+                  <label>{{selectedItemParts[i].placement}}</label>
+                  <input type="number" class="form-control" [(ngModel)]="selectedItemPartAmounts[i]"/>
+                  <br>
+                </div>
+              </div>
               <button class="btn btn-success btn-rectangle input-group-text" (click)="addItem()">Tilføj genstand</button>
             </div>
         </div>
@@ -53,7 +62,7 @@
           <div class="card-header">Egenskaber der ligger på den valgte skabelon</div>
             <div class="card-body">
               <div *ngIf="!detailsReady">
-                Vælg en skabelon til venstre og dennes egenskaber vil vises
+                Vælg en skabelon og dennes egenskaber vil vises her
               </div>
               <div *ngIf="detailsReady">
                 <div *ngFor="let prop of templateDetails.templateProperties; let i=index">
