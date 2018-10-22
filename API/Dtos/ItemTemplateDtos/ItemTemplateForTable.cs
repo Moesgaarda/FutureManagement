@@ -11,5 +11,8 @@ namespace API.Dtos
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
         public string Files { get; set; }
+        public int RevisionId { get; set; }
+        public System.DateTime Created { get; set; }
+        public ItemTemplate RevisionedFrom;
     }
 }
