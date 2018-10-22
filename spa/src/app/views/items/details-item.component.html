@@ -8,11 +8,6 @@
           <div class="input-group">
             <input type="text" placeholder="Anvendt skabelon" id="templateUsed" class="form-control" value="Skabelon 1"
               [disabled]="templateDisabled">
-            <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="enableTemplate()">
-                {{ templateDisabled ? 'Rediger' : 'Gem' }}
-              </button>
-            </span>
           </div>
         </div>
         <div class="form-group">
@@ -20,11 +15,6 @@
           <div class="input-group">
             <input type="text" placeholder="Genstandens placering" class="form-control" id="placement" value="{{item?.placement}}"
               id="placement" [disabled]="placementDisabled" />
-            <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="enablePlacement()">
-                {{ placementDisabled ? 'Rediger' : 'Gem' }}
-              </button>
-            </span>
           </div>
         </div>
         <div class="form-group">
@@ -32,11 +22,6 @@
           <div class="input-group">
             <input type="text" placeholder="Mængde" class="form-control" id="amount" value="{{item?.amount}}"
               [disabled]="amountDisabled" />
-            <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="enableAmount()">
-                {{ amountDisabled ? 'Rediger' : 'Gem' }}
-              </button>
-            </span>
           </div>
         </div>
 
@@ -45,11 +30,6 @@
           <div class="input-group">
             <input type="text" placeholder="Oprindelsesordre" id="order" value="{{item?.order.company}} - {{item?.order.orderDate}}"
               class="form-control" disabled>
-            <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="routeToOrderDetail()">
-                Detaljer
-              </button>
-            </span>
           </div>
         </div>
         <div class="form-group">

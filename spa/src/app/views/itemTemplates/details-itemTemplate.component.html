@@ -7,11 +7,6 @@
           <label for="name">Navn på skabelon</label>
           <div class="input-group">
             <input type="text" placeholder="Navn" id="name" class="form-control" value="{{template?.name}}" [disabled]="nameDisabled" />
-            <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="enableName()">
-                {{ nameDisabled ? 'Rediger' : 'Gem' }}
-              </button>
-            </span>
           </div>
         </div>
 
@@ -27,11 +22,6 @@
           <label for="description">Beskrivelse</label>
           <div class="input-group">
             <textarea rows="3" placeholder="Text Area" id="description" class="form-control" [disabled]="descriptionDisabled">{{template?.description}}</textarea>
-            <span class="input-group-append">
-              <button class="btn btn-success input-group-text" (click)="enableDescription()">
-                {{ descriptionDisabled ? 'Rediger' : 'Gem' }}
-              </button>
-            </span>
           </div>
         </div>
 
