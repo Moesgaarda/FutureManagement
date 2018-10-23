@@ -21,6 +21,10 @@ namespace API.Data
             if(user == null)
                 return null;
             
+            if(user.IsActive == false){
+                return null;
+            }
+
             if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
 
