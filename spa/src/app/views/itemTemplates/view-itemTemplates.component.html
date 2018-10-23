@@ -1,14 +1,34 @@
-
 <div class="card">
   <div class="card-header">
-    Genstande
+    Skabeloner
   </div>
 
-  <div class="card-body">   
-      <ng2-smart-table [settings]="settings" [source]="source" (edit)="editTemplate($event)" (delete)="deleteTemplate($event)" (create)="addNewTemplate()">
-      </ng2-smart-table>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <input *ngIf="config.filtering" placeholder="Filtrer skabeloner"
+               [ngTableFiltering]="config.filtering"
+               class="form-control"
+               (tableChanged)="onChangeTable(config)"/>
+      </div>
+    </div>
+    <br>
+    <ng-table [config]="config"
+              (tableChanged)="onChangeTable(config)"
+              (cellClicked)="onCellClick($event)"
+              [rows]="rows" [columns]="columns">
+    </ng-table>
+    <pagination *ngIf="config.paging"
+                class="pagination-sm"
+                [(ngModel)]="page"
+                [totalItems]="length"
+                [itemsPerPage]="itemsPerPage"
+                [maxSize]="maxSize"
+                [boundaryLinks]="true"
+                [rotate]="false"
+                (pageChanged)="onChangeTable(config, $event)"
+                previousText="Tilbage" nextText="Frem" firstText="Første" lastText="Sidste"
+                (numPages)="numPages = $event">
+    </pagination>
   </div>
 </div>
-
-
-

@@ -7,6 +7,8 @@ export interface ItemTemplate {
     id: number;
     name: string;
     unitType: UnitType;
+    revisionId: number;
+    created: Date;
     files: any;
     fileNames: string[];
     templateProperties: ItemPropertyName[];
