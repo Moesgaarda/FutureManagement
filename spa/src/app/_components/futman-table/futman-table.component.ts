@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-futman-table',
@@ -6,7 +7,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./futman-table.component.scss']
 })
 export class FutmanTableComponent implements OnInit {
+  baseUrl = environment.spaUrl;
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    {title: 'Navn', name: 'name'},
+    {title: 'Revision', name: 'revisionId'},
+    {title: 'Oprettet', name: 'created'},
+];
+  public page = 1;
+  public itemsPerPage = 5;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
+  public config: any = {
+    paging: true,
+    sorting: {columns: this.columns},
+    filtering: {filterString: ''},
+    className: ['table-striped', 'table-bordered']
+  };
+
+  private data: Array<any> = [];
   constructor() { }
 
   ngOnInit() {

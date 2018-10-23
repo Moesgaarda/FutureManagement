@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ItemsRoutingModule } from './items-routing.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FutmanTableComponent } from '../../_components/futman-table/futman-table.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
   declarations: [
     ViewItemsComponent,
     AddItemsComponent,
-    DetailsItemComponent
+    DetailsItemComponent,
+    FutmanTableComponent
    ]
 })
 export class ItemsModule { }
