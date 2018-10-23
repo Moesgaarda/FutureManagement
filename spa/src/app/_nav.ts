@@ -1,3 +1,5 @@
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+
 export const navItems = [
   {
     title: true,
@@ -256,9 +258,10 @@ export const navItems = [
     divider: true
   },
   {
+    hidden: tokenNotExpired('token'),
     name: 'Log ind',
     url: '/login',
-    icon: 'icon-cloud-download',
+    icon: 'icon-login',
     class: 'mt-auto',
     variant: 'success'
   }
