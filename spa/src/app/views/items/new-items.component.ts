@@ -9,6 +9,7 @@ import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
 import { User } from '../../_models/User';
 import { ItemItemRelation } from '../../_models/ItemItemRelation';
 import { environment } from '../../../environments/environment';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   templateUrl: './new-items.component.html',
@@ -35,7 +36,7 @@ export class AddItemsComponent {
   baseUrl = environment.spaUrl;
 
   constructor(private templateService: ItemTemplateService,
-  private itemService: ItemService, private userService: UserService) {
+  private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
     this.getTemplates();
     this.getItems();
     this.getUsers();
@@ -71,6 +72,23 @@ export class AddItemsComponent {
   }
 
   addItem() {
+    for ( let i = 0; i < this.selectedItemParts.length; i++) {
+      for (let j = 0; j < this.items.length; j++) {
+        console.log(this.items[j].id);
+        console.log(this.selectedItemParts[i].id);
+        if (this.items[j].id === this.selectedItemParts[i].id && this.items[j].amount < this.selectedItemPartAmounts[i]) {
+          // this.alertify.error('Lageret har ikke nok af genstand ' + this.items[j].placement);
+          return;
+        }
+      }
+
+
+      this.itemItemRelations.push({
+        amount: this.selectedItemPartAmounts[i],
+        partId: this.selectedItemParts[i].id,
+      });
+    }
+
    for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
       this.propertyDescriptionsToAdd.push({
         description: this.descriptionTextsToAdd[i],
@@ -78,15 +96,7 @@ export class AddItemsComponent {
       });
     }
 
-    for ( let i = 0; i < this.selectedItemParts.length; i++) {
-      this.itemItemRelations.push({
-        amount: this.selectedItemPartAmounts[i],
-        partId: this.selectedItemParts[i].id,
-      });
-    }
-
     this.itemToAdd.parts = this.itemItemRelations;
-
     this.itemToAdd.properties = this.propertyDescriptionsToAdd;
     this.itemToAdd.template = this.templateDetails;
     this.itemToAdd.isActive = true;

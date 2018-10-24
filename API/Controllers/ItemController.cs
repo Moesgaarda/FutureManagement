@@ -129,9 +129,14 @@ namespace API.Controllers
             List<ItemItemRelation> partsToAdd = new List<ItemItemRelation>();
             foreach(ItemItemRelationPartOfForGet part in item.Parts){
                 partsToAdd.Add(new ItemItemRelation{
-                    PartId = part.ItemId,
+                    PartId = part.PartId,
                     Amount = part.Amount
                 });
+            }
+
+            foreach(ItemItemRelation itemPart in partsToAdd) {
+                var itemToReduce = await _repo.GetItem(itemPart.PartId);
+                itemToReduce.Amount -= itemPart.Amount;
             }
 
             var itemToCreate = new Item(
@@ -145,6 +150,8 @@ namespace API.Controllers
                 item.PartOf,
                 item.IsActive
             );
+
+
 
             bool result = await _repo.AddItem(itemToCreate);
             return result ? StatusCode(201) : BadRequest();

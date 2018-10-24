@@ -6,24 +6,24 @@
               <div class="form-group">
                 <label for="placement">Genstandens placering</label>
                 <div class="input-group">
-                  <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="itemToAdd.placement"/>
+                  <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="itemToAdd.placement" required/>
                 </div>
               </div>
               <div class="form-group">
                 <label for="amount">Mængde</label>
                 <div class="input-group">
-                  <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="itemToAdd.amount"/>
+                  <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="itemToAdd.amount" required/>
                 </div>
               </div>
               <div class="form-group">
                 <label>Vælg skabelon</label>
-                <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails()">
+                <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails()" required>
                   <option *ngFor="let temp of templates" [ngValue]="temp">{{temp.name}}</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="madeBy">Lavet af</label>
-                <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="itemToAdd.createdBy">
+                <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="itemToAdd.createdBy" required>
                   <option *ngFor="let user of userList" [ngValue]="user">{{user.name}} - {{user.username}}</option>
                 </select>
               </div>
@@ -68,7 +68,7 @@
                 <div *ngFor="let prop of templateDetails.templateProperties; let i=index">
                   {{prop.name}}
                   <br>
-                  <input type="text" placeholder="{{prop.name}}" class="form-control" [(ngModel)]="descriptionTextsToAdd[i]">
+                  <input type="text" placeholder="{{prop.name}}" class="form-control" [(ngModel)]="descriptionTextsToAdd[i]" required>
                   <br>
                 </div>
               </div>
