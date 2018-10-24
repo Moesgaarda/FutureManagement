@@ -2,7 +2,7 @@ matrix:
   include: 
     - language: node_js
       node_js: 
-        - "node"
+        - "9"
       dist: trusty
       sudo: required
       
@@ -24,7 +24,7 @@ matrix:
         - "sudo chmod 4755 /usr/lib/chromium-browser/chrome-sandbox"
         - cd spa
         - npm install -g @angular/cli
-        - npm install --save-dev @angular-devkit/build-angular
+        - npm install
         - ng update @angular/cli --migrate--only --from=1.7.4
 
       script:
