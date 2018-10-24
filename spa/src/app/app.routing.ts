@@ -16,7 +16,7 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '404',
@@ -44,8 +44,8 @@ export const routes: Routes = [
     component: RegisterComponent,
     data: {
       title: 'Register Page'
-    }
-    // canActivate: [AuthGuard]
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -53,7 +53,7 @@ export const routes: Routes = [
     data: {
       title: 'Home'
     },
-     canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'base',
