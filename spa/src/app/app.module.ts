@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
+import { HttpModule} from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -68,6 +69,7 @@ import { FileUploadService} from './_services/fileUpload.service';
     TabsModule.forRoot(),
     ChartsModule,
     HttpClientModule,
+    HttpModule,
     FormsModule,
     NgSelectModule,
   ],

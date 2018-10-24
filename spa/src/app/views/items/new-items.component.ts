@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Item } from '../../_models/Item';
-import { ItemTemplate } from '../../_models/ItemTemplate';
+import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
 import { UserService } from '../../_services/user.service';
@@ -9,6 +9,7 @@ import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
 import { User } from '../../_models/User';
 import { ItemItemRelation } from '../../_models/ItemItemRelation';
 import { environment } from '../../../environments/environment';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   templateUrl: './new-items.component.html',
@@ -17,9 +18,9 @@ import { environment } from '../../../environments/environment';
 export class AddItemsComponent {
   itemToAdd: Item = {} as Item;
   templates: ItemTemplate[] = [];
-  showCreatedBy: boolean;
   items: Item[] = [];
   selectedItemParts: Item[] = [];
+  selectedItemPartAmounts: number[] = [];
   properties: ItemPropertyDescription[] =  [];
   templateToGet: ItemTemplate = {} as ItemTemplate;
   templateDetails: ItemTemplate = {} as ItemTemplate;
@@ -35,11 +36,10 @@ export class AddItemsComponent {
   baseUrl = environment.spaUrl;
 
   constructor(private templateService: ItemTemplateService,
-  private itemService: ItemService, private userService: UserService) {
+  private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
     this.getTemplates();
     this.getItems();
     this.getUsers();
-    this.showCreatedBy = false;
   }
 
   async getTemplates() {
@@ -59,7 +59,7 @@ export class AddItemsComponent {
     await this.itemService.getActiveItems().subscribe(items => {
       this.items = items.map((name) => {
         name.placement = name.template.name + ' - (' + name.placement + ') - Mængde: '
-          + name.amount + ' ' + name.template.unitType;
+          + name.amount + ' ' + UnitType[name.template.unitType];
         return name;
       });
     });
@@ -72,6 +72,21 @@ export class AddItemsComponent {
   }
 
   addItem() {
+    for ( let i = 0; i < this.selectedItemParts.length; i++) {
+      for (let j = 0; j < this.items.length; j++) {
+        if (this.items[j].id === this.selectedItemParts[i].id && this.items[j].amount < this.selectedItemPartAmounts[i]) {
+          // this.alertify.error('Lageret har ikke nok af genstand ' + this.items[j].placement);
+          return;
+        }
+      }
+
+
+      this.itemItemRelations.push({
+        amount: this.selectedItemPartAmounts[i],
+        partId: this.selectedItemParts[i].id,
+      });
+    }
+
    for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
       this.propertyDescriptionsToAdd.push({
         description: this.descriptionTextsToAdd[i],
@@ -79,21 +94,13 @@ export class AddItemsComponent {
       });
     }
 
-    for ( let i = 0; i < this.selectedItemParts.length; i++) {
-      this.itemItemRelations.push({
-        amount: this.selectedItemParts[i].amount,
-        partId: this.selectedItemParts[i].id,
-      });
-    }
-
     this.itemToAdd.parts = this.itemItemRelations;
-
     this.itemToAdd.properties = this.propertyDescriptionsToAdd;
     this.itemToAdd.template = this.templateDetails;
     this.itemToAdd.isActive = true;
     this.itemService.addItem(this.itemToAdd).subscribe();
 
-    location.href = this.baseUrl + 'items/new';
+    // location.href = this.baseUrl + 'items/view';
   }
 
 }
