@@ -10,8 +10,7 @@ matrix:
         chrome: stable
 
       before_script:
-        - ls
-        - cd SPA
+        - cd spa
         - npm install -g @angular/cli
 
       script:
