@@ -2,9 +2,14 @@ matrix:
   include: 
     - language: node_js
       node_js: 
-        - "node"
+        - "9"
       dist: trusty
       sudo: required
+      
+      
+      cache:
+        directories:
+          - node_modules
 
       addons:
         chrome: stable
@@ -17,12 +22,13 @@ matrix:
       before_script:
         - "sudo chown root /usr/lib/chromium-browser/chrome-sandbox"
         - "sudo chmod 4755 /usr/lib/chromium-browser/chrome-sandbox"
-        - cd angular-unit-testing
+        - cd spa
         - npm install -g @angular/cli
+        - npm install
         - ng update @angular/cli --migrate--only --from=1.7.4
 
       script:
-        - ng build --prod --aot
+        - ng build
 
     - language: csharp
       mono: none
@@ -33,12 +39,4 @@ matrix:
         - dotnet restore
 
       script:
-      - dotnet run
-
-  notifications:
-    email: false
-
-  branches: 
-    only:
-      - master
-      - develop
+        - dotnet build
