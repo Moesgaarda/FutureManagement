@@ -18,7 +18,7 @@ namespace API.Dtos
         
         [ForeignKey("CreatedBy")]
         public User CreatedBy { get; set; }
-        public ICollection<ItemItemRelation> Parts { get; set; }
+        public ICollection<ItemItemRelationPartOfForGet> Parts { get; set; }
         public ICollection<ItemItemRelation> PartOf { get; set; }
         public ICollection<ItemPropertyDescription> Properties { get; set; }
         public bool IsActive { get; set; }

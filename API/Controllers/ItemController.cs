@@ -122,6 +122,23 @@ namespace API.Controllers
 
         [HttpPost("add", Name = "AddItem")]
         public async Task<IActionResult> AddItem([FromBody]ItemForAddDto item){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            List<ItemItemRelation> partsToAdd = new List<ItemItemRelation>();
+            foreach(ItemItemRelationPartOfForGet part in item.Parts){
+                partsToAdd.Add(new ItemItemRelation{
+                    PartId = part.PartId,
+                    Amount = part.Amount
+                });
+            }
+
+            foreach(ItemItemRelation itemPart in partsToAdd) {
+                var itemToReduce = await _repo.GetItem(itemPart.PartId);
+                itemToReduce.Amount -= itemPart.Amount;
+            }
+
             var itemToCreate = new Item(
                 item.Placement,
                 item.Amount,
@@ -129,10 +146,12 @@ namespace API.Controllers
                 item.Order,
                 item.CreatedBy,
                 item.Properties,
-                item.Parts,
+                partsToAdd,
                 item.PartOf,
                 item.IsActive
             );
+
+
 
             bool result = await _repo.AddItem(itemToCreate);
             return result ? StatusCode(201) : BadRequest();

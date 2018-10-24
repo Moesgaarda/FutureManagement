@@ -19,6 +19,7 @@ namespace API.Models{
             this.PartOf = partOf;
             this.IsActive = isActive;
         }
+        
         public Item(string placement, int amount, ItemTemplate template, Order order, User createdBy, 
             ICollection<ItemPropertyDescription> properties, ICollection<ItemItemRelation> parts, ICollection<ItemItemRelation> partOf, bool isActive){
 
