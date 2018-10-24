@@ -33,7 +33,7 @@ matrix:
         - dotnet restore
 
       script:
-      - dotnet run
+      - dotnet build
 
   notifications:
     email: false
