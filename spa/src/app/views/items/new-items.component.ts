@@ -74,8 +74,6 @@ export class AddItemsComponent {
   addItem() {
     for ( let i = 0; i < this.selectedItemParts.length; i++) {
       for (let j = 0; j < this.items.length; j++) {
-        console.log(this.items[j].id);
-        console.log(this.selectedItemParts[i].id);
         if (this.items[j].id === this.selectedItemParts[i].id && this.items[j].amount < this.selectedItemPartAmounts[i]) {
           // this.alertify.error('Lageret har ikke nok af genstand ' + this.items[j].placement);
           return;
