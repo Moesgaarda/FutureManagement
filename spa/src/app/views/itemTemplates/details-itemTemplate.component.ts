@@ -2,7 +2,7 @@ import { environment } from '../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
@@ -13,6 +13,7 @@ import { FileUploadService } from '../../_services/fileUpload.service';
   templateUrl: './details-itemTemplate.component.html'
 })
 export class DetailsItemTemplateComponent implements OnInit {
+  isRevisioned = false;
   isDataAvailable = false;
   itemTemplate: ItemTemplate;
   unitTypeEnum: string;
@@ -23,7 +24,8 @@ export class DetailsItemTemplateComponent implements OnInit {
   constructor(
     private templateService: ItemTemplateService,
     private route: ActivatedRoute,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private router: Router
   ) {
     this.fileService = fileUploadService;
   }
@@ -42,12 +44,14 @@ export class DetailsItemTemplateComponent implements OnInit {
         console.log(this.unitTypes[itemTemplate.unitType]);
         this.unitTypeEnum = this.unitTypes[itemTemplate.unitType];
         this.isDataAvailable = true;
+        if (itemTemplate.revisionedFrom != null) {
+          this.isRevisioned = true;
+        }
     });
   }
 
-  loadFiles() {
-    this.templateService.getFiles(+this.route.snapshot.params['id']).subscribe( files => {
-      this.files = files;
-    });
+  goToItemTemplateDetail(templateId: number) {
+    console.log('lul');
+    this.router.navigateByUrl('itemTemplates/details/' + templateId);
   }
 }

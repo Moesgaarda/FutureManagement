@@ -101,13 +101,16 @@ namespace API.Data
                     .Include(x => x.Property)
                     .Load();
 
-            template.PartOf = _context.ItemTemplateParts.Where(x => x.PartId == template.Id).ToList();
-
             _context.Entry(template).Collection(x => x.PartOf)
                     .Query()
                     .Include(x => x.Template)
                     .Load();
-             
+            
+            _context.Entry(template).Collection(x => x.Files)
+                    .Query()
+                    .Include(x => x.FileData)
+                    .Load();
+                    
             return template;
         }
 

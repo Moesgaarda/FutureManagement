@@ -50,9 +50,5 @@ export class ItemTemplateService {
         return this.http.post<ItemPropertyName>(this.baseUrl + 'ItemTemplate/addProperty', property, this.httpOptions);
     }
 
-    getFiles(id: number): Observable<DetailFile[]> {
-        return this.http.get<DetailFile[]>(this.baseUrl + 'ItemTemplate/getFiles/' + id);
-    }
-
 
 }
