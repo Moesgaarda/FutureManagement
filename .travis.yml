@@ -10,10 +10,10 @@ matrix:
         chrome: stable
 
       before_script:
+        - cd SPA
         - npm install -g @angular/cli
 
       script:
-        - cd SPA
         - ng build --prod --aot
 
     - language: csharp
