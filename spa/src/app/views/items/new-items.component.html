@@ -44,17 +44,19 @@
                   </small>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="amount">Hvor mange af de forskellige genstande er brugt?</label>
-                <div *ngFor="let part of selectedItemParts; let i=index"> 
-                  <label>{{selectedItemParts[i].placement}}</label>
+                <label for="amount"><h6>Hvor mange af de forskellige genstande er brugt?</h6></label>
+                <div class="row">
+                <div *ngFor="let part of selectedItemParts; let i=index" class="col-lg-6"> 
+                  <div class="card-header">{{selectedItemParts[i].placement}}</div>
+                  <div class="card-body">
                   <input type="number" class="form-control" [(ngModel)]="selectedItemPartAmounts[i]"/>
+                </div>
                   <br>
                 </div>
               </div>
               <button class="btn btn-success btn-rectangle input-group-text" (click)="addItem()">Tilføj genstand</button>
             </div>
-        </div>
+            </div>
       </div>
       
       <div class="col-lg-6">
