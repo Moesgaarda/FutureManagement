@@ -28,7 +28,7 @@ matrix:
         - ng update @angular/cli --migrate--only --from=1.7.4
 
       script:
-        - ng build --prod --aot
+        - ng build
 
     - language: csharp
       mono: none
