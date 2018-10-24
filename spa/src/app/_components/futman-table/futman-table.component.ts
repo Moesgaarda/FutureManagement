@@ -27,11 +27,13 @@ export class FutmanTableComponent implements OnInit {
     className: ['table-striped', 'table-bordered']
   };
 
-  private data: Array<any> = [];
-  constructor() { }
+  public data: Array<any> = [];
+  constructor() {
+   }
 
   ngOnInit() {
   }
+
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
