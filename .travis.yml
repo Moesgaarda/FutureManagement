@@ -23,7 +23,6 @@ matrix:
 
       script:
         - ng build --prod --aot
-        - ng test --watch=false
 
     - language: csharp
       mono: none
@@ -33,10 +32,8 @@ matrix:
         - cd API
         - dotnet restore
 
-      before_script: cd ../API.TESTS/
-
       script:
-      - dotnet test
+      - dotnet run
 
   notifications:
     email: false
@@ -44,3 +41,4 @@ matrix:
   branches: 
     only:
       - master
+      - develop
