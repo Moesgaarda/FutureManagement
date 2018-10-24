@@ -17,11 +17,11 @@ matrix:
       before_script:
         - "sudo chown root /usr/lib/chromium-browser/chrome-sandbox"
         - "sudo chmod 4755 /usr/lib/chromium-browser/chrome-sandbox"
-        - cd angular-unit-testing
         - npm install -g @angular/cli
         - ng update @angular/cli --migrate--only --from=1.7.4
 
       script:
+        - cd SPA
         - ng build --prod --aot
 
     - language: csharp
