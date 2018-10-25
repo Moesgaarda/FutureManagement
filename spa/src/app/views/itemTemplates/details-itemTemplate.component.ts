@@ -33,15 +33,12 @@ export class DetailsItemTemplateComponent implements OnInit {
   async ngOnInit() {
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
     await this.loadTemplateOnInIt();
-    console.log(this.itemTemplate);
-    console.log(this.unitTypeEnum);
   }
 
   async loadTemplateOnInIt() {
     await this.templateService.getItemTemplateAsync(+this.route.snapshot.params['id'])
       .then(itemTemplate => {
         this.itemTemplate = itemTemplate;
-        console.log(this.unitTypes[itemTemplate.unitType]);
         this.unitTypeEnum = this.unitTypes[itemTemplate.unitType];
         this.isDataAvailable = true;
         if (itemTemplate.revisionedFrom != null) {
@@ -51,7 +48,6 @@ export class DetailsItemTemplateComponent implements OnInit {
   }
 
   goToItemTemplateDetail(templateId: number) {
-    console.log('lul');
     this.router.navigateByUrl('itemTemplates/details/' + templateId);
   }
 }
