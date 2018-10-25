@@ -1,109 +1,145 @@
-<div class="row">
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="card-header">Detaljer omkring skabelonen</div>
-      <div class="card-body">
-        <div class="form-group">
-          <label for="name">Navn på skabelon</label>
-          <div class="input-group">
-            <input type="text" placeholder="Navn" id="name" class="form-control" value="{{template?.name}}" [disabled]="nameDisabled" />
-          </div>
+<div *ngIf="isDataAvailable">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+      
+        <div class="card-header">
+          <h5>{{itemTemplate.name}}</h5>
         </div>
-
-        <div class="form-group">
-          <label for="amount">Mængdeenhed</label>
-          <div class="input-group">
-            <input type="text" placeholder="Mængdeenhed" class="form-control" id="unitTypeEnum" [value]="template.unitType"
-              [disabled]="unitTypeDisabled" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="description">Beskrivelse</label>
-          <div class="input-group">
-            <textarea rows="3" placeholder="Text Area" id="description" class="form-control" [disabled]="descriptionDisabled">{{template?.description}}</textarea>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="templateList">Skabelonliste</label>
+        <div class="card-body">
+        
           <div class="form-group">
-            <ng-select [items]="templates" [multiple]="true" [closeOnSelect]="false" [hideSelected]="true" bindValue="id"
-              bindLabel="name" placeholder="Vælg skabeloner" [(ngModel)]="selectedTemplates">
-            </ng-select>
-            <small class="form-text">En liste af skabeloner der bruges til at fremstille denne skabelon.
-            </small>
+            <label for="description">Beskrivelse</label>
+            <div class="input-group-text">
+              {{itemTemplate.description}}
+            </div>
           </div>
-        </div>
-        <div class="input-group" *ngFor="let temp of template?.parts">
-          {{temp.part.name}} {{temp.amount}}
-        </div>
-        <div class="form-group">
-          <label for="usedList">Anvendelsesliste</label>
+
           <div class="form-group">
-            <ng-select [items]="templates" [multiple]="true" [closeOnSelect]="false" [hideSelected]="true" bindLabel="part.name"
-              placeholder="Vælg skabeloner" [(ngModel)]="usedTemplates">
-            </ng-select>
-            <small class="form-text">En liste af skabeloner hvori denne skabelon anvendes.
-            </small>
+            <label for="unitType">Mængde enhed</label>
+            <div class="input-group-text">
+              {{unitTypeEnum}}
+            </div>
           </div>
+          
+          <div class="form-group">
+            <label for="created">Oprettet</label>
+            <div class="input-group-text">
+              {{itemTemplate.created}}
+            </div>
+          </div>
+
+          <div *ngIf="isRevisioned">
+            <div class="form-group">
+              <label for="revisionedFrom">Revideret fra</label>
+              <div class="input-group-text">
+                {{itemTemplate.revisionedFrom.name}}
+              </div>
+              <div class="input-group-text">
+                Revision nummer: {{itemTemplate.revisionId}}
+              </div>
+              <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(itemTemplate.revisionedFrom.id)">
+                Vis Original
+              </button>
+            </div>
+          </div>
+        
         </div>
-        <div class="form-group">
-          <div class="card-header">Filer</div>
-          <div class="card-body">
-            <div class="col-lg-12" style="margin-bottom: 40px">
-              <table class="table">
+      </div>
+      
+      <div class="card">
+        <div class="card-header">Filer</div>
+        <div class="card-body">
+            <table class="table">
                 <thead>
                   <tr>
-                    <th width="50%">Navn</th>
+                    <th width="80%">Navn</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of files">
+                  <tr *ngFor="let item of itemTemplate.files">
+                    <td>{{item.fileName}}</td>
                     <td>
-                      <strong>{{ item.fileName }}</strong>
-                    </td>
-                    <td>
+                      <button type="button" class="btn btn-block btn-success">Download</button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-        </div>
-        <button (click)="printList()">med</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="card-header">Valgte egenskaber</div>
-      <div class="card-body">
-        <div class="row demo-checkboxes-radio">
-          <div class="demo-checkboxes col-sm-4">
-            <ng-container *ngFor="let prop of properties">
-              <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
-              <ng-template #checkedBox>
-                <!-- <nb-checkbox [value]="true"> {{prop.id}} </nb-checkbox> --> ng-checkbox
-              </ng-template>
-              <ng-template #uncheckedBox>
-                <!-- <nb-checkbox [value]="false"> {{prop.id}} </nb-checkbox> --> ng-checkbox
-              </ng-template>
-            </ng-container>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <input type="text" placeholder="Tilføj ny egenskab" class="form-control" name="propertyContent" />
-          <span class="input-group-append">
-            <button class="btn btn-success input-group-text" (click)="addProperty()">
-              Tilføj
-            </button>
-          </span>
         </div>
       </div>
     </div>
+
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">Egenskaber</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Navn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemTemplate.templateProperties">
+                <td>{{item.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Dele</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Navn</th>
+                <th>Mængde</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemTemplate.parts">
+                <td>{{item.part.name}}</td>
+                <td>{{item.amount}}</td>
+                <td>
+                  <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.part.id)">
+                    Vis Detaljer
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Del af</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Navn</th>
+                <th>Mængde</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemTemplate.partOf">
+                <td>{{item.template.name}}</td>
+                <td>{{item.amount}}</td>
+                <td>
+                  <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.template.id)">
+                    Vis Detaljer
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+    </div>
+
   </div>
 </div>

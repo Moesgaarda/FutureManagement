@@ -35,6 +35,8 @@ namespace API.Helpers
             CreateMap<TemplateFileName, FileForTableGetDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember( x => x.FileName, opt => opt.MapFrom(src => src.FileName));
+            CreateMap<TemplateFileName, TemplateFileNameForGetDto>()
+                .ForMember(x => x.FileDataId, opt => opt.MapFrom(src => src.FileData.Id));
             
         }
     }

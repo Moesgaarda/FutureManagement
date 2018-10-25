@@ -40,6 +40,7 @@ namespace API.Controllers
             itemTemplateToReturn.Parts = _mapper.Map<List<ItemTemplatePartDto>>(itemTemplate.Parts);
             itemTemplateToReturn.TemplateProperties = _mapper.Map<List<TemplatePropertyForGetDto>>(itemTemplate.TemplateProperties);
             itemTemplateToReturn.PartOf = _mapper.Map<List<ItemTemplatePartOfDto>>(itemTemplate.PartOf);
+            itemTemplateToReturn.Files = _mapper.Map<List<TemplateFileNameForGetDto>>(itemTemplate.Files);
 
             return Ok(itemTemplateToReturn);
         }

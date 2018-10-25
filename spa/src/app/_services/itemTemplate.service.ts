@@ -27,6 +27,12 @@ export class ItemTemplateService {
         return this.http.get<ItemTemplate>(this.baseUrl + 'ItemTemplate/get/' + id);
     }
 
+    async getItemTemplateAsync(id: number): Promise<ItemTemplate> {
+        return new Promise<ItemTemplate>(resolve => {
+            resolve(this.http.get<ItemTemplate>(this.baseUrl + 'ItemTemplate/get/' + id).toPromise());
+        })
+    }
+
     deleteItemTemplate(id: number) {
         return this.http.post(this.baseUrl + 'ItemTemplate/delete/' + id, {})
         .map(response => {});
@@ -42,10 +48,6 @@ export class ItemTemplateService {
 
     addTemplateProperty(property: ItemPropertyName): Observable<ItemPropertyName> {
         return this.http.post<ItemPropertyName>(this.baseUrl + 'ItemTemplate/addProperty', property, this.httpOptions);
-    }
-
-    getFiles(id: number): Observable<DetailFile[]> {
-        return this.http.get<DetailFile[]>(this.baseUrl + 'ItemTemplate/getFiles/' + id);
     }
 
 

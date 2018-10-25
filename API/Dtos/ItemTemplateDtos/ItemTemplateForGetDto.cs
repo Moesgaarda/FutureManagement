@@ -13,6 +13,6 @@ namespace API.Dtos
         public ICollection<TemplatePropertyForGetDto> TemplateProperties { get; set; }
         public ICollection<ItemTemplatePartDto> Parts { get; set; }
         public ICollection<ItemTemplatePartOfDto> PartOf { get; set; }
-        public ICollection<TemplateFileName> Files { get; set; }
+        public ICollection<TemplateFileNameForGetDto> Files { get; set; }
     }
 }
