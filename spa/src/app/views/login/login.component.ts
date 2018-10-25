@@ -17,10 +17,10 @@ export class LoginComponent {
   login() {
     this.authService.login(this.model).subscribe(data => {
       console.log('logged in successfully');
-      this.alertify.success('Logged ind');
+      // TODO: this.alertify.success('Logged ind');
     }, error => {
       console.log('failed to login');
-      this.alertify.error('Kunne ikke logge ind');
+      // TODO: this.alertify.error('Kunne ikke logge ind');
     }, () => {
       this.router.navigate(['']);
     });

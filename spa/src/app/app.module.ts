@@ -54,6 +54,7 @@ import { CustomerService } from './_services/customer.service';
 import { EventLogService } from './_services/eventLog.service';
 import { AuthService } from './_services/auth.service';
 import { FileUploadService} from './_services/fileUpload.service';
+import { AuthGuard } from './_guards/auth.guard';
 
 @NgModule({
   imports: [
@@ -94,6 +95,7 @@ import { FileUploadService} from './_services/fileUpload.service';
   AuthService,
   AlertifyService,
   FileUploadService,
+  AuthGuard
   ],
   bootstrap: [ AppComponent ]
 })
