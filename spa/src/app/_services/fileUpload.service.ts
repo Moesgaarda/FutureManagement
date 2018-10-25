@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpRequest, HttpClient } from '@angular/common/http';
 import { ResponseType } from '@angular/http';
-//import { saveAs } from 'file-saver';
 
 @Injectable()
 export class FileUploadService {
