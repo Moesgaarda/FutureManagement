@@ -17,11 +17,11 @@ export class ViewItemTemplatesComponent {
     {title: 'Revision', name: 'revisionId'},
     {title: 'Oprettet', name: 'created'},
 ];
-  public page: number = 1;
-  public itemsPerPage: number = 5;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 5;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   public config: any = {
     paging: true,
@@ -46,8 +46,8 @@ export class ViewItemTemplatesComponent {
   }
 
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -56,7 +56,7 @@ export class ViewItemTemplatesComponent {
       return data;
     }
 
-    let columns = this.config.sorting.columns || [];
+    const columns = this.config.sorting.columns || [];
     let columnName: string = void 0;
     let sort: string = void 0;
 
@@ -91,7 +91,7 @@ export class ViewItemTemplatesComponent {
         });
       }
     });
-    let tempArray: Array<any> = [];
+    const tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {
@@ -117,8 +117,8 @@ export class ViewItemTemplatesComponent {
       Object.assign(this.config.sorting, config.sorting);
     }
 
-    let filteredData = this.changeFilter(this.data, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilter(this.data, this.config);
+    const sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
   }

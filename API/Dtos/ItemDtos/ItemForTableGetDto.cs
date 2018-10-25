@@ -10,5 +10,6 @@ namespace API.Dtos
         public ItemTemplateForItemGetDto Template { get; set; }
         public OrderForGetDto Order { get; set; }
         public UserForItemGetDto CreatedBy { get; set; }
+        public bool IsActive { get; set; }
     }
 }

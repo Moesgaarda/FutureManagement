@@ -1,25 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from '../../_services/item.service';
 import { environment } from '../../../environments/environment';
-import * as _ from 'underscore';
-import { Item } from '../../_models/Item';
 
 @Component({
-  templateUrl: './view-items.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-  `],
+  selector: 'app-futman-table',
+  templateUrl: './futman-table.component.html',
+  styleUrls: ['./futman-table.component.scss']
 })
-export class ViewItemsComponent implements OnInit {
+export class FutmanTableComponent implements OnInit {
   baseUrl = environment.spaUrl;
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    {title: 'Navn', name: 'template.name'},
-    {title: 'Mængde', name: 'amount'},
-    {title: 'Placering', name: 'placement'},
-    {title: 'Er aktiv', name: 'isActive'},
+    {title: 'Navn', name: 'name'},
+    {title: 'Revision', name: 'revisionId'},
+    {title: 'Oprettet', name: 'created'},
 ];
   public page = 1;
   public itemsPerPage = 5;
@@ -34,11 +27,16 @@ export class ViewItemsComponent implements OnInit {
     className: ['table-striped', 'table-bordered']
   };
 
-  private data: Array<any> = [];
+  public data: Array<any> = [];
+  constructor() {
+   }
+
+  ngOnInit() {
+  }
 
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
-    const start = (page.page - 1) * page.itemsPerPage;
-    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -47,7 +45,7 @@ export class ViewItemsComponent implements OnInit {
       return data;
     }
 
-    const columns = this.config.sorting.columns || [];
+    let columns = this.config.sorting.columns || [];
     let columnName: string = void 0;
     let sort: string = void 0;
 
@@ -82,12 +80,11 @@ export class ViewItemsComponent implements OnInit {
         });
       }
     });
-    const tempArray: Array<any> = [];
+    let tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {
-        const correctPath = this.fixPropPath(column.name, item);
-        if ((correctPath.toString().toLowerCase()).match(this.config.filtering.filterString.toLowerCase())) {
+        if ((item[column.name].toString().toLowerCase()).match(this.config.filtering.filterString.toLowerCase())) {
           flag = true;
         }
       });
@@ -109,44 +106,13 @@ export class ViewItemsComponent implements OnInit {
       Object.assign(this.config.sorting, config.sorting);
     }
 
-    const filteredData = this.changeFilter(this.data, this.config);
-    const sortedData = this.changeSort(filteredData, this.config);
+    let filteredData = this.changeFilter(this.data, this.config);
+    let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
   }
 
   public onCellClick(data: any): any {
     console.log(data);
-  }
-  /*  method to sterialize path to a given property in a object
-  *   Example:
-  *    item[column.name] --> item["template.name"]
-  *   This gives an undefined error
-  *   It should be:
-  *     Item[column][name] --> Item["template"]["name"]
-  *   This is what fixPropPath method does
-  */
-  public fixPropPath(path, obj) {
-    return path.split('.').reduce(function(prev, curr) {
-        return prev ? prev[curr] : null;
-    }, obj || self);
-  }
-
-  ngOnInit() {
-    this.loadItems();
-  }
-  constructor(private itemService: ItemService) {
-  }
-
-  async loadItems() {
-    await this.itemService.getAllItems().subscribe(items => {
-      this.rows = items;
-      this.data = items;
-      this.onChangeTable(this.config);
-    });
-  }
-
-  addNewItem() {
-    location.href = this.baseUrl + 'items/new';
   }
 }
