@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ViewUsersComponent } from './view-users.component';
 import { NewUserComponent } from './new-user.component';
 import { EditUserComponent } from './edit-user.component';
@@ -13,10 +14,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   imports: [
     UsersRoutingModule,
-    Ng2SmartTableModule,
+    PaginationModule.forRoot(),
     FormsModule,
     CommonModule,
-    NgSelectModule
+    NgSelectModule,
+    Ng2TableModule
   ],
   declarations: [
     ViewUsersComponent,

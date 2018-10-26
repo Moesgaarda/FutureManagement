@@ -1,19 +1,34 @@
 <div class="card">
-    <div class="nb-card-header">
-      Ansatte
-    </div>
-
-    <div class="col-lg-2">
-      <button type="btn btn-success input-group-text" (click)="toggleInactiveUsers()"> 
-        <div *ngIf="showInactive; then ifActiveUsers else ifInactiveUsers">
-        </div>
-      </button>
-    </div>
-
-    <div class="card-body">
-      <ng2-smart-table [settings]="settings" [source]="source" (delete)="deactivateUser($event)" (create)="createUser($event)" (edit)="editUser($event)">
-      </ng2-smart-table>
-    </div>
+  <div class="card-header">
+    Brugere
   </div>
-  <ng-template #ifActiveUsers > Vis kun aktive</ng-template>
-  <ng-template #ifInactiveUsers > Vis også inaktive brugere</ng-template>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <input *ngIf="config.filtering" placeholder="Filtrer brugere"
+               [ngTableFiltering]="config.filtering"
+               class="form-control"
+               (tableChanged)="onChangeTable(config)"/>
+      </div>
+    </div>
+    <br>
+    <ng-table [config]="config"
+              (tableChanged)="onChangeTable(config)"
+              (cellClicked)="onCellClick($event)"
+              [rows]="rows" [columns]="columns">
+    </ng-table>
+    <pagination *ngIf="config.paging"
+                class="pagination-sm"
+                [(ngModel)]="page"
+                [totalItems]="length"
+                [itemsPerPage]="itemsPerPage"
+                [maxSize]="maxSize"
+                [boundaryLinks]="true"
+                [rotate]="false"
+                (pageChanged)="onChangeTable(config, $event)"
+                previousText="Tilbage" nextText="Frem" firstText="Første" lastText="Sidste"
+                (numPages)="numPages = $event">
+    </pagination>
+  </div>
+</div>
