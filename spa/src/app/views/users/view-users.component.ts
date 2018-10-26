@@ -16,7 +16,7 @@ export class ViewUsersComponent {
     {title: 'Brugernavn', name: 'username'},
     {title: 'Fornavn', name: 'name'},
     {title: 'Efternavn', name: 'surname'},
-    {title: 'Roller', name: 'role'}
+    {title: 'Roller', name: 'email'} // TODO NYI
 ];
   public page = 1;
   public itemsPerPage = 5;
@@ -125,6 +125,6 @@ export class ViewUsersComponent {
   }
 
   public onCellClick(data: any): any {
-    console.log(data);
+    location.href = this.baseUrl + 'users/details/' + data.row.id;
   }
 }
