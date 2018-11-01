@@ -16,11 +16,9 @@ export class LoginComponent {
 
   login() {
     this.authService.login(this.model).subscribe(data => {
-      console.log('logged in successfully');
-      // TODO: this.alertify.success('Logged ind');
+      this.alertify.success('Logged ind');
     }, error => {
-      console.log('failed to login');
-      // TODO: this.alertify.error('Kunne ikke logge ind');
+      this.alertify.error('Kunne ikke logge ind');
     }, () => {
       this.router.navigate(['']);
     });
@@ -29,7 +27,6 @@ export class LoginComponent {
   logout() {
     this.authService.userToken = null;
     localStorage.removeItem('token');
-    console.log('logged out');
     this.alertify.message('logged ud');
     this.router.navigate(['login']);
   }
