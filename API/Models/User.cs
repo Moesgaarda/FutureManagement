@@ -6,10 +6,10 @@ namespace API.Models{
     public class User{
         public User() { }
 
-        public User(int id, string username, UserRole role, string name, string surname, DateTime birthdate, bool isActive, string email, string phone){
+        public User(int id, string username, List<UserUserRoleRelation> roles, string name, string surname, DateTime birthdate, bool isActive, string email, string phone){
             this.Id = id;
             this.Username = username;
-            this.Role = role;
+            this.Roles= roles;
             this.Name = name;
             this.Surname = surname;
             this.Birthdate = birthdate;
@@ -18,9 +18,9 @@ namespace API.Models{
             this.Phone = phone;
         }
 
-        public User(string username, UserRole role, string name, string surname, DateTime birthdate, bool isActive, string email, string phone){
+        public User(string username, List<UserUserRoleRelation> roles, string name, string surname, DateTime birthdate, bool isActive, string email, string phone){
             this.Username = username;
-            this.Role = role;
+            this.Roles = roles;
             this.Name = name;
             this.Surname = surname;
             this.Birthdate = birthdate;
@@ -34,7 +34,7 @@ namespace API.Models{
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public UserRole Role { get; set; }
+        public List<UserUserRoleRelation> Roles { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime Birthdate { get; set; }

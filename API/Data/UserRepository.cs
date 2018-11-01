@@ -78,9 +78,10 @@ namespace API.Data
 
         public async Task<User> GetUser(int id)
         {
+            // TODO noget her der skal fixes
             User user = await _dbContext.Users
                     .Where(x => x.Id == id)
-                    .Include(x => x.Role)
+                    .Include(x => x.Roles)
                     .FirstOrDefaultAsync();
             return user;
         }
