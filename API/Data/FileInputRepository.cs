@@ -21,20 +21,10 @@ namespace API.Data
             return fileToAdd.Entity.Id;
         }
 
-        public async Task<IFileName> GetFile(FileForGetDto fileForGet)
+        public async Task<FileData> GetFile(int id)
         {
-            IFileName fileName;
-            switch (fileForGet.Origin){
-                case "Template":
-                    fileName = await _context.TemplateFileNames.Where(x => x.Id == fileForGet.Id)
-                                                               .Include(f => f.FileData)
-                                                               .FirstOrDefaultAsync();
-                    break;
-                default:
-                    fileName = null;
-                    break;
-            }
-            return fileName;
+            FileData fileData = await _context.FileData.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return fileData;
         }
 
         public async Task<int> GetFileId(byte[] fileHash)

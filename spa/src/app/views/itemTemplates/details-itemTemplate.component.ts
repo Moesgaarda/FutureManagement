@@ -50,4 +50,7 @@ export class DetailsItemTemplateComponent implements OnInit {
   goToItemTemplateDetail(templateId: number) {
     this.router.navigateByUrl('itemTemplates/details/' + templateId);
   }
+  downloadFile(fileDetails: DetailFile){
+    this.fileService.download(fileDetails, 'Template');
+  }
 }
