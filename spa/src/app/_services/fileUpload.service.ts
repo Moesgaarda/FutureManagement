@@ -51,7 +51,7 @@ export class FileUploadService {
     const params = new HttpParams().set('id', id).set('origin', origin);
     this.http.get(this.baseUrl + 'FileInput/downloadfile', { responseType: 'blob', params: params }).subscribe(blob => {
       saveAs(blob, fileDetails.fileName, {
-        type: 'text/plain;charset=windows-1252'
+        type: 'text/plain;charset=utf-8'
       });
     });
   }
