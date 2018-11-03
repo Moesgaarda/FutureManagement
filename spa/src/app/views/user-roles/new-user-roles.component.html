@@ -1,0 +1,58 @@
+<div class="card">
+    <div class="card-header">
+        Ny rolle
+    </div>
+
+    <div class="card-body">
+        <div class="container">
+
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-lg" style="margin-block-end: 3em; margin-block-start: 2em">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Rollenavn</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                            style="border-width: 2px">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h1 style="text-align: center; margin-bottom: 1em">Adgangsniveau</h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div *ngFor="let test of userRoleTest; let i = index" class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>{{test.name}}</h3>
+                            <label class="switch switch-lg switch-3d switch-primary">
+                                <input type="checkbox" class="switch-input" (change)="changeHasRole(test.id)"
+                                    [attr.aria-expanded]="test.hasRole" aria-controls="example">
+                                <span class="switch-slider"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="card-body" id="example" [collapse]="!test.hasRole">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{test.test[0].name}}</li>
+                                <li class="list-group-item">{{test.test[1]}}</li>
+                                <li class="list-group-item">{{test.test[2]}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
