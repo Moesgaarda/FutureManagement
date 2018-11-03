@@ -97,6 +97,11 @@ export const navItems = [
         name: 'Tilføj ny bruger',
         url: '/users/new',
         icon: 'fa fa-user-o'
+      },
+      {
+        name: 'Tilføj ny rolle',
+        url: '/userRoles/new',
+        icon: 'fa fa-user-o'
       }
     ]
   },

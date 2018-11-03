@@ -76,6 +76,10 @@ export const routes: Routes = [
         loadChildren: './views/itemTemplates/itemTemplates.module#ItemTemplatesModule'
       },
       {
+        path: 'userRoles',
+        loadChildren: './views/user-roles/user-roles.module#UserRolesModule'
+      },
+      {
         path: 'users',
         loadChildren: './views/users/users.module#UsersModule'
       },
