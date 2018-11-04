@@ -1,12 +1,22 @@
 matrix: 
   include: 
+    - language: csharp
+      mono: none
+      dotnet: 2.1.401
+
+      install:
+        - cd API
+        - dotnet restore
+
+      script:
+        - dotnet build
+
     - language: node_js
       node_js: 
         - "node"
       dist: trusty
       sudo: required
-      
-      
+            
       cache:
         directories:
           - "$HOME/.npm"
@@ -33,14 +43,3 @@ matrix:
 
       script:
         - ng build
-
-    - language: csharp
-      mono: none
-      dotnet: 2.0.0
-
-      install:
-        - cd API
-        - dotnet restore
-
-      script:
-        - dotnet build
