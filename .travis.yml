@@ -2,7 +2,7 @@ matrix:
   include: 
     - language: csharp
       mono: none
-      dotnet: 2.1.300
+      dotnet: 2.1.401
 
       install:
         - cd API
@@ -16,8 +16,7 @@ matrix:
         - "node"
       dist: trusty
       sudo: required
-      
-      
+            
       cache:
         directories:
           - "$HOME/.npm"
