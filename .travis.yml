@@ -1,5 +1,16 @@
 matrix: 
   include: 
+    - language: csharp
+      mono: none
+      dotnet: 2.1.300
+
+      install:
+        - cd API
+        - dotnet restore
+
+      script:
+        - dotnet build
+
     - language: node_js
       node_js: 
         - "node"
@@ -33,14 +44,3 @@ matrix:
 
       script:
         - ng build
-
-    - language: csharp
-      mono: none
-      dotnet: 2.1.300
-
-      install:
-        - cd API
-        - dotnet restore
-
-      script:
-        - dotnet build
