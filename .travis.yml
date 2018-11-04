@@ -2,14 +2,15 @@ matrix:
   include: 
     - language: node_js
       node_js: 
-        - "9"
+        - "node"
       dist: trusty
       sudo: required
       
       
       cache:
         directories:
-          - node_modules
+          - "$HOME/.npm"
+          - ./node_modules
 
       addons:
         chrome: stable
@@ -19,13 +20,16 @@ matrix:
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
 
+      install: 
+        - cd spa
+        - npm i -g @angular/cli
+        - npm i -g npm@6.1.0
+        - npm ci
+        - ng update @angular/cli --migrate--only --from=1.7.4
+
       before_script:
         - "sudo chown root /usr/lib/chromium-browser/chrome-sandbox"
         - "sudo chmod 4755 /usr/lib/chromium-browser/chrome-sandbox"
-        - cd spa
-        - npm install -g @angular/cli
-        - npm install
-        - ng update @angular/cli --migrate--only --from=1.7.4
 
       script:
         - ng build
