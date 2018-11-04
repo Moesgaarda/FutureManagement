@@ -1,4 +1,6 @@
 # FutureManagement
+[![Build Status](https://travis-ci.com/Moesgaarda/FutureManagement.svg?token=KqZbsZZR2d8mqnhg3hA3&branch=develop)](https://travis-ci.com/Moesgaarda/FutureManagement)
+
 Future Management v2.0
 
 Future Management v2.0 projektet er lavet som et samarbejde mellem Future Rundbuehaller ApS og Techkrus Digital Solutions IVS.
