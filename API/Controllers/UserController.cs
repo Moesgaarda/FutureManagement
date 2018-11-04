@@ -7,6 +7,7 @@ using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -47,19 +48,7 @@ namespace API.Controllers
 
             return Ok(userToReturn);            
         }
-        [HttpPost("addRole")]
-             public async Task<IActionResult> AddNewRole([FromBody]string name)
-        {   
-            //string name = (string)jObj.SelectToken("name");
-            if (String.IsNullOrEmpty(name))
-            {
-                return BadRequest();
-            }
-            var newRole = new UserRole(name);
-            bool succes = await _repo.AddRole(newRole);
 
-            return succes ? StatusCode(201) : BadRequest();
-        }
         [HttpPost("edit")]
         public async Task<IActionResult> EditUser([FromBody]User user)
         {
@@ -92,14 +81,6 @@ namespace API.Controllers
             bool succes = await _repo.ActivateUser(userActivate);
             return succes ? StatusCode(200) : BadRequest();
         }
-        [HttpPost("delete/{id}", Name = "DeleteUser")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var userDel = await _repo.GetUser(id);
-            bool succes = await _repo.DeleteUser(userDel);
-            return succes ? StatusCode(200) : BadRequest();
-
-        }
         [HttpPost("add")]
         public async Task<IActionResult> AddUser([FromBody]User userToAdd)
         {
@@ -107,11 +88,29 @@ namespace API.Controllers
             bool succes = await _repo.AddUser(userToAdd);
             return succes ? StatusCode(200) : BadRequest();
         }
-        [HttpPost("editRole")]
-        public async Task<IActionResult> EditUserRole([FromBody]User user, UserRole newRole)
-        {
-            user.Role = newRole;
-            bool succes = await _repo.EditRole(user);
+        [HttpPost("AddRoleToUser")]
+        public async Task<IActionResult> AddRoleToUser(){
+            // TODO implement
+            throw new NotImplementedException();
+            return StatusCode(200);
+        }
+        [HttpPost("RemoveRoleFromUser")]
+        public async Task<IActionResult> RemoveRoleFromUser(){
+            // TODO implement
+            throw new NotImplementedException();
+            return StatusCode(200);
+        }
+
+        [HttpPost("addRole")]
+        public async Task<IActionResult> AddNewRole([FromBody]string name)
+        {   
+            if (String.IsNullOrEmpty(name))
+            {
+                return BadRequest();
+            }
+            var newRole = new UserRole(name, null);
+            bool succes = await _repo.AddRole(newRole);
+
             return succes ? StatusCode(201) : BadRequest();
         }
 

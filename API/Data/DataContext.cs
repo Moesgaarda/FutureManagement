@@ -76,6 +76,19 @@ namespace API.Data
                 .WithMany(i => i.PartOf)
                 .HasForeignKey(ii => ii.PartId);
             
+            modelBuilder.Entity<UserUserRoleRelation>()
+                .HasKey(u => new {u.UserId, u.UserRoleId});
+
+            modelBuilder.Entity<UserUserRoleRelation>()
+                .HasOne(u => u.User)
+                .WithMany(ur => ur.Roles)
+                .HasForeignKey(uu => uu.UserId);
+
+            modelBuilder.Entity<UserUserRoleRelation>()
+                .HasOne(u => u.UserRole)
+                .WithMany(ur => ur.Users)
+                .HasForeignKey(uu => uu.UserRoleId);
+
 
             /* Ensures that IsActive defaults to true */
             modelBuilder.Entity<Item>()

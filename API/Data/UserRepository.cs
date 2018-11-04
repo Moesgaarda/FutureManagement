@@ -68,19 +68,26 @@ namespace API.Data
 
         public async Task<List<User>> GetAllActiveUsers()
         {
-            return await _dbContext.Users.Where(x => x.IsActive == true).ToListAsync();
+            List<User> users = await _dbContext.Users
+                .Where(x => x.IsActive == true)
+                .Include(x => x.Roles)
+                .ToListAsync();
+            return users;
         }
 
         public async Task<List<User>> GetAllInactiveUsers()
         {
-            return await _dbContext.Users.Where(x => x.IsActive == false).ToListAsync();
+            return await _dbContext.Users
+                .Where(x => x.IsActive == false)
+                .Include(x => x.Roles)
+                .ToListAsync();
         }
 
         public async Task<User> GetUser(int id)
         {
             User user = await _dbContext.Users
                     .Where(x => x.Id == id)
-                    .Include(x => x.Role)
+                    .Include(x => x.Roles)
                     .FirstOrDefaultAsync();
             return user;
         }
