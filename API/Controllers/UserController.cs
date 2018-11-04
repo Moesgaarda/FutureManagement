@@ -81,14 +81,6 @@ namespace API.Controllers
             bool succes = await _repo.ActivateUser(userActivate);
             return succes ? StatusCode(200) : BadRequest();
         }
-        [HttpPost("delete/{id}", Name = "DeleteUser")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var userDel = await _repo.GetUser(id);
-            bool succes = await _repo.DeleteUser(userDel);
-            return succes ? StatusCode(200) : BadRequest();
-
-        }
         [HttpPost("add")]
         public async Task<IActionResult> AddUser([FromBody]User userToAdd)
         {
@@ -96,17 +88,21 @@ namespace API.Controllers
             bool succes = await _repo.AddUser(userToAdd);
             return succes ? StatusCode(200) : BadRequest();
         }
-    public async Task<IActionResult> AddRoleToUser(){
-        // TODO implement
-        return StatusCode(200);
-    }
-    public async Task<IActionResult> RemoveRoleFromUser(){
-        // TODO implement
-        return StatusCode(200);
-    }
+        [HttpPost("AddRoleToUser")]
+        public async Task<IActionResult> AddRoleToUser(){
+            // TODO implement
+            throw new NotImplementedException();
+            return StatusCode(200);
+        }
+        [HttpPost("RemoveRoleFromUser")]
+        public async Task<IActionResult> RemoveRoleFromUser(){
+            // TODO implement
+            throw new NotImplementedException();
+            return StatusCode(200);
+        }
 
-     [HttpPost("addRole")]
-    public async Task<IActionResult> AddNewRole([FromBody]string name)
+        [HttpPost("addRole")]
+        public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
             if (String.IsNullOrEmpty(name))
             {
