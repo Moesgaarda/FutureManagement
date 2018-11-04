@@ -23,8 +23,8 @@ matrix:
         - "sudo chown root /usr/lib/chromium-browser/chrome-sandbox"
         - "sudo chmod 4755 /usr/lib/chromium-browser/chrome-sandbox"
         - cd spa
-        - npm install -g @angular/cli
-        - npm install
+        - npm i -g @angular/cli
+        - npm ci
         - ng update @angular/cli --migrate--only --from=1.7.4
 
       script:
