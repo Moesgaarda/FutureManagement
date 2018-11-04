@@ -40,6 +40,7 @@ export class ViewUsersComponent {
 
   loadUsers() {
     this.userService.getActiveUsers().subscribe(users => {
+      console.log(users);
       this.rows = users;
       this.data = users;
       this.onChangeTable(this.config);
