@@ -6,6 +6,8 @@ import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { DetailFile } from '../../_models/DetailFile';
 import { FileUploadService } from '../../_services/fileUpload.service';
+import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   templateUrl: './revise-itemTemplate.component.html'
@@ -25,11 +27,14 @@ export class ReviseItemTemplateComponent implements OnInit {
   partAmounts: number[] = [];
   fileService: FileUploadService;
   uploader: FileUploadService;
+  propertiesToCheck: ItemPropertyName[] = [];
+  templatePartsToAdd: ItemTemplatePart[] = [] as ItemTemplatePart[];
 
   constructor(private templateService: ItemTemplateService,
               private route: ActivatedRoute,
               private router: Router,
-              private uploaderParameter: FileUploadService) {
+              private uploaderParameter: FileUploadService,
+              private alertify: AlertifyService) {
                 this.uploader = uploaderParameter;
               }
 
@@ -47,9 +52,11 @@ export class ReviseItemTemplateComponent implements OnInit {
       .then(itemTemplate => {
         this.templateToCopy = itemTemplate;
         this.unitTypeEnum = this.unitTypes[itemTemplate.unitType];
-        this.templateToRevise.description = itemTemplate.description;
+        this.templateToRevise = itemTemplate;
+        this.propertiesToCheck = itemTemplate.templateProperties;
         this.isDataAvailable = true;
     });
+    console.log(this.templateToRevise);
   }
 
   async loadAllTemplateProperties() {
@@ -90,5 +97,42 @@ export class ReviseItemTemplateComponent implements OnInit {
   putFilesIntoQueue() {
   }
 
+  checkBox(id) {
+    for (const propToCheck of this.propertiesToCheck) {
+      if (propToCheck.id === id) {
+        return true;
+      }
+    }
+    return false;
+  }
 
+  async addRevision() {
+    for (let i = 0; i < this.selectedTemplates.length; i++) {
+      this.templatePartsToAdd.push({
+        part: this.selectedTemplates[i],
+        templateId: this.selectedTemplates[i].id,
+        amount: this.partAmounts[i],
+      });
+    }
+    if (this.uploader.queuedFiles.length > 0) {
+      const fileArray = await this.uploader.upload('ItemTemplateFiles');
+      this.templateToRevise.files = fileArray;
+      this.templateToRevise.fileNames = [];
+      for (const file of this.uploader.queuedFiles) {
+        this.templateToRevise.fileNames.push(file.name);
+      }
+    }
+
+    this.templateToRevise.revisionedFrom = this.templateToCopy;
+    this.templateToRevise.unitType = UnitType[this.unitTypeEnum];
+    this.templateToRevise.templateProperties = this.propertiesToAdd;
+
+    this.templateService.addTemplate(this.templateToRevise).subscribe(data => {
+      this.alertify.success('Tilføjede revidering af skabelon');
+    }, error => {
+      this.alertify.error('kunne ikke tilføje revidering');
+    }, () => {
+      this.router.navigate(['itemTemplates/view']);
+    });
+  }
 }
