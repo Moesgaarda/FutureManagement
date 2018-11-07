@@ -39,6 +39,7 @@ export class ReviseItemTemplateComponent implements OnInit {
               }
 
   async ngOnInit() {
+    // unittypes should both enum text and numbers. Dividing by 2 removes numbers.
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
     await this.loadTemplateOnInIt();
     await this.loadAllTemplateProperties();
@@ -47,16 +48,22 @@ export class ReviseItemTemplateComponent implements OnInit {
     // this.putFilesIntoQueue();
   }
 
+  /**
+   *A template is copied through the route. Copied template is stored, and revision props are initialized
+   */
+
   async loadTemplateOnInIt() {
     await this.templateService.getItemTemplateAsync(+this.route.snapshot.params['id'])
       .then(itemTemplate => {
         this.templateToCopy = itemTemplate;
         this.unitTypeEnum = this.unitTypes[itemTemplate.unitType];
-        this.templateToRevise = itemTemplate;
+        this.templateToRevise.name = itemTemplate.name;
+        this.templateToRevise.description = itemTemplate.description;
         this.propertiesToCheck = itemTemplate.templateProperties;
+        this.propertiesToAdd = itemTemplate.templateProperties;
         this.isDataAvailable = true;
+        this.uploader.queue(itemTemplate.files);
     });
-    console.log(this.templateToRevise);
   }
 
   async loadAllTemplateProperties() {
@@ -74,13 +81,18 @@ export class ReviseItemTemplateComponent implements OnInit {
       this.propertiesToAdd.push(prop);
     } else {
       for (let i = 0; i < this.properties.length; i++) {
-        if (this.propertiesToAdd[i] === prop) {
+        if (this.propertiesToAdd[i].id === prop.id) {
           this.propertiesToAdd.splice(i, 1);
+          break;
         }
       }
     }
   }
 
+  /**
+   *ngSelect component needs to be filled with the templates from the copied template.
+   *selectedTemplates is the model used by ngSelect, so parts are pushed to this.
+   */
   async populateSelect() {
     if (this.isDataAvailable) {
       for (let i = 0; i < this.templateToCopy.parts.length; i++) {
@@ -97,6 +109,9 @@ export class ReviseItemTemplateComponent implements OnInit {
   putFilesIntoQueue() {
   }
 
+  /**
+  * The list of properties on the template is compared to all properties so the checkbox can be checked.
+  */
   checkBox(id) {
     for (const propToCheck of this.propertiesToCheck) {
       if (propToCheck.id === id) {
@@ -107,6 +122,7 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   async addRevision() {
+    // selectedTemplates and amounts are pushed to a new array that is formatted correctly for the database.
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
         part: this.selectedTemplates[i],
@@ -114,6 +130,7 @@ export class ReviseItemTemplateComponent implements OnInit {
         amount: this.partAmounts[i],
       });
     }
+
     if (this.uploader.queuedFiles.length > 0) {
       const fileArray = await this.uploader.upload('ItemTemplateFiles');
       this.templateToRevise.files = fileArray;
@@ -123,16 +140,28 @@ export class ReviseItemTemplateComponent implements OnInit {
       }
     }
 
+    this.templateToRevise.templateProperties = this.propertiesToAdd;
     this.templateToRevise.revisionedFrom = this.templateToCopy;
     this.templateToRevise.unitType = UnitType[this.unitTypeEnum];
     this.templateToRevise.templateProperties = this.propertiesToAdd;
+    this.templateToRevise.parts = this.templatePartsToAdd;
 
-    this.templateService.addTemplate(this.templateToRevise).subscribe(data => {
+    // Revising from new template sets id to 1, otherwise increment
+    if (this.templateToCopy.revisionId == null) {
+      this.templateToRevise.revisionId = 1;
+    } else {
+      this.templateToRevise.revisionId = this.templateToCopy.revisionId++;
+    }
+
+    console.log(this.templateToRevise);
+    console.log(this.templateToRevise.id);
+
+    /*this.templateService.addTemplate(this.templateToRevise).subscribe(data => {
       this.alertify.success('Tilføjede revidering af skabelon');
     }, error => {
       this.alertify.error('kunne ikke tilføje revidering');
     }, () => {
       this.router.navigate(['itemTemplates/view']);
-    });
+    });*/
   }
 }

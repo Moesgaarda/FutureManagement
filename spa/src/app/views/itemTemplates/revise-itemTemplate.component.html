@@ -154,10 +154,10 @@
             <ng-container *ngFor="let prop of properties">
               <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
               <ng-template #checkedBox>
-                  <input type="checkbox" checked="checked"/> {{prop.name}}
+                  <input type="checkbox" (change)="onCheckboxChange(prop,$event)" checked/> {{prop.name}}
               </ng-template>
               <ng-template #uncheckedBox>
-                  <input type="checkbox"/> {{prop.name}}
+                  <input type="checkbox" (change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
               </ng-template>
               <br>
             </ng-container>
