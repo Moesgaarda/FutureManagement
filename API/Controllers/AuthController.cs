@@ -62,7 +62,7 @@ namespace API.Controllers
                 var userToReturn = _mapper.Map<UserForGetDto>(appUser);
 
                 return Ok(new{
-                    token = GenerateJwtTokenAsync(appUser),
+                    token = GenerateJwtTokenAsync(appUser).Result,
                     user = userToReturn
                 });
             }
