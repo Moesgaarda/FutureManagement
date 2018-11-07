@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180801094514_AddedCalendarEventBinding")]
-    partial class AddedCalendarEventBinding
+    [Migration("20181107171225_IdentityInitial")]
+    partial class IdentityInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,9 +123,33 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Description");
+
+                    b.Property<string>("LocalIP");
+
+                    b.Property<DateTime>("Time");
+
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("EventLogs");
+                });
+
+            modelBuilder.Entity("API.Models.FileData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte[]>("FileHash");
+
+                    b.Property<string>("FilePath");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileData");
                 });
 
             modelBuilder.Entity("API.Models.Item", b =>
@@ -214,9 +238,9 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<DateTime>("Created");
 
-                    b.Property<string>("Files");
+                    b.Property<string>("Description");
 
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -224,9 +248,15 @@ namespace API.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("RevisionID");
+
+                    b.Property<int?>("RevisionedFromId");
+
                     b.Property<int>("UnitType");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RevisionedFromId");
 
                     b.ToTable("ItemTemplates");
                 });
@@ -324,6 +354,49 @@ namespace API.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("API.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("API.Models.TemplateFileName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("FileDataId");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<int?>("ItemTemplateId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileDataId");
+
+                    b.HasIndex("ItemTemplateId");
+
+                    b.ToTable("TemplateFileNames");
+                });
+
             modelBuilder.Entity("API.Models.TemplatePropertyRelation", b =>
                 {
                     b.Property<int>("TemplateId");
@@ -342,49 +415,76 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AccessFailedCount");
+
                     b.Property<DateTime>("Birthdate");
 
                     b.Property<int?>("CalendarEventId");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
 
                     b.Property<bool?>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
                     b.Property<string>("Name");
 
-                    b.Property<byte[]>("PasswordHash");
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
 
-                    b.Property<byte[]>("PasswordSalt");
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("Phone");
+                    b.Property<string>("PasswordHash");
 
-                    b.Property<int?>("RoleId");
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
 
                     b.Property<string>("Surname");
 
-                    b.Property<string>("Username");
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CalendarEventId");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("API.Models.UserRole", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("UserId");
 
-                    b.Property<string>("Name");
+                    b.Property<int>("RoleId");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("UserRoles");
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("API.Models.Value", b =>
@@ -397,6 +497,74 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Values");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("API.Models.CalendarEvent", b =>
@@ -415,6 +583,14 @@ namespace API.Migrations
                     b.HasOne("API.Models.CustomerType", "CustomerType")
                         .WithMany()
                         .HasForeignKey("CustomerTypeId");
+                });
+
+            modelBuilder.Entity("API.Models.EventLog", b =>
+                {
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany("Changes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("API.Models.Item", b =>
@@ -460,6 +636,13 @@ namespace API.Migrations
                         .HasForeignKey("PropertyNameId");
                 });
 
+            modelBuilder.Entity("API.Models.ItemTemplate", b =>
+                {
+                    b.HasOne("API.Models.ItemTemplate", "RevisionedFrom")
+                        .WithMany()
+                        .HasForeignKey("RevisionedFromId");
+                });
+
             modelBuilder.Entity("API.Models.ItemTemplatePart", b =>
                 {
                     b.HasOne("API.Models.ItemTemplate", "Part")
@@ -492,6 +675,17 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("API.Models.TemplateFileName", b =>
+                {
+                    b.HasOne("API.Models.FileData", "FileData")
+                        .WithMany()
+                        .HasForeignKey("FileDataId");
+
+                    b.HasOne("API.Models.ItemTemplate", "ItemTemplate")
+                        .WithMany("Files")
+                        .HasForeignKey("ItemTemplateId");
+                });
+
             modelBuilder.Entity("API.Models.TemplatePropertyRelation", b =>
                 {
                     b.HasOne("API.Models.ItemPropertyName", "Property")
@@ -510,10 +704,51 @@ namespace API.Migrations
                     b.HasOne("API.Models.CalendarEvent")
                         .WithMany("Participants")
                         .HasForeignKey("CalendarEventId");
+                });
 
-                    b.HasOne("API.Models.UserRole", "Role")
+            modelBuilder.Entity("API.Models.UserRole", b =>
+                {
+                    b.HasOne("API.Models.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("API.Models.Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("API.Models.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("API.Models.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("API.Models.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

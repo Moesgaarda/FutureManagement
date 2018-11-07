@@ -1,9 +1,15 @@
 using API.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class DataContext : DbContext
+    /* Uses all the ints to allow the use of ints rather than strings which is
+    *  the default. */
+    public class DataContext : IdentityDbContext<User, Role, int, 
+        IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, 
+        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options){}
 
@@ -19,8 +25,6 @@ namespace API.Data
         public DbSet<ItemTemplate> ItemTemplates { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Project> Projects { get; set; }         
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }  
         public DbSet<Value> Values { get; set; }
         public DbSet<TemplatePropertyRelation> TemplatePropertyRelations { get; set; }
         public DbSet<ItemTemplatePart> ItemTemplateParts { get; set; }      
@@ -30,9 +34,27 @@ namespace API.Data
 
         /************************************************************
         * Overriding the OnModelCreating method allows us to create *
-        * one to many and many to many reations in Entity Framework *            
+        * one to many and many to many relations in Entity Framework *            
         ************************************************************/
+        // TODO Could use refactoring to look like userrole.
         protected override void OnModelCreating(ModelBuilder modelBuilder){
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserRole>(userRole => {
+                userRole.HasKey(ur => new {ur.UserId, ur.RoleId});
+
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
+
+
             modelBuilder.Entity<TemplatePropertyRelation>()
                 .HasKey(t => new { t.TemplateId, t.PropertyId });    
 
@@ -75,19 +97,6 @@ namespace API.Data
                 .HasOne(p => p.Part)
                 .WithMany(i => i.PartOf)
                 .HasForeignKey(ii => ii.PartId);
-            
-            modelBuilder.Entity<UserUserRoleRelation>()
-                .HasKey(u => new {u.UserId, u.UserRoleId});
-
-            modelBuilder.Entity<UserUserRoleRelation>()
-                .HasOne(u => u.User)
-                .WithMany(ur => ur.Roles)
-                .HasForeignKey(uu => uu.UserId);
-
-            modelBuilder.Entity<UserUserRoleRelation>()
-                .HasOne(u => u.UserRole)
-                .WithMany(ur => ur.Users)
-                .HasForeignKey(uu => uu.UserRoleId);
 
 
             /* Ensures that IsActive defaults to true */

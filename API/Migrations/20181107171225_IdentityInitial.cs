@@ -4,10 +4,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class RedoneMigrations : Migration
+    public partial class IdentityInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Calculators",
                 columns: table => new
@@ -49,15 +64,17 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventLogs",
+                name: "FileData",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FileHash = table.Column<byte[]>(nullable: true),
+                    FilePath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventLogs", x => x.Id);
+                    table.PrimaryKey("PK_FileData", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,27 +97,22 @@ namespace API.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    RevisionID = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
                     UnitType = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    Files = table.Column<string>(nullable: true)
+                    IsActive = table.Column<bool>(nullable: true, defaultValue: true),
+                    RevisionedFromId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemTemplates", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRoles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemTemplates_ItemTemplates_RevisionedFromId",
+                        column: x => x.RevisionedFromId,
+                        principalTable: "ItemTemplates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,6 +126,27 @@ namespace API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Values", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<int>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,6 +198,33 @@ namespace API.Migrations
                         principalTable: "ItemTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TemplateFileNames",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FileName = table.Column<string>(nullable: true),
+                    FileDataId = table.Column<int>(nullable: true),
+                    ItemTemplateId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateFileNames", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemplateFileNames_FileData_FileDataId",
+                        column: x => x.FileDataId,
+                        principalTable: "FileData",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TemplateFileNames_ItemTemplates_ItemTemplateId",
+                        column: x => x.ItemTemplateId,
+                        principalTable: "ItemTemplates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -232,32 +292,64 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(nullable: true),
-                    PasswordHash = table.Column<byte[]>(nullable: true),
-                    PasswordSalt = table.Column<byte[]>(nullable: true),
-                    RoleId = table.Column<int>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true),
-                    Birthdate = table.Column<DateTime>(nullable: false),
-                    Active = table.Column<bool>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Phone = table.Column<int>(nullable: false),
-                    CalendarEventId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_UserRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "UserRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                 });
 
             migrationBuilder.CreateTable(
@@ -285,12 +377,65 @@ namespace API.Migrations
                         principalTable: "Calendars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    Birthdate = table.Column<DateTime>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: true, defaultValue: true),
+                    CalendarEventId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CalendarEvents_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
+                        name: "FK_AspNetUsers_CalendarEvents_CalendarEventId",
+                        column: x => x.CalendarEventId,
+                        principalTable: "CalendarEvents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Time = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    LocalIP = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventLogs_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -314,9 +459,9 @@ namespace API.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Users_OrderedById",
+                        name: "FK_Orders_AspNetUsers_OrderedById",
                         column: x => x.OrderedById,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -332,16 +477,16 @@ namespace API.Migrations
                     TemplateId = table.Column<int>(nullable: true),
                     OrderId = table.Column<int>(nullable: true),
                     CreatedById = table.Column<int>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: true, defaultValue: true),
                     ProjectId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Users_CreatedById",
+                        name: "FK_Items_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -369,7 +514,8 @@ namespace API.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<int>(nullable: false),
-                    PartId = table.Column<int>(nullable: false)
+                    PartId = table.Column<int>(nullable: false),
+                    Amount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -416,6 +562,48 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CalendarEventId",
+                table: "AspNetUsers",
+                column: "CalendarEventId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CalendarEvents_CalendarId",
                 table: "CalendarEvents",
                 column: "CalendarId");
@@ -429,6 +617,11 @@ namespace API.Migrations
                 name: "IX_Customers_CustomerTypeId",
                 table: "Customers",
                 column: "CustomerTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventLogs_UserId",
+                table: "EventLogs",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemItemRelations_PartId",
@@ -471,6 +664,11 @@ namespace API.Migrations
                 column: "PartId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ItemTemplates_RevisionedFromId",
+                table: "ItemTemplates",
+                column: "RevisionedFromId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderedById",
                 table: "Orders",
                 column: "OrderedById");
@@ -486,25 +684,57 @@ namespace API.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TemplateFileNames_FileDataId",
+                table: "TemplateFileNames",
+                column: "FileDataId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemplateFileNames_ItemTemplateId",
+                table: "TemplateFileNames",
+                column: "ItemTemplateId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TemplatePropertyRelations_PropertyId",
                 table: "TemplatePropertyRelations",
                 column: "PropertyId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_CalendarEventId",
-                table: "Users",
-                column: "CalendarEventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                table: "AspNetUserRoles",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Users_CalendarEvents_CalendarEventId",
-                table: "Users",
-                column: "CalendarEventId",
-                principalTable: "CalendarEvents",
+                name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                table: "AspNetUserTokens",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CalendarEvents_AspNetUsers_CreatedById",
+                table: "CalendarEvents",
+                column: "CreatedById",
+                principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -512,12 +742,23 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_CalendarEvents_Calendars_CalendarId",
+                name: "FK_CalendarEvents_AspNetUsers_CreatedById",
                 table: "CalendarEvents");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_CalendarEvents_Users_CreatedById",
-                table: "CalendarEvents");
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
                 name: "EventLogs");
@@ -532,13 +773,22 @@ namespace API.Migrations
                 name: "ItemTemplateParts");
 
             migrationBuilder.DropTable(
+                name: "TemplateFileNames");
+
+            migrationBuilder.DropTable(
                 name: "TemplatePropertyRelations");
 
             migrationBuilder.DropTable(
                 name: "Values");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
                 name: "Items");
+
+            migrationBuilder.DropTable(
+                name: "FileData");
 
             migrationBuilder.DropTable(
                 name: "ItemPropertyNames");
@@ -562,16 +812,13 @@ namespace API.Migrations
                 name: "CustomerTypes");
 
             migrationBuilder.DropTable(
-                name: "Calendars");
-
-            migrationBuilder.DropTable(
-                name: "Users");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "CalendarEvents");
 
             migrationBuilder.DropTable(
-                name: "UserRoles");
+                name: "Calendars");
         }
     }
 }

@@ -70,7 +70,7 @@ namespace API.Data
         {
             List<User> users = await _dbContext.Users
                 .Where(x => x.IsActive == true)
-                .Include(x => x.Roles)
+                .Include(x => x.UserRoles)
                 .ToListAsync();
             return users;
         }
@@ -79,7 +79,7 @@ namespace API.Data
         {
             return await _dbContext.Users
                 .Where(x => x.IsActive == false)
-                .Include(x => x.Roles)
+                .Include(x => x.UserRoles)
                 .ToListAsync();
         }
 
@@ -87,7 +87,7 @@ namespace API.Data
         {
             User user = await _dbContext.Users
                     .Where(x => x.Id == id)
-                    .Include(x => x.Roles)
+                    .Include(x => x.UserRoles)
                     .FirstOrDefaultAsync();
             return user;
         }
