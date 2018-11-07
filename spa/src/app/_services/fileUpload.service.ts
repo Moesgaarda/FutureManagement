@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpRequest, HttpClient } from '@angular/common/http';
+import { HttpRequest, HttpClient, HttpParams } from '@angular/common/http';
 import { ResponseType } from '@angular/http';
+import { saveAs } from 'file-saver';
+import { DetailFile } from '../_models/DetailFile';
 
 @Injectable()
 export class FileUploadService {
@@ -42,5 +44,15 @@ export class FileUploadService {
       console.log(error);
     }
   }
-  async download(id: number, origin: string) {}
+  async download(fileDetails: DetailFile, origin: string) {
+    const headers = new Headers();
+    headers.append('content-type', 'application/json');
+    const id = fileDetails.fileDataId.toString();
+    const params = new HttpParams().set('id', id).set('origin', origin);
+    this.http.get(this.baseUrl + 'FileInput/downloadfile', { responseType: 'blob', params: params }).subscribe(blob => {
+      saveAs(blob, fileDetails.fileName, {
+        type: 'text/plain;charset=utf-8'
+      });
+    });
+  }
 }

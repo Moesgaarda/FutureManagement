@@ -61,7 +61,7 @@
                   <tr *ngFor="let item of itemTemplate.files">
                     <td>{{item.fileName}}</td>
                     <td>
-                      <button type="button" class="btn btn-block btn-success">Download</button>
+                      <button type="button" class="btn btn-block btn-success" (click)="downloadFile(item)">Download</button>
                     </td>
                   </tr>
                 </tbody>

@@ -1,0 +1,941 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@coreui/coreui-free-angular-admin-template documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">@coreui/coreui-free-angular-admin-template documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>ViewItemsComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/views/items/view-items.component.ts</code>
+</p>
+
+
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">styles</td>
+                <td class="col-md-9"><code>
+    nb-card {
+      transform: translate3d(0, 0, 0);
+    }
+  </code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./view-items.component.html</code></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#baseUrl">baseUrl</a>
+                            </li>
+                            <li>
+                                <a href="#items">items</a>
+                            </li>
+                            <li>
+                                <a href="#settings">settings</a>
+                            </li>
+                            <li>
+                                <a href="#source">source</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addNewItem">addNewItem</a>
+                            </li>
+                            <li>
+                                <a href="#deleteItem">deleteItem</a>
+                            </li>
+                            <li>
+                                <a href="#editItem">editItem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#loadItems">loadItems</a>
+                            </li>
+                            <li>
+                                <a href="#onDeleteConfirm">onDeleteConfirm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(itemService: <a href="../injectables/ItemService.html">ItemService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/views/items/view-items.component.ts:80</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>itemService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/ItemService.html" target="_self" >ItemService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addNewItem"></a>
+                        <span class="name">
+                            <b>
+                            addNewItem
+                            </b>
+                            <a href="#addNewItem"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>addNewItem()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">src/app/views/items/view-items.component.ts:116</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="deleteItem"></a>
+                        <span class="name">
+                            <b>
+                            deleteItem
+                            </b>
+                            <a href="#deleteItem"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>deleteItem(itemToDelete: )</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/views/items/view-items.component.ts:107</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>itemToDelete</td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="editItem"></a>
+                        <span class="name">
+                            <b>
+                            editItem
+                            </b>
+                            <a href="#editItem"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>editItem(itemToLoad: )</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">src/app/views/items/view-items.component.ts:103</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>itemToLoad</td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loadItems"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Async</span>
+                            loadItems
+                            </b>
+                            <a href="#loadItems"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>loadItems()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/views/items/view-items.component.ts:87</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onDeleteConfirm"></a>
+                        <span class="name">
+                            <b>
+                            onDeleteConfirm
+                            </b>
+                            <a href="#onDeleteConfirm"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>onDeleteConfirm(event: )</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/views/items/view-items.component.ts:95</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>event</td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="baseUrl"></a>
+                        <span class="name">
+                            <b>
+                            baseUrl
+                            </b>
+                            <a href="#baseUrl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>baseUrl:     <code></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>environment.spaUrl</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/views/items/view-items.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="items"></a>
+                        <span class="name">
+                            <b>
+                            items
+                            </b>
+                            <a href="#items"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>items:     <code><a href="../interfaces/Item.html" target="_self" >Item[]</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/Item.html" target="_self" >Item[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/views/items/view-items.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="settings"></a>
+                        <span class="name">
+                            <b>
+                            settings
+                            </b>
+                            <a href="#settings"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>settings:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+    attr: {
+        class: &#x27;table table-striped pagination&#x27;
+      },
+    pager: {
+      perPage: 15,
+    },
+    mode: &#x27;external&#x27;,
+    delete: {
+      deleteButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-danger fa fa-trash&quot;&gt; Slet &lt;/i&gt;&#x27;,
+      confirmDelete: true,
+    },
+    add: {
+      addButtonContent: &#x27;Tilføj ny genstand&#x27;
+    },
+    edit: {
+      editButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-primary fa fa-edit&quot;&gt; Rediger &lt;/i&gt;&#x27;,
+      saveButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-info fa fa-save&quot;&gt; Gem &lt;/i&gt;&#x27;,
+      cancelButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-warning fa fa-trash&quot;&gt; Fortryd &lt;/i&gt;&#x27;,
+    },
+    columns: {
+      template: {
+        title: &#x27;Lavet af skabelon&#x27;,
+        valuePrepareFunction: (temp) &#x3D;&gt; {
+          return temp.name.toString();
+        },
+        filterFunction(temp?: any, search?: string): boolean {
+          const match &#x3D; temp.name.toLowerCase().indexOf(search.toLowerCase()) &gt; -1;
+          if (match || search &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+      placement: {
+        title: &#x27;Placering&#x27;,
+        type: &#x27;string&#x27;,
+      },
+      amount: {
+        title: &#x27;Mængde&#x27;,
+        type: &#x27;string&#x27;,
+      },
+      order: {
+        title: &#x27;Købt fra eller lavet af&#x27;,
+        valuePrepareFunction: (order) &#x3D;&gt; {
+          return order.company.toString();
+        },
+        filterFunction(order?: any, search?: string): boolean {
+          const match &#x3D; order.company.indexOf(search) &gt; -1;
+          if (match || search &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+    },
+  }</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/views/items/view-items.component.ts:22</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="source"></a>
+                        <span class="name">
+                            <b>
+                            source
+                            </b>
+                            <a href="#source"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>source:     <code>LocalDataSource</code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>LocalDataSource</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/views/items/view-items.component.ts:18</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { LocalDataSource } from &#x27;ng2-smart-table&#x27;;
+import { ItemService } from &#x27;../../_services/item.service&#x27;;
+import { environment } from &#x27;../../../environments/environment&#x27;;
+import * as _ from &#x27;underscore&#x27;;
+import { Item } from &#x27;../../_models/Item&#x27;;
+
+@Component({
+  templateUrl: &#x27;./view-items.component.html&#x27;,
+  styles: [&#x60;
+    nb-card {
+      transform: translate3d(0, 0, 0);
+    }
+  &#x60;],
+})
+export class ViewItemsComponent {
+    baseUrl &#x3D; environment.spaUrl;
+  source: LocalDataSource;
+  items: Item[];
+
+
+  settings &#x3D; {
+    attr: {
+        class: &#x27;table table-striped pagination&#x27;
+      },
+    pager: {
+      perPage: 15,
+    },
+    mode: &#x27;external&#x27;,
+    delete: {
+      deleteButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-danger fa fa-trash&quot;&gt; Slet &lt;/i&gt;&#x27;,
+      confirmDelete: true,
+    },
+    add: {
+      addButtonContent: &#x27;Tilføj ny genstand&#x27;
+    },
+    edit: {
+      editButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-primary fa fa-edit&quot;&gt; Rediger &lt;/i&gt;&#x27;,
+      saveButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-info fa fa-save&quot;&gt; Gem &lt;/i&gt;&#x27;,
+      cancelButtonContent: &#x27;&lt;i class&#x3D;&quot;btn btn-sm btn-warning fa fa-trash&quot;&gt; Fortryd &lt;/i&gt;&#x27;,
+    },
+    columns: {
+      template: {
+        title: &#x27;Lavet af skabelon&#x27;,
+        valuePrepareFunction: (temp) &#x3D;&gt; {
+          return temp.name.toString();
+        },
+        filterFunction(temp?: any, search?: string): boolean {
+          const match &#x3D; temp.name.toLowerCase().indexOf(search.toLowerCase()) &gt; -1;
+          if (match || search &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+      placement: {
+        title: &#x27;Placering&#x27;,
+        type: &#x27;string&#x27;,
+      },
+      amount: {
+        title: &#x27;Mængde&#x27;,
+        type: &#x27;string&#x27;,
+      },
+      order: {
+        title: &#x27;Købt fra eller lavet af&#x27;,
+        valuePrepareFunction: (order) &#x3D;&gt; {
+          return order.company.toString();
+        },
+        filterFunction(order?: any, search?: string): boolean {
+          const match &#x3D; order.company.indexOf(search) &gt; -1;
+          if (match || search &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+    },
+  };
+
+  constructor(private itemService: ItemService) {
+    this.source &#x3D; new LocalDataSource();
+    this.loadItems();
+  }
+
+  async loadItems() {
+    await this.itemService.getAllItems().subscribe(items &#x3D;&gt; {
+      this.items &#x3D; items;
+      this.source.load(items);
+      this.source.refresh();
+    });
+  }
+
+  onDeleteConfirm(event): void {
+    if (window.confirm(&#x27;Er du sikker på at du vil slette denne forekomst?&#x27;)) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  editItem(itemToLoad): void {
+    location.href &#x3D; this.baseUrl + &#x27;items/details/&#x27; + itemToLoad.data.id;
+  }
+
+  deleteItem(itemToDelete): void {
+    if (window.confirm(&#x27;Er du sikker på at du vil slette denne skabelon?&#x27;)) {
+      this.itemService.deleteItem(itemToDelete.data.id).subscribe(() &#x3D;&gt; {
+        this.items.splice(_.findIndex(this.items, {id: itemToDelete.data.id}), 1);
+        this.source.refresh();
+      });
+    }
+  }
+
+  addNewItem() {
+    location.href &#x3D; this.baseUrl + &#x27;items/new&#x27;;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;card&quot;&gt;
+  &lt;div class&#x3D;&quot;card-header&quot;&gt;
+    Genstande
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;card-body&quot;&gt;
+    &lt;ng2-smart-table [settings]&#x3D;&quot;settings&quot; [source]&#x3D;&quot;source&quot; (edit)&#x3D;&quot;editItem($event)&quot; (deleteConfirm)&#x3D;&quot;onDeleteConfirm($event)&quot; (create)&#x3D;&quot;addNewItem()&quot; (delete)&#x3D;&quot;deleteItem($event)&quot;&gt;
+    &lt;/ng2-smart-table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="card">  <div class="card-header">    Genstande  </div>  <div class="card-body">    <ng2-smart-table [settings]="settings" [source]="source" (edit)="editItem($event)" (deleteConfirm)="onDeleteConfirm($event)" (create)="addNewItem()" (delete)="deleteItem($event)">    </ng2-smart-table>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddItemsComponent', 'selector': ''},{'name': 'AlertsComponent', 'selector': ''},{'name': 'AppComponent', 'selector': 'body'},{'name': 'BadgesComponent', 'selector': ''},{'name': 'BrandButtonsComponent', 'selector': ''},{'name': 'ButtonsComponent', 'selector': ''},{'name': 'CardsComponent', 'selector': ''},{'name': 'CarouselsComponent', 'selector': ''},{'name': 'ChartJSComponent', 'selector': ''},{'name': 'CollapsesComponent', 'selector': ''},{'name': 'ColorsComponent', 'selector': ''},{'name': 'CoreUIIconsComponent', 'selector': ''},{'name': 'DashboardComponent', 'selector': ''},{'name': 'DefaultLayoutComponent', 'selector': 'app-dashboard'},{'name': 'DetailsCustomerComponent', 'selector': ''},{'name': 'DetailsItemComponent', 'selector': ''},{'name': 'DetailsItemTemplateComponent', 'selector': ''},{'name': 'DetailsOrderComponent', 'selector': ''},{'name': 'DetailsProjectComponent', 'selector': ''},{'name': 'DetailsUserComponent', 'selector': ''},{'name': 'DropdownsComponent', 'selector': ''},{'name': 'EditUserComponent', 'selector': ''},{'name': 'FlagsComponent', 'selector': ''},{'name': 'FontAwesomeComponent', 'selector': ''},{'name': 'FormsComponent', 'selector': ''},{'name': 'LoginComponent', 'selector': 'app-dashboard'},{'name': 'ModalsComponent', 'selector': ''},{'name': 'NewCustomerComponent', 'selector': ''},{'name': 'NewItemTemplateComponent', 'selector': ''},{'name': 'NewOrderComponent', 'selector': ''},{'name': 'NewProjectComponent', 'selector': ''},{'name': 'NewUserComponent', 'selector': ''},{'name': 'P404Component', 'selector': ''},{'name': 'P500Component', 'selector': ''},{'name': 'PaginationsComponent', 'selector': ''},{'name': 'PopoversComponent', 'selector': ''},{'name': 'ProgressComponent', 'selector': ''},{'name': 'RegisterComponent', 'selector': 'app-dashboard'},{'name': 'SimpleLineIconsComponent', 'selector': ''},{'name': 'SwitchesComponent', 'selector': ''},{'name': 'TablesComponent', 'selector': ''},{'name': 'TabsComponent', 'selector': ''},{'name': 'TooltipsComponent', 'selector': ''},{'name': 'TypographyComponent', 'selector': ''},{'name': 'ViewCustomersComponent', 'selector': ''},{'name': 'ViewItemTemplatesComponent', 'selector': ''},{'name': 'ViewItemsComponent', 'selector': ''},{'name': 'ViewLogComponent', 'selector': ''},{'name': 'ViewOrdersComponent', 'selector': ''},{'name': 'ViewProjectsComponent', 'selector': ''},{'name': 'ViewUsersComponent', 'selector': ''},{'name': 'WidgetsComponent', 'selector': ''}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ViewItemsComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ViewItemsComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -80,6 +80,10 @@ export const routes: Routes = [
         loadChildren: './views/users/users.module#UsersModule'
       },
       {
+        path: 'no-access',
+        loadChildren: './views/no-access/no-access.module#NoAccessModule'
+      },
+      {
         path: 'buttons',
         loadChildren: './views/buttons/buttons.module#ButtonsModule'
       },

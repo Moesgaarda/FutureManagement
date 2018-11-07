@@ -30,7 +30,7 @@ export class ItemTemplateService {
     async getItemTemplateAsync(id: number): Promise<ItemTemplate> {
         return new Promise<ItemTemplate>(resolve => {
             resolve(this.http.get<ItemTemplate>(this.baseUrl + 'ItemTemplate/get/' + id).toPromise());
-        })
+        });
     }
 
     deleteItemTemplate(id: number) {
