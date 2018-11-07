@@ -89,6 +89,17 @@ namespace API
                         ValidateAudience = false
                     };
                 });
+
+            /* This part defines the roles, which are used to define which pages are used. 
+            *  It should be in the format:
+            *  - AddPolicy & RequireRole = PartOfSystem_Subpart */
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("ItemTemplate_Add", policy => policy.RequireRole("ItemTemplate_Add"));
+                options.AddPolicy("ItemTemplate_View_All", policy => policy.RequireRole("ItemTemplate_View_All"));
+                options.AddPolicy("ItemTemplate_View_Detail", policy => policy.RequireRole("ItemTemplate_View_Detail"));
+                options.AddPolicy("ItemTemplate_ActivateDeactivate", policy => policy.RequireRole("ItemTemplate_ActivateDeactivate"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,11 +6,13 @@ using API.Dtos;
 using API.Dtos.FileDtos;
 using API.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class ItemTemplateController : Controller
     {
         private readonly DataContext _context;
@@ -23,6 +25,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
+        [Authorize(Policy = "ItemTemplates_Get")]
         [HttpGet("getAll", Name = "GetItemTemplates")]
         public async Task<IActionResult> GetItemTemplates(){
             var itemTemplates = await _repo.GetItemTemplates();
@@ -32,6 +35,7 @@ namespace API.Controllers
             return Ok(itemTemplatesToReturn);
         }
 
+        [Authorize(Policy = "ItemTemplates_Get_All")]
         [HttpGet("get/{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
@@ -45,6 +49,7 @@ namespace API.Controllers
             return Ok(itemTemplateToReturn);
         }
 
+        [Authorize(Policy = "ItemTemplates_Add")]
         [HttpPost("add")]
         public async Task<IActionResult> AddItemTemplate([FromBody]ItemTemplateForAddDto templateDto){
             if(!ModelState.IsValid){
@@ -67,7 +72,6 @@ namespace API.Controllers
                 });
             }
 
-            // TODO: Update to new model
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
                 templateDto.UnitType,
@@ -86,35 +90,7 @@ namespace API.Controllers
             return succes ? StatusCode(201) : BadRequest();
         }
 
-        [HttpPut("edit")]
-        public async Task<IActionResult> EditItemTemplate([FromBody]ItemTemplate template){
-            if(template.Id == 0){
-                ModelState.AddModelError("Item Template Error","Template id can not be 0.");
-            }
-            if(!ModelState.IsValid){
-                return BadRequest(ModelState);
-            }
-
-            bool result = await _repo.EditItemTemplate(template);
-
-            return result ? StatusCode(200) : StatusCode(400);
-        }
-        [HttpPost("delete/{id}", Name = "DeleteItemTemplate")]
-        public async Task<IActionResult> DeleteItemTemplate(int id){
-            if(id == 0){
-                ModelState.AddModelError("Item Template Error","Can not delete template with id 0.");
-            }
-
-            if(!ModelState.IsValid){
-                return BadRequest(ModelState);
-            }
-            var template = await _repo.GetItemTemplate(id);
-
-            bool result = await _repo.DeleteItemTemplate(template);
-
-            return result ? StatusCode(200) : BadRequest();
-        }
-
+        [Authorize(Policy = "ItemTemplates_Add")]
         [HttpPost("addProperty", Name = "AddPropertyName")]
         public async Task<IActionResult> AddPropertyName([FromBody]ItemPropertyNameForAddDto propertyDto){
             if(!ModelState.IsValid){
@@ -134,6 +110,7 @@ namespace API.Controllers
             return result ? StatusCode(201) : BadRequest();
         }
 
+        [Authorize(Policy = "ItemTemplates_Add")]
         [HttpGet("getPropertyNames", Name = "GetPropertyNames")]
         public async Task<IActionResult> GetPropertyNames(){
             var propertyNames = await _repo.GetPropertyNames();
@@ -144,6 +121,7 @@ namespace API.Controllers
             return Ok(PropertyNamesToReturn);
         }
 
+        [Authorize(Policy = "ItemTemplates_Add")]
         [HttpGet("getPropertyName/{id}", Name = "GetPropertyName")]
         public async Task<IActionResult> GetPropertyName(int id){
             ItemPropertyName propertyName = await _repo.GetPropertyName(id);
@@ -152,6 +130,7 @@ namespace API.Controllers
             return Ok(propertyNameToReturn);
         }
 
+        [Authorize(Policy = "ItemTemplate_ActivateDeactivate")]
         [HttpPost("activate/{id}", Name = "ActivateItemTemplate")]
         public async Task<IActionResult> ActivateItemTemplate(int id){
             if(id == 0){
@@ -168,6 +147,7 @@ namespace API.Controllers
             return result ? StatusCode(200) : BadRequest();
         }
 
+        [Authorize(Policy = "ItemTemplate_ActivateDeactivate")]
         [HttpPost("deactivate/{id}", Name = "DeactivateItemTemplate")]
         public async Task<IActionResult> DeactivateItemTemplate(int id){
             if(id == 0){
@@ -184,6 +164,8 @@ namespace API.Controllers
 
             return result ? StatusCode(200) : BadRequest();
         }
+
+        [Authorize(Policy = "ItemTemplates_Get")]
         [HttpGet("getFiles/{id}", Name = "GetFiles")]
         public async Task<IActionResult> GetFiles(int id){
             if(!ModelState.IsValid){
