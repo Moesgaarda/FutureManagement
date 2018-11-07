@@ -7,10 +7,12 @@ using API.Dtos.FileDtos;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class ItemTemplateController : Controller
     {
         private readonly DataContext _context;

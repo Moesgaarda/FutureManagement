@@ -49,7 +49,7 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   /**
-   *A template is copied through the route. Copied template is stored, and revision props are initialized
+   *A template is copied through the route. Copied template is stored, and revision props are initialized.
    */
 
   async loadTemplateOnInIt() {
@@ -156,12 +156,12 @@ export class ReviseItemTemplateComponent implements OnInit {
     console.log(this.templateToRevise);
     console.log(this.templateToRevise.id);
 
-    /*this.templateService.addTemplate(this.templateToRevise).subscribe(data => {
+    this.templateService.addTemplate(this.templateToRevise).subscribe(data => {
       this.alertify.success('Tilføjede revidering af skabelon');
     }, error => {
       this.alertify.error('kunne ikke tilføje revidering');
     }, () => {
       this.router.navigate(['itemTemplates/view']);
-    });*/
+    });
   }
 }
