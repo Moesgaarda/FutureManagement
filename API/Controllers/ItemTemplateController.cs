@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    [AllowAnonymous]
     public class ItemTemplateController : Controller
     {
         private readonly DataContext _context;
