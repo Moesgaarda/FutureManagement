@@ -18,11 +18,11 @@ export class AuthService {
         return this.http.post(this.baseUrl + 'login', model, this.requestOptions())
         .map((response: Response) => {
             const user = response.json();
-            if (user && user.tokenString) {
-                localStorage.setItem('token', user.tokenString);
-                this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
+            if (user && user.token) {
+                localStorage.setItem('token', user.token);
+                this.decodedToken = this.jwtHelper.decodeToken(user.token);
                 console.log(this.decodedToken);
-                this.userToken = user.tokenString;
+                this.userToken = user.token;
             }
         });
     }
