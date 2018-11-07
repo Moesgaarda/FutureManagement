@@ -2,11 +2,11 @@ namespace API.Dtos
 {
     public class UserForLoginDto
     {
-        public UserForLoginDto(string Username, string Password){
-            this.Username = Username;
-            this.Password = Password;
+        public UserForLoginDto(string userName, string password){
+            this.UserName = userName;
+            this.Password = password;
         }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
     }
 }

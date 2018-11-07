@@ -92,26 +92,18 @@ namespace API.Controllers
         public async Task<IActionResult> AddRoleToUser(){
             // TODO implement
             throw new NotImplementedException();
-            return StatusCode(200);
         }
         [HttpPost("RemoveRoleFromUser")]
         public async Task<IActionResult> RemoveRoleFromUser(){
             // TODO implement
             throw new NotImplementedException();
-            return StatusCode(200);
         }
 
         [HttpPost("addRole")]
         public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
-            if (String.IsNullOrEmpty(name))
-            {
-                return BadRequest();
-            }
-            var newRole = new UserRole(name, null);
-            bool succes = await _repo.AddRole(newRole);
-
-            return succes ? StatusCode(201) : BadRequest();
+            throw new NotImplementedException();
+            return StatusCode(200);
         }
 
 

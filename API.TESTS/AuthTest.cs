@@ -63,7 +63,7 @@ namespace API.TESTS
             var userRegisterDto = new UserForRegisterDto("testuser","testPassword");
 
             await controller.Register(userRegisterDto);
-            Assert.NotNull(_dbContext.Users.FirstOrDefault(x => x.Username == "testuser"));
+            Assert.NotNull(_dbContext.Users.FirstOrDefault(x => x.UserName == "testuser"));
         }
 
         [Fact]
