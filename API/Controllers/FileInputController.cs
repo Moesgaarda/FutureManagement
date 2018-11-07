@@ -65,13 +65,10 @@ namespace API.Controllers
         }
 
         [HttpGet("downloadfile", Name = "DownloadFile")]
-        public async Task<IActionResult> Download([FromBody] FileForGetDto fileDto){
-            var fileName = await _repo.GetFile(fileDto);
-            var bytes = System.IO.File.ReadAllBytes(fileName.FileData.FilePath);
-            return new FileContentResult(bytes, MediaTypeNames.Application.Octet)
-            {
-                FileDownloadName = fileName.FileName
-            };
+        public async Task<IActionResult> Download(int id){
+            var fileData = await _repo.GetFile(id);
+            var bytes = System.IO.File.ReadAllBytes(fileData.FilePath);
+            return new FileContentResult(bytes, MediaTypeNames.Application.Octet);
         }
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
