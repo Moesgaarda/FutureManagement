@@ -95,10 +95,10 @@ namespace API
             *  - AddPolicy & RequireRole = PartOfSystem_Subpart */
 
             services.AddAuthorization(options => {
-                options.AddPolicy("ItemTemplate_Add", policy => policy.RequireRole("ItemTemplate_Add"));
-                options.AddPolicy("ItemTemplate_View_All", policy => policy.RequireRole("ItemTemplate_View_All"));
-                options.AddPolicy("ItemTemplate_View_Detail", policy => policy.RequireRole("ItemTemplate_View_Detail"));
-                options.AddPolicy("ItemTemplate_ActivateDeactivate", policy => policy.RequireRole("ItemTemplate_ActivateDeactivate"));
+                options.AddPolicy("ItemTemplates_Add", policy => policy.RequireRole("ItemTemplates_Add"));
+                options.AddPolicy("ItemTemplates_View_All", policy => policy.RequireRole("ItemTemplates_View_All"));
+                options.AddPolicy("ItemTemplates_View_Details", policy => policy.RequireRole("ItemTemplates_View_Details"));
+                options.AddPolicy("ItemTemplates_ActivateDeactivate", policy => policy.RequireRole("ItemTemplates_ActivateDeactivate"));
             });
         }
 

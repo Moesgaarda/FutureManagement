@@ -25,7 +25,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        [Authorize(Policy = "ItemTemplates_Get")]
+        [Authorize(Policy = "ItemTemplates_View_All")]
         [HttpGet("getAll", Name = "GetItemTemplates")]
         public async Task<IActionResult> GetItemTemplates(){
             var itemTemplates = await _repo.GetItemTemplates();
@@ -35,7 +35,7 @@ namespace API.Controllers
             return Ok(itemTemplatesToReturn);
         }
 
-        [Authorize(Policy = "ItemTemplates_Get_All")]
+        [Authorize(Policy = "ItemTemplates_View_Details")]
         [HttpGet("get/{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
@@ -130,7 +130,7 @@ namespace API.Controllers
             return Ok(propertyNameToReturn);
         }
 
-        [Authorize(Policy = "ItemTemplate_ActivateDeactivate")]
+        [Authorize(Policy = "ItemTemplates_ActivateDeactivate")]
         [HttpPost("activate/{id}", Name = "ActivateItemTemplate")]
         public async Task<IActionResult> ActivateItemTemplate(int id){
             if(id == 0){
@@ -147,7 +147,7 @@ namespace API.Controllers
             return result ? StatusCode(200) : BadRequest();
         }
 
-        [Authorize(Policy = "ItemTemplate_ActivateDeactivate")]
+        [Authorize(Policy = "ItemTemplates_ActivateDeactivate")]
         [HttpPost("deactivate/{id}", Name = "DeactivateItemTemplate")]
         public async Task<IActionResult> DeactivateItemTemplate(int id){
             if(id == 0){
@@ -165,7 +165,7 @@ namespace API.Controllers
             return result ? StatusCode(200) : BadRequest();
         }
 
-        [Authorize(Policy = "ItemTemplates_Get")]
+        [Authorize(Policy = "ItemTemplates_View_Details")]
         [HttpGet("getFiles/{id}", Name = "GetFiles")]
         public async Task<IActionResult> GetFiles(int id){
             if(!ModelState.IsValid){

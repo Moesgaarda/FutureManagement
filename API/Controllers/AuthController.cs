@@ -25,14 +25,16 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<Role> _roleManager;
 
         public AuthController(IConfiguration config, 
                             IMapper mapper, UserManager<User> userManager,
-                            SignInManager<User> signInManager){
+                            SignInManager<User> signInManager, RoleManager<Role> roleManager){
             _config = config;
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpPost("register")]
