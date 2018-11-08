@@ -14,26 +14,30 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot): boolean {
     const roles = next.firstChild.data['roles'] as Array<string>;
-    console.log('test');
+    console.log('firstchild auth.guard.ts');
+    console.log(next.firstChild);
+    console.log('roles auth.guard.ts');
+    console.log(roles);
     if (roles) {
-      this.alertify.error('aaaaaaaaaa');
+      console.log('Role are not null');
       const match = this.authService.roleMatch(roles);
       if (match) {
-      this.alertify.error('abbbb');
-      return true;
+        console.log('There is a match');
+        return true;
       } else {
-        this.router.navigate(['/login']);
+        this.router.navigate(['./login']);
         this.alertify.error('Du har ikke adgang til denne side');
       }
     } else {
-      this.alertify.error('Duasdasdasde');
+      console.log('roles were null');
     }
+
     if (this.authService.loggedIn()) {
       return true;
     }
 
     this.alertify.error('Adgang nægtet: Ikke logget ind.');
-    this.router.navigate(['/login']);
+    this.router.navigate(['./login']);
     return false;
   }
 }
