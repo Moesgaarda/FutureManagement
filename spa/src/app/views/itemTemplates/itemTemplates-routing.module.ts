@@ -15,21 +15,24 @@ const routes: Routes = [
         path: 'view',
         component: ViewItemTemplatesComponent,
         data: {
-          title: 'Vis skabeloner'
+          title: 'Vis skabeloner',
+          roles: ['ItemTemplates_View']
         }
       },
       {
         path: 'new',
         component: NewItemTemplateComponent,
         data: {
-          title: 'Tilføj skabelon'
+          title: 'Tilføj skabelon',
+          roles: ['ItemTemplates_Add']
         }
       },
       {
         path: 'details/:id',
         component: DetailsItemTemplateComponent,
         data: {
-          title: 'Vis detaljer'
+          title: 'Vis detaljer',
+          roles: ['ItemTemplates_View']
         }
       }
     ]

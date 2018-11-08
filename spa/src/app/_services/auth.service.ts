@@ -35,6 +35,18 @@ export class AuthService {
         return tokenNotExpired('token');
     }
 
+    roleMatch(allowedRoles): boolean {
+        let isMatch = false;
+        const userRoles = this.decodedToken.Role as Array<string>;
+        allowedRoles.forEach(element => {
+            if (userRoles.includes(element)) {
+                isMatch = true;
+                return isMatch;
+            }
+        });
+        return isMatch;
+    }
+
     private requestOptions() {
         const headers = new Headers({'Content-type': 'application/json'});
         return new RequestOptions({headers: headers});

@@ -96,8 +96,7 @@ namespace API
 
             services.AddAuthorization(options => {
                 options.AddPolicy("ItemTemplates_Add", policy => policy.RequireRole("ItemTemplates_Add"));
-                options.AddPolicy("ItemTemplates_View_All", policy => policy.RequireRole("ItemTemplates_View_All"));
-                options.AddPolicy("ItemTemplates_View_Details", policy => policy.RequireRole("ItemTemplates_View_Details"));
+                options.AddPolicy("ItemTemplates_View", policy => policy.RequireRole("ItemTemplates_View"));
                 options.AddPolicy("ItemTemplates_ActivateDeactivate", policy => policy.RequireRole("ItemTemplates_ActivateDeactivate"));
             });
         }
