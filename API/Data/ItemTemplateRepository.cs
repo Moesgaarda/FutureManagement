@@ -37,6 +37,9 @@ namespace API.Data
             foreach(var file in template.Files){
                 file.FileData = await _context.FileData.FirstOrDefaultAsync(x => x.Id == file.FileData.Id);
             }
+            if(template.RevisionedFrom != null){
+                template.RevisionedFrom = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == template.RevisionedFrom.Id);
+            }
             await _context.ItemTemplates.AddAsync(template);
             int result = await _context.SaveChangesAsync();
 
@@ -80,36 +83,15 @@ namespace API.Data
         }
 
         public async Task<ItemTemplate> GetItemTemplate(int id){
-           
-            // ItemTemplate template = await _context.ItemTemplates
-            //         .Where(x => x.Id == id)
-            //         .Include(x => x.Parts)
-            //         .Include(x => x.TemplateProperties)
-            //         .FirstOrDefaultAsync();
             
             ItemTemplate template = await _context.ItemTemplates
+                    .Include(x => x.RevisionedFrom)
+                    .Include(x => x.Parts)
+                    .Include(x => x.TemplateProperties)
+                    .Include(x => x.PartOf)
+                    .Include(x => x.Files)
                     .Where(x => x.Id == id)
                     .FirstOrDefaultAsync();
-
-            _context.Entry(template).Collection( x => x.Parts )
-                    .Query()
-                    .Include(x => x.Part)
-                    .Load();
-
-            _context.Entry(template).Collection( x => x.TemplateProperties )
-                    .Query()
-                    .Include(x => x.Property)
-                    .Load();
-
-            _context.Entry(template).Collection(x => x.PartOf)
-                    .Query()
-                    .Include(x => x.Template)
-                    .Load();
-            
-            _context.Entry(template).Collection(x => x.Files)
-                    .Query()
-                    .Include(x => x.FileData)
-                    .Load();
                     
             return template;
         }

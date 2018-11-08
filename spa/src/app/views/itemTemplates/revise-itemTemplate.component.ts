@@ -106,9 +106,6 @@ export class ReviseItemTemplateComponent implements OnInit {
     this.fileService.download(fileDetails, 'Template');
   }
 
-  putFilesIntoQueue() {
-  }
-
   /**
   * The list of properties on the template is compared to all properties so the checkbox can be checked.
   */
@@ -152,9 +149,6 @@ export class ReviseItemTemplateComponent implements OnInit {
     } else {
       this.templateToRevise.revisionId = this.templateToCopy.revisionId++;
     }
-
-    console.log(this.templateToRevise);
-    console.log(this.templateToRevise.id);
 
     this.templateService.addTemplate(this.templateToRevise).subscribe(data => {
       this.alertify.success('Tilføjede revidering af skabelon');
