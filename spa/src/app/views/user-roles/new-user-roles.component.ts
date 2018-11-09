@@ -11,7 +11,8 @@ export class NewUserRolesComponent implements OnInit {
 
   constructor(private alertify: AlertifyService) {}
 
-  // dette objekt er kun til test af UI. Skal ændres til en model når backend for userroles virker
+  // TODO  Skal ændres til at bruge en model når backend for userroles virker
+  // dette objekt er kun til test af UI.
   userRoles: { id: number, name: string, hasRole: boolean, subRoles: { id: number, name: string, hasRole: boolean }[] }[] = [
     {
       'id': 0, 'name': 'Kunder', hasRole: false, subRoles: [
@@ -37,7 +38,12 @@ export class NewUserRolesComponent implements OnInit {
 
   }
 
-  // Ændrer på bool værdien af en rolle når der ændres på en switch
+  /**
+   *
+   * Ændrer på bool værdien af en rolle når der clickes på en switch
+   * @param {number} id
+   * @memberof NewUserRolesComponent
+   */
   changeHasRole(id: number) {
     if (this.userRoles[id].hasRole === true) {
       this.userRoles[id].hasRole = false;
@@ -46,7 +52,13 @@ export class NewUserRolesComponent implements OnInit {
     }
   }
 
-  // Ændrer på bool værdien af en subrolle når der ændres på en switch
+  /**
+   *
+   * Ændrer på bool værdien af en subrolle når der clickes på en switch
+   * @param {number} roleId
+   * @param {number} subRoleId
+   * @memberof NewUserRolesComponent
+   */
   changeHasSubRole(roleId: number, subRoleId: number) {
     if (this.userRoles[roleId].subRoles[subRoleId].hasRole === true) {
       this.userRoles[roleId].subRoles[subRoleId].hasRole = false;
@@ -56,7 +68,7 @@ export class NewUserRolesComponent implements OnInit {
   }
 
   addRole() {
-    // Skal implementeres når backend virker
+    // TODO lav metoden når backend til userroles virker
     this.alertify.error('Kunne ikke tilføje rolle');
   }
 }
