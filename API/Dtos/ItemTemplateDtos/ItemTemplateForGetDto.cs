@@ -14,5 +14,6 @@ namespace API.Dtos
         public ICollection<ItemTemplatePartDto> Parts { get; set; }
         public ICollection<ItemTemplatePartOfDto> PartOf { get; set; }
         public ICollection<TemplateFileNameForGetDto> Files { get; set; }
+        public ItemTemplateForGetDto RevisionedFrom { get; set; }
     }
 }

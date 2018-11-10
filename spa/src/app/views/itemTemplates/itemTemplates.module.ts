@@ -11,6 +11,7 @@ import { NewItemTemplateComponent } from './new-itemTemplate.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   declarations: [
     ViewItemTemplatesComponent,
     NewItemTemplateComponent,
-    DetailsItemTemplateComponent ]
+    DetailsItemTemplateComponent,
+    ReviseItemTemplateComponent ]
 })
 export class ItemTemplatesModule { }
