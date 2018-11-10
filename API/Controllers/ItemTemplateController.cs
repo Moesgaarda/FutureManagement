@@ -7,6 +7,7 @@ using API.Dtos.FileDtos;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
