@@ -32,11 +32,12 @@ namespace API.Data
         public DbSet<FileData> FileData { get; set; }
         public DbSet<TemplateFileName> TemplateFileNames { get; set; }      
 
-        /************************************************************
-        * Overriding the OnModelCreating method allows us to create *
-        * one to many and many to many relations in Entity Framework *            
-        ************************************************************/
+        
         // TODO Could use refactoring to look like userrole.
+
+        /// <summary> Overriding the OnModelCreating method allows us to create 
+        /// one to many and many to many relations in Entity Framework
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             base.OnModelCreating(modelBuilder);
 

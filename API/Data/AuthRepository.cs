@@ -24,10 +24,6 @@ namespace API.Data
             if(user.IsActive == false){
                 return null;
             }
-
-            // if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-            //     return null;
-
             return user;
         }
 
@@ -47,10 +43,6 @@ namespace API.Data
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-            // user.PasswordHash = passwordHash;
-            // user.PasswordSalt = passwordSalt;
-
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
