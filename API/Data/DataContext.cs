@@ -38,6 +38,7 @@ namespace API.Data
         /// <summary> Overriding the OnModelCreating method allows us to create 
         /// one to many and many to many relations in Entity Framework
         /// </summary>
+
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             base.OnModelCreating(modelBuilder);
 

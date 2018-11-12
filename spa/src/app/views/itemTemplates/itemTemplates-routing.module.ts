@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ViewItemTemplatesComponent } from './view-itemTemplates.component';
 import { NewItemTemplateComponent } from './new-itemTemplate.component';
 import { DetailsItemTemplateComponent } from './details-itemTemplate.component';
-import { AuthGuard } from '../../_guards/auth.guard';
-
+import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
 
 const routes: Routes = [
   {
@@ -38,7 +37,14 @@ const routes: Routes = [
         data: {
           roles: ['ItemTemplates_View'],
           title: 'Vis detaljer'
-        },
+        }
+      },
+      {
+        path: 'revise/:id',
+        component: ReviseItemTemplateComponent,
+        data: {
+          title: 'Revider skabelon'
+        }
       }
     ]
   }
