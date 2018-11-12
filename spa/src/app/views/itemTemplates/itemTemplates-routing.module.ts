@@ -4,6 +4,7 @@ import { ViewItemTemplatesComponent } from './view-itemTemplates.component';
 import { NewItemTemplateComponent } from './new-itemTemplate.component';
 import { DetailsItemTemplateComponent } from './details-itemTemplate.component';
 import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
+import { AuthGuard } from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
