@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   templateUrl: './new-order.component.html'
 })
-export class ViewOrdersComponent implements OnInit {
+export class NewOrderComponent implements OnInit {
   orderToAdd: Order = {} as Order;
   unitTypes = Object.keys(UnitType);
   currentItem: Item = {} as Item;
