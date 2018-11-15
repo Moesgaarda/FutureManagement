@@ -159,6 +159,15 @@ export class TechtableComponent implements OnInit {
     return filteredData;
   }
 
+  /**
+   * Is called whenever the table changes state. This can happen
+   * if sorting or filtering is changed.
+   *
+   * @param {*} config Current configuration
+   * @param {*} [page={page: this.page, itemsPerPage: this.itemsPerPage}] Information about the page from html
+   * @returns {*} None
+   * @memberof TechtableComponent
+   */
   public onChangeTable(config: any, page: any = {page: this.page, itemsPerPage: this.itemsPerPage}): any {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
