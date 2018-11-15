@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { ItemsRoutingModule } from './items-routing.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FutmanTableComponent } from '../../_components/futman-table/futman-table.component';
 import { Ng2TableModule } from 'ng2-table';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
@@ -26,7 +25,6 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     ViewItemsComponent,
     AddItemsComponent,
     DetailsItemComponent,
-    FutmanTableComponent
    ]
 })
 export class ItemsModule { }
