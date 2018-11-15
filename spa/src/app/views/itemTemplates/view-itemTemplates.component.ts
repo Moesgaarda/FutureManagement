@@ -38,7 +38,7 @@ export class ViewItemTemplatesComponent {
   }
 
   loadTemplates() {
-    this.templateService.getItemTemplates().subscribe(templates => {
+    this.templateService.getAll().subscribe(templates => {
       this.rows = templates;
       this.data = templates;
       this.onChangeTable(this.config);

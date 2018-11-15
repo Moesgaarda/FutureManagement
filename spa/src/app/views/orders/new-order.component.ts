@@ -47,7 +47,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   async getTemplates() {
-    await this.itemTemplateService.getItemTemplates().subscribe(templates => {
+    await this.itemTemplateService.getAll().subscribe(templates => {
       this.templates = templates;
     });
   }

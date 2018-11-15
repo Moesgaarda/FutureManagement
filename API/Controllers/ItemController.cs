@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using API.Dtos;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class ItemController : Controller
     {

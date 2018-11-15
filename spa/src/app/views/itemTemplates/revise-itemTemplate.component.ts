@@ -73,7 +73,7 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   async getTemplates() {
-    this.templates = await this.templateService.getItemTemplates();
+    this.templates = await this.templateService.getAll();
   }
 
   onCheckboxChange(prop, event) {

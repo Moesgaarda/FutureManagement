@@ -8,7 +8,7 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { TechtableComponent } from '../../_components/techtable/techtable.component';
 
 @NgModule({
   imports: [
@@ -17,13 +17,12 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
     CommonModule,
     NgSelectModule,
     PaginationModule.forRoot(),
-    NgSelectModule,
-    Ng2TableModule
   ],
   declarations: [
     ViewOrdersComponent,
     NewOrderComponent,
-    DetailsOrderComponent
+    DetailsOrderComponent,
+    TechtableComponent
   ]
 })
 export class OrdersModule { }

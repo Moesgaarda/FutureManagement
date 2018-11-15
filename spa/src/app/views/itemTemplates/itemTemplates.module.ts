@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
+import { TechtableComponent } from '../../_components/techtable/techtable.component';
 
 
 @NgModule({
@@ -21,12 +22,14 @@ import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
     FormsModule,
     CommonModule,
     NgSelectModule,
-    Ng2TableModule
+    Ng2TableModule,
   ],
   declarations: [
     ViewItemTemplatesComponent,
     NewItemTemplateComponent,
     DetailsItemTemplateComponent,
-    ReviseItemTemplateComponent ]
+    ReviseItemTemplateComponent,
+    TechtableComponent
+   ]
 })
 export class ItemTemplatesModule { }

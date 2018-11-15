@@ -41,7 +41,7 @@ export class NewItemTemplateComponent implements OnInit {
   }
 
   async getTemplates() {
-    this.templates = await this.templateService.getItemTemplates();
+    this.templates = await this.templateService.getAll();
   }
 
   async loadAllTemplateProperties() {

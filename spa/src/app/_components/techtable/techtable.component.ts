@@ -1,47 +1,98 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
+import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
 import { environment } from '../../../environments/environment';
 import * as _ from 'underscore';
-import { Item } from '../../_models/Item';
+import { Injector } from '@angular/core';
+import { OrderService } from '../../_services/order.service';
 
 @Component({
-  templateUrl: './view-items.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-  `],
+  selector: 'app-techtable',
+  templateUrl: './techtable.component.html',
+  styleUrls: ['./techtable.component.scss']
 })
-export class ViewItemsComponent implements OnInit {
+
+export class TechtableComponent implements OnInit {
   baseUrl = environment.spaUrl;
   public rows: Array<any> = [];
-  public columns: Array<any> = [
-    {title: 'Navn', name: 'template.name'},
-    {title: 'Mængde', name: 'amount'},
-    {title: 'Placering', name: 'placement'},
-    {title: 'Er aktiv', name: 'isActive'},
-];
+  @Input() columns: Array<any> = [];
+
   public page = 1;
   public itemsPerPage = 5;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
+  @Input() serviceType: string;
 
+  private tableService;
   public config: any = {
     paging: true,
     sorting: {columns: this.columns},
     filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered']
   };
-
   private data: Array<any> = [];
 
+  // TODO Add additional services or figure out how to use the string literal as service
+  /**
+   * The ngOnInit handles getting the correct serviceType, depending on the string
+   * passed from the HTML call.
+   * @memberof TechtableComponent
+   */
+  ngOnInit() {
+    if (this.serviceType === 'ItemService') {
+      this.tableService = <ItemService>this.injector.get(ItemService);
+    } else if (this.serviceType === 'ItemTemplateService') {
+      this.tableService = <ItemTemplateService>this.injector.get(ItemTemplateService);
+    } else if (this.serviceType === 'OrderService') {
+      this.tableService = <OrderService>this.injector.get(OrderService);
+    } else {
+      console.log('Unexpected service name: ' + this.serviceType);
+    }
+    this.loadItems();
+  }
+
+  constructor(private injector: Injector) {
+  }
+
+  /**
+   * Loads items from the tableService specified in ngOnInit() and
+   * places the data in the rows and tables.
+   * @memberof TechtableComponent
+   */
+  async loadItems() {
+    await this.tableService.getAll().subscribe(items => {
+      this.rows = items;
+      this.data = items;
+      this.onChangeTable(this.config);
+    });
+  }
+
+
+  /**
+   * ChangePage is called every time the page on the table is changed and handles
+   * receiving the correct output for the user.
+   *
+   * @param {*} page handles the current page.
+   * @param {Array<any>} [data=this.data] gets the attached data.
+   * @returns {Array<any>} Returns the data that is located between start and end.
+   * @memberof TechtableComponent
+   */
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
     const start = (page.page - 1) * page.itemsPerPage;
     const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
+  /**
+   * changeSort changes the sorting method.
+   *
+   * @param {*} data the data received
+   * @param {*} config the currect configuration for sorting
+   * @returns {*} returns the data in a sorted manner according to config
+   * @memberof TechtableComponent
+   */
   public changeSort(data: any, config: any): any {
     if (!config.sorting) {
       return data;
@@ -73,6 +124,14 @@ export class ViewItemsComponent implements OnInit {
     });
   }
 
+  /**
+   * Updates the table depending on the filter that is input in the 
+   *  search field.
+   * @param {*} data the data received
+   * @param {*} config the currect configuration for sorting
+   * @returns {*}
+   * @memberof TechtableComponent
+   */
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
@@ -115,38 +174,37 @@ export class ViewItemsComponent implements OnInit {
     this.length = sortedData.length;
   }
 
+  // TODO onCellClick should redirect the user.
+  /**
+   * NOT YET IMPLEMENTED CORRECTLY
+   *
+   * @param {*} data
+   * @returns {*}
+   * @memberof TechtableComponent
+   */
   public onCellClick(data: any): any {
     console.log(data);
   }
-  /*  method to sterialize path to a given property in a object
-  *   Example:
-  *    item[column.name] --> item["template.name"]
-  *   This gives an undefined error
-  *   It should be:
-  *     Item[column][name] --> Item["template"]["name"]
-  *   This is what fixPropPath method does
-  */
+
+
+   /**  method to sterialize path to a given property in a object
+   *   Example:
+   *    item[column.name] --> item["template.name"]
+   *   This gives an undefined error
+   *   It should be:
+   *     Item[column][name] --> Item["template"]["name"]
+   *   This is what fixPropPath method does
+   *
+   * @param {*} path
+   * @param {*} obj
+   * @returns
+   * @memberof TechtableComponent
+   */
   public fixPropPath(path, obj) {
     return path.split('.').reduce(function(prev, curr) {
         return prev ? prev[curr] : null;
     }, obj || self);
   }
 
-  ngOnInit() {
-    this.loadItems();
-  }
-  constructor(private itemService: ItemService) {
-  }
 
-  async loadItems() {
-    await this.itemService.getAll().subscribe(items => {
-      this.rows = items;
-      this.data = items;
-      this.onChangeTable(this.config);
-    });
-  }
-
-  addNewItem() {
-    location.href = this.baseUrl + 'items/new';
-  }
 }
