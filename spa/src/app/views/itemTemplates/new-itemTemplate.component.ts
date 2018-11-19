@@ -60,7 +60,7 @@ export class NewItemTemplateComponent implements OnInit {
    *Uses the function defined in the templateService to load into templates array of observables.
    */
   async getTemplates() {
-    this.templates = await this.templateService.getItemTemplates();
+    this.templates = await this.templateService.getAll();
   }
 
   /**
