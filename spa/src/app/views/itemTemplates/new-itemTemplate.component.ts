@@ -131,7 +131,7 @@ export class NewItemTemplateComponent implements OnInit {
     this.templateService.addTemplate(this.templateToAdd).subscribe(data => {
       this.alertify.success('Tilføjede skabelon');
     }, error => {
-      this.alertify.error('kunne ikke tilføje skabelon');
+      this.alertify.error('Kunne ikke tilføje skabelon');
     }, () => {
       this.router.navigate(['itemTemplates/view']);
     });
