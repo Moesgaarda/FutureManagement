@@ -18,7 +18,8 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IItemTemplateRepository _repo;
 
-        public ItemTemplateController(IItemTemplateRepository repo, DataContext context, IMapper mapper){
+        public ItemTemplateController(IItemTemplateRepository repo, DataContext context, IMapper mapper)
+        {
             _context = context;
             _mapper = mapper;
             _repo = repo;
@@ -26,7 +27,8 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_View")]
         [HttpGet("getAll", Name = "GetItemTemplates")]
-        public async Task<IActionResult> GetItemTemplates(){
+        public async Task<IActionResult> GetItemTemplates()
+        {
             var itemTemplates = await _repo.GetItemTemplates();
 
             var itemTemplatesToReturn = _mapper.Map<List<ItemTemplateForTableDto>>(itemTemplates);
@@ -36,7 +38,8 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_View")]
         [HttpGet("get/{id}", Name = "GetItemTemplate")]
-        public async Task<IActionResult> GetItemTemplate(int id){
+        public async Task<IActionResult> GetItemTemplate(int id)
+        {
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
 
             ItemTemplateForGetDto itemTemplateToReturn = _mapper.Map<ItemTemplateForGetDto>(itemTemplate);
@@ -50,24 +53,31 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_Add")]
         [HttpPost("add")]
-        public async Task<IActionResult> AddItemTemplate([FromBody]ItemTemplateForAddDto templateDto){
-            if(!ModelState.IsValid){
+        public async Task<IActionResult> AddItemTemplate([FromBody]ItemTemplateForAddDto templateDto)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             List<TemplatePropertyRelation> propertiesToAdd = new List<TemplatePropertyRelation>();
-            foreach(ItemPropertyNameForGetDto prop in templateDto.TemplateProperties){
-                propertiesToAdd.Add(new TemplatePropertyRelation{
+            foreach (ItemPropertyNameForGetDto prop in templateDto.TemplateProperties)
+            {
+                propertiesToAdd.Add(new TemplatePropertyRelation
+                {
                     PropertyId = prop.Id
                 });
             }
             List<TemplateFileName> filesToAdd = new List<TemplateFileName>();
-            for(int i = 0; i < templateDto.Files.Length; i++){
-                filesToAdd.Add(new TemplateFileName{
-                    FileData = new FileData{
+            for (int i = 0; i < templateDto.Files.Length; i++)
+            {
+                filesToAdd.Add(new TemplateFileName
+                {
+                    FileData = new FileData
+                    {
                         Id = templateDto.Files[i]
                     },
                     FileName = templateDto.FileNames[i]
-                    
+
                 });
             }
 
@@ -91,8 +101,10 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_Add")]
         [HttpPost("addProperty", Name = "AddPropertyName")]
-        public async Task<IActionResult> AddPropertyName([FromBody]ItemPropertyNameForAddDto propertyDto){
-            if(!ModelState.IsValid){
+        public async Task<IActionResult> AddPropertyName([FromBody]ItemPropertyNameForAddDto propertyDto)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -102,7 +114,8 @@ namespace API.Controllers
 
             bool result = await _repo.AddPropertyName(itemPropertyName);
 
-            if(propertyDto.Name == null){
+            if (propertyDto.Name == null)
+            {
                 return BadRequest("Property name cannot be null.");
             }
 
@@ -111,7 +124,8 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_Add")]
         [HttpGet("getPropertyNames", Name = "GetPropertyNames")]
-        public async Task<IActionResult> GetPropertyNames(){
+        public async Task<IActionResult> GetPropertyNames()
+        {
             var propertyNames = await _repo.GetPropertyNames();
             var PropertyNamesToReturn = _mapper.Map<List<ItemPropertyNameForGetDto>>(propertyNames);
 
@@ -122,7 +136,8 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_Add")]
         [HttpGet("getPropertyName/{id}", Name = "GetPropertyName")]
-        public async Task<IActionResult> GetPropertyName(int id){
+        public async Task<IActionResult> GetPropertyName(int id)
+        {
             ItemPropertyName propertyName = await _repo.GetPropertyName(id);
             ItemPropertyNameForGetDto propertyNameToReturn = _mapper.Map<ItemPropertyNameForGetDto>(propertyName);
 
@@ -131,12 +146,15 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_ActivateDeactivate")]
         [HttpPost("activate/{id}", Name = "ActivateItemTemplate")]
-        public async Task<IActionResult> ActivateItemTemplate(int id){
-            if(id == 0){
-                ModelState.AddModelError("Item Template Error","Can not activate template with id 0.");
+        public async Task<IActionResult> ActivateItemTemplate(int id)
+        {
+            if (id == 0)
+            {
+                ModelState.AddModelError("Item Template Error", "Can not activate template with id 0.");
             }
 
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var template = await _repo.GetItemTemplate(id);
@@ -148,12 +166,15 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_ActivateDeactivate")]
         [HttpPost("deactivate/{id}", Name = "DeactivateItemTemplate")]
-        public async Task<IActionResult> DeactivateItemTemplate(int id){
-            if(id == 0){
-                ModelState.AddModelError("Item Template Error","Can not deactivate template with id 0.");
+        public async Task<IActionResult> DeactivateItemTemplate(int id)
+        {
+            if (id == 0)
+            {
+                ModelState.AddModelError("Item Template Error", "Can not deactivate template with id 0.");
             }
 
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -166,11 +187,13 @@ namespace API.Controllers
 
         [Authorize(Policy = "ItemTemplates_View")]
         [HttpGet("getFiles/{id}", Name = "GetFiles")]
-        public async Task<IActionResult> GetFiles(int id){
-            if(!ModelState.IsValid){
+        public async Task<IActionResult> GetFiles(int id)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
-            
+
             var files = await _repo.GetFiles(id);
             var filesToReturn = _mapper.Map<List<FileForTableGetDto>>(files);
 

@@ -17,14 +17,16 @@ namespace API.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IItemRepository _repo;
-        public ItemController(IItemRepository repo, DataContext context, IMapper mapper){
+        public ItemController(IItemRepository repo, DataContext context, IMapper mapper)
+        {
             _context = context;
             _mapper = mapper;
             _repo = repo;
         }
 
         [HttpGet("getActive")]
-        public async Task<IActionResult> GetActiveItems(){
+        public async Task<IActionResult> GetActiveItems()
+        {
             var items = await _repo.GetActiveItems();
             var itemsToReturn = _mapper.Map<List<ItemForTableGetDto>>(items);
 
@@ -32,7 +34,8 @@ namespace API.Controllers
         }
 
         [HttpGet("hasDependencies/{id}")]
-        public async Task<IActionResult> HasDependencies(int id){
+        public async Task<IActionResult> HasDependencies(int id)
+        {
             var item = await _repo.GetItem(id);
             var result = _repo.HasDependencies(item);
 
@@ -40,31 +43,37 @@ namespace API.Controllers
         }
 
         [HttpGet("getInactive")]
-        public async Task<IActionResult> GetInactiveItems(){
+        public async Task<IActionResult> GetInactiveItems()
+        {
             var items = await _repo.GetInactiveItems();
             var itemsToReturn = _mapper.Map<List<ItemForTableGetDto>>(items);
 
             return Ok(itemsToReturn);
         }
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetItems(){
+        public async Task<IActionResult> GetItems()
+        {
             var items = await _repo.GetAllItems();
             var itemsToReturn = _mapper.Map<List<ItemForTableGetDto>>(items);
 
             return Ok(itemsToReturn);
         }
         [HttpGet("get/{id}", Name = "GetItem")]
-        public async Task<IActionResult> GetItem(int id){
+        public async Task<IActionResult> GetItem(int id)
+        {
             Item item = await _repo.GetItem(id);
             ItemForGetDto itemToReturn = _mapper.Map<ItemForGetDto>(item);
             return Ok(itemToReturn);
         }
         [HttpPost("edit")]
-        public async Task<IActionResult> EditItem([FromBody]Item item){
-            if(item.Id == 0){
-                ModelState.AddModelError("Item Error","Item id can not be 0.");
+        public async Task<IActionResult> EditItem([FromBody]Item item)
+        {
+            if (item.Id == 0)
+            {
+                ModelState.AddModelError("Item Error", "Item id can not be 0.");
             }
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -73,13 +82,16 @@ namespace API.Controllers
             return result ? StatusCode(200) : StatusCode(400);
         }
 
-         [HttpPost("delete/{id}", Name = "DeleteItem")]
-        public async Task<IActionResult> DeleteItem(int id){
-            if(id == 0){
-                ModelState.AddModelError("Item Error","Can not delete item with id 0.");
+        [HttpPost("delete/{id}", Name = "DeleteItem")]
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+            if (id == 0)
+            {
+                ModelState.AddModelError("Item Error", "Can not delete item with id 0.");
             }
-            
-            if(!ModelState.IsValid){
+
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var item = await _repo.GetItem(id);
@@ -89,12 +101,15 @@ namespace API.Controllers
             return result ? StatusCode(200) : BadRequest();
         }
         [HttpPost("deactivate/{id}", Name = "DeactivateItem")]
-        public async Task<IActionResult> DeactivateItem(int id){
-            if(id == 0){
-                ModelState.AddModelError("Item Error","Can not deactivate item with id 0.");
+        public async Task<IActionResult> DeactivateItem(int id)
+        {
+            if (id == 0)
+            {
+                ModelState.AddModelError("Item Error", "Can not deactivate item with id 0.");
             }
-            
-            if(!ModelState.IsValid){
+
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -106,12 +121,15 @@ namespace API.Controllers
         }
 
         [HttpPost("activate/{id}", Name = "ActivateItem")]
-        public async Task<IActionResult> ActivateItem(int id){
-            if(id == 0){
-                ModelState.AddModelError("Item Error","Can not activate item with id 0.");
+        public async Task<IActionResult> ActivateItem(int id)
+        {
+            if (id == 0)
+            {
+                ModelState.AddModelError("Item Error", "Can not activate item with id 0.");
             }
-            
-            if(!ModelState.IsValid){
+
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var template = await _repo.GetItem(id);
@@ -122,20 +140,25 @@ namespace API.Controllers
         }
 
         [HttpPost("add", Name = "AddItem")]
-        public async Task<IActionResult> AddItem([FromBody]ItemForAddDto item){
-            if(!ModelState.IsValid){
+        public async Task<IActionResult> AddItem([FromBody]ItemForAddDto item)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
             List<ItemItemRelation> partsToAdd = new List<ItemItemRelation>();
-            foreach(ItemItemRelationPartOfForGet part in item.Parts){
-                partsToAdd.Add(new ItemItemRelation{
+            foreach (ItemItemRelationPartOfForGet part in item.Parts)
+            {
+                partsToAdd.Add(new ItemItemRelation
+                {
                     PartId = part.PartId,
                     Amount = part.Amount
                 });
             }
 
-            foreach(ItemItemRelation itemPart in partsToAdd) {
+            foreach (ItemItemRelation itemPart in partsToAdd)
+            {
                 var itemToReduce = await _repo.GetItem(itemPart.PartId);
                 itemToReduce.Amount -= itemPart.Amount;
             }
@@ -159,7 +182,8 @@ namespace API.Controllers
         }
 
         [HttpGet("getPropertyDescription/{id}", Name = "GetPropertyDescription")]
-        public async Task<IActionResult> GetPropertyDescriptions(int id){
+        public async Task<IActionResult> GetPropertyDescriptions(int id)
+        {
             List<ItemPropertyDescription> propertyDescription = await _repo.GetPropertyDescriptions(id);
             List<ItemPropertyDescriptionForGetDto> propertyDescriptionToReturn = _mapper.Map<List<ItemPropertyDescriptionForGetDto>>(propertyDescription);
 

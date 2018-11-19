@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Dtos
 {
+    /// <summary>
+    /// This DTO is used for registering a user.
+    /// </summary>
     public class UserForRegisterDto
     {
         public UserForRegisterDto(string userName, string password){

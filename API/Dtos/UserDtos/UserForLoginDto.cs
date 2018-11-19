@@ -1,5 +1,8 @@
 namespace API.Dtos
 {
+    /// <summary>
+    /// This DTO is used for login requests.
+    /// </summary>
     public class UserForLoginDto
     {
         public UserForLoginDto(string userName, string password){

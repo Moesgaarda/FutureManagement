@@ -26,37 +26,45 @@ namespace API.Controllers
         private readonly DataContext _context;
         private readonly IFileInputRepository _repo;
 
-        public FileInputController(IFileInputRepository repo, DataContext context){
+        public FileInputController(IFileInputRepository repo, DataContext context)
+        {
             _repo = repo;
             _context = context;
         }
 
         [HttpPost("uploadfiles", Name = "UploadFiles")]
         [DisableFormValueModelBinding]
-        public async Task<IActionResult> UploadFiles(){
+        public async Task<IActionResult> UploadFiles()
+        {
             List<int> fileIds = new List<int>();
             bool isUploaded;
             StringValues origin;
             Request.Form.TryGetValue("origin", out origin);
-            
+
 
             string path = origin.ToArray()[0] + "/";
-            foreach (IFormFile file in Request.Form.Files){
-                if (file == null || file.Length == 0){
+            foreach (IFormFile file in Request.Form.Files)
+            {
+                if (file == null || file.Length == 0)
+                {
                     continue;
                 }
 
                 var fileHash = MD5.Create().ComputeHash(file.OpenReadStream());
                 isUploaded = await _repo.IsFileUploaded(fileHash);
-                if(isUploaded){
+                if (isUploaded)
+                {
                     fileIds.Add(await _repo.GetFileId(fileHash));
                 }
-                else{
+                else
+                {
                     var fileName = BitConverter.ToString(fileHash).Replace("-", string.Empty);
-                    using(var stream = new FileStream(path + fileName, FileMode.Create)){
+                    using (var stream = new FileStream(path + fileName, FileMode.Create))
+                    {
                         await file.CopyToAsync(stream);
                     }
-                    FileData fileToAdd = new FileData(){
+                    FileData fileToAdd = new FileData()
+                    {
                         FileHash = fileHash,
                         FilePath = path + fileName
                     };
@@ -67,7 +75,8 @@ namespace API.Controllers
         }
 
         [HttpGet("downloadfile", Name = "DownloadFile")]
-        public async Task<IActionResult> Download(int id){
+        public async Task<IActionResult> Download(int id)
+        {
             var fileData = await _repo.GetFile(id);
             var bytes = System.IO.File.ReadAllBytes(fileData.FilePath);
             return new FileContentResult(bytes, MediaTypeNames.Application.Octet);
@@ -86,5 +95,5 @@ namespace API.Controllers
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
         }
-    }    
+    }
 }

@@ -50,13 +50,14 @@ namespace API.Controllers
             User user = await _repo.GetUser(id);
             UserForGetDto userToReturn = _mapper.Map<UserForGetDto>(user);
 
-            return Ok(userToReturn);            
+            return Ok(userToReturn);
         }
 
         [HttpPost("edit")]
         public async Task<IActionResult> EditUser([FromBody]User user)
         {
-            if(user.Id == 0){
+            if (user.Id == 0)
+            {
                 ModelState.AddModelError("User Error", "User id can not be 0.");
             }
             if (!ModelState.IsValid)
@@ -68,21 +69,23 @@ namespace API.Controllers
             return succes ? StatusCode(200) : BadRequest();
 
         }
-        
+
         [HttpGet("GetUsersWithRoles")]
-        public async Task<IActionResult> GetUsersWithRoles(){
-            var userList = await (from user in _context.Users orderby user.UserName
-                                    select new
-                                    {
-                                        Id = user.Id,
-                                        UserName = user.UserName,
-                                        Roles = (from userRole in user.UserRoles
-                                                    join role in _context.Roles
-                                                    on userRole.RoleId
-                                                    equals role.Id
-                                                    select role.Name).ToList()
-                                                    
-                                    }).ToListAsync();
+        public async Task<IActionResult> GetUsersWithRoles()
+        {
+            var userList = await (from user in _context.Users
+                                  orderby user.UserName
+                                  select new
+                                  {
+                                      Id = user.Id,
+                                      UserName = user.UserName,
+                                      Roles = (from userRole in user.UserRoles
+                                               join role in _context.Roles
+                                               on userRole.RoleId
+                                               equals role.Id
+                                               select role.Name).ToList()
+
+                                  }).ToListAsync();
             return Ok(userList);
         }
 
@@ -117,33 +120,35 @@ namespace API.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var selectedRoles = roleEditDto.RoleNames;
-            selectedRoles = selectedRoles ?? new string[]{};
+            selectedRoles = selectedRoles ?? new string[] { };
             var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 return BadRequest("Failed to add to roles");
 
             result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 return BadRequest("Failed to remove from roles");
 
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
         [HttpPost("AddRoleToUser")]
-        public async Task<IActionResult> AddRoleToUser(){
+        public async Task<IActionResult> AddRoleToUser()
+        {
             // TODO implement
             throw new NotImplementedException();
         }
         [HttpPost("RemoveRoleFromUser")]
-        public async Task<IActionResult> RemoveRoleFromUser(){
+        public async Task<IActionResult> RemoveRoleFromUser()
+        {
             // TODO implement
             throw new NotImplementedException();
         }
 
         [HttpPost("addRole")]
         public async Task<IActionResult> AddNewRole([FromBody]string name)
-        {   
+        {
             throw new NotImplementedException();
             return StatusCode(200);
         }
