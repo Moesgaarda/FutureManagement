@@ -27,6 +27,12 @@ namespace API.Controllers
             _repo = repo;
             _userManager = userManager;
         }
+
+        /// <summary>
+        /// Used for getting a list of all users with a status
+        /// set as active.
+        /// </summary>
+        /// <returns>List of active users</returns>
         [HttpGet("active")]
         public async Task<IActionResult> GetAllActiveUsers()
         {
@@ -35,6 +41,11 @@ namespace API.Controllers
 
             return Ok(usersToReturn);
         }
+        /// <summary>
+        /// Used for getting a list of all users with a status
+        /// set as inactive.
+        /// </summary>
+        /// <returns>List of inactive users</returns>
         [HttpGet("inactive")]
         public async Task<IActionResult> GetAllInactiveUsers()
         {
@@ -44,6 +55,12 @@ namespace API.Controllers
             return Ok(usersToReturn);
 
         }
+
+        /// <summary>
+        /// Get a single user.
+        /// </summary>
+        /// <param name="id">Id of requested user</param>
+        /// <returns>User with requested id</returns>
         [HttpGet("get/{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -53,6 +70,11 @@ namespace API.Controllers
             return Ok(userToReturn);
         }
 
+        /// <summary>
+        /// Used to edit properties on a user.
+        /// </summary>
+        /// <param name="user">User to edit</param>
+        /// <returns>StatusCode 200 or BadRequest</returns>
         [HttpPost("edit")]
         public async Task<IActionResult> EditUser([FromBody]User user)
         {
@@ -70,25 +92,33 @@ namespace API.Controllers
 
         }
 
+        /// <summary>
+        /// Gets all users with their id, username and roles.
+        /// </summary>
+        /// <returns>List of users with associated roles</returns>
         [HttpGet("GetUsersWithRoles")]
         public async Task<IActionResult> GetUsersWithRoles()
         {
             var userList = await (from user in _context.Users
-                                  orderby user.UserName
-                                  select new
-                                  {
-                                      Id = user.Id,
-                                      UserName = user.UserName,
-                                      Roles = (from userRole in user.UserRoles
-                                               join role in _context.Roles
-                                               on userRole.RoleId
-                                               equals role.Id
-                                               select role.Name).ToList()
-
-                                  }).ToListAsync();
+                                orderby user.UserName
+                                select new
+                                {
+                                    Id = user.Id,
+                                    UserName = user.UserName,
+                                    Roles = (from userRole in user.UserRoles
+                                            join role in _context.Roles
+                                            on userRole.RoleId
+                                            equals role.Id
+                                            select role.Name).ToList()
+                                }).ToListAsync();
             return Ok(userList);
         }
 
+        /// <summary>
+        /// Deactivates a user with a given ID
+        /// </summary>
+        /// <param name="id">Id of user</param>
+        /// <returns>Status code 200 or bad request</returns>
         [HttpPost("deactivate/{id}", Name = "DeactivateUser")]
         public async Task<IActionResult> DeactivateUser(int id)
         {
@@ -97,6 +127,12 @@ namespace API.Controllers
             var succes = await _repo.DeActivateUser(user);
             return succes ? StatusCode(200) : BadRequest();
         }
+
+        /// <summary>
+        /// Activates a user with a given ID
+        /// </summary>
+        /// <param name="id">Id of user</param>
+        /// <returns>Status code 200 or bad request</returns>
         [HttpPost("activate")]
         public async Task<IActionResult> ActivateUser(int id)
         {
@@ -105,6 +141,12 @@ namespace API.Controllers
             bool succes = await _repo.ActivateUser(userActivate);
             return succes ? StatusCode(200) : BadRequest();
         }
+
+        /// <summary>
+        /// Adds a user to the database
+        /// </summary>
+        /// <param name="userToAdd">User with all information</param>
+        /// <returns>Status code 200 or bad request</returns>
         [HttpPost("add")]
         public async Task<IActionResult> AddUser([FromBody]User userToAdd)
         {
@@ -113,6 +155,12 @@ namespace API.Controllers
             return succes ? StatusCode(200) : BadRequest();
         }
 
+        /// <summary>
+        /// Edits the roles of a user.
+        /// </summary>
+        /// <param name="userName">Username for the user you wish to edit</param>
+        /// <param name="roleEditDto">List of strings with role names</param>
+        /// <returns>Ok or bad request</returns>
         [HttpPost("EditRoles/{userName}")]
         public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
         {
@@ -152,7 +200,5 @@ namespace API.Controllers
             throw new NotImplementedException();
             return StatusCode(200);
         }
-
-
     }
 }
