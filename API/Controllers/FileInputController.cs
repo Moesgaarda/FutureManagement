@@ -34,6 +34,10 @@ namespace API.Controllers
         [HttpPost("uploadfiles", Name = "UploadFiles")]
         [DisableFormValueModelBinding]
         public async Task<IActionResult> UploadFiles(){
+            
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
             List<int> fileIds = new List<int>();
             bool isUploaded;
             StringValues origin;

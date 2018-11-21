@@ -87,11 +87,21 @@ namespace API.Data
             ItemTemplate template = await _context.ItemTemplates
                     .Include(x => x.RevisionedFrom)
                     .Include(x => x.Parts)
+                    .ThenInclude(x => x.Part)
                     .Include(x => x.TemplateProperties)
                     .Include(x => x.PartOf)
+                    .ThenInclude(x => x.Template)
                     .Include(x => x.Files)
-                    .Where(x => x.Id == id)
-                    .FirstOrDefaultAsync();
+                    .Include(x => x.Files)                
+                    .ThenInclude(x => x.FileData)
+                    .FirstOrDefaultAsync(x => x.Id == id);
+            /* 
+            _context.Entry(template).Collection(x => x.Files)
+                    .Query()
+                    .Include(x => x.FileData)
+                    .Load();
+*/
+            
                     
             return template;
         }
