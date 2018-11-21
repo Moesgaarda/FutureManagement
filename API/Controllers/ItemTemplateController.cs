@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
-{
+{   [AllowAnonymous]
     [Route("api/[controller]")]
     public class ItemTemplateController : Controller
     {

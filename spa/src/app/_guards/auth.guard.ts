@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
               private alertify: AlertifyService) {}
 
   canActivate(next: ActivatedRouteSnapshot): boolean {
-    console.log(this.authService.test);
     if (this.authService.loggedIn()) {
       return true;
     }
