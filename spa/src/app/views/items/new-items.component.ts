@@ -43,7 +43,7 @@ export class AddItemsComponent {
   }
 
   async getTemplates() {
-    await this.templateService.getItemTemplates().subscribe(templates => {
+    await this.templateService.getAll().subscribe(templates => {
       this.templates = templates;
     });
   }

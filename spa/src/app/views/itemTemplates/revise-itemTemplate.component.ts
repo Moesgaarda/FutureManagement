@@ -103,7 +103,7 @@ export class ReviseItemTemplateComponent implements OnInit {
    * @memberof ReviseItemTemplateComponent
    */
   async getTemplates() {
-    this.templates = await this.templateService.getItemTemplates();
+    this.templates = await this.templateService.getAll();
   }
 
   /**

@@ -19,7 +19,7 @@ export class ItemService {
 
     constructor(private http: HttpClient) {}
 
-    getAllItems(): Observable<Item[]> {
+    getAll(): Observable<Item[]> {
         return this.http.get<Item[]>(this.baseUrl + 'Item/getAll');
     }
 

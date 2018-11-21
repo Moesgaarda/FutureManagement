@@ -55,6 +55,7 @@ import { EventLogService } from './_services/eventLog.service';
 import { AuthService } from './_services/auth.service';
 import { FileUploadService} from './_services/fileUpload.service';
 import { AuthGuard } from './_guards/auth.guard';
+import { TechtableComponent } from './_components/techtable/techtable.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,7 @@ import { AuthGuard } from './_guards/auth.guard';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   providers: [{
     provide: LocationStrategy,
