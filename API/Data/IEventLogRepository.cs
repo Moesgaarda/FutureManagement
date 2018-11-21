@@ -19,7 +19,7 @@ namespace API.Data
         Task<List<EventLog>> GetEventLogs(int id);
         string GetAction(EventType action);
         Task<bool> AddEventLog(EventType action, string objectType, string objectName, int objectId, User currentUser);
-        Task<bool> AddEventLogChange<T>(string objectType, String objectName, int objectId, User currentUser, T objectOld, T objectNew);
+        Task<bool> AddEventLogChange<T>(string objectType, string objectName, int objectId, User currentUser, T objectOld, T objectNew);
 
     }
 }

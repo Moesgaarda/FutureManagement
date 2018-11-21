@@ -64,9 +64,6 @@ namespace API.Data
 
             switch (action)
             {
-                case EventType.Changed:
-                    result = "ændrede";
-                    break;
                 case EventType.Created:
                     result = "tilføjede";
                     break;
