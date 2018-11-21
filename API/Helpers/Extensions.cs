@@ -16,6 +16,8 @@ namespace API.Helpers
             response.Headers.Add("Acces-Control-Allow-Origin", "*");
         }
 
+
+        // Used to find differences in the properties of two objects of the same type
         public static List<Variance> DetailedCompare<T>(this T val1, T val2){
 
             List<Variance> variances = new List<Variance>();

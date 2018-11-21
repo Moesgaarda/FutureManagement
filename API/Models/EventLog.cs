@@ -12,14 +12,16 @@ namespace API.Models{
         public string Description {get; set;}
         public string LocalIP {get; set;}
         public EventLog(){
-            this.Time = DateTime.Today;
+            this.Time = DateTime.Now;
+            this.Time = this.Time.Date + (TimeSpan.Parse(string.Format("{0:HH:mm:ss}", this.Time)));
         }
         public EventLog(int id, User user, int userId, string description, string localIP){
             this.Id = id;
             this.User = user;
             this.UserId = userId;
             this.Description = description;
-            this.Time = DateTime.Today;
+            this.Time = DateTime.Now;
+            this.Time = this.Time.Date + (TimeSpan.Parse(string.Format("{0:HH:mm:ss}", this.Time)));
             this.LocalIP = localIP;
         }
 
@@ -28,6 +30,7 @@ namespace API.Models{
             this.UserId = userId;
             this.Description = description;
             this.Time = DateTime.Now;
+            this.Time = this.Time.Date + (TimeSpan.Parse(string.Format("{0:HH:mm:ss}", this.Time)));
             this.LocalIP = localIP;
         }
     }

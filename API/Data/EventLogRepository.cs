@@ -27,10 +27,10 @@ namespace API.Data
         }
 
         // Used to add eventlog to the database when an object is added or activated/deactived
-        public async Task<bool> AddEventLog(EventType action, String objectName, int objectId, User currentUser)
+        public async Task<bool> AddEventLog(EventType action, string objectType, string objectName, int objectId, User currentUser)
         {
 
-            string desc = $"Bruger \"{currentUser.UserName}\" {GetAction(action)} \"{objectName}\" med ID[{objectId}]";
+            string desc = $"Bruger \"{currentUser.UserName}\" {GetAction(action)} {objectType} \"{objectName}\" med ID[{objectId}]";
 
             int result = await WriteEvent(currentUser, desc);
 
@@ -38,7 +38,7 @@ namespace API.Data
         }
 
         // Used to add eventlog to the database when an object is changed
-        public async Task<bool> AddEventLogChange<T>(String objectName, int objectId, User currentUser, T objectOld, T objectNew)
+        public async Task<bool> AddEventLogChange<T>(string objectType, string objectName, int objectId, User currentUser, T objectOld, T objectNew)
         {
 
             List<Variance> variances = objectOld.DetailedCompare(objectNew);
@@ -51,7 +51,7 @@ namespace API.Data
                 }
             }
 
-            string desc = $"Bruger \"{currentUser.UserName}\" ændrede {changes} for \"{objectName}\" med ID[{objectId}]";
+            string desc = $"Bruger \"{currentUser.UserName}\" ændrede {changes} for {objectType} \"{objectName}\" med ID[{objectId}]";
 
             int result = await WriteEvent(currentUser, desc);
 
