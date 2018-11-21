@@ -114,6 +114,10 @@ export const routes: Routes = [
       {
         path: 'widgets',
         loadChildren: './views/widgets/widgets.module#WidgetsModule'
+      },
+      {
+        path: 'logs',
+        loadChildren: './views/logs/log.module#LogModule'
       }
     ]
   }

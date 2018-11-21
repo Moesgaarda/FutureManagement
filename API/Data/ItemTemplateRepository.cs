@@ -18,11 +18,9 @@ namespace API.Data
     public class ItemTemplateRepository : IItemTemplateRepository
     {
         private readonly DataContext _context;
-        private readonly IEventLogRepository _eventRepo;
 
         public ItemTemplateRepository(DataContext context){
             _context = context;
-            _eventRepo = new EventLogRepository(_context);
         }
 
         public async Task<bool> AddItemTemplate(ItemTemplate template)
@@ -43,9 +41,6 @@ namespace API.Data
             await _context.ItemTemplates.AddAsync(template);
             int result = await _context.SaveChangesAsync();
 
-            if(result > 0){
-                await _eventRepo.AddEventLogItemTemplate(EventType.Created, template);
-            }
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
@@ -54,9 +49,6 @@ namespace API.Data
             await _context.ItemPropertyNames.AddAsync(propertyName);
             int result = await _context.SaveChangesAsync();
 
-            if(result > 0){
-                await _eventRepo.AddEventLogItemPropertyName(EventType.Created, propertyName);
-            }
             return result > 0;
         }
 

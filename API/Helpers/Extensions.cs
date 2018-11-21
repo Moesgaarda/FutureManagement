@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Reflection;
+using API.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace API.Helpers
@@ -11,6 +14,23 @@ namespace API.Helpers
             // these headers allow the message to be displayed
             response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
             response.Headers.Add("Acces-Control-Allow-Origin", "*");
+        }
+
+        public static List<Variance> DetailedCompare<T>(this T val1, T val2){
+
+            List<Variance> variances = new List<Variance>();
+            FieldInfo[] fi = val1.GetType().GetFields();
+            foreach (FieldInfo f in fi)
+            {
+                Variance v = new Variance();
+                v.Prop = f.Name;
+                v.valA = f.GetValue(val1);
+                v.valB = f.GetValue(val2);
+                if (!Equals(v.valA, v.valB))
+                    variances.Add(v);
+
+            }
+            return variances;
         }
     }
 }

@@ -12,14 +12,14 @@ namespace API.Models{
         public string Description {get; set;}
         public string LocalIP {get; set;}
         public EventLog(){
-            this.Time = DateTime.Now;
+            this.Time = DateTime.Today;
         }
         public EventLog(int id, User user, int userId, string description, string localIP){
             this.Id = id;
             this.User = user;
             this.UserId = userId;
             this.Description = description;
-            this.Time = DateTime.Now;
+            this.Time = DateTime.Today;
             this.LocalIP = localIP;
         }
 
