@@ -166,7 +166,7 @@ export class ReviseItemTemplateComponent implements OnInit {
    *The list of properties on the template is compared to all properties so the checkbox can be checked.
    *
    * @param {*} id id of the properti that should be checked
-   * @returns a boolean
+   * @returns a boolean that means if it succeded or not
    * @memberof ReviseItemTemplateComponent
    */
   checkBox(id) {

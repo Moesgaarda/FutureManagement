@@ -91,7 +91,6 @@ namespace API.Data
                     .Include(x => x.TemplateProperties)
                     .Include(x => x.PartOf)
                     .ThenInclude(x => x.Template)
-                    .Include(x => x.Files)
                     .Include(x => x.Files)                
                     .ThenInclude(x => x.FileData)
                     .FirstOrDefaultAsync(x => x.Id == id);            
