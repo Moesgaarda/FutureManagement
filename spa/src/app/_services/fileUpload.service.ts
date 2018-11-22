@@ -53,7 +53,7 @@ export class FileUploadService {
    * @memberof FileUploadService
    */
   async upload(origin: string): Promise<number []> {
-    // try {
+    
       if (this.queuedFiles.length === 0) {
         return;
       }
@@ -67,9 +67,6 @@ export class FileUploadService {
       });
       const result = await this.http.post(this.baseUrl + 'FileInput/uploadfiles', formData).toPromise();
       return result as number [];
-   /* } catch (error) {
-      console.log(error);
-    }*/
   }
   async download(fileDetails: DetailFile, origin: string) {
     const headers = new Headers();

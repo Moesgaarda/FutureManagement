@@ -94,14 +94,7 @@ namespace API.Data
                     .Include(x => x.Files)
                     .Include(x => x.Files)                
                     .ThenInclude(x => x.FileData)
-                    .FirstOrDefaultAsync(x => x.Id == id);
-            /* 
-            _context.Entry(template).Collection(x => x.Files)
-                    .Query()
-                    .Include(x => x.FileData)
-                    .Load();
-*/
-            
+                    .FirstOrDefaultAsync(x => x.Id == id);            
                     
             return template;
         }
