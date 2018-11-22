@@ -14,19 +14,46 @@ export class FileUploadService {
   fileIds: number[];
   constructor(private http: HttpClient) { }
 
+  /**
+   *Adds files to the Upload queue
+   *
+   * @param {File []} files files that are to be added
+   * @memberof FileUploadService
+   */
   queue(files: File []) {
     for (const file of files) {
       this.queuedFiles.push(file);
     }
   }
+
+  /**
+   *Empties the upload queue
+   *
+   * @memberof FileUploadService
+   */
   clearQueue() {
     this.queuedFiles.splice(0, this.queuedFiles.length);
   }
+
+  /**
+   *Remove a file from the upload queue
+   *
+   * @param {File} file file to be removed
+   * @memberof FileUploadService
+   */
   removeFromQueue(file: File) {
     this.queuedFiles.splice(this.queuedFiles.indexOf(file), 1);
   }
+
+  /**
+   *Sends a post request to the controller with the files that are to be uploaded
+   *
+   * @param {string} origin which of the components the request is made from. This is used to save the files in the correct path in the API
+   * @returns {Promise<number []>} Returns the FileData Id of the uploaded files.
+   * @memberof FileUploadService
+   */
   async upload(origin: string): Promise<number []> {
-    try {
+    
       if (this.queuedFiles.length === 0) {
         return;
       }
@@ -40,9 +67,6 @@ export class FileUploadService {
       });
       const result = await this.http.post(this.baseUrl + 'FileInput/uploadfiles', formData).toPromise();
       return result as number [];
-    } catch (error) {
-      console.log(error);
-    }
   }
   async download(fileDetails: DetailFile, origin: string) {
     const headers = new Headers();

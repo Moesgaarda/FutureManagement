@@ -47,6 +47,7 @@ export class NewItemTemplateComponent implements OnInit {
     this.getTemplates();
     this.loadAllTemplateProperties();
     this.uploader = uploaderParameter;
+    this.uploader.clearQueue();
   }
 
   ngOnInit() {
