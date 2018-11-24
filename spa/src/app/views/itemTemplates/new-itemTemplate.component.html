@@ -60,7 +60,7 @@
       <div class="card-header">Egenskaber</div>
       <div class="card-body">
         <div class="input-group">
-          <input type="text" placeholder="Filtrer egenskaber" class="form-control"/>
+          <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
         </div>
         <br>
         <div class="col-sm-6" *ngFor="let prop of paginatedPropArray; let i=index">

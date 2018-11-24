@@ -34,6 +34,7 @@ export class NewItemTemplateComponent implements OnInit {
   paginatedPropArray: ItemPropertyName[];
   itemsPerPage = 15;
   currentPage = 1;
+  propFilter: string;
 
   /**
    * @param {ItemTemplateService} templateService
