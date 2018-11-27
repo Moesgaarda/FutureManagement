@@ -3,13 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { ViewOrdersComponent } from './view-orders.component';
 import { DetailsOrderComponent } from './details-order.component';
 import { NewOrderComponent } from './new-order.component';
+import { AuthGuard } from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Bestillinger'
+      title: 'Bestillinger',
+      roles: ['ItemTempaltes_View']
     },
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'view',
