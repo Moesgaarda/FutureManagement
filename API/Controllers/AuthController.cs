@@ -37,7 +37,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto){
+        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto){
  
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
 
@@ -53,13 +53,13 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody]UserForLoginDto userForLoginDto){
+        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto){
             var user = await _userManager.FindByNameAsync(userForLoginDto.UserName);
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
 
             if (result.Succeeded){
-                var appUser = await _userManager.Users.Include(r => r.UserRoles)
+                var appUser = await _userManager.Users
                     .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.UserName.ToUpper());
                 var userToReturn = _mapper.Map<UserForGetDto>(appUser);
 

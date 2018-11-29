@@ -10,9 +10,11 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -20,12 +22,14 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUserRepository _repo;
         private readonly UserManager<User> _userManager;
-        public UserController(IUserRepository repo, DataContext context, IMapper mapper, UserManager<User> userManager)
+        private readonly RoleManager<Role> _roleManager;
+        public UserController(IUserRepository repo, DataContext context, IMapper mapper, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _context = context;
             _mapper = mapper;
             _repo = repo;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
         [HttpGet("active")]
         public async Task<IActionResult> GetAllActiveUsers()
@@ -144,8 +148,17 @@ namespace API.Controllers
         [HttpPost("addRole")]
         public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
-            throw new NotImplementedException();
-            return StatusCode(200);
+            if(name != null){
+                bool roleCheck = await _roleManager.RoleExistsAsync(name.ToUpper());
+                if (!roleCheck){
+                    var result = _roleManager.CreateAsync(new Role{Name = name}).Result;
+                    if(result.Succeeded){
+                        return StatusCode(201);
+                    }
+                }
+            }
+            
+            return BadRequest();
         }
 
 

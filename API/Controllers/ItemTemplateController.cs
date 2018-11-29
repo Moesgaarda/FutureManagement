@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace API.Controllers
 {   [AllowAnonymous]
     [Route("api/[controller]")]
+    [ApiController]
     public class ItemTemplateController : Controller
     {
         private readonly DataContext _context;
