@@ -49,22 +49,29 @@ export class NewItemTemplateComponent implements OnInit {
     this.uploader = uploaderParameter;
   }
 
+  /**
+   * Unittypes is initially both enum text and numbers. Dividing by 2 removes numbers for dropdown.
+   * Properties array is sorted alphabetically through underscorejs on the name property.
+   * @memberof NewItemTemplateComponent
+   */
   ngOnInit() {
-    // unittypes should both enum text and numbers. Dividing by 2 removes numbers.
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
-    // Properties array is sorted alphabetically through underscorejs
+
     _.sortBy(this.properties, 'name');
   }
 
+
   /**
-   *Uses the function defined in the templateService to load into templates array of observables.
+   * Uses the function defined in the templateService to load the templates into an array of observables.
+   * @memberof NewItemTemplateComponent
    */
   async getTemplates() {
     this.templates = await this.templateService.getAll();
   }
 
   /**
-   *Loads all properties and subscrubes since properties array is not an observable.
+   * Loads all properties and subscribes since properties array is not an observable.
+   * @memberof NewItemTemplateComponent
    */
   async loadAllTemplateProperties() {
     await this.templateService.getAllTemplateProperties().subscribe(properties => {
@@ -86,10 +93,11 @@ export class NewItemTemplateComponent implements OnInit {
   }
 
   /**
-   * @param {*} prop
-   * @param {*} event
    * prop is the property represented by the checkbox, event is the act of checking or unchecking.
    * Upon check it simply adds to the array, if unchecked it searches the array and splices that one prop out.
+   * @param {*} prop
+   * @param {*} event
+   * @memberof NewItemTemplateComponent
    */
   onCheckboxChange(prop, event) {
     if (event.target.checked) {
@@ -103,9 +111,16 @@ export class NewItemTemplateComponent implements OnInit {
     }
   }
 
+  /**
+   * First for:
+   * SelectedTemplates is of type ItemTemplate, templatePartsToAdd are parts.
+   * Takes the necessary information from the ItemTemplate and pushes to the Part array.
+   *
+   * Remaining properties on propertyToAdd are then updated.
+   * Finally the addTemplate function from the templateservice is used to add the new template to DB.
+   * @memberof NewItemTemplateComponent
+   */
   async addTemplate() {
-    // SelectedTemplates is of type ItemTemplate, templatePartsToAdd are parts. Takes the necessary information from
-    // the ItemTemplate and pushes to the Part array.
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
         part: this.selectedTemplates[i],
@@ -137,9 +152,15 @@ export class NewItemTemplateComponent implements OnInit {
     });
   }
 
+  /**
+   * Checks if the name of the property being added already exists in the database.
+   * Converts to lowercase, so multiples do not exist.
+   * @returns nothing, do not want to add to DB if it already exists.
+   *
+   * Uses the addProperty function from the service to add the new property to the DB.
+   * @memberof NewItemTemplateComponent
+   */
   async addTemplateProperty() {
-    // Checks if the name of the property being added already exists in the database.
-    // Converts to lowercase, so multiples do not exist.
     for (let i = 0; i < this.properties.length; i++) {
       if (this.properties[i].name.toLowerCase() === this.propToAddToDb.name.toLowerCase()) {
         this.alertify.error('En egenskab med dette navn findes allerede!');

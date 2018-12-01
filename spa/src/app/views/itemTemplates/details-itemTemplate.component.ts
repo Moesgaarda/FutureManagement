@@ -21,6 +21,15 @@ export class DetailsItemTemplateComponent implements OnInit {
   unitTypes = Object.keys(UnitType);
   fileService: FileUploadService;
 
+  /**
+   *Creates an instance of DetailsItemTemplateComponent.
+   *The services are specified, router brought in and fileService is initialised.
+   * @param {ItemTemplateService} templateService
+   * @param {ActivatedRoute} route
+   * @param {FileUploadService} fileUploadService
+   * @param {Router} router
+   * @memberof DetailsItemTemplateComponent
+   */
   constructor(
     private templateService: ItemTemplateService,
     private route: ActivatedRoute,
@@ -30,11 +39,23 @@ export class DetailsItemTemplateComponent implements OnInit {
     this.fileService = fileUploadService;
   }
 
+  /**
+   *Calls function to extract template.
+   * Unittypes are initially both enum text and numbers. Dividing by 2 removes numbers from dropdown.
+   * @memberof DetailsItemTemplateComponent
+   */
   async ngOnInit() {
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
     await this.loadTemplateOnInIt();
   }
 
+  /**
+   *Gets template through the number in the route.
+   * itemTemplate property is initilialised with the data from the DB.
+   * Unittype number is converted to the string value for display.
+   * Data is flagged as available.
+   * @memberof DetailsItemTemplateComponent
+   */
   async loadTemplateOnInIt() {
     await this.templateService.getItemTemplateAsync(+this.route.snapshot.params['id'])
       .then(itemTemplate => {
@@ -47,9 +68,16 @@ export class DetailsItemTemplateComponent implements OnInit {
     });
   }
 
+  /**
+   * Is passed ID from part of revisionedFrom template.
+   * Uses the router to navigate to the proper URL with the id it receives.
+   * @param {number} templateId
+   * @memberof DetailsItemTemplateComponent
+   */
   goToItemTemplateDetail(templateId: number) {
     this.router.navigateByUrl('itemTemplates/details/' + templateId);
   }
+
   downloadFile(fileDetails: DetailFile) {
     this.fileService.download(fileDetails, 'Template');
   }

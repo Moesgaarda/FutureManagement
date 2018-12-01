@@ -30,6 +30,15 @@ export class ReviseItemTemplateComponent implements OnInit {
   propertiesToCheck: ItemPropertyName[] = [];
   templatePartsToAdd: ItemTemplatePart[] = [] as ItemTemplatePart[];
 
+  /**
+   *Creates an instance of ReviseItemTemplateComponent. Sets up services and initialises uploader.
+   * @param {ItemTemplateService} templateService
+   * @param {ActivatedRoute} route
+   * @param {Router} router
+   * @param {FileUploadService} uploaderParameter
+   * @param {AlertifyService} alertify
+   * @memberof ReviseItemTemplateComponent
+   */
   constructor(private templateService: ItemTemplateService,
               private route: ActivatedRoute,
               private router: Router,
@@ -38,8 +47,13 @@ export class ReviseItemTemplateComponent implements OnInit {
                 this.uploader = uploaderParameter;
               }
 
+  /**
+   * Unittypes is initially both enum text and numbers. Dividing by 2 removes numbers for dropdown.
+   * Properties array is sorted alphabetically through underscorejs on the name property.
+   * Calls functions to get data ready for user.
+   * @memberof ReviseItemTemplateComponent
+   */
   async ngOnInit() {
-    // unittypes should both enum text and numbers. Dividing by 2 removes numbers.
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
     await this.loadTemplateOnInIt();
     await this.loadAllTemplateProperties();
@@ -49,9 +63,9 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   /**
-   *A template is copied through the route. Copied template is stored, and revision props are initialized.
+   * A template is copied through the route. Copied template is stored, and revision props are initialized.
+   * @memberof ReviseItemTemplateComponent
    */
-
   async loadTemplateOnInIt() {
     await this.templateService.getItemTemplateAsync(+this.route.snapshot.params['id'])
       .then(itemTemplate => {
@@ -66,16 +80,31 @@ export class ReviseItemTemplateComponent implements OnInit {
     });
   }
 
+  /**
+   * Loads all properties from DB into the properties property.
+   * @memberof ReviseItemTemplateComponent
+   */
   async loadAllTemplateProperties() {
     await this.templateService.getAllTemplateProperties().subscribe(properties => {
       this.properties = properties;
     });
   }
 
+  /**
+   * Loads all templates into templates property.
+   * @memberof ReviseItemTemplateComponent
+   */
   async getTemplates() {
     this.templates = await this.templateService.getAll();
   }
 
+  /**
+   * prop is the property represented by the checkbox, event is the act of checking or unchecking.
+   * Upon check it simply adds to the array, if unchecked it searches the array and splices that one prop out.
+   * @param {*} prop
+   * @param {*} event
+   * @memberof ReviseItemTemplateComponent
+   */
   onCheckboxChange(prop, event) {
     if (event.target.checked) {
       this.propertiesToAdd.push(prop);
@@ -90,8 +119,9 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   /**
-   *ngSelect component needs to be filled with the templates from the copied template.
-   *selectedTemplates is the model used by ngSelect, so parts are pushed to this.
+   * ngSelect component needs to be filled with the templates from the copied template.
+   * selectedTemplates is of the type used by ngSelect, so parts are pushed to this so they fit.
+   * @memberof ReviseItemTemplateComponent
    */
   async populateSelect() {
     if (this.isDataAvailable) {
@@ -107,8 +137,11 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   /**
-  * The list of properties on the template is compared to all properties so the checkbox can be checked.
-  */
+   * The list of properties on the template is compared to all properties so the checkbox can be checked.
+   * @param {*} id
+   * @returns
+   * @memberof ReviseItemTemplateComponent
+   */
   checkBox(id) {
     for (const propToCheck of this.propertiesToCheck) {
       if (propToCheck.id === id) {
@@ -118,8 +151,16 @@ export class ReviseItemTemplateComponent implements OnInit {
     return false;
   }
 
+  /**
+   * First for:
+   * selectedTemplates and amounts are pushed to a new array that is formatted correctly for the database.
+   *
+   * Other properties on the templateToRevise are given values.
+   * RevisionID is incremented if this is not the first revision, overwise it is set to 1.
+   * Finally the revision is added through the addTemplate function from the templateservice.
+   * @memberof ReviseItemTemplateComponent
+   */
   async addRevision() {
-    // selectedTemplates and amounts are pushed to a new array that is formatted correctly for the database.
     for (let i = 0; i < this.selectedTemplates.length; i++) {
       this.templatePartsToAdd.push({
         part: this.selectedTemplates[i],
