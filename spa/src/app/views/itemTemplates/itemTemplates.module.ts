@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
 import { TechtableComponent } from '../../_components/techtable/techtable.component';
-import { PropertyFilterPipe } from './property-filter.pipe';
+import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
 
 
 @NgModule({

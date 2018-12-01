@@ -63,7 +63,7 @@
           <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
         </div>
         <br>
-        <div class="col-sm-6" *ngFor="let prop of paginatedPropArray; let i=index">
+        <div class="col-sm-6" *ngFor="let prop of paginatedPropArray | propertyFilter: propFilter; let i=index">
           <input type="checkbox" value="{{prop}}" (click)="onCheckboxChange(prop,$event)" /> {{prop.name}}
         </div>
         <br>
