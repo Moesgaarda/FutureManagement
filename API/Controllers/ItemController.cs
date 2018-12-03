@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using API.Dtos;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -22,6 +23,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
+        //[Authorize(Policy = "Items_View")]
         [HttpGet("getActive")]
         public async Task<IActionResult> GetActiveItems(){
             var items = await _repo.GetActiveItems();
@@ -38,6 +40,7 @@ namespace API.Controllers
             return result.Result ? StatusCode(200) : StatusCode(400);
         }
 
+        [Authorize(Policy = "Items_View")]
         [HttpGet("getInactive")]
         public async Task<IActionResult> GetInactiveItems(){
             var items = await _repo.GetInactiveItems();
@@ -45,6 +48,8 @@ namespace API.Controllers
 
             return Ok(itemsToReturn);
         }
+
+        [Authorize(Policy = "Items_View")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetItems(){
             var items = await _repo.GetAllItems();
@@ -52,12 +57,16 @@ namespace API.Controllers
 
             return Ok(itemsToReturn);
         }
+
+        [Authorize(Policy = "Items_View")]
         [HttpGet("get/{id}", Name = "GetItem")]
         public async Task<IActionResult> GetItem(int id){
             Item item = await _repo.GetItem(id);
             ItemForGetDto itemToReturn = _mapper.Map<ItemForGetDto>(item);
             return Ok(itemToReturn);
         }
+
+        [Authorize(Policy = "Items_Edit")]
         [HttpPost("edit")]
         public async Task<IActionResult> EditItem([FromBody]Item item){
             if(item.Id == 0){
@@ -72,7 +81,8 @@ namespace API.Controllers
             return result ? StatusCode(200) : StatusCode(400);
         }
 
-         [HttpPost("delete/{id}", Name = "DeleteItem")]
+        [Authorize(Policy = "Items_Delete")]
+        [HttpPost("delete/{id}", Name = "DeleteItem")]
         public async Task<IActionResult> DeleteItem(int id){
             if(id == 0){
                 ModelState.AddModelError("Item Error","Can not delete item with id 0.");
@@ -87,6 +97,8 @@ namespace API.Controllers
 
             return result ? StatusCode(200) : BadRequest();
         }
+
+        [Authorize(Policy = "Items_ActivateDeactivate")]
         [HttpPost("deactivate/{id}", Name = "DeactivateItem")]
         public async Task<IActionResult> DeactivateItem(int id){
             if(id == 0){
@@ -104,6 +116,7 @@ namespace API.Controllers
             return result ? StatusCode(200) : BadRequest();
         }
 
+        [Authorize(Policy = "Items_ActivateDeactivate")]
         [HttpPost("activate/{id}", Name = "ActivateItem")]
         public async Task<IActionResult> ActivateItem(int id){
             if(id == 0){
@@ -120,6 +133,7 @@ namespace API.Controllers
             return result ? StatusCode(200) : BadRequest();
         }
 
+        [Authorize(Policy = "Items_Add")]
         [HttpPost("add", Name = "AddItem")]
         public async Task<IActionResult> AddItem([FromBody]ItemForAddDto item){
             if(!ModelState.IsValid){

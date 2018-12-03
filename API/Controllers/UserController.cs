@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -31,6 +30,8 @@ namespace API.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
+
+        [Authorize(Policy = "User_View")]
         [HttpGet("active")]
         public async Task<IActionResult> GetAllActiveUsers()
         {
@@ -39,6 +40,8 @@ namespace API.Controllers
 
             return Ok(usersToReturn);
         }
+
+        [Authorize(Policy = "User_View")]
         [HttpGet("inactive")]
         public async Task<IActionResult> GetAllInactiveUsers()
         {
@@ -48,6 +51,8 @@ namespace API.Controllers
             return Ok(usersToReturn);
 
         }
+
+        [Authorize(Policy = "User_View")]
         [HttpGet("get/{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -57,6 +62,7 @@ namespace API.Controllers
             return Ok(userToReturn);            
         }
 
+        [Authorize(Policy = "User_Edit")]
         [HttpPost("edit")]
         public async Task<IActionResult> EditUser([FromBody]User user)
         {
@@ -73,6 +79,7 @@ namespace API.Controllers
 
         }
         
+        [Authorize(Policy = "User_View")]      
         [HttpGet("GetUsersWithRoles")]
         public async Task<IActionResult> GetUsersWithRoles(){
             var userList = await (from user in _context.Users orderby user.UserName
@@ -90,6 +97,7 @@ namespace API.Controllers
             return Ok(userList);
         }
 
+        [Authorize(Policy = "User_ActivateDeactivate")]
         [HttpPost("deactivate/{id}", Name = "DeactivateUser")]
         public async Task<IActionResult> DeactivateUser(int id)
         {
@@ -98,6 +106,8 @@ namespace API.Controllers
             var succes = await _repo.DeActivateUser(user);
             return succes ? StatusCode(200) : BadRequest();
         }
+
+        [Authorize(Policy = "User_ActivateDeactivate")]
         [HttpPost("activate")]
         public async Task<IActionResult> ActivateUser(int id)
         {
@@ -106,6 +116,8 @@ namespace API.Controllers
             bool succes = await _repo.ActivateUser(userActivate);
             return succes ? StatusCode(200) : BadRequest();
         }
+
+        [Authorize(Policy = "User_Add")]
         [HttpPost("add")]
         public async Task<IActionResult> AddUser([FromBody]User userToAdd)
         {
@@ -114,8 +126,9 @@ namespace API.Controllers
             return succes ? StatusCode(200) : BadRequest();
         }
 
+        [Authorize(Policy = "User_Edit")]
         [HttpPost("EditRoles/{userName}")]
-        public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
+        public async Task<IActionResult> EditRoles(string userName,[FromBody] RoleEditDto roleEditDto)
         {
             var user = await _userManager.FindByNameAsync(userName);
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -134,17 +147,7 @@ namespace API.Controllers
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
-        [HttpPost("AddRoleToUser")]
-        public async Task<IActionResult> AddRoleToUser(){
-            // TODO implement
-            throw new NotImplementedException();
-        }
-        [HttpPost("RemoveRoleFromUser")]
-        public async Task<IActionResult> RemoveRoleFromUser(){
-            // TODO implement
-            throw new NotImplementedException();
-        }
-
+        [Authorize(Policy = "User_Add")]
         [HttpPost("addRole")]
         public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
