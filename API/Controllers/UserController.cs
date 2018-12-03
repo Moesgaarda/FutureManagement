@@ -121,6 +121,7 @@ namespace API.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> AddUser([FromBody]User userToAdd)
         {
+            // TODO MOST LIKELY OUTDATED
             // TODO maybe need to be UserForRegister or something
             bool succes = await _repo.AddUser(userToAdd);
             return succes ? StatusCode(200) : BadRequest();
