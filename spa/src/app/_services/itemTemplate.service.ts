@@ -19,7 +19,7 @@ export class ItemTemplateService {
 
     constructor(private http: HttpClient) {}
 
-    getItemTemplates(): Observable<ItemTemplate[]> {
+    getAll(): Observable<ItemTemplate[]> {
         return this.http.get<ItemTemplate[]>(this.baseUrl + 'ItemTemplate/getAll');
     }
 

@@ -139,7 +139,7 @@ export class ViewItemsComponent implements OnInit {
   }
 
   async loadItems() {
-    await this.itemService.getAllItems().subscribe(items => {
+    await this.itemService.getAll().subscribe(items => {
       this.rows = items;
       this.data = items;
       this.onChangeTable(this.config);
