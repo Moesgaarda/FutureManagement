@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ItemTemplatesRoutingModule } from './itemTemplates-routing.module';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 
@@ -24,6 +25,7 @@ import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
     CommonModule,
     NgSelectModule,
     Ng2TableModule,
+    NgxPaginationModule,
   ],
   declarations: [
     ViewItemTemplatesComponent,

@@ -75,18 +75,6 @@ export class NewItemTemplateComponent implements OnInit {
     });
   }
 
-
-  /**
-   * @param {PageChangedEvent} event
-   * The event contains pageNumber and itemPerPage. The index of the start item is calculated by previous page number,
-   * and the endItem is calculated with the number of the page you are switching to.
-   */
-  propPageChanged(event: PageChangedEvent): void {
-    const startItem = (event.page - 1) * event.itemsPerPage;
-    const endItem = event.page * event.itemsPerPage;
-    this.paginatedPropArray = this.properties.slice(startItem, endItem);
-  }
-
   /**
    * @param {*} prop
    * @param {*} event
