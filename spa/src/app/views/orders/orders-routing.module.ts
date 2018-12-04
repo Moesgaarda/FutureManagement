@@ -19,6 +19,7 @@ const routes: Routes = [
         path: 'view',
         component: ViewOrdersComponent,
         data: {
+          roles: ['ItemTemplates_View'],
           title: 'Vis bestillinger'
         }
       },
@@ -26,6 +27,7 @@ const routes: Routes = [
         path: 'details/:id',
         component: DetailsOrderComponent,
         data: {
+          roles: ['ItemTemplates_View'],
           title: 'Detaljer for bestilling'
         }
       },
@@ -33,6 +35,7 @@ const routes: Routes = [
         path: 'new',
         component: NewOrderComponent,
         data: {
+          roles: ['ItemTemplates_View'],
           title: 'Ny bestilling'
         }
       },

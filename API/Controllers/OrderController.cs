@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers{
 
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class OrderController : Controller{
         private readonly DataContext _context;
@@ -31,22 +32,7 @@ namespace API.Controllers{
         }
 
         [HttpPost("add", Name = "AddOrder")]
-        public async Task<IActionResult> AddOrder([FromBody]Order order){
-            
-            var orderToCreate = new Order(
-                order.Company,
-                order.OrderDate,
-                order.DeliveryDate,
-                order.OrderedBy,
-                order.InvoicePath,
-                order.PurchaseNumber,
-                order.Width,
-                order.Height,
-                order.Length,
-                order.UnitType,
-                order.Products
-            );
-       
+        public async Task<IActionResult> AddOrder([FromBody]Order orderToCreate){       
 
             bool result = await _repo.AddOrder(orderToCreate);
             return result ? StatusCode(201) : BadRequest();

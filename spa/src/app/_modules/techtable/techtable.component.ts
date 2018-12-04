@@ -125,7 +125,7 @@ export class TechtableComponent implements OnInit {
   }
 
   /**
-   * Updates the table depending on the filter that is input in the 
+   * Updates the table depending on the filter that is input in the
    *  search field.
    * @param {*} data the data received
    * @param {*} config the currect configuration for sorting

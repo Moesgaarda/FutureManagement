@@ -32,13 +32,13 @@ export class NewOrderComponent implements OnInit {
     private alertify: AlertifyService,
     private router: Router
   ) {
-    this.getTemplates();
     this.templateDetails.templateProperties = [] as ItemPropertyName[];
     this.orderToAdd.products = [] as Item[];
     this.currentItem.template = {} as ItemTemplate;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getTemplates();
     this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
   }
 
