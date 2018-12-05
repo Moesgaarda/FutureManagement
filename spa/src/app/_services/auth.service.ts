@@ -3,6 +3,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
+import { User } from '../_models/User';
 
 @Injectable()
 export class AuthService {
@@ -10,8 +11,8 @@ export class AuthService {
     userToken: any;
     decodedToken: any;
     jwtHelper: JwtHelper = new JwtHelper();
-
     constructor(private http: Http) { }
+    test: any;
 
     login(model: any) {
 
@@ -21,8 +22,8 @@ export class AuthService {
             if (user && user.token) {
                 localStorage.setItem('token', user.token);
                 this.decodedToken = this.jwtHelper.decodeToken(user.token);
-                console.log(this.decodedToken);
                 this.userToken = user.token;
+                this.test = user.user;
             }
         });
     }
@@ -38,6 +39,9 @@ export class AuthService {
     roleMatch(allowedRoles): boolean {
         let isMatch = false;
         const userRoles = this.decodedToken.role as Array<string>;
+        if (!userRoles) {
+            return false;
+        }
         allowedRoles.forEach(element => {
             if (userRoles.includes(element)) {
                 isMatch = true;

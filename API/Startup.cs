@@ -71,7 +71,7 @@ namespace API
                     .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             services.AddAutoMapper();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // TODO undersøg om skal slettes
             services.AddScoped<IEventLogRepository, EventLogRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemTemplateRepository, ItemTemplateRepository>();
@@ -98,6 +98,36 @@ namespace API
                 options.AddPolicy("ItemTemplates_Add", policy => policy.RequireRole("ItemTemplates_Add"));
                 options.AddPolicy("ItemTemplates_View", policy => policy.RequireRole("ItemTemplates_View"));
                 options.AddPolicy("ItemTemplates_ActivateDeactivate", policy => policy.RequireRole("ItemTemplates_ActivateDeactivate"));
+                options.AddPolicy("Calender_Add", policy => policy.RequireRole("Calender_Add"));
+                options.AddPolicy("Calender_View", policy => policy.RequireRole("Calender_View"));
+                options.AddPolicy("Customer_Add", policy => policy.RequireRole("Customer_Add"));
+                options.AddPolicy("Customer_View", policy => policy.RequireRole("Customer_View"));
+                options.AddPolicy("Customer_Edit", policy => policy.RequireRole("Customer_Edit"));
+                options.AddPolicy("Customer_ActivateDeactivate", policy => policy.RequireRole("Customer_ActivateDeactivate"));
+                options.AddPolicy("EventLogs_View", policy => policy.RequireRole("EventLogs_View"));
+                options.AddPolicy("Upload_Files", policy => policy.RequireRole("Upload_Files"));
+                options.AddPolicy("Download_Files", policy => policy.RequireRole("Download_Files"));
+                options.AddPolicy("Items_Add", policy => policy.RequireRole("Items_Add"));
+                options.AddPolicy("Items_View", policy => policy.RequireRole("Items_View"));
+                options.AddPolicy("Items_Edit", policy => policy.RequireRole("Items_Edit"));
+                options.AddPolicy("Items_ActivateDeactivate", policy => policy.RequireRole("Items_ActivateDeactivate"));
+                options.AddPolicy("Items_Delete", policy => policy.RequireRole("Items_Delete"));
+                options.AddPolicy("Order_View", policy => policy.RequireRole("Order_View"));
+                options.AddPolicy("Order_Add", policy => policy.RequireRole("Order_Add"));
+                options.AddPolicy("Order_Edit", policy => policy.RequireRole("Order_Edit"));
+                options.AddPolicy("Order_Delete", policy => policy.RequireRole("Order_Delete"));
+                options.AddPolicy("Order_ActivateDeactivate", policy => policy.RequireRole("Order_ActivateDeactivate"));
+                options.AddPolicy("Project_View", policy => policy.RequireRole("Project_View"));
+                options.AddPolicy("Project_Add", policy => policy.RequireRole("Project_Add"));
+                options.AddPolicy("Project_Edit", policy => policy.RequireRole("Project_Edit"));
+                options.AddPolicy("Project_Delete", policy => policy.RequireRole("Project_Delete"));
+                options.AddPolicy("User_Add", policy => policy.RequireRole("User_Add"));
+                options.AddPolicy("User_View", policy => policy.RequireRole("User_View"));
+                options.AddPolicy("User_Edit", policy => policy.RequireRole("User_Edit"));
+                options.AddPolicy("User_Delete", policy => policy.RequireRole("User_Delete"));
+                options.AddPolicy("User_ActivateDeactivate", policy => policy.RequireRole("User_ActivateDeactivate"));
+                
+                
             });
         }
 

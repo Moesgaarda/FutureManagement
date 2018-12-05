@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ViewProjectsComponent } from './view-projects.component';
 import { DetailsProjectComponent } from './details-project.component';
 import { NewProjectComponent } from './new-project.component';
+import { AuthGuard } from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,26 +11,30 @@ const routes: Routes = [
     data: {
       title: 'Projekter'
     },
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'view',
         component: ViewProjectsComponent,
         data: {
-          title: 'Vis projekter'
+          title: 'Vis projekter',
+          roles: ['Project_View']
         }
       },
       {
         path: 'new',
         component: NewProjectComponent,
         data: {
-          title: 'Tilføj projekt'
+          title: 'Tilføj projekt',
+          roles: ['Project_Add']
         }
       },
       {
         path: 'details/:id',
         component: DetailsProjectComponent,
         data: {
-          title: 'Detaljer om projekt'
+          title: 'Detaljer om projekt',
+          roles: ['Project_View']
         }
       }
     ]

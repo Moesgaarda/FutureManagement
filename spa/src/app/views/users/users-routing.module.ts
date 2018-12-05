@@ -4,6 +4,7 @@ import { ViewUsersComponent } from './view-users.component';
 import { NewUserComponent } from './new-user.component';
 import { EditUserComponent } from './edit-user.component';
 import { DetailsUserComponent } from './details-user.component';
+import { AuthGuard } from '../../_guards/auth.guard';
 
 
 
@@ -13,33 +14,38 @@ const routes: Routes = [
     data: {
       title: 'Brugere'
     },
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'view',
         component: ViewUsersComponent,
         data: {
-          title: 'Vis brugere'
+          title: 'Vis brugere',
+          roles: ['User_View']
         }
       },
       {
         path: 'new',
         component: NewUserComponent,
         data: {
-          title: 'Tilføj ny bruger'
+          title: 'Tilføj ny bruger',
+          roles: ['User_Add']
         }
       },
       {
         path: 'edit/:id',
         component: EditUserComponent,
         data: {
-            title: 'Rediger bruger'
+            title: 'Rediger bruger',
+            roles: ['User_Edit']
         }
       },
       {
         path: 'details/:id',
         component: DetailsUserComponent,
         data: {
-          title: 'Detaljer om bruger'
+          title: 'Detaljer om bruger',
+          roles: ['User_View']
         }
       }
     ]
