@@ -44,7 +44,8 @@ const routes: Routes = [
         path: 'revise/:id',
         component: ReviseItemTemplateComponent,
         data: {
-          title: 'Revider skabelon'
+          title: 'Revider skabelon',
+          roles: ['ItemTemplates_Add']
         }
       }
     ]

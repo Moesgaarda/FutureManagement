@@ -12,31 +12,30 @@ const routes: Routes = [
       title: 'Bestillinger',
       roles: ['ItemTempaltes_View']
     },
-    runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
       {
         path: 'view',
         component: ViewOrdersComponent,
         data: {
-          roles: ['ItemTemplates_View'],
-          title: 'Vis bestillinger'
+          title: 'Vis bestillinger',
+          roles: ['Order_View']
         }
       },
       {
         path: 'details/:id',
         component: DetailsOrderComponent,
         data: {
-          roles: ['ItemTemplates_View'],
-          title: 'Detaljer for bestilling'
+          title: 'Detaljer for bestilling',
+          roles: ['Order_View']
         }
       },
       {
         path: 'new',
         component: NewOrderComponent,
         data: {
-          roles: ['ItemTemplates_View'],
-          title: 'Ny bestilling'
+          title: 'Ny bestilling',
+          roles: ['Order_Add']
         }
       },
     ]

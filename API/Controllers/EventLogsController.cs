@@ -23,6 +23,7 @@ namespace API.Controllers
              this._repo = repo;
          }
 
+        [Authorize(Policy = "EventLogs_View")]
         [HttpGet("getAll")]
          public async Task<IActionResult> GetAllEventLogs(){
              List<EventLog> allEventLogs = await _repo.GetAllEventLogs();
@@ -30,6 +31,7 @@ namespace API.Controllers
              return Ok(allEventLogs);
          }
 
+        [Authorize(Policy = "EventLogs_View")]
         [HttpGet("myEventLogs/{id}", Name = "GetMyEventLogs")]
          public async Task<IActionResult> GetMyEventLogs(int id){
             // TODO Fjern try-catch når det er påkrævet at være logged ind.
@@ -47,6 +49,7 @@ namespace API.Controllers
             }  
         }
 
+        [Authorize(Policy = "EventLogs_View")]
         [HttpGet("{id}", Name = "GetUserEventLogs")]
          public async Task<IActionResult> GetUserEventLog(int userId){
             var myEventLogs = await _repo.GetEventLogs(userId);

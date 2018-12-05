@@ -1,10 +1,12 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
-{
+{   [AllowAnonymous]
     public class AuthRepository : IAuthRepository
     {
         private readonly DataContext _context;
@@ -16,8 +18,10 @@ namespace API.Data
 
         public async Task<User> Login(string username, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
-        
+            User user = await _context.Users
+                    .Where(x => x.UserName == username)
+                    .Include(x => x.UserRoles)
+                    .FirstOrDefaultAsync();
             if(user == null)
                 return null;
             

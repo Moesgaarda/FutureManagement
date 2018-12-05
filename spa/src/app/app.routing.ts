@@ -7,7 +7,6 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 
@@ -40,20 +39,11 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'register',
-    component: RegisterComponent,
-    data: {
-      title: 'Register Page'
-    },
-    canActivate: [AuthGuard]
-  },
-  {
     path: '',
     component: DefaultLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Home',
     },
-    canActivate: [AuthGuard],
     children: [
       {
         path: 'base',
