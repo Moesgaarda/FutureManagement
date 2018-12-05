@@ -38,6 +38,9 @@ export class ReviseItemTemplateComponent implements OnInit {
   propertiesToCheck: ItemPropertyName[] = [];
   templatePartsToAdd: ItemTemplatePart[] = [] as ItemTemplatePart[];
   filesFromRevision: DetailFile[];
+  itemsPerPage = 15;
+  currentPage = 1;
+  propFilter: string;
 
   constructor(private templateService: ItemTemplateService,
               private route: ActivatedRoute,

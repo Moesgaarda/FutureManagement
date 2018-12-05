@@ -31,7 +31,6 @@ export class NewItemTemplateComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   uploader: FileUploadService;
-  paginatedPropArray: ItemPropertyName[];
   itemsPerPage = 15;
   currentPage = 1;
   propFilter: string;
@@ -71,7 +70,6 @@ export class NewItemTemplateComponent implements OnInit {
   async loadAllTemplateProperties() {
     await this.templateService.getAllTemplateProperties().subscribe(properties => {
       this.properties = properties;
-      this.paginatedPropArray = properties.slice(0, this.itemsPerPage);
     });
   }
 
