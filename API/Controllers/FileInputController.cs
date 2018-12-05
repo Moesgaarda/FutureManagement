@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class FileInputController : Controller
     {
@@ -31,6 +30,7 @@ namespace API.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "Upload_Files")]
         [HttpPost("uploadfiles", Name = "UploadFiles")]
         [DisableFormValueModelBinding]
         public async Task<IActionResult> UploadFiles(){
@@ -70,6 +70,7 @@ namespace API.Controllers
             return Ok(fileIds);
         }
 
+        [Authorize(Policy = "Download_Files")]
         [HttpGet("downloadfile", Name = "DownloadFile")]
         public async Task<IActionResult> Download(int id){
             var fileData = await _repo.GetFile(id);

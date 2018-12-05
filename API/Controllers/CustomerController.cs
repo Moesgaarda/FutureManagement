@@ -17,22 +17,28 @@ namespace API.Controllers{
             _context = context;
         }
 
+        [Authorize(Policy = "Customer_View")]
         public Task<List<Customer>> GetAllCustomers(){
             throw new NotImplementedException();
         }
 
+        [Authorize(Policy = "Customer_Add")]
         public Task<bool> AddNewCustomer(Customer customer){
             throw new NotImplementedException();
         }
 
+        [Authorize(Policy = "Customer_View")]
         public Task<Customer> GetCustomer(int userId){
             throw new NotImplementedException();
         }
 
+        // TODO: Kan man delete? Skal man ikke aktivere/deaktivere?
+        [Authorize(Policy = "Customer_ActivateDeactivate")] 
         public Task<bool> DeleteCustomer(int userId){
             throw new NotImplementedException();
         }
 
+        [Authorize(Policy = "Customer_Edit")]
         public Task<bool> EditCustomer(Customer customer){
             throw new NotImplementedException();
         }

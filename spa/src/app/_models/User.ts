@@ -3,7 +3,7 @@ import { UserRole } from './UserRole';
 export interface User {
     id: number;
     username: string;
-    role: UserRole[];
+    UserRoles: UserRole[];
     name: string;
     surname: string;
     birthdate: Date;

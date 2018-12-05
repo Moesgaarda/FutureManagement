@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ViewCustomersComponent } from './view-customers.component';
 import { NewCustomerComponent } from './new-customer.component';
 import { DetailsCustomerComponent } from './details-customer.component';
+import { AuthGuard } from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,26 +11,30 @@ const routes: Routes = [
     data: {
       title: 'Kunder'
     },
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'view',
         component: ViewCustomersComponent,
         data: {
-          title: 'Vis kunder'
+          title: 'Vis kunder',
+          roles: ['Customer_View']
         }
       },
       {
         path: 'new',
         component: NewCustomerComponent,
         data: {
-          title: 'Tilføj kunde'
+          title: 'Tilføj kunde',
+          roles: ['Customer_Add']
         }
       },
       {
         path: 'details/:id',
         component: DetailsCustomerComponent,
         data: {
-          title: 'Detaljer for kunde'
+          title: 'Detaljer for kunde',
+          roles: ['Customer_View']
         }
       }
     ]
