@@ -129,7 +129,6 @@ export class NewOrderComponent implements OnInit {
     this.currentItem.isActive = true;
     this.orderToAdd.products.push(this.currentItem);
     this.changePage();
-    console.log(this.orderToAdd);
     this.currentItem = {} as Item;
     this.propertyDescriptionsToAdd = [] as ItemPropertyDescription[];
     this.templateDetails = {} as ItemTemplate;
