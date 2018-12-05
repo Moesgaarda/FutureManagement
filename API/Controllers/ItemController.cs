@@ -23,7 +23,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
-        //[Authorize(Policy = "Items_View")]
+        [Authorize(Policy = "Items_View")]
         [HttpGet("getActive")]
         public async Task<IActionResult> GetActiveItems(){
             var items = await _repo.GetActiveItems();
