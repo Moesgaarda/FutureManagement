@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ItemTemplatesRoutingModule } from './itemTemplates-routing.module';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
 import { TechtableComponent } from '../../_components/techtable/techtable.component';
+import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
 
 
 @NgModule({
@@ -23,13 +25,15 @@ import { TechtableComponent } from '../../_components/techtable/techtable.compon
     CommonModule,
     NgSelectModule,
     Ng2TableModule,
+    NgxPaginationModule,
   ],
   declarations: [
     ViewItemTemplatesComponent,
     NewItemTemplateComponent,
     DetailsItemTemplateComponent,
     ReviseItemTemplateComponent,
-    TechtableComponent
+    TechtableComponent,
+    PropertyFilterPipe
    ]
 })
 export class ItemTemplatesModule { }
