@@ -18,7 +18,7 @@ export class NewOrderComponent implements OnInit {
   unitTypes = Object.keys(UnitType);
   currentItem: Item = {} as Item;
   templates: ItemTemplate[] = [];
-  onOrderPage: boolean = true;
+  onOrderPage = true;
   templateToGet: ItemTemplate = {} as ItemTemplate;
   templateDetails: ItemTemplate = {} as ItemTemplate;
   detailsReady: boolean;
@@ -39,25 +39,46 @@ export class NewOrderComponent implements OnInit {
 
   async ngOnInit() {
     await this.getTemplates();
-    this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
+    // we only need the lenght measurements
+    this.unitTypes = this.unitTypes.slice(6, 9);
   }
 
+  /**
+   * This method is used to switch between page for adding details to order and adding items to order
+   *
+   * @memberof NewOrderComponent
+   */
   changePage() {
     this.onOrderPage = !this.onOrderPage;
   }
 
+  
+  /**
+   * Gets all the ItemTemplates from the api
+   *
+   * @memberof NewOrderComponent
+   */
   async getTemplates() {
     await this.itemTemplateService.getAll().subscribe(templates => {
       this.templates = templates;
     });
   }
 
+
+  /**
+   * Gets details for a specific ItemTemplate
+   * Is used when the user chooses one ItemTemplate to add to the order
+   * Because the templates that are retrieved when getting all templates at once don't have all the details of the ItemTemplate
+   * 
+   * @memberof NewOrderComponent
+   */
   async getTemplateDetails() {
     await this.itemTemplateService
       .getItemTemplate(this.templateToGet.id)
       .subscribe(
         template => {
           this.templateDetails = template;
+          console.log(template);
         },
         error => {
           this.alertify.error('kunne ikke hente skabelon');
@@ -69,14 +90,32 @@ export class NewOrderComponent implements OnInit {
       );
   }
 
+
+  /**
+   * Extracts the unitType from the ItemTemplate that is being added to the Order
+   *
+   * @memberof NewOrderComponent
+   */
   getUnitTypeForTemplate() {
     this.unitTypeForAmount = UnitType[this.templateDetails.unitType];
   }
 
+  /**
+   *
+   * Removes a Item i from the Order
+   *
+   * @param {number} i
+   * @memberof NewOrderComponent
+   */
   removeItemFromOrder(i: number) {
     this.orderToAdd.products.splice(i, 1);
   }
 
+  /**
+   * Adds an item to the order with all it's details
+   *
+   * @memberof NewOrderComponent
+   */
   addItemToOrder() {
     for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
       this.propertyDescriptionsToAdd.push({
@@ -97,6 +136,11 @@ export class NewOrderComponent implements OnInit {
     this.templateToGet = {} as ItemTemplate;
   }
 
+  /**
+   * Sends the finished Order to the API to be added
+   *
+   * @memberof NewOrderComponent
+   */
   addOrder() {
     this.orderService.addOrder(this.orderToAdd).subscribe(
       data => {
