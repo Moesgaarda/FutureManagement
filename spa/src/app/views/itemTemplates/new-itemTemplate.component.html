@@ -62,11 +62,12 @@
         <div class="input-group">
           <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
         </div>
-        <br>  
+        <br>
+        
         <div class="col-sm-6" *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
                                                                                             currentPage: currentPage, 
                                                                                             totalItems: properties?.length }; let i=index">
-          <input type="checkbox" value="{{prop}}" (click)="onCheckboxChange(prop,$event)" /> {{prop.name}}
+          <input type="checkbox" class="form-check-input" value="{{prop}}" (click)="onCheckboxChange(prop,$event)" /> {{prop.name}}
         </div>
         <br>
         <pagination-controls (pageChange)="currentPage = $event"
