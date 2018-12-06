@@ -33,22 +33,7 @@ namespace API.Controllers{
 
         [Authorize(Policy = "Order_Add")]
         [HttpPost("add", Name = "AddOrder")]
-        public async Task<IActionResult> AddOrder([FromBody]Order order){
-            
-            var orderToCreate = new Order(
-                order.Company,
-                order.OrderDate,
-                order.DeliveryDate,
-                order.OrderedBy,
-                order.InvoicePath,
-                order.PurchaseNumber,
-                order.Width,
-                order.Height,
-                order.Length,
-                order.UnitType,
-                order.Products
-            );
-       
+        public async Task<IActionResult> AddOrder([FromBody]Order orderToCreate){       
 
             bool result = await _repo.AddOrder(orderToCreate);
             return result ? StatusCode(201) : BadRequest();

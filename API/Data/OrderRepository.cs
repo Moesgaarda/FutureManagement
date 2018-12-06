@@ -23,13 +23,18 @@ namespace API.Data
         {
             if(order.OrderedBy != null){
                 order.OrderedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == order.OrderedBy.Id);
+            }else{
+                order.OrderedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == 1);
+            }
+            foreach(Item product in order.Products){
+                product.Template = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == product.Template.Id);
+                foreach(ItemPropertyDescription property in product.Properties){
+                    property.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync(x => x.Id == property.PropertyName.Id);
+                }
+                
             }
 
             await _context.Orders.AddAsync(order);
-            foreach(Item item in order.Products){
-                item.Order.Id = order.Id;
-                await _itemRepo.AddItem(item);
-            }
             
             int result = await _context.SaveChangesAsync();
 

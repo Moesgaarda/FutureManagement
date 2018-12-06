@@ -69,7 +69,7 @@ export const navItems = [
   {
     name: 'Bestillinger',
     icon: 'fa fa-envelope-o',
-    url: '/base',
+    url: '/orders',
     children: [
       {
         name: 'Vis bestillinger',

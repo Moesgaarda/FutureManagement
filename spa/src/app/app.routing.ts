@@ -66,6 +66,10 @@ export const routes: Routes = [
         loadChildren: './views/itemTemplates/itemTemplates.module#ItemTemplatesModule'
       },
       {
+        path: 'orders',
+        loadChildren: './views/orders/orders.module#OrdersModule'
+      },
+      {
         path: 'userRoles',
         loadChildren: './views/user-roles/user-roles.module#UserRolesModule'
       },

@@ -150,7 +150,7 @@
           <select
             class="form-control btn btn-success dropdown-toggle"
             [(ngModel)]="templateToGet"
-            (change)="getTemplateDetails() && getUnitTypeForTemplate()"
+            (change)="getTemplateDetails()"
           >
             <option *ngFor="let temp of templates" [ngValue]="temp">{{
               temp.name
@@ -164,7 +164,7 @@
               type="text"
               placeholder="Placering"
               class="form-control"
-              [(ngModel)]="currentItem.amount"
+              [(ngModel)]="currentItem.placement"
             />
           </div>
         </div>
@@ -207,21 +207,24 @@
       </div>
       <div class="card-body">
         <div *ngIf="detailsReady">
-          <div
-            *ngFor="
-              let prop of templateDetails.templateProperties;
-              let i = index
-            "
-          >
-            {{ prop.name }} <br />
-            <br />
-            <input
-              type="text"
-              placeholder="{{prop.name}}"
-              class="form-control"
-              [(ngModel)]="descriptionTextsToAdd[i]"
-            />
-            <br />
+          <div class="table-responsive-sm">
+              <table class="table">
+                  <tbody>
+                    <tr *ngFor="let prop of templateDetails.templateProperties; let i=index">
+                      <td>
+                        <b>{{prop.name}}</b>
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          placeholder="{{prop.name}}"
+                          class="form-control"
+                          [(ngModel)]="descriptionTextsToAdd[i]"
+                        />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
           </div>
         </div>
       </div>

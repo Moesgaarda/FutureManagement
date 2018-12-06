@@ -13,10 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
-import { TechtableComponent } from '../../_components/techtable/techtable.component';
+import { TechTableModule} from '../../_modules/techtable/techtable.module';
 import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
-
-
 @NgModule({
   imports: [
     ItemTemplatesRoutingModule,
@@ -25,6 +23,7 @@ import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
     CommonModule,
     NgSelectModule,
     Ng2TableModule,
+    TechTableModule,
     NgxPaginationModule,
   ],
   declarations: [
@@ -32,8 +31,7 @@ import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
     NewItemTemplateComponent,
     DetailsItemTemplateComponent,
     ReviseItemTemplateComponent,
-    TechtableComponent,
     PropertyFilterPipe
-   ]
+  ]
 })
 export class ItemTemplatesModule { }

@@ -89,6 +89,7 @@ namespace API.Data
                     .Include(x => x.Parts)
                     .ThenInclude(x => x.Part)
                     .Include(x => x.TemplateProperties)
+                    .ThenInclude(x => x.Property)
                     .Include(x => x.PartOf)
                     .ThenInclude(x => x.Template)
                     .Include(x => x.Files)                
