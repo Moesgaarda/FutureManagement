@@ -39,7 +39,7 @@ export class NewOrderComponent implements OnInit {
 
   async ngOnInit() {
     await this.getTemplates();
-    // we only need the lenght measurements
+    // we only need the length measurements, so the second half of the unit types are cut off
     this.unitTypes = this.unitTypes.slice(6, 9);
   }
 
@@ -78,7 +78,6 @@ export class NewOrderComponent implements OnInit {
       .subscribe(
         template => {
           this.templateDetails = template;
-          console.log(template);
         },
         error => {
           this.alertify.error('kunne ikke hente skabelon');

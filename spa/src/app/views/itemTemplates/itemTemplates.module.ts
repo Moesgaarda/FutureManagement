@@ -31,8 +31,7 @@ import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
     NewItemTemplateComponent,
     DetailsItemTemplateComponent,
     ReviseItemTemplateComponent,
-    TechtableComponent,
     PropertyFilterPipe
-   ]
+  ]
 })
 export class ItemTemplatesModule { }
