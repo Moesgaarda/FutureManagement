@@ -155,8 +155,14 @@
           <div class="card">
             <div class="card-header">Egenskaber</div>
             <div class="card-body">
+              <div class="input-group">
+                <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
+              </div>
+              <br>
 
-            <ng-container *ngFor="let prop of properties">
+              <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
+                                                                                                   currentPage: currentPage, 
+                                                                                                   totalItems: properties?.length }; let i=index">
               <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
               <ng-template #checkedBox>
                   <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)" checked/> {{prop.name}}
@@ -165,6 +171,12 @@
                   <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
               </ng-template>
               <br>
-            </ng-container>
+              </ng-container>
+              <pagination-controls (pageChange)="currentPage = $event"
+                                    maxSize="7"
+                                    previousLabel="Forrige"
+                                    nextLabel="Næste">
+              </pagination-controls>
+            </div>
           </div>
-          </div>
+        </div>

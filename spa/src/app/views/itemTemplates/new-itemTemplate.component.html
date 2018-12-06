@@ -60,14 +60,21 @@
       <div class="card-header">Egenskaber</div>
       <div class="card-body">
         <div class="input-group">
-          <input type="text" placeholder="Filtrer egenskaber" class="form-control"/>
+          <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
         </div>
         <br>
-        <div class="col-sm-6" *ngFor="let prop of paginatedPropArray; let i=index">
+        
+        <div class="col-sm-6" *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
+                                                                                            currentPage: currentPage, 
+                                                                                            totalItems: properties?.length }; let i=index">
           <input type="checkbox" class="form-check-input" value="{{prop}}" (click)="onCheckboxChange(prop,$event)" /> {{prop.name}}
         </div>
         <br>
-        <pagination [totalItems]="properties?.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" previousText="Tilbage" nextText="Frem" (pageChanged)="propPageChanged($event)"> </pagination>
+        <pagination-controls (pageChange)="currentPage = $event"
+                             maxSize="7"
+                             previousLabel="Forrige"
+                             nextLabel="Næste">
+        </pagination-controls>
 
         <div class="input-group">
           <input type="text" placeholder="Tilføj ny egenskab" class="form-control" id="propField" [(ngModel)]="propToAddToDb && propToAddToDb.name" />
