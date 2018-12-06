@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers{
 
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class OrderController : Controller{
         private readonly DataContext _context;
