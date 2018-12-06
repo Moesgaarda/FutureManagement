@@ -52,5 +52,6 @@ namespace API.Models{
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
         public ICollection<TemplateFileName> Files { get; set; }
+        public int LowerLimit { get; set; }
     }
 }
