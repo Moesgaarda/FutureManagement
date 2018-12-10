@@ -9,7 +9,7 @@ const routes: Routes = [
     data: {
       title: 'Data log'
     },
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'view',

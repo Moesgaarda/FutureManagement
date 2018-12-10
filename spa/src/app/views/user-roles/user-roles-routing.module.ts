@@ -9,7 +9,7 @@ const routes: Routes = [
     data: {
       title: 'Roller'
     },
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
         {
             path: 'new',

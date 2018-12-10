@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './_services/auth.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { AuthService } from './_services/auth.service';
   template: '<router-outlet></router-outlet>'
 })
 export class AppComponent implements OnInit {
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private router: Router, private authService: AuthService) { }
 
