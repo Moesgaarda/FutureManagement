@@ -23,6 +23,7 @@ namespace API.Controllers{
             _mapper = mapper;
         }
 
+        [Authorize(Policy = "Order_View")]
         [HttpGet("get/{id}", Name = "GetOrder")]
         public async Task<IActionResult> GetOrder(int orderId){
             var order = await _repo.GetOrder(orderId);
@@ -30,23 +31,9 @@ namespace API.Controllers{
             return Ok(order);
         }
 
+        [Authorize(Policy = "Order_Add")]
         [HttpPost("add", Name = "AddOrder")]
-        public async Task<IActionResult> AddOrder([FromBody]Order order){
-            
-            var orderToCreate = new Order(
-                order.Company,
-                order.OrderDate,
-                order.DeliveryDate,
-                order.OrderedBy,
-                order.InvoicePath,
-                order.PurchaseNumber,
-                order.Width,
-                order.Height,
-                order.Length,
-                order.UnitType,
-                order.Products
-            );
-       
+        public async Task<IActionResult> AddOrder([FromBody]Order orderToCreate){       
 
             bool result = await _repo.AddOrder(orderToCreate);
             return result ? StatusCode(201) : BadRequest();
@@ -55,7 +42,7 @@ namespace API.Controllers{
             
         }
         
-
+        [Authorize(Policy = "Order_View")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllOrders(){
             var orders = await _repo.GetAllOrders();
@@ -63,6 +50,7 @@ namespace API.Controllers{
             return Ok(orders);
         }
 
+        [Authorize(Policy = "Order_Edit")]
         [HttpPost("edit")]
         public async Task<IActionResult> EditOrder([FromBody]Order order){
             if(order.Id == 0){
@@ -77,7 +65,7 @@ namespace API.Controllers{
             return result ? StatusCode(200) : StatusCode(400);
         }
 
-        
+        [Authorize(Policy = "Order_Delete")]
         [HttpPost("delete/{id}", Name = "DeleteOrder")]
         public async Task<IActionResult> DeleteOrder(int id){
             if(id == 0){
@@ -94,6 +82,7 @@ namespace API.Controllers{
             return result ? StatusCode(200) : BadRequest();
         }
 
+        [Authorize(Policy = "Order_Edit")]
         public Task<bool> UpdateOrderStatus(){
             throw new NotImplementedException(); //TODO Unit testing
         }

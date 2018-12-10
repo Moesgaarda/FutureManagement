@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewLogComponent } from './view-log.component';
+import { AuthGuard } from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -8,12 +9,14 @@ const routes: Routes = [
     data: {
       title: 'Data log'
     },
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'view',
         component: ViewLogComponent,
         data: {
-          title: 'Vis data log'
+          title: 'Vis data log',
+          roles: ['EventLogs_View']
         }
       }
     ]

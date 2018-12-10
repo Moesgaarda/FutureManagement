@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using API.Dtos;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-
     [Route("api/[controller]")]
     public class CalendarController : Controller
     {
@@ -23,6 +23,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
+        [Authorize(Policy = "Calender_View")]
         [HttpGet("getCalendars")]
         public async Task<IActionResult> GetCalendars(){
             var calendars = await _repo.GetCalendars();
@@ -30,12 +31,14 @@ namespace API.Controllers
             return Ok(calendars);
         }
 
+        [Authorize(Policy = "Calender_View")]
         [HttpGet("getCalendarEvents/{id}")]
         public async Task<IActionResult> GetCalendarEvents(int calendarId){
             var calendarEvents = await _repo.GetCalendarEvents(calendarId);
             return Ok(calendarEvents);
         }
 
+        [Authorize(Policy = "Calender_Add")]
         [HttpPost("addCalendar")]
         public Task<IActionResult> AddCalendar(){
             throw new NotImplementedException();

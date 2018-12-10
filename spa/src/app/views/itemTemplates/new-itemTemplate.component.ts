@@ -31,9 +31,9 @@ export class NewItemTemplateComponent implements OnInit {
   propToAddToDb: ItemPropertyName = {} as ItemPropertyName;
   fileNamesToAdd: string;
   uploader: FileUploadService;
-  paginatedPropArray: ItemPropertyName[];
   itemsPerPage = 15;
   currentPage = 1;
+  propFilter: string;
 
   /**
    * @param {ItemTemplateService} templateService
@@ -47,6 +47,7 @@ export class NewItemTemplateComponent implements OnInit {
     this.getTemplates();
     this.loadAllTemplateProperties();
     this.uploader = uploaderParameter;
+    this.uploader.clearQueue();
   }
 
   ngOnInit() {
@@ -69,20 +70,7 @@ export class NewItemTemplateComponent implements OnInit {
   async loadAllTemplateProperties() {
     await this.templateService.getAllTemplateProperties().subscribe(properties => {
       this.properties = properties;
-      this.paginatedPropArray = properties.slice(0, this.itemsPerPage);
     });
-  }
-
-
-  /**
-   * @param {PageChangedEvent} event
-   * The event contains pageNumber and itemPerPage. The index of the start item is calculated by previous page number,
-   * and the endItem is calculated with the number of the page you are switching to.
-   */
-  propPageChanged(event: PageChangedEvent): void {
-    const startItem = (event.page - 1) * event.itemsPerPage;
-    const endItem = event.page * event.itemsPerPage;
-    this.paginatedPropArray = this.properties.slice(startItem, endItem);
   }
 
   /**

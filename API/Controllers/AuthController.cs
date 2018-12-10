@@ -26,6 +26,7 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
+
         public AuthController(IConfiguration config, 
                             IMapper mapper, UserManager<User> userManager,
                             SignInManager<User> signInManager){
@@ -58,7 +59,8 @@ namespace API.Controllers
                 .CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
 
             if (result.Succeeded){
-                var appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName.ToLower() == userForLoginDto.UserName.ToLower());
+                var appUser = await _userManager.Users
+                    .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.UserName.ToUpper());
                 var userToReturn = _mapper.Map<UserForGetDto>(appUser);
 
                 return Ok(new{

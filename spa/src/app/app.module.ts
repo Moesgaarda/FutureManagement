@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { HttpModule} from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -55,7 +55,8 @@ import { EventLogService } from './_services/eventLog.service';
 import { AuthService } from './_services/auth.service';
 import { FileUploadService} from './_services/fileUpload.service';
 import { AuthGuard } from './_guards/auth.guard';
-import { TechtableComponent } from './_components/techtable/techtable.component';
+import { Interceptor } from './_services/http.interceptor';
+
 
 @NgModule({
   imports: [
@@ -86,6 +87,11 @@ import { TechtableComponent } from './_components/techtable/techtable.component'
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: Interceptor,
+    multi: true
   },
   ItemService,
   ItemTemplateService,
