@@ -11,7 +11,7 @@ const routes: Routes = [
     data: {
       title: 'Projekter'
     },
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'view',

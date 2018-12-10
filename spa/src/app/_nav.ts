@@ -1,4 +1,4 @@
-import { tokenNotExpired } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 export const navItems = [
   {

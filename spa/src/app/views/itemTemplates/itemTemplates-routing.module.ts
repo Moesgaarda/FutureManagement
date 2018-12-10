@@ -14,7 +14,7 @@ const routes: Routes = [
       roles: ['ItemTemplates_View']
     },
     runGuardsAndResolvers: 'always',
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'view',
