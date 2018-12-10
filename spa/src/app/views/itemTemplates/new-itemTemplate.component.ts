@@ -141,4 +141,13 @@ export class NewItemTemplateComponent implements OnInit {
       this.loadAllTemplateProperties();
     });
   }
+
+  checkBox(id) {
+    for (const propToCheck of this.propertiesToAdd) {
+      if (propToCheck.id === id) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
