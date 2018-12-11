@@ -53,7 +53,6 @@ export class FileUploadService {
    * @memberof FileUploadService
    */
   async upload(origin: string): Promise<number []> {
-    
       if (this.queuedFiles.length === 0) {
         return;
       }
