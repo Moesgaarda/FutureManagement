@@ -10,7 +10,7 @@ namespace API.Models{
         public ItemTemplate(){}
         public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
                             ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, DateTime created, 
-                            ItemTemplate revisionedFrom, ICollection<TemplateFileName> files , int loserLimit){
+                            ItemTemplate revisionedFrom, ICollection<TemplateFileName> files , int lowerLimit){
             this.Id = id;
             this.Name = name;
             this.UnitType = unitType;
@@ -22,12 +22,12 @@ namespace API.Models{
             this.RevisionID = revisionId;
             this.Created = created;
             this.RevisionedFrom = revisionedFrom;
-            this.LowerLimit = LowerLimit;
+            this.LowerLimit = lowerLimit;
         }
 
         public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
                             ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, 
-                            DateTime created, ItemTemplate revisionedFrom, ICollection<TemplateFileName> files , int LowerLimit){
+                            DateTime created, ItemTemplate revisionedFrom, ICollection<TemplateFileName> files , int lowerLimit){
             this.Name = name;
             this.UnitType = unitType;
             this.Description = description;
@@ -38,7 +38,7 @@ namespace API.Models{
             this.RevisionID = revisionId;
             this.Created = created;
             this.RevisionedFrom = revisionedFrom;
-            this.LowerLimit = LowerLimit;
+            this.LowerLimit = lowerLimit;
         }
         
         [Key]
