@@ -14,7 +14,7 @@ const routes: Routes = [
     data: {
       title: 'Brugere'
     },
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'view',

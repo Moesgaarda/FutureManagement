@@ -5,7 +5,7 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
-import { TechtableComponent } from '../techtable/techtable.component';
+import { TechTableModule } from '../techtable/techtable.module';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { TechtableComponent } from '../techtable/techtable.component';
     NgSelectModule,
     PaginationModule.forRoot(),
     FormsModule,
-    TechtableComponent
+    TechTableModule
   ],
-  declarations: [TechkrustableComponent, TechtableComponent]
+  declarations: [TechkrustableComponent]
 })
 export class TechkrustableModule { }

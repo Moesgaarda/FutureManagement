@@ -12,7 +12,7 @@ const routes: Routes = [
       title: 'Bestillinger',
       roles: ['ItemTemplates_View']
     },
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'view',

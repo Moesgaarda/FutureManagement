@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { User } from '../_models/User';
@@ -10,7 +10,7 @@ export class AuthService {
     baseUrl = environment.apiUrl + 'auth/';
     userToken: any;
     decodedToken: any;
-    jwtHelper: JwtHelper = new JwtHelper();
+    jwtHelper: JwtHelperService = new JwtHelperService();
     constructor(private http: Http) { }
     test: any;
 
@@ -33,7 +33,8 @@ export class AuthService {
     }
 
     loggedIn() {
-        return tokenNotExpired('token');
+        const token = localStorage.getItem('token');
+        return !this.jwtHelper.isTokenExpired(token);
     }
 
     roleMatch(allowedRoles): boolean {

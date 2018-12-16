@@ -12,7 +12,7 @@ export class EventLogService {
 
     constructor(private http: HttpClient) {}
 
-    getAllEventLogs(): Observable<EventLog[]> {
+    getAll(): Observable<EventLog[]> {
         return this.http.get<EventLog[]>(this.baseUrl + 'getAll/');
     }
     getUserEventLogs(id: number): Observable<EventLog[]> {
