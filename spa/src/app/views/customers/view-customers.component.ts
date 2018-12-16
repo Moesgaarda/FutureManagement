@@ -59,7 +59,7 @@ export class ViewCustomersComponent {
   }
 
   async loadCustomers() {
-    await this.service.getAllCustomers().subscribe(customers => {
+    await this.service.getAll().subscribe(customers => {
       this.customers = customers;
       this.source.load(customers);
       this.source.refresh();

@@ -85,6 +85,7 @@ export class ReviseItemTemplateComponent implements OnInit {
         this.isDataAvailable = true;
         this.templateToRevise.fileNames = [];
         this.templateToRevise.files = [];
+        this.templateToRevise.lowerLimit = itemTemplate.lowerLimit;
     });
   }
 
