@@ -26,5 +26,6 @@ namespace API.Dtos
         public int[] Files { get; set; }
         public string[] FileNames { get; set;}
         public bool IsActive { get; set; }
+        public int LowerLimit { get; set; }
     }
 }
