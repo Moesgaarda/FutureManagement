@@ -72,8 +72,7 @@ namespace API.Data {
             return result > 0;
         }
 
-        public async Task<bool> EditItem (Item item) {
-            var itemToChange = await _context.Items.FirstAsync (x => x.Id == item.Id);
+        public async Task<bool> EditItem (Item item, Item itemToChange) {
             _context.Entry (itemToChange).CurrentValues.SetValues (item);
             var result = await _context.SaveChangesAsync ();
 

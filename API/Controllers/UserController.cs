@@ -11,6 +11,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using API.Enums;
 
 namespace API.Controllers
 {
@@ -22,13 +23,16 @@ namespace API.Controllers
         private readonly IUserRepository _repo;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
-        public UserController(IUserRepository repo, DataContext context, IMapper mapper, UserManager<User> userManager, RoleManager<Role> roleManager)
+        private readonly IEventLogRepository _eventLogRepo;
+        public UserController(IUserRepository repo, DataContext context, IMapper mapper, UserManager<User> userManager, 
+                                RoleManager<Role> roleManager, IEventLogRepository eventLogRepo)
         {
             _context = context;
             _mapper = mapper;
             _repo = repo;
             _userManager = userManager;
             _roleManager = roleManager;
+            _eventLogRepo = eventLogRepo;
         }
 
         [Authorize(Policy = "User_View")]
@@ -73,8 +77,13 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            bool succes = await _repo.EditUser(user);
+            var userToChange = _context.Users.First(x => x.Id == user.Id);
+            bool succes = await _repo.EditUser(user, userToChange);
 
+            if(succes){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                succes = await _eventLogRepo.AddEventLogChange("bruger", user.UserName, user.Id, currentUser, user, userToChange);
+            }
             return succes ? StatusCode(200) : BadRequest();
 
         }
@@ -104,6 +113,11 @@ namespace API.Controllers
             var user = await _repo.GetUser(id);
             user.IsActive = false;
             var succes = await _repo.DeActivateUser(user);
+
+            if(succes){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                succes = await _eventLogRepo.AddEventLog(EventType.Deactivated, "bruger", user.UserName, user.Id, currentUser);
+            }
             return succes ? StatusCode(200) : BadRequest();
         }
 
@@ -114,6 +128,11 @@ namespace API.Controllers
             var userActivate = await _repo.GetUser(id);
             userActivate.IsActive = true;
             bool succes = await _repo.ActivateUser(userActivate);
+
+            if(succes){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                succes = await _eventLogRepo.AddEventLog(EventType.Activated, "bruger", userActivate.UserName, userActivate.Id, currentUser);
+            }
             return succes ? StatusCode(200) : BadRequest();
         }
 
@@ -145,6 +164,11 @@ namespace API.Controllers
             if(!result.Succeeded)
                 return BadRequest("Failed to remove from roles");
 
+            RoleEditDto oldRoles = new RoleEditDto();
+            oldRoles.RoleNames = userRoles.ToArray();
+            User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            await _eventLogRepo.AddEventLogChange("bruger", user.UserName, user.Id, currentUser, oldRoles, roleEditDto);
+
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
@@ -156,7 +180,10 @@ namespace API.Controllers
                 bool roleCheck = await _roleManager.RoleExistsAsync(name.ToUpper());
                 if (!roleCheck){
                     var result = _roleManager.CreateAsync(new Role{Name = name}).Result;
+
                     if(result.Succeeded){
+                        User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                        await _eventLogRepo.AddEventLog(EventType.Created, "rolle", name, _roleManager.FindByNameAsync(name).Result.Id, currentUser);
                         return StatusCode(201);
                     }
                 }

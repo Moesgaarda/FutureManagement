@@ -34,7 +34,7 @@ namespace API.Data
 
             int result = await WriteEvent(currentUser, desc);
 
-            return result < 0;
+            return result > 0;
         }
 
         // Used to add eventlog to the database when an object is changed
@@ -42,20 +42,21 @@ namespace API.Data
         {
 
             List<Variance> variances = objectOld.DetailedCompare(objectNew);
-            String changes = "";
+            string changes = "";
             if (variances.Count > 0)
             {
-                for (int i = 0; i < variances.Count; i++)
+                changes += variances[0].Prop;
+                for (int i = 1; i < variances.Count; i++)
                 {
                     changes += ", " + variances[i].Prop;
                 }
             }
 
-            string desc = $"Bruger \"{currentUser.UserName}\" ændrede {changes} for {objectType} \"{objectName}\" med ID[{objectId}]";
+            string desc = $"Bruger \"{currentUser.UserName}\" ændrede {changes} på {objectType} \"{objectName}\" med ID[{objectId}]";
 
             int result = await WriteEvent(currentUser, desc);
 
-            return result < 0;
+            return result > 0;
         }
 
         public string GetAction(EventType action)

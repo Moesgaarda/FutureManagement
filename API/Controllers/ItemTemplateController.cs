@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Dtos;
 using API.Dtos.FileDtos;
+using API.Enums;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -18,11 +20,17 @@ namespace API.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IItemTemplateRepository _repo;
+        private readonly UserManager<User> _userManager;
+        private readonly IEventLogRepository _eventLogRepo;
 
-        public ItemTemplateController(IItemTemplateRepository repo, DataContext context, IMapper mapper){
+        public ItemTemplateController(IItemTemplateRepository repo, DataContext context,
+                                     IMapper mapper, UserManager<User> userManager, IEventLogRepository eventLogRepo)
+        {
             _context = context;
             _mapper = mapper;
             _repo = repo;
+            _userManager = userManager;
+            _eventLogRepo = eventLogRepo;
         }
 
         [Authorize(Policy = "ItemTemplates_View")]
@@ -83,6 +91,11 @@ namespace API.Controllers
 
             bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);
 
+            if(succes){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                succes = await _eventLogRepo.AddEventLog(EventType.Created, "skabelon", itemTemplateToCreate.Name, itemTemplateToCreate.Id, currentUser);
+            }
+
             return succes ? StatusCode(201) : BadRequest();
         }
 
@@ -101,6 +114,11 @@ namespace API.Controllers
 
             if(propertyDto.Name == null){
                 return BadRequest("Property name cannot be null.");
+            }
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "egenskab", itemPropertyName.Name, itemPropertyName.Id, currentUser);
             }
 
             return result ? StatusCode(201) : BadRequest();
@@ -140,6 +158,11 @@ namespace API.Controllers
 
             bool result = await _repo.ActivateItemTemplate(template);
 
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Activated, "egenskab", template.Name, template.Id, currentUser);
+            }
+
             return result ? StatusCode(200) : BadRequest();
         }
 
@@ -157,6 +180,11 @@ namespace API.Controllers
             var template = await _repo.GetItemTemplate(id);
 
             bool result = await _repo.DeactivateItemTemplate(template);
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Deactivated, "egenskab", template.Name, template.Id, currentUser);
+            }
 
             return result ? StatusCode(200) : BadRequest();
         }

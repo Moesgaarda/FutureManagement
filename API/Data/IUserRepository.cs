@@ -13,7 +13,7 @@ namespace API.Data
         Task<User> ShowDetails(User user);
         Task<bool> AddRole(UserRole newRole);
         Task<bool> AddUser(User user);
-        Task<bool> EditUser(User user);
+        Task<bool> EditUser(User user, User userToChange);
         Task<bool> EditRole(User user);
         Task<bool> DeleteUser(User user);
         Task<bool> ActivateUser(User user);
