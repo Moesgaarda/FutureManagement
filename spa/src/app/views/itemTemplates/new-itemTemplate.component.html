@@ -16,6 +16,12 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="name">Nedre grænse</label>
+          <div class="input-group">
+            <input type="text" placeholder="Nedre grænse for denne skabelon på lageret" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.lowerLimit"/>
+          </div>
+        </div>
+        <div class="form-group">
           <label for="name">Beskrivelse</label>
           <div class="input-group">
             <textarea rows="5" placeholder="Beskrivelse" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.description"></textarea>
@@ -55,7 +61,6 @@
   </div>
 
   <div class="col-lg-6">
-
     <div class="card">
       <div class="card-header">Egenskaber</div>
       <div class="card-body">
@@ -63,11 +68,19 @@
           <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
         </div>
         <br>
-        
-        <div class="col-sm-6" *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
-                                                                                            currentPage: currentPage, 
-                                                                                            totalItems: properties?.length }; let i=index">
-          <input type="checkbox" class="form-check-input" value="{{prop}}" (click)="onCheckboxChange(prop,$event)" /> {{prop.name}}
+        <div class="col-lg-6">
+          <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
+                                                                                               currentPage: currentPage, 
+                                                                                               totalItems: properties?.length }; let i=index">
+            <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
+              <ng-template #checkedBox>
+                <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)" checked/> {{prop.name}}
+              </ng-template>
+              <ng-template #uncheckedBox>
+                <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
+              </ng-template>   
+              <br>      
+        </ng-container>      
         </div>
         <br>
         <pagination-controls (pageChange)="currentPage = $event"
@@ -86,7 +99,7 @@
         </div>
       </div>
     </div>
-
+    
     <style>
       .my-drop-zone {
         border: dotted 3px lightgray;
@@ -140,17 +153,15 @@
           </table>
         </form>
 
-
           <div>
             <button type="button" class="btn btn-danger btn-s"(click)="uploader.clearQueue()" [disabled]="!uploader.queuedFiles.length">
               <span class="glyphicon glyphicon-trash"></span> Fjern alle
             </button>
           </div>
-
         </div>
       </div>
     </div>
-
   </div>
-
 </div>
+
+

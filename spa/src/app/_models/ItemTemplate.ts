@@ -18,4 +18,5 @@ export interface ItemTemplate {
     parts: ItemTemplatePart[];
     partOf: ItemTemplatePartOf[];
     description: string;
+    lowerLimit: number;
 }

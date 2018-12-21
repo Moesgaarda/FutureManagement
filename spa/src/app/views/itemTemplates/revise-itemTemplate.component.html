@@ -21,11 +21,19 @@
               </div>
 
             <div class="form-group">
-                <label>Mængdeenhed</label>
-                <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="unitTypeEnum">
-                  <option *ngFor="let enum of unitTypes" selected>{{enum}}</option>
-                </select>
-              </div>     
+              <label>Mængdeenhed</label>
+              <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]    ="unitTypeEnum">
+                <option *ngFor="let enum of unitTypes" selected>{{enum}}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Nedre grænse</label>
+              <div class="input-group">
+                <input class="form-control" [(ngModel)]="templateToRevise && templateToRevise.lowerLimit">
+              </div>
+            </div> 
+                
           </div>
         </div>
 
@@ -159,7 +167,7 @@
                 <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
               </div>
               <br>
-
+              <div class="col-lg-6">
               <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
                                                                                                    currentPage: currentPage, 
                                                                                                    totalItems: properties?.length }; let i=index">
@@ -172,6 +180,8 @@
               </ng-template>
               <br>
               </ng-container>
+            </div>
+            <br>
               <pagination-controls (pageChange)="currentPage = $event"
                                     maxSize="7"
                                     previousLabel="Forrige"

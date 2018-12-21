@@ -55,6 +55,11 @@ export class AddItemsComponent {
     this.detailsReady = true;
   }
 
+  /**
+   * ngSelect cannot show the name properly without the mapping made in this method. The mapping removes the
+   * name property and replaces it with placement.
+   * @memberof AddItemsComponent
+   */
   async getItems() {
     await this.itemService.getActiveItems().subscribe(items => {
       this.items = items.map((name) => {
@@ -71,15 +76,98 @@ export class AddItemsComponent {
     });
   }
 
+  /**
+   * Calls method to run checks. If they all succeed, descriptions of properties are
+   * added in the right format through the for loop, the rest of the properties are
+   * given values and user is redirected.
+   * @memberof AddItemsComponent
+   */
   addItem() {
+    let checksPassed = false;
+    checksPassed = this.performChecks(checksPassed);
+
+    if (checksPassed) {
+      for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
+        this.propertyDescriptionsToAdd.push({
+          description: this.descriptionTextsToAdd[i],
+          propertyName: this.templateDetails.templateProperties[i],
+        });
+      }
+
+      this.itemToAdd.parts = this.itemItemRelations;
+      this.itemToAdd.properties = this.propertyDescriptionsToAdd;
+      this.itemToAdd.template = this.templateDetails;
+      this.itemToAdd.isActive = true;
+      this.itemService.addItem(this.itemToAdd).subscribe();
+
+      location.href = this.baseUrl + 'items/view';
+    }
+  }
+
+  performChecks(checkPassed: boolean): boolean {
+    checkPassed = this.checkAmountIsNotZero(checkPassed);
+
+    if (checkPassed) {
+      checkPassed = this.checkAmountIsFilled(checkPassed);
+    }
+
+    if (checkPassed) {
+      checkPassed = this.checkStockAboveZero(checkPassed);
+    }
+
+    return checkPassed;
+  }
+
+
+  /**
+   * Checks to prevent from picking 0. If they pick an amount and then delete it shows as null, so checks for that too.
+   * @param {boolean} checkPassed
+   * @returns {boolean}
+   * @memberof AddItemsComponent
+   */
+  checkAmountIsNotZero(checkPassed: boolean): boolean {
+    for (let i = 0; i < this.selectedItemPartAmounts.length; i++) {
+      if (this.selectedItemPartAmounts[i] === 0 || this.selectedItemPartAmounts[i] === null) {
+        this.alertify.error('Du kan ikke vælge 0 af en genstand');
+        return;
+      }
+    }
+
+    return checkPassed = true;
+  }
+
+  /**
+   * If length of itemParts and itemPartsAmounts are not the same, they forgot to fill out a value.
+   * @param {boolean} checkPassed
+   * @returns {boolean}
+   * @memberof AddItemsComponent
+   */
+  checkAmountIsFilled(checkPassed: boolean): boolean {
+    checkPassed = false;
+    if (this.selectedItemPartAmounts.length !== this.selectedItemParts.length) {
+      this.alertify.error('Du mangler at udfylde mængde på en af dine genstande');
+        return;
+    }
+
+    return checkPassed = true;
+  }
+
+  /**
+   * Makes sure you cannot create an item if you do not have enough of the required items.
+   * If it passes it adds the items used to the itemItemrelation with amount.
+   * @param {boolean} checkPassed
+   * @returns {boolean}
+   * @memberof AddItemsComponent
+   */
+  checkStockAboveZero(checkPassed: boolean): boolean {
+    checkPassed = false;
     for ( let i = 0; i < this.selectedItemParts.length; i++) {
       for (let j = 0; j < this.items.length; j++) {
         if (this.items[j].id === this.selectedItemParts[i].id && this.items[j].amount < this.selectedItemPartAmounts[i]) {
-          // this.alertify.error('Lageret har ikke nok af genstand ' + this.items[j].placement);
+          this.alertify.error('Lageret har ikke nok af genstand ' + this.items[j].placement);
           return;
         }
       }
-
 
       this.itemItemRelations.push({
         amount: this.selectedItemPartAmounts[i],
@@ -87,20 +175,6 @@ export class AddItemsComponent {
       });
     }
 
-   for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
-      this.propertyDescriptionsToAdd.push({
-        description: this.descriptionTextsToAdd[i],
-        propertyName: this.templateDetails.templateProperties[i],
-      });
-    }
-
-    this.itemToAdd.parts = this.itemItemRelations;
-    this.itemToAdd.properties = this.propertyDescriptionsToAdd;
-    this.itemToAdd.template = this.templateDetails;
-    this.itemToAdd.isActive = true;
-    this.itemService.addItem(this.itemToAdd).subscribe();
-
-    // location.href = this.baseUrl + 'items/view';
+    return checkPassed = true;
   }
-
 }
