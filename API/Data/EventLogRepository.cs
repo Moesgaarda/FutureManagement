@@ -13,111 +13,70 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
+using API.Helpers;
 
 namespace API.Data
 {
     public class EventLogRepository : IEventLogRepository
     {
         private readonly DataContext _context;
-        private readonly IUserRepository _userRepo;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public EventLogRepository(DataContext context){
+        public EventLogRepository(DataContext context)
+        {
             this._context = context;
-            this._userRepo = new UserRepository(_context);
-            this._httpContextAccessor = new HttpContextAccessor();
         }
 
-        public async Task<bool> AddEventLogCalendarEvent(EventType action, CalendarEvent calendarEvent)
+        // Used to add eventlog to the database when an object is added or activated/deactived
+        public async Task<bool> AddEventLog(EventType action, string objectType, string objectName, int objectId, User currentUser)
         {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} kalenderbegivenhed \"{calendarEvent.Name}\" med ID[{calendarEvent.Id}]";
-            
-            int result = await WriteEvent(currUser, desc);
 
-            return result < 0;
+            string desc = $"Bruger \"{currentUser.UserName}\" {GetAction(action)} {objectType} \"{objectName}\" med ID[{objectId}]";
+
+            int result = await WriteEvent(currentUser, desc);
+
+            return result > 0;
         }
 
-        public async Task<bool> AddEventLogCustomer(EventType action, Customer customer)
+        // Used to add eventlog to the database when an object is changed
+        public async Task<bool> AddEventLogChange<T>(string objectType, string objectName, int objectId, User currentUser, T objectOld, T objectNew)
         {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} kunde \"{customer.Name}\" med ID[{customer.Id}]";
-            
-            int result = await WriteEvent(currUser, desc);
 
-            return result < 0;
-        }
+            List<Variance> variances = objectOld.DetailedCompare(objectNew);
+            string changes = "";
+            if (variances.Count > 0)
+            {
+                changes += variances[0].Prop;
+                for (int i = 1; i < variances.Count; i++)
+                {
+                    changes += ", " + variances[i].Prop;
+                }
+            }
 
-        public async Task<bool> AddEventLogItem(EventType action, Item item)
-        {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} genstand \"{item.Template.Name}\" med ID[{item.Id}]";
-            
-            int result = await WriteEvent(currUser, desc);
+            string desc = $"Bruger \"{currentUser.UserName}\" ændrede {changes} på {objectType} \"{objectName}\" med ID[{objectId}]";
 
-            return result < 0;
-        }
+            int result = await WriteEvent(currentUser, desc);
 
-        public async Task<bool> AddEventLogItemTemplate(EventType action, ItemTemplate itemTemplate)
-        {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} skabelon \"{itemTemplate.Name}\" med ID[{itemTemplate.Id}]";
-            
-            int result = await WriteEvent(currUser, desc);
-
-            return result < 0;
-        }
-        public async Task<bool> AddEventLogItemPropertyName(EventType action, ItemPropertyName itemPropertyName)
-        {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} egenskaben \"{itemPropertyName.Name}\"";
-            
-            int result = await WriteEvent(currUser, desc);
-
-            return result < 0;
-        }
-
-        public async Task<bool> AddEventLogOrder(EventType action, Order order)
-        {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} ordre fra \"{order.Company}\" med købsnummer[{order.PurchaseNumber}]";
-            
-            int result = await WriteEvent(currUser, desc);
-
-            return result < 0;
-        }
-
-        public async Task<bool> AddEventLogProject(EventType action, Project project)
-        {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} projekt for kunde \"{project.Customer.Name}\" med ID[{project.Id}]";
-            
-            int result = await WriteEvent(currUser, desc);
-
-            return result < 0;
-        }
-
-        public async Task<bool> AddEventLogUser(EventType action, User user)
-        {
-            User currUser = await GetCurrentUser();
-            string desc = $"Bruger \"{currUser.UserName}\" {GetAction(action)} bruger \"{user.UserName}\" med ID[{user.Id}]";
-            
-            int result = await WriteEvent(currUser, desc);
-
-            return result < 0;
+            return result > 0;
         }
 
         public string GetAction(EventType action)
         {
             string result = "";
 
-            if(action == EventType.Changed){
-                result = "ændrede";
-            }
-            else if(action == EventType.Created){
-                result = "tilføjede";
-            }
-            else if(action == EventType.Delete){
-                result = "slettede";
+            switch (action)
+            {
+                case EventType.Created:
+                    result = "tilføjede";
+                    break;
+                case EventType.Deleted:
+                    result = "slettede";
+                    break;
+                case EventType.Activated:
+                    result = "aktiverede";
+                    break;
+                case EventType.Deactivated:
+                    result = "deaktiverede";
+                    break;
             }
             return result;
         }
@@ -125,22 +84,7 @@ namespace API.Data
         public async Task<List<EventLog>> GetAllEventLogs()
         {
             return await _context.EventLogs.Include(x => x.User).ToListAsync();
-            
-        }
 
-        public async Task<User> GetCurrentUser()
-        {
-            // Try-catch blok is here because the login is not fully implemented,
-            // so it can not find the currently logged in user.
-            // TODO Implement this when login is implement  
-            try{
-                int userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                User user = await _userRepo.GetUser(userId);
-
-                return user;
-            }catch(Exception e){
-                return await _userRepo.GetUser(1);
-            }
         }
 
         public async Task<List<EventLog>> GetEventLogs(int id)
@@ -161,14 +105,17 @@ namespace API.Data
             return "Ingen IP-adresse fundet";
         }
 
-        private async Task<int> WriteEvent(User currUser, string desc){
+        private async Task<int> WriteEvent(User currUser, string desc)
+        {
             string ip = GetLocalIPAddress();
             EventLog eventLog = new EventLog(currUser, currUser.Id, desc, ip);
-            
+
             await _context.EventLogs.AddAsync(eventLog);
             int result = await _context.SaveChangesAsync();
 
             return result;
         }
+
+
     }
 }
