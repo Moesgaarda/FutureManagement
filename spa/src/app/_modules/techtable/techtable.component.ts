@@ -6,6 +6,8 @@ import { environment } from '../../../environments/environment';
 import * as _ from 'underscore';
 import { Injector } from '@angular/core';
 import { OrderService } from '../../_services/order.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   selector: 'app-techtable',
@@ -53,7 +55,7 @@ export class TechtableComponent implements OnInit {
     this.loadItems();
   }
 
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector, private alertify: AlertifyService) {
   }
 
   /**
@@ -183,16 +185,23 @@ export class TechtableComponent implements OnInit {
     this.length = sortedData.length;
   }
 
-  // TODO onCellClick should redirect the user.
   /**
-   * NOT YET IMPLEMENTED CORRECTLY
+   * Redirects the user based on the injected service
    *
    * @param {*} data
    * @returns {*}
    * @memberof TechtableComponent
    */
   public onCellClick(data: any): any {
-    console.log(data);
+    if (this.serviceType === 'ItemService') {
+      location.href = this.baseUrl + 'items/details/' + data.row.id;
+    } else if (this.serviceType === 'ItemTemplateService') {
+      location.href = this.baseUrl + 'itemTemplates/details/' + data.row.id;
+    } else if (this.serviceType === 'OrderService') {
+      location.href = this.baseUrl + 'orders/details/' + data.row.id;
+    } else {
+      this.alertify.error('Unexpected service name: ' + this.serviceType);
+    }
   }
 
 
