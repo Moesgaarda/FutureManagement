@@ -3,9 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
-
-import { P404Component } from './views/error/404.component';
-import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -16,20 +13,6 @@ export const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full',
     canActivate: [AuthGuard],
-  },
-  {
-    path: '404',
-    component: P404Component,
-    data: {
-      title: 'Page 404'
-    }
-  },
-  {
-    path: '500',
-    component: P500Component,
-    data: {
-      title: 'Page 500'
-    }
   },
   {
     path: 'login',
@@ -46,10 +29,6 @@ export const routes: Routes = [
       title: 'Home',
     },
     children: [
-      {
-        path: 'base',
-        loadChildren: './views/base/base.module#BaseModule'
-      },
       {
         path: 'projects',
         loadChildren: './views/projects/projects.module#ProjectsModule'
@@ -83,32 +62,8 @@ export const routes: Routes = [
         loadChildren: './views/no-access/no-access.module#NoAccessModule'
       },
       {
-        path: 'buttons',
-        loadChildren: './views/buttons/buttons.module#ButtonsModule'
-      },
-      {
-        path: 'charts',
-        loadChildren: './views/chartjs/chartjs.module#ChartJSModule'
-      },
-      {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'icons',
-        loadChildren: './views/icons/icons.module#IconsModule'
-      },
-      {
-        path: 'notifications',
-        loadChildren: './views/notifications/notifications.module#NotificationsModule'
-      },
-      {
-        path: 'theme',
-        loadChildren: './views/theme/theme.module#ThemeModule'
-      },
-      {
-        path: 'widgets',
-        loadChildren: './views/widgets/widgets.module#WidgetsModule'
       }
     ]
   }
