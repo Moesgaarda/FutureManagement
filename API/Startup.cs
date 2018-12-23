@@ -71,7 +71,6 @@ namespace API
                     .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             services.AddAutoMapper();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // TODO undersøg om skal slettes
             services.AddScoped<IEventLogRepository, EventLogRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemTemplateRepository, ItemTemplateRepository>();

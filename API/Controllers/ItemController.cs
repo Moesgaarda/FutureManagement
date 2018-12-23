@@ -8,6 +8,9 @@ using AutoMapper;
 using API.Dtos;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using API.Enums;
 
 namespace API.Controllers
 {
@@ -17,10 +20,15 @@ namespace API.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IItemRepository _repo;
-        public ItemController(IItemRepository repo, DataContext context, IMapper mapper){
+        private readonly UserManager<User> _userManager;
+        private readonly IEventLogRepository _eventLogRepo;
+        public ItemController(IItemRepository repo, DataContext context, IMapper mapper, 
+                                UserManager<User> userManager, IEventLogRepository eventLogRepo){
             _context = context;
             _mapper = mapper;
             _repo = repo;
+            _userManager = userManager;
+            _eventLogRepo = eventLogRepo;
         }
 
         [Authorize(Policy = "Items_View")]
@@ -75,8 +83,14 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
+            
+            var itemToChange = await _context.Items.FirstAsync(x => x.Id == item.Id);
+            bool result = await _repo.EditItem(item, itemToChange);
 
-            bool result = await _repo.EditItem(item);
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLogChange("genstand", item.Template.Name, item.Id, currentUser, item, itemToChange);
+            }
 
             return result ? StatusCode(200) : StatusCode(400);
         }
@@ -95,6 +109,11 @@ namespace API.Controllers
 
             bool result = await _repo.DeleteItem(item);
 
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Deleted, "genstand", item.Template.Name, item.Id, currentUser);
+            }
+
             return result ? StatusCode(200) : BadRequest();
         }
 
@@ -109,9 +128,14 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var template = await _repo.GetItem(id);
+            var item = await _repo.GetItem(id);
 
-            bool result = await _repo.DeactivateItem(template);
+            bool result = await _repo.DeactivateItem(item);
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Deactivated, "genstand", item.Template.Name, item.Id, currentUser);
+            }
 
             return result ? StatusCode(200) : BadRequest();
         }
@@ -126,9 +150,14 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-            var template = await _repo.GetItem(id);
+            var item = await _repo.GetItem(id);
 
-            bool result = await _repo.ActivateItem(template);
+            bool result = await _repo.ActivateItem(item);
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Activated, "genstand", item.Template.Name, item.Id, currentUser);
+            }
 
             return result ? StatusCode(200) : BadRequest();
         }
@@ -165,9 +194,12 @@ namespace API.Controllers
                 item.IsActive
             );
 
-
-
             bool result = await _repo.AddItem(itemToCreate);
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "genstand", itemToCreate.Template.Name, itemToCreate.Id, currentUser);
+            }
             return result ? StatusCode(201) : BadRequest();
         }
 

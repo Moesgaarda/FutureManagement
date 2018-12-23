@@ -48,9 +48,8 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<bool> EditOrder(Order order)
+        public async Task<bool> EditOrder(Order order, Order orderToChange)
         {
-            var orderToChange = await _context.Orders.FirstAsync(x => x.Id == order.Id);
             _context.Entry(orderToChange).CurrentValues.SetValues(order);
             var result = await _context.SaveChangesAsync();
 

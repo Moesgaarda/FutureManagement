@@ -57,9 +57,8 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<bool> EditUser(User user)
+        public async Task<bool> EditUser(User user, User userToChange)
         {
-            var userToChange = _dbContext.Users.First(x => x.Id == user.Id);
             _dbContext.Entry(userToChange).CurrentValues.SetValues(user);
             var result = await _dbContext.SaveChangesAsync();
 
