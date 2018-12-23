@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Enums;
 using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +18,16 @@ namespace API.Controllers{
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IOrderRepository _repo;
+        private readonly UserManager<User> _userManager;
+        private readonly IEventLogRepository _eventLogRepo;
 
-        public OrderController(DataContext context, IMapper mapper, IOrderRepository repo){
+        public OrderController(DataContext context, IMapper mapper, IOrderRepository repo, 
+                                UserManager<User> userManager, IEventLogRepository eventLogRepo){
             _context = context;
             _repo = repo;
             _mapper = mapper;
+            _userManager = userManager;
+            _eventLogRepo = eventLogRepo;
         }
 
         [Authorize(Policy = "Order_View")]
@@ -36,10 +43,12 @@ namespace API.Controllers{
         public async Task<IActionResult> AddOrder([FromBody]Order orderToCreate){       
 
             bool result = await _repo.AddOrder(orderToCreate);
-            return result ? StatusCode(201) : BadRequest();
 
-
-            
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "bestilling", "Købsnummer: " + orderToCreate.PurchaseNumber.ToString(), orderToCreate.Id, currentUser);
+            }
+            return result ? StatusCode(201) : BadRequest();          
         }
         
         [Authorize(Policy = "Order_View")]
@@ -60,7 +69,13 @@ namespace API.Controllers{
                 return BadRequest(ModelState);
             }
 
-            bool result = await _repo.EditOrder(order);
+            var orderToChange = await _context.Orders.FirstAsync(x => x.Id == order.Id);
+            bool result = await _repo.EditOrder(order, orderToChange);
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLogChange("bestilling", "Købsnummer: " + order.PurchaseNumber.ToString(), order.Id, currentUser, order, orderToChange);
+            }
 
             return result ? StatusCode(200) : StatusCode(400);
         }
@@ -78,6 +93,11 @@ namespace API.Controllers{
             var order = await _repo.GetOrder(id);
 
             bool result = await _repo.DeleteOrder(order);
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Deleted, "bestilling", "Købsnummer: " + order.PurchaseNumber.ToString(), order.Id, currentUser);
+            }
 
             return result ? StatusCode(200) : BadRequest();
         }

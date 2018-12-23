@@ -17,17 +17,9 @@ namespace API.Data
     {
         Task<List<EventLog>> GetAllEventLogs();
         Task<List<EventLog>> GetEventLogs(int id);
-        Task<bool> AddEventLogOrder(EventType action, Order order);
-        Task<bool> AddEventLogItem(EventType action, Item item);
-        Task<bool> AddEventLogItemTemplate(EventType action, ItemTemplate itemTemplate);
-        Task<bool> AddEventLogItemPropertyName(EventType action, ItemPropertyName itemPropertyName);
-        Task<bool> AddEventLogUser(EventType action, User user);
-        Task<bool> AddEventLogProject(EventType action, Project project);
-        Task<bool> AddEventLogCustomer(EventType action, Customer customer);
-        Task<bool> AddEventLogCalendarEvent(EventType action, CalendarEvent calenderEvent);
-
         string GetAction(EventType action);
+        Task<bool> AddEventLog(EventType action, string objectType, string objectName, int objectId, User currentUser);
+        Task<bool> AddEventLogChange<T>(string objectType, string objectName, int objectId, User currentUser, T objectOld, T objectNew);
 
-        Task<User> GetCurrentUser();
     }
 }
