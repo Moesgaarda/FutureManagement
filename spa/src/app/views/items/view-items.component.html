@@ -10,6 +10,14 @@
                class="form-control"
                (tableChanged)="onChangeTable(config)"/>
       </div>
+      <div class="col-md-8">
+        <button style="float: right" type="button" class="btn btn-success btn-rectangle input-group-text" (click)="getTableAsPdf()" 
+        data-toggle="tooltip" data-placement="top" title="Åbner en ny fane der indeholder alle genstande som pdf">
+          Åben som pdf
+        </button>
+
+      </div>
+
     </div>
     <br>
     <ng-table [config]="config"
@@ -30,5 +38,4 @@
                 (numPages)="numPages = $event">
     </pagination>
   </div>
-  
 </div>

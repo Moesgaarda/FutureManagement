@@ -3,6 +3,8 @@ import { ItemService } from '../../_services/item.service';
 import { environment } from '../../../environments/environment';
 import * as _ from 'underscore';
 import { Item } from '../../_models/Item';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 @Component({
   templateUrl: './view-items.component.html',
@@ -13,6 +15,7 @@ import { Item } from '../../_models/Item';
   `],
 })
 export class ViewItemsComponent implements OnInit {
+  private allItems: Item[];
   baseUrl = environment.spaUrl;
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -136,6 +139,7 @@ export class ViewItemsComponent implements OnInit {
     this.loadItems();
   }
   constructor(private itemService: ItemService) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
   async loadItems() {
@@ -143,10 +147,62 @@ export class ViewItemsComponent implements OnInit {
       this.rows = items;
       this.data = items;
       this.onChangeTable(this.config);
+      this.allItems = items;
     });
+
   }
 
   addNewItem() {
     location.href = this.baseUrl + 'items/new';
   }
+
+  getTableAsPdf() {
+    this.loadItems();
+    console.log(this.allItems);
+    const docDefinition = {
+      content: [
+        { text: 'Alle genstande', style: 'header' },
+        this.table(this.allItems, ['id', 'template', 'placement', 'amount', 'isActive'],
+                            ['Id', 'Skabelonens navn', 'Placering', 'Mængde', 'Aktivt'])
+      ]
+    };
+    pdfMake.createPdf(docDefinition).open();
+  }
+
+  buildPdfTableBody(data, columns, headers) {
+    const body = [];
+    body.push(headers);
+    data.forEach(function(row) {
+        const dataRow = [];
+
+        columns.forEach(function(column) {
+          if (column === 'template') {
+            dataRow.push(row[column].name);
+          } else {
+            dataRow.push(row[column].toString());
+          }
+        });
+
+        body.push(dataRow);
+    });
+
+    return body;
+  }
+
+  table(data, columns, headers) {
+    const widths = [];
+    const width = (100.0 / columns.length).toString() + '%';
+
+    for (let i = 0; i < columns.length; i++ ) {
+      widths.push(width);
+    }
+    return {
+        table: {
+            headerRows: 1,
+            body: this.buildPdfTableBody(data, columns, headers),
+            widths: widths
+        }
+    };
+  }
+
 }
