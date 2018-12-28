@@ -32,6 +32,11 @@ namespace API.Data
         public DbSet<FileData> FileData { get; set; }
         public DbSet<TemplateFileName> TemplateFileNames { get; set; }     
         public DbSet<OrderFileName> OrderFileNames { get; set; } 
+        public DbSet<UnitType> UnitTypes { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
+        public DbSet<ProjectStatus> ProjectStatuses { get; set; }
+        public DbSet<ItemTemplateCategory> ItemTemplateCategories { get; set; }
+
 
         
         // TODO Could use refactoring to look like userrole.
