@@ -89,7 +89,8 @@ namespace API.Controllers
                 templateDto.Created,
                 templateDto.RevisionedFrom,
                 filesToAdd,
-                templateDto.LowerLimit
+                templateDto.LowerLimit,
+                templateDto.Category
             );
 
             bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);
@@ -122,6 +123,33 @@ namespace API.Controllers
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                 result = await _eventLogRepo.AddEventLog(EventType.Created, "egenskab", itemPropertyName.Name, itemPropertyName.Id, currentUser);
+            }
+
+            return result ? StatusCode(201) : BadRequest();
+        }
+
+        
+        [Authorize(Policy = "ItemTemplates_Add")]
+        [HttpPost("addCategory", Name = "AddTemplateCategory")]
+        public async Task<IActionResult> AddTemplateCategory([FromBody]TemplateCategoryForAddDto categoryDto){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var category = new ItemTemplateCategory(
+                categoryDto.Name,
+                categoryDto.ItemTemplates
+            );
+
+            bool result = await _repo.AddTemplateCategory(category);
+
+            if(category.Name == null){
+                return BadRequest("Category name cannot be null.");
+            }
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "kategori", category.Name, category.Id, currentUser);
             }
 
             return result ? StatusCode(201) : BadRequest();

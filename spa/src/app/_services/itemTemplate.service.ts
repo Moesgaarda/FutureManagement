@@ -6,6 +6,7 @@ import { ItemPropertyName } from '../_models/ItemPropertyName';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { DetailFile } from '../_models/DetailFile';
+import { ItemTemplateCategory } from '../_models/ItemTemplateCategory';
 
 @Injectable()
 export class ItemTemplateService {
@@ -48,6 +49,10 @@ export class ItemTemplateService {
 
     addTemplateProperty(property: ItemPropertyName): Observable<ItemPropertyName> {
         return this.http.post<ItemPropertyName>(this.baseUrl + 'ItemTemplate/addProperty', property, this.httpOptions);
+    }
+
+    addTemplateCategory(category: ItemTemplateCategory): Observable<ItemTemplateCategory> {
+        return this.http.post<ItemTemplateCategory>(this.baseUrl + 'ItemTemplate/addCategory', category, this.httpOptions);
     }
 
 

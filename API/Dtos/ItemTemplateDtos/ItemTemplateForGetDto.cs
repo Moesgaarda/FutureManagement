@@ -16,5 +16,6 @@ namespace API.Dtos
         public ICollection<TemplateFileNameForGetDto> Files { get; set; }
         public ItemTemplateForGetDto RevisionedFrom { get; set; }
         public int LowerLimit { get; set; }
+        public ItemTemplateCategory category { get; set; }
     }
 }
