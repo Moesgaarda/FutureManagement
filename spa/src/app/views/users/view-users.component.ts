@@ -13,6 +13,7 @@ export class ViewUsersComponent {
   baseUrl = environment.spaUrl;
   public rows: Array<any> = [];
   public columns: Array<any> = [
+    {title: 'Brugernavn', name: 'username'},
     {title: 'Fornavn', name: 'name'},
     {title: 'Efternavn', name: 'surname'},
     {title: 'Email', name: 'email'} // TODO NYI
