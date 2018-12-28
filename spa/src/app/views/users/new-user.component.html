@@ -5,28 +5,46 @@
               Detaljer omkring bruger
               <div class="card-header">
             <div class="card-body">
+              Felter markeret med * skal udfyldes
               <div class="form-group">
                 <label for="username">
-                  Brugernavn
+                  Brugernavn*
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="Navn" id="username" class="form-control" />
+                  <input type="text" placeholder="Brugernavn" id="username" class="form-control" [(ngModel)]="user.username" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">
+                  Kodeord*
+                </label>
+                <div class="input-group">
+                  <input type="text" placeholder="Kodeord" id="name" type="password" class="form-control" [(ngModel)]="user.password" />
+                </div>
+              </div>
+            <div *ngIf="user.password !== passwordConfirm"> Kodeord er ikke ens</div>
+              <div class="form-group">
+                <label for="passwordConfirm">
+                  Bekræft kodeord*
+                </label>
+                <div class="input-group">
+                  <input type="text" placeholder="Bekræft kodeord" id="name"  type="password" class="form-control" [(ngModel)]="passwordConfirm" />
                 </div>
               </div>
               <div class="form-group">
                 <label for="name">
-                  Fornavn
+                  Fornavn*
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="Navn" id="name" class="form-control"  />
+                  <input type="text" placeholder="Fornavn" id="name" class="form-control" [(ngModel)]="user.name" />
                 </div>
               </div>
               <div class="form-group">
                 <label for="surName">
-                  Efternavn
+                  Efternavn*
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="Navn" id="surName" class="form-control"/>
+                  <input type="text" placeholder="Efternavn" id="surName" class="form-control" [(ngModel)]="user.surname"/>
                 </div>
               </div>
               <div class="form-group">
@@ -34,7 +52,7 @@
                   E-mail
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="E-mail" id="eMail" class="form-control"  />
+                  <input type="text" placeholder="E-mail" id="eMail" class="form-control"  [(ngModel)]="user.email"/>
                 </div>
               </div>
               <div class="form-group">
@@ -42,28 +60,26 @@
                   Telefonnummer
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="Phone number" id="phone" class="form-control"/>
+                  <input type="text" placeholder="Telefonnummer" id="phone" class="form-control" [(ngModel)]="user.phone"/>
                 </div>
               </div>
               <div class="form-group">
-                <label for="birthday">
-                  Fødselsdag
-                </label>
-                <div class="input-group">
-                  <input type="text" placeholder="Ikke opgivet" id="birthday" class="form-control"  />
+                  <label for="birthDate">Førdselsdag</label>
+                  <div class="input-group">
+                    <input
+                      type="date"
+                      placeholder="Fødselsdag"
+                      class="form-control"
+                      [(ngModel)]="user.birthdate"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="role">
-                  Rolle
-                </label>
-                <div class="input-group">
-                  <input type="text" placeholder="Rolle" id="role" class="form-control"/>
-                </div>
-              </div>
             </div>
         </div>
         </div>
+        <button type="button" (click)="createUser()">
+          Tilføj bruger
+        </button>
         <button type="button" (click)="goToUserTable()">
           Tilbage
         </button>
