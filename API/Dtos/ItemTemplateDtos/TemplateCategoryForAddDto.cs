@@ -1,4 +1,7 @@
-namespace API.Dtos.ItemTemplateDtos
+using System.Collections.Generic;
+using API.Models;
+
+namespace API.Dtos
 {
     public class TemplateCategoryForAddDto
     {

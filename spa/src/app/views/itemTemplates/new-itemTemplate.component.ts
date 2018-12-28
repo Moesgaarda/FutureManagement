@@ -10,6 +10,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { FileUploadService } from '../../_services/fileUpload.service';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import * as _ from 'underscore';
+import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -34,6 +35,8 @@ export class NewItemTemplateComponent implements OnInit {
   itemsPerPage = 15;
   currentPage = 1;
   propFilter: string;
+  category: ItemTemplateCategory;
+  categoryList: ItemTemplateCategory[] = [] as ItemTemplateCategory[];
 
   /**
    * @param {ItemTemplateService} templateService
@@ -46,6 +49,7 @@ export class NewItemTemplateComponent implements OnInit {
      private alertify: AlertifyService, private uploaderParameter: FileUploadService) {
     this.getTemplates();
     this.loadAllTemplateProperties();
+    this.getTemplateCategories();
     this.uploader = uploaderParameter;
     this.uploader.clearQueue();
   }
@@ -70,6 +74,12 @@ export class NewItemTemplateComponent implements OnInit {
   async loadAllTemplateProperties() {
     await this.templateService.getAllTemplateProperties().subscribe(properties => {
       this.properties = properties;
+    });
+  }
+
+  async getTemplateCategories() {
+    await this.templateService.getTemplateCategories().subscribe(categories => {
+      this.categoryList = categories;
     });
   }
 

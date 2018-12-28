@@ -156,6 +156,17 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "ItemTemplates_Add")]
+        [HttpGet("getTemplateCategories", Name = "GetTemplateCategories")]
+        public async Task<IActionResult> GetTemplateCategories(){
+            var categories = await _repo.GetTemplateCategories();
+            var categoriesToReturn = _mapper.Map<List<TemplateCategoryForGetDto>>(categories);
+
+            categoriesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
+
+            return Ok(categoriesToReturn);
+        }
+
+        [Authorize(Policy = "ItemTemplates_Add")]
         [HttpGet("getPropertyNames", Name = "GetPropertyNames")]
         public async Task<IActionResult> GetPropertyNames(){
             var propertyNames = await _repo.GetPropertyNames();

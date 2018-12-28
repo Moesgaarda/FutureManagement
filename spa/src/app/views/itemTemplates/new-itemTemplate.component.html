@@ -27,6 +27,12 @@
             <textarea rows="5" placeholder="Beskrivelse" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.description"></textarea>
           </div>
         </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="category">
+            <option *ngFor="let cat of categoryList" selected>{{cat}}</option>
+          </select>
+        </div>
 
         <div class="form-group">
           <label for="templateList">Skabelonliste</label>

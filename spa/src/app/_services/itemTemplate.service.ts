@@ -55,5 +55,9 @@ export class ItemTemplateService {
         return this.http.post<ItemTemplateCategory>(this.baseUrl + 'ItemTemplate/addCategory', category, this.httpOptions);
     }
 
+    getTemplateCategories(): Observable<ItemTemplateCategory[]> {
+        return this.http.get<ItemTemplateCategory[]>(this.baseUrl + 'ItemTemplate/getTemplateCategories');
+    }
+
 
 }
