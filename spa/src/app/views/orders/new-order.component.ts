@@ -9,6 +9,7 @@ import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { User } from '../../_models/User';
 
 @Component({
   templateUrl: './new-order.component.html'
@@ -25,6 +26,8 @@ export class NewOrderComponent implements OnInit {
   unitTypeForAmount: string;
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
   descriptionTextsToAdd: string[] = [] as string[];
+  internalOrder: boolean;
+  assignedUser: User;
 
   constructor(
     private itemTemplateService: ItemTemplateService,
