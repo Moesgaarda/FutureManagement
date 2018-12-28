@@ -8,8 +8,8 @@ namespace API.Models{
         public Order(){
             this.OrderDate = DateTime.Now;
         }
-        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, 
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, ICollection<OrderFileName> files){
+        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, 
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, bool internalOrder, User assignedUser, User signedBy){
 
             this.Company = company;
             this.OrderDate = DateTime.Now;
@@ -21,11 +21,13 @@ namespace API.Models{
             this.Length = length;
             this.UnitType = unitType;
             this.Products = products;
-            this.Files = files;
+            this.InternalOrder = internalOrder;
+            this.AssignedUser = assignedUser;
+            this.SignedBy = signedBy;
         }
 
-        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy,
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products){
+        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, 
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, bool internalOrder, User assignedUser, User signedBy){
 
             this.Id = id;
             this.Company = company;
@@ -38,6 +40,9 @@ namespace API.Models{
             this.Length = length;
             this.UnitType = unitType;
             this.Products = products;
+            this.InternalOrder = internalOrder;
+            this.AssignedUser = assignedUser;
+            this.SignedBy = signedBy;
         }
 
         [Key]
