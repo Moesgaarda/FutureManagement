@@ -54,5 +54,6 @@ namespace API.Models{
         public int Length { get; set; }
         public UnitType UnitType { get; set; }
         public ICollection<Item> Products { get; set; }
+        public ICollection<OrderFileName> Files { get; set; }
     }
 }
