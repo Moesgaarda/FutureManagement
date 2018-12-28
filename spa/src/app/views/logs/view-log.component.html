@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-header">Logs</div>
+  
+    <div class="card-body">
+      <app-techtable
+        [serviceType]="'EventLogService'"
+        [columns]="[
+          { title: 'ID', name: 'id' },
+          { title: 'Tid', name: 'time' },
+          { title: 'Beskrivelse', name: 'description' },
+          { title: 'IP-adresse', name: 'localIP' }
+        ]"
+      >
+      </app-techtable>
+    </div>
+  </div>
+  
