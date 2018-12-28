@@ -54,5 +54,13 @@ namespace API.Models{
         public int Length { get; set; }
         public UnitType UnitType { get; set; }
         public ICollection<Item> Products { get; set; }
+        public ICollection<OrderFileName> Files { get; set; }
+        public OrderStatus Status { get; set; }
+        public bool InternalOrder { get; set; }
+
+        /* If the order is internal, it should have an assigned user */
+        public User AssignedUser { get; set; }
+        public User SignedBy { get; set; }
+
     }
 }

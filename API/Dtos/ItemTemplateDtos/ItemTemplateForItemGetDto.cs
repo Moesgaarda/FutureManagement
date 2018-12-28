@@ -1,4 +1,4 @@
-using API.Enums;
+using API.Models;
 
 namespace API.Dtos
 {
