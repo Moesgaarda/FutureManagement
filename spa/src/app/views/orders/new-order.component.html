@@ -80,6 +80,20 @@
         </div>
 
         <div class="form-group">
+          <input
+              type="checkbox"
+              [checked]="internalOrder"
+              (change)="internalOrder = !internalOrder"/> Intern bestilling
+              <div *ngIf="internalOrder" class="input-group">
+                <input
+                  type="text"
+                  placeholder="Tilknyttet bruger"
+                  class="form-control"
+                  [(ngModel)]="assignedUser"
+                />
+              </div>
+        </div>
+        <div class="form-group">
           <div _ngcontent-c21="" class="form-group">
             <button
               _ngcontent-c21=""
