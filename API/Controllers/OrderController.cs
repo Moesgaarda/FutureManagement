@@ -64,7 +64,6 @@ namespace API.Controllers{
                 OrderDto.OrderDate,
                 OrderDto.DeliveryDate,
                 OrderDto.OrderedBy,
-                OrderDto.InvoicePath,
                 OrderDto.PurchaseNumber,
                 OrderDto.Width,
                 OrderDto.Height,
