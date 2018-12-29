@@ -33,6 +33,11 @@ namespace API.Data
                 }
                 
             }
+            order.UnitType = await _context.UnitTypes.FirstOrDefaultAsync( x => x.Name == order.UnitType.Name);
+            
+            foreach(var file in order.Files){
+                file.FileData = await _context.FileData.FirstOrDefaultAsync(x => x.Id == file.FileData.Id);
+            }
 
             await _context.Orders.AddAsync(order);
             

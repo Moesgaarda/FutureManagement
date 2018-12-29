@@ -34,7 +34,7 @@ export class NewOrderComponent implements OnInit {
     private itemTemplateService: ItemTemplateService,
     private orderService: OrderService,
     private alertify: AlertifyService,
-    private router: Router
+    private router: Router,
     private uploaderParameter: FileUploadService
   ) {
     this.templateDetails.templateProperties = [] as ItemPropertyName[];
@@ -59,7 +59,6 @@ export class NewOrderComponent implements OnInit {
     this.onOrderPage = !this.onOrderPage;
   }
 
-  
   /**
    * Gets all the ItemTemplates from the api
    *
@@ -76,7 +75,7 @@ export class NewOrderComponent implements OnInit {
    * Gets details for a specific ItemTemplate
    * Is used when the user chooses one ItemTemplate to add to the order
    * Because the templates that are retrieved when getting all templates at once don't have all the details of the ItemTemplate
-   * 
+   *
    * @memberof NewOrderComponent
    */
   async getTemplateDetails() {
@@ -129,14 +128,6 @@ export class NewOrderComponent implements OnInit {
         propertyName: this.templateDetails.templateProperties[i]
       });
     }
-    if (this.uploader.queuedFiles.length > 0) {
-      const fileArray = await this.uploader.upload('OrderFiles');
-      this.orderToAdd.files = fileArray;
-      this.orderToAdd.fileNames = [];
-      for (const file of this.uploader.queuedFiles) {
-        this.orderToAdd.fileNames.push(file.name);
-      }
-    }
 
     this.currentItem.properties = this.propertyDescriptionsToAdd;
     this.currentItem.template = this.templateDetails;
@@ -154,7 +145,15 @@ export class NewOrderComponent implements OnInit {
    *
    * @memberof NewOrderComponent
    */
-  addOrder() {
+  async addOrder() {
+    if (this.uploader.queuedFiles.length > 0) {
+      const fileArray = await this.uploader.upload('OrderFiles');
+      this.orderToAdd.files = fileArray;
+      this.orderToAdd.fileNames = [];
+      for (const file of this.uploader.queuedFiles) {
+        this.orderToAdd.fileNames.push(file.name);
+      }
+    }
     this.orderService.addOrder(this.orderToAdd).subscribe(
       data => {
         console.log('added order');
