@@ -68,6 +68,7 @@ namespace API.Controllers{
                 OrderDto.Width,
                 OrderDto.Height,
                 OrderDto.Length,
+                // TODO ændre det sådan at vi bruger Unit Type som en model i SPa'en
                 new UnitType(){
                     Name = OrderDto.UnitType
                 },
