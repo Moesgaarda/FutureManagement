@@ -116,7 +116,7 @@ export class ViewItemsComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    console.log(data);
+    location.href = this.baseUrl + 'items/details/' + data.row.id;
   }
   /*  method to sterialize path to a given property in a object
   *   Example:

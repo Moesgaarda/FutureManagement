@@ -3,48 +3,52 @@
     <div class="card">
       <div class="card-header">Detaljer omkring genstanden</div>
       <div class="card-body">
-        <div class="form-group">
-          <label for="templateUsed">Anvendt skabelon</label>
-          <div class="input-group">
-            <input type="text" placeholder="Anvendt skabelon" id="templateUsed" class="form-control" value="Skabelon 1"
-              [disabled]="templateDisabled">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="placement">Genstandens placering</label>
-          <div class="input-group">
-            <input type="text" placeholder="Genstandens placering" class="form-control" id="placement" value="{{item?.placement}}"
-              id="placement" [disabled]="placementDisabled" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="amount">Mængde</label>
-          <div class="input-group">
-            <input type="text" placeholder="Mængde" class="form-control" id="amount" value="{{item?.amount}}"
-              [disabled]="amountDisabled" />
-          </div>
-        </div>
+        <dl class="row">
+          <dt class="col-sm-3">Navn</dt>
+          <dd class="col-sm-9">
+            <p>{{item.template.name}}</p>
+          </dd>
+  
+          <dt class="col-sm-3">Mængde</dt>
+          <dd class="col-sm-9">
+            <p>{{item.amount}}</p>
+          </dd>
+  
+          <dt class="col-sm-3">Placering</dt>
+          <dd class="col-sm-9">
+            <p>{{item.placement}}</p>
+          </dd>
+  
+          <dt class="col-sm-3">Aktivt</dt>
+          <dd *ngIf="item.isActive" class="col-sm-9">
+            <p>Ja</p>
+          </dd>
+          <dd *ngIf="!item.isActive" class="col-sm-9">
+            <p>Nej</p>
+          </dd>
+  
+            <dt *ngIf="item.createdBy != null" class="col-sm-3">Lavet af</dt>
+            <dd *ngIf="item.createdBy != null" class="col-sm-9">
+              <p>{{item.createdBy}}</p>
+            </dd>
 
-        <div class="form-group">
-          <label for="order">Oprindelsesordre</label>
-          <div class="input-group">
-            <input type="text" placeholder="Oprindelsesordre" id="order" value="{{item?.order.company}} - {{item?.order.orderDate}}"
-              class="form-control" disabled>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="madeBy">Lavet af</label>
-          <div class="input-group">
-            <input type="text" placeholder="Lavet af" id="madeBy" class="form-control" value="{{item?.createdBy.username}}"
-              disabled>
-          </div>
-        </div>
+            <dt class="col-sm-3">Ordre </dt>
+            <dd class="col-sm-9">
+              <button class="btn btn-success input-group-text btn-lg" (click)="goToOrder()">
+                Gå til ordre
+              </button>
+            </dd>
 
-        <div class="form-group">
-          <label for="itemList">Liste af dele</label>
-          <input type="text" placeholder="Genstandsliste" class="form-control" disabled />
-          <small class="form-text">En liste af genstande der blev anvendt til at fremstille denne genstand </small>
-        </div>
+            <dt class="col-sm-3">Genstande brugt til produktion </dt>
+            <dd class="col-sm-9">
+                <p *ngFor="let part of item.parts">{{part.amount}} {{getPart(part.partId)}}</p>
+            </dd>
+
+              
+
+  
+
+        </dl>
       </div>
     </div>
   </div>
