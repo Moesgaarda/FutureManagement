@@ -2,10 +2,11 @@
         <div class="clo-lg-6">
             <div class="card">
             <div class="card-header">
-              Detaljer omkring bruger
+              <font size="5">Opret ny burger</font>
               <div class="card-header">
             <div class="card-body">
-              Felter markeret med * skal udfyldes
+              
+              <p><font color="red"> Felter markeret med * skal udfyldes</font></p>
               <div class="form-group">
                 <label for="username">
                   Brugernavn*
@@ -22,7 +23,6 @@
                   <input type="text" placeholder="Kodeord" id="name" type="password" class="form-control" [(ngModel)]="user.password" />
                 </div>
               </div>
-            <div *ngIf="user.password !== passwordConfirm"> Kodeord er ikke ens</div>
               <div class="form-group">
                 <label for="passwordConfirm">
                   Bekræft kodeord*
@@ -30,7 +30,8 @@
                 <div class="input-group">
                   <input type="text" placeholder="Bekræft kodeord" id="name"  type="password" class="form-control" [(ngModel)]="passwordConfirm" />
                 </div>
-              </div>
+                <div *ngIf="user.password !== passwordConfirm"> <font color="red">Kodeord er ikke ens</font></div>
+              </div>             
               <div class="form-group">
                 <label for="name">
                   Fornavn*
@@ -77,9 +78,6 @@
             </div>
         </div>
         </div>
-        <button type="button" (click)="createUser()">
-          Tilføj bruger
-        </button>
-        <button type="button" (click)="goToUserTable()">
-          Tilbage
+        <button type="button" class="btn btn-success btn-rectangle input-group-text" (click)="createUser()">
+          <font size="3"><b>Tilføj bruger</b></font>
         </button>

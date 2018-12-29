@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../_services/auth.service';
 import { UserForRegister } from '../../_models/UserForRegister';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
+import { userInfo } from 'os';
 
 @Component({
   templateUrl: './new-user.component.html'
 })
 
-export class NewUserComponent {
+export class NewUserComponent implements OnInit {
+  
   baseUrl = environment.spaUrl;
   user: UserForRegister = {} as UserForRegister;
-  passwordConfirm: string;
+  passwordConfirm = '';
   isValid = true;
 
   constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router) {
+
+  }
+  ngOnInit(): void {
+    this.user.password = '';
   }
   createUser() {
     if (this.user.name !== undefined
