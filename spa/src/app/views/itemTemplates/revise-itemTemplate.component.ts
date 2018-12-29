@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UnitType, ItemTemplate } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { DetailFile } from '../../_models/DetailFile';
 import { FileUploadService } from '../../_services/fileUpload.service';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
 import { AlertifyService } from '../../_services/alertify.service';
+import { UnitType } from '../../_models/UnitType';
 
 /**
  *Component that is used to Revise an ItemTemplate
@@ -21,12 +22,11 @@ import { AlertifyService } from '../../_services/alertify.service';
 })
 
 export class ReviseItemTemplateComponent implements OnInit {
-  unitTypes = Object.keys(UnitType);
   isDataAvailable = false;
   templateToRevise: ItemTemplate = {} as ItemTemplate;
   templateToCopy: ItemTemplate = {} as ItemTemplate;
-  unitTypeEnum: string;
   unitType: UnitType;
+  unitTypeList: UnitType[] = [] as UnitType[];
   properties: ItemPropertyName[];
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
   templates: Observable<ItemTemplate[]>;
@@ -58,12 +58,11 @@ export class ReviseItemTemplateComponent implements OnInit {
    * @memberof ReviseItemTemplateComponent
    */
   async ngOnInit() {
-    // unittypes should both enum text and numbers. Dividing by 2 removes numbers.
-    this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
     await this.loadTemplateOnInIt();
-    await this.loadAllTemplateProperties();
+    await this.getTemplateProperties();
     await this.getTemplates();
     await this.populateSelect();
+    await this.getUnitTypes();
     // this.putFilesIntoQueue();
   }
 
@@ -76,7 +75,6 @@ export class ReviseItemTemplateComponent implements OnInit {
     await this.templateService.getItemTemplateAsync(+this.route.snapshot.params['id'])
       .then(itemTemplate => {
         this.templateToCopy = itemTemplate;
-        this.unitTypeEnum = this.unitTypes[itemTemplate.unitType];
         this.templateToRevise.name = itemTemplate.name;
         this.templateToRevise.description = itemTemplate.description;
         this.filesFromRevision = itemTemplate.files;
@@ -95,8 +93,8 @@ export class ReviseItemTemplateComponent implements OnInit {
    *
    * @memberof ReviseItemTemplateComponent
    */
-  async loadAllTemplateProperties() {
-    await this.templateService.getAllTemplateProperties().subscribe(properties => {
+  async getTemplateProperties() {
+    await this.templateService.getTemplateProperties().subscribe(properties => {
       this.properties = properties;
     });
   }
@@ -108,6 +106,12 @@ export class ReviseItemTemplateComponent implements OnInit {
    */
   async getTemplates() {
     this.templates = await this.templateService.getAll();
+  }
+
+  async getUnitTypes() {
+    await this.templateService.getUnitTypes().subscribe(unitTypes => {
+      this.unitTypeList = unitTypes;
+    });
   }
 
   /**
@@ -214,7 +218,7 @@ export class ReviseItemTemplateComponent implements OnInit {
 
     this.templateToRevise.templateProperties = this.propertiesToAdd;
     this.templateToRevise.revisionedFrom = this.templateToCopy;
-    this.templateToRevise.unitType = UnitType[this.unitTypeEnum];
+    this.templateToRevise.unitType = this.unitType;
     this.templateToRevise.templateProperties = this.propertiesToAdd;
     this.templateToRevise.parts = this.templatePartsToAdd;
 

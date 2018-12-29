@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
 import { environment } from '../../../environments/environment';
@@ -8,6 +8,7 @@ import { Injector } from '@angular/core';
 import { OrderService } from '../../_services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
+import { UnitType } from '../../_models/UnitType';
 
 @Component({
   selector: 'app-techtable',

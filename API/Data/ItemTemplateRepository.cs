@@ -60,9 +60,22 @@ namespace API.Data
             return result > 0;
         }
 
-         public async Task<List<ItemTemplateCategory>> GetTemplateCategories()
+        public async Task<List<ItemTemplateCategory>> GetTemplateCategories()
         {
             return await _context.ItemTemplateCategories.ToListAsync();
+        }
+
+        public async Task<bool> AddUnitType(UnitType unitType)
+        {
+            await _context.UnitTypes.AddAsync(unitType);
+            int result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<List<UnitType>> GetUnitTypes()
+        {
+            return await _context.UnitTypes.ToListAsync();
         }
 
 

@@ -3,8 +3,8 @@ using API.Models;
 
 namespace API.Dtos
 {
-    public class TemplateCategoryForAddDto
+    public class UnitTypeForAddDto
     {
-        public string Name {get; set;}
+        public string Name {get; set; } 
     }
 }

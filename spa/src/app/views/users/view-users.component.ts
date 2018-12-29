@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { UserService } from '../../_services/user.service';
 import { environment } from '../../../environments/environment';
 import * as _ from 'underscore';

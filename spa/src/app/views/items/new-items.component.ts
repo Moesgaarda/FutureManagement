@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Item } from '../../_models/Item';
-import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
 import { UserService } from '../../_services/user.service';
@@ -64,7 +64,7 @@ export class AddItemsComponent {
     await this.itemService.getActiveItems().subscribe(items => {
       this.items = items.map((name) => {
         name.placement = name.template.name + ' - (' + name.placement + ') - Mængde: '
-          + name.amount + ' ' + UnitType[name.template.unitType];
+          + name.amount + ' ' + name.template.unitType.name;
         return name;
       });
     });

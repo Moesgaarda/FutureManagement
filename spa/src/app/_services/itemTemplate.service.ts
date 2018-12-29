@@ -7,6 +7,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { DetailFile } from '../_models/DetailFile';
 import { ItemTemplateCategory } from '../_models/ItemTemplateCategory';
+import { UnitType } from '../_models/UnitType';
 
 @Injectable()
 export class ItemTemplateService {
@@ -57,6 +58,14 @@ export class ItemTemplateService {
 
     getTemplateCategories(): Observable<ItemTemplateCategory[]> {
         return this.http.get<ItemTemplateCategory[]>(this.baseUrl + 'ItemTemplate/getTemplateCategories');
+    }
+
+    getUnitTypes(): Observable<UnitType[]> {
+        return this.http.get<UnitType[]>(this.baseUrl + 'ItemTemplate/getUnitTypes');
+    }
+
+    addUnitType(unitType: UnitType): Observable<UnitType> {
+        return this.http.post<UnitType>(this.baseUrl + 'ItemTemplate/addUnitType', unitType, this.httpOptions);
     }
 
 

@@ -3,8 +3,7 @@ import { ItemTemplatePart } from './ItemTemplatePart';
 import { ItemTemplatePartOf} from './ItemTemplatePartOf';
 import { DetailFile } from './DetailFile';
 import { ItemTemplateCategory } from './ItemTemplateCategory';
-
-export enum UnitType {mm = 1, cm, m, stk, paller, par}
+import { UnitType } from './UnitType';
 
 export interface ItemTemplate {
     id: number;

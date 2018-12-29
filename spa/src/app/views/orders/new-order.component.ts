@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../_models/Order';
-import { UnitType, ItemTemplate } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { Item } from '../../_models/Item';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
@@ -9,20 +9,21 @@ import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { UnitType } from '../../_models/UnitType';
 
 @Component({
   templateUrl: './new-order.component.html'
 })
 export class NewOrderComponent implements OnInit {
   orderToAdd: Order = {} as Order;
-  unitTypes = Object.keys(UnitType);
   currentItem: Item = {} as Item;
   templates: ItemTemplate[] = [];
   onOrderPage = true;
   templateToGet: ItemTemplate = {} as ItemTemplate;
   templateDetails: ItemTemplate = {} as ItemTemplate;
   detailsReady: boolean;
-  unitTypeForAmount: string;
+  unitType: UnitType;
+  unitTypeList: UnitType[] = [] as UnitType[];
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
   descriptionTextsToAdd: string[] = [] as string[];
 
@@ -39,8 +40,7 @@ export class NewOrderComponent implements OnInit {
 
   async ngOnInit() {
     await this.getTemplates();
-    // we only need the length measurements, so the second half of the unit types are cut off
-    this.unitTypes = this.unitTypes.slice(6, 9);
+    await this.getUnitTypes();
   }
 
   /**
@@ -52,7 +52,7 @@ export class NewOrderComponent implements OnInit {
     this.onOrderPage = !this.onOrderPage;
   }
 
-  
+
   /**
    * Gets all the ItemTemplates from the api
    *
@@ -64,12 +64,18 @@ export class NewOrderComponent implements OnInit {
     });
   }
 
+  async getUnitTypes() {
+    await this.itemTemplateService.getUnitTypes().subscribe(unitTypes => {
+      this.unitTypeList = unitTypes;
+    });
+  }
+
 
   /**
    * Gets details for a specific ItemTemplate
    * Is used when the user chooses one ItemTemplate to add to the order
    * Because the templates that are retrieved when getting all templates at once don't have all the details of the ItemTemplate
-   * 
+   *
    * @memberof NewOrderComponent
    */
   async getTemplateDetails() {
@@ -84,19 +90,8 @@ export class NewOrderComponent implements OnInit {
         },
         () => {
           this.detailsReady = true;
-          this.getUnitTypeForTemplate();
         }
       );
-  }
-
-
-  /**
-   * Extracts the unitType from the ItemTemplate that is being added to the Order
-   *
-   * @memberof NewOrderComponent
-   */
-  getUnitTypeForTemplate() {
-    this.unitTypeForAmount = UnitType[this.templateDetails.unitType];
   }
 
   /**

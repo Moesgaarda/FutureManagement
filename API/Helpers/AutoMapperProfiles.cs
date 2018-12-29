@@ -41,6 +41,8 @@ namespace API.Helpers
                 .ForMember(x => x.FileDataId, opt => opt.MapFrom(src => src.FileData.Id));
             CreateMap<ItemTemplateCategory, TemplateCategoryForAddDto>();
             CreateMap<ItemTemplateCategory, TemplateCategoryForGetDto>();
+            CreateMap<UnitType, UnitTypeForAddDto>();
+            CreateMap<UnitType, UnitTypeForGetDto>();
             
         }
     }

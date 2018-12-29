@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
-import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { Observable } from 'rxjs';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
@@ -11,6 +11,7 @@ import { FileUploadService } from '../../_services/fileUpload.service';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import * as _ from 'underscore';
 import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
+import { UnitType } from '../../_models/UnitType';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -21,11 +22,11 @@ const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 export class NewItemTemplateComponent implements OnInit {
   templates: Observable<ItemTemplate[]>;
   selectedTemplates: ItemTemplate[] = [] as ItemTemplate[];
-  unitTypes = Object.keys(UnitType);
   properties: ItemPropertyName[];
   templateToAdd: ItemTemplate = {} as ItemTemplate;
-  unitType: UnitType;
-  unitTypeEnumNumber = UnitType;
+  unitType: UnitType = {} as UnitType;
+  unitTypeList: UnitType[] = [] as UnitType[];
+  unitTypeToAddToDb: UnitType = {} as UnitType;
   templatePartsToAdd: ItemTemplatePart[] = [] as ItemTemplatePart[];
   partAmounts: number[] = [];
   propertiesToAdd: ItemPropertyName[] = [] as ItemPropertyName[];
@@ -51,13 +52,12 @@ export class NewItemTemplateComponent implements OnInit {
     this.getTemplates();
     this.getTemplateProperties();
     this.getTemplateCategories();
+    this.getUnitTypes();
     this.uploader = uploaderParameter;
     this.uploader.clearQueue();
   }
 
   ngOnInit() {
-    // unittypes should both enum text and numbers. Dividing by 2 removes numbers.
-    this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
     // Properties array is sorted alphabetically through underscorejs
     _.sortBy(this.properties, 'name');
   }
@@ -81,6 +81,12 @@ export class NewItemTemplateComponent implements OnInit {
   async getTemplateCategories() {
     await this.templateService.getTemplateCategories().subscribe(categories => {
       this.categoryList = categories;
+    });
+  }
+
+  async getUnitTypes() {
+    await this.templateService.getUnitTypes().subscribe(unitTypes => {
+      this.unitTypeList = unitTypes;
     });
   }
 
@@ -165,6 +171,20 @@ export class NewItemTemplateComponent implements OnInit {
     await this.templateService.addTemplateCategory(this.categoryToAddToDb).subscribe( () => {
       this.alertify.success('Tiføjede ' + this.categoryToAddToDb.name +  '!');
       this.getTemplateCategories();
+    });
+  }
+
+  async addUnitType() {
+    for (let i = 0; i < this.unitTypeList.length; i++) {
+      if (this.unitTypeList[i].name.toLowerCase() === this.unitTypeToAddToDb.name.toLowerCase()) {
+        this.alertify.error('En mængdeenhed med dette navn findes allerede!');
+        return;
+      }
+    }
+
+    await this.templateService.addUnitType(this.unitTypeToAddToDb).subscribe( () => {
+      this.alertify.success('Tiføjede ' + this.unitTypeToAddToDb.name +  '!');
+      this.getUnitTypes();
     });
   }
 
