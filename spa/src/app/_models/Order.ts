@@ -6,7 +6,6 @@ export interface Order {
     orderDate: Date;
     deliveryDate: Date;
     orderedBy: User;
-    invoicePath: string;
     purchaseNumber: number;
     width: number;
     length: number;
