@@ -158,7 +158,6 @@ export class ViewItemsComponent implements OnInit {
 
   getTableAsPdf() {
     this.loadItems();
-    console.log(this.allItems);
     const docDefinition = {
       content: [
         { text: 'Alle genstande', style: 'header' },
@@ -166,7 +165,7 @@ export class ViewItemsComponent implements OnInit {
                             ['Id', 'Skabelonens navn', 'Placering', 'Mængde', 'Aktivt'])
       ]
     };
-    pdfMake.createPdf(docDefinition).open();
+    pdfMake.createPdf(docDefinition).open({}, window);
   }
 
   buildPdfTableBody(data, columns, headers) {
