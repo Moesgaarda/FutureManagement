@@ -29,9 +29,17 @@
         </div>
         <div class="form-group">
           <label>Kategori</label>
-          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="category">
-            <option *ngFor="let cat of categoryList" selected>{{cat}}</option>
+          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="category && category.name">
+            <option *ngFor="let cat of categoryList" selected>{{cat.name}}</option>
           </select>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Lav en ny kategori" class="form-control" id="categoryField" [(ngModel)]="categoryToAddToDb && categoryToAddToDb.name" />
+          <span class="input-group-append">
+            <button class="btn btn-success input-group-text" (click)="addTemplateCategory()" onclick="document.getElementById('propField').value = ''">
+              Tilføj
+            </button>
+          </span>
         </div>
 
         <div class="form-group">

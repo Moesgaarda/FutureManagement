@@ -137,8 +137,7 @@ namespace API.Controllers
             }
 
             var category = new ItemTemplateCategory(
-                categoryDto.Name,
-                categoryDto.ItemTemplates
+                categoryDto.Name
             );
 
             bool result = await _repo.AddTemplateCategory(category);

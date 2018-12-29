@@ -39,7 +39,7 @@ export class ItemTemplateService {
         .map(response => {});
     }
 
-    getAllTemplateProperties(): Observable<ItemPropertyName[]> {
+    getTemplateProperties(): Observable<ItemPropertyName[]> {
         return this.http.get<ItemPropertyName[]>(this.baseUrl + 'ItemTemplate/getPropertyNames');
     }
 

@@ -35,8 +35,9 @@ export class NewItemTemplateComponent implements OnInit {
   itemsPerPage = 15;
   currentPage = 1;
   propFilter: string;
-  category: ItemTemplateCategory;
+  category: ItemTemplateCategory = {} as ItemTemplateCategory;
   categoryList: ItemTemplateCategory[] = [] as ItemTemplateCategory[];
+  categoryToAddToDb: ItemTemplateCategory = {} as ItemTemplateCategory;
 
   /**
    * @param {ItemTemplateService} templateService
@@ -48,7 +49,7 @@ export class NewItemTemplateComponent implements OnInit {
   constructor(private templateService: ItemTemplateService, private router: Router,
      private alertify: AlertifyService, private uploaderParameter: FileUploadService) {
     this.getTemplates();
-    this.loadAllTemplateProperties();
+    this.getTemplateProperties();
     this.getTemplateCategories();
     this.uploader = uploaderParameter;
     this.uploader.clearQueue();
@@ -71,8 +72,8 @@ export class NewItemTemplateComponent implements OnInit {
   /**
    *Loads all properties and subscrubes since properties array is not an observable.
    */
-  async loadAllTemplateProperties() {
-    await this.templateService.getAllTemplateProperties().subscribe(properties => {
+  async getTemplateProperties() {
+    await this.templateService.getTemplateProperties().subscribe(properties => {
       this.properties = properties;
     });
   }
@@ -124,6 +125,7 @@ export class NewItemTemplateComponent implements OnInit {
     this.templateToAdd.parts = this.templatePartsToAdd;
     this.templateToAdd.unitType = this.unitType;
     this.templateToAdd.templateProperties = this.propertiesToAdd;
+    this.templateToAdd.category = this.category;
 
     // Uses the function defined in the service to add. Alertify notifies succes or failure, and user is sent to view table.
     this.templateService.addTemplate(this.templateToAdd).subscribe(data => {
@@ -148,7 +150,21 @@ export class NewItemTemplateComponent implements OnInit {
     // It is added if not found in the DB.
     await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe( () => {
       this.alertify.success('Tiføjede ' + this.propToAddToDb.name +  '!');
-      this.loadAllTemplateProperties();
+      this.getTemplateProperties();
+    });
+  }
+
+  async addTemplateCategory() {
+    for (let i = 0; i < this.categoryList.length; i++) {
+      if (this.categoryList[i].name.toLowerCase() === this.categoryToAddToDb.name.toLowerCase()) {
+        this.alertify.error('En kategori med dette navn findes allerede!');
+        return;
+      }
+    }
+
+    await this.templateService.addTemplateCategory(this.categoryToAddToDb).subscribe( () => {
+      this.alertify.success('Tiføjede ' + this.categoryToAddToDb.name +  '!');
+      this.getTemplateCategories();
     });
   }
 
