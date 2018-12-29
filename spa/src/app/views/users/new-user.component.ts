@@ -24,11 +24,7 @@ export class NewUserComponent implements OnInit {
     this.user.password = '';
   }
   createUser() {
-    if (this.user.name !== undefined
-      && this.user.surname !== undefined
-      && this.user.username !== undefined
-      && this.user.password !== undefined
-      && this.user.password === this.passwordConfirm) {
+    if (this.user.password === this.passwordConfirm) {
       this.authService.register(this.user).subscribe(() => {
         this.alertify.success('Bruger var oprettet');
         this.router.navigate(['users/view/']);
