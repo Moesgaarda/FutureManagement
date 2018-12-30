@@ -40,6 +40,7 @@ namespace API.Controllers
         [HttpGet("myEventLogs/{id}", Name = "GetMyEventLogs")]
         public async Task<IActionResult> GetMyEventLogs(int id)
         {
+            // TODO Figure out if this is always int, otherwise type check
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
                 return Unauthorized();
