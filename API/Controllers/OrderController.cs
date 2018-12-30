@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Dtos.OrderDtos;
 using API.Enums;
 using API.Models;
 using AutoMapper;
@@ -40,7 +41,40 @@ namespace API.Controllers{
 
         [Authorize(Policy = "Order_Add")]
         [HttpPost("add", Name = "AddOrder")]
-        public async Task<IActionResult> AddOrder([FromBody]Order orderToCreate){       
+        public async Task<IActionResult> AddOrder([FromBody]OrderForAddDto OrderDto){       
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            List<OrderFileName> filesToAdd = new List<OrderFileName>();
+            if(OrderDto.Files != null){
+                for(int i = 0; i < OrderDto.Files.Length; i++){
+                    filesToAdd.Add(new OrderFileName{
+                        FileData = new FileData{
+                            Id = OrderDto.Files[i]
+                        },
+                        FileName = OrderDto.FileNames[i]
+                    });
+                }
+            }
+
+
+            Order orderToCreate = new Order(
+                OrderDto.Company,
+                OrderDto.OrderDate,
+                OrderDto.DeliveryDate,
+                OrderDto.OrderedBy,
+                OrderDto.PurchaseNumber,
+                OrderDto.Width,
+                OrderDto.Height,
+                OrderDto.Length,
+                // TODO ændre det sådan at vi bruger Unit Type som en model i SPa'en
+                new UnitType(){
+                    Name = OrderDto.UnitType
+                },
+                OrderDto.Products,
+                filesToAdd
+            );
 
             bool result = await _repo.AddOrder(orderToCreate);
 
