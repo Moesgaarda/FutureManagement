@@ -127,7 +127,7 @@ export class NewItemTemplateComponent implements OnInit {
         this.templateToAdd.fileNames.push(file.name);
       }
     }
-    
+
     this.templateToAdd.parts = this.templatePartsToAdd;
     this.templateToAdd.unitType = this.unitType;
     this.templateToAdd.templateProperties = this.propertiesToAdd;

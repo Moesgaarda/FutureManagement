@@ -77,10 +77,18 @@ namespace API.Controllers
                     });
                 }
             }
+
+            UnitType ut = new UnitType {
+                Name = templateDto.UnitType.Name
+            };
+
+            ItemTemplateCategory itc = new ItemTemplateCategory {
+                Name = templateDto.Category.Name
+            };
             
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
-                templateDto.UnitType,
+                ut,
                 templateDto.Description,
                 propertiesToAdd,
                 templateDto.Parts,
@@ -90,7 +98,7 @@ namespace API.Controllers
                 templateDto.RevisionedFrom,
                 filesToAdd,
                 templateDto.LowerLimit,
-                templateDto.Category
+                itc
             );
 
             bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);

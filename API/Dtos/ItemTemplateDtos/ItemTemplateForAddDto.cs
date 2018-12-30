@@ -15,7 +15,7 @@ namespace API.Dtos
         [Required]
         public string Name { get; set; }
         [Required]
-        public UnitType UnitType { get; set; }
+        public UnitTypeForAddDto UnitType { get; set; }
         public string Description { get; set; }
         public ICollection<ItemPropertyNameForGetDto> TemplateProperties { get; set; }
         public ICollection<ItemTemplatePart> Parts { get; set; }
@@ -27,6 +27,6 @@ namespace API.Dtos
         public string[] FileNames { get; set;}
         public bool IsActive { get; set; }
         public int LowerLimit { get; set; }
-        public ItemTemplateCategory Category { get; set; }
+        public TemplateCategoryForAddDto Category { get; set; }
     }
 }
