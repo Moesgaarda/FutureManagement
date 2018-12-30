@@ -16,9 +16,11 @@ matrix:
         - "node"
       dist: trusty
       sudo: required
-      
+
+      before_install:
+        - cd spa
+              
       install:
-        - cd SPA
         - npm ci
       cache:
         directories:
