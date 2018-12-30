@@ -1,5 +1,6 @@
 import { User } from './User';
 import { Item } from './Item';
+import { OrderStatus } from './OrderStatus';
 
 export interface Order {
     company: string;
@@ -14,4 +15,5 @@ export interface Order {
     products: Item[];
     files: any;
     fileNames: string[];
+    status: OrderStatus;
 }

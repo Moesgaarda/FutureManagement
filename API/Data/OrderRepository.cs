@@ -26,6 +26,8 @@ namespace API.Data
             }else{
                 order.OrderedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == 1);
             }
+            order.Status = await _context.OrderStatuses.FirstOrDefaultAsync(x => x.Id == order.Status.Id);
+            
             foreach(Item product in order.Products){
                 product.Template = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == product.Template.Id);
                 foreach(ItemPropertyDescription property in product.Properties){
@@ -69,6 +71,10 @@ namespace API.Data
         public async Task<Order> GetOrder(int id)
         {
             return await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<List<OrderStatus>> GetAllStatuses(){
+            return await _context.OrderStatuses.ToListAsync();
         }
     }
 }

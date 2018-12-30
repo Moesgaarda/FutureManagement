@@ -73,7 +73,8 @@ namespace API.Controllers{
                     Name = OrderDto.UnitType
                 },
                 OrderDto.Products,
-                filesToAdd
+                filesToAdd, 
+                OrderDto.Status
             );
 
             bool result = await _repo.AddOrder(orderToCreate);
@@ -139,6 +140,13 @@ namespace API.Controllers{
         [Authorize(Policy = "Order_Edit")]
         public Task<bool> UpdateOrderStatus(){
             throw new NotImplementedException(); //TODO Unit testing
+        }
+
+        [Authorize(Policy = "Order_View")]
+        [HttpGet("getAllStatuses", Name = "GetAllStatuses")]
+        public async Task<IActionResult> GetAllStatuses(){
+           var statuses = await _repo.GetAllStatuses();
+           return Ok(statuses);
         }
 
     }

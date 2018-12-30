@@ -9,7 +9,7 @@ namespace API.Models{
             this.OrderDate = DateTime.Now;
         }
         public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, 
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, ICollection<OrderFileName> files){
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, ICollection<OrderFileName> files, OrderStatus status){
 
             this.Company = company;
             this.OrderDate = DateTime.Now;
@@ -22,10 +22,11 @@ namespace API.Models{
             this.UnitType = unitType;
             this.Products = products;
             this.Files = files;
+            this.Status = status;
         }
 
         public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy,
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products){
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, OrderStatus status){
 
             this.Id = id;
             this.Company = company;
@@ -38,6 +39,7 @@ namespace API.Models{
             this.Length = length;
             this.UnitType = unitType;
             this.Products = products;
+            this.Status = status;
         }
 
         [Key]
