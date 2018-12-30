@@ -1,27 +1,19 @@
 matrix: 
+  fast_finish: true
+
   include: 
     - language: node_js
-      node_js:
-      - "8.11"
+      sudo: false
+      node_js: 
+        - "node"
 
-      branches:
-        only:
-          - master
-
-      addons:
-        chrome: stable
-
-      before_script:
+      install:
         - cd spa
-        - yarn global add @angular/cli
+        - npm install --no-progress
+      cache: npm
 
-      cache:
-        yarn: true
-        directories:
-          - node_modules
-
-      script:
-      - ng build --prod
+      script: 
+        - npm run build
 
     - language: csharp
       mono: none
