@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using API.Enums;
 
-namespace API.Models{
-    public class Order{
-        public Order(){
+namespace API.Models
+{
+    public class Order
+    {
+        public Order()
+        {
             this.OrderDate = DateTime.Now;
         }
-        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, 
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, bool internalOrder, User assignedUser, User signedBy){
-
+        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy,
+                int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products,
+                bool internalOrder, User assignedUser, User signedBy){
             this.Company = company;
             this.OrderDate = DateTime.Now;
             this.DeliveryDate = deliveryDate;
@@ -26,9 +29,9 @@ namespace API.Models{
             this.SignedBy = signedBy;
         }
 
-        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, 
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, bool internalOrder, User assignedUser, User signedBy){
-
+        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy,
+                int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products,
+                bool internalOrder, User assignedUser, User signedBy){
             this.Id = id;
             this.Company = company;
             this.OrderDate = DateTime.Now;
