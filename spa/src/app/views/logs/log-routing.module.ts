@@ -12,6 +12,10 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
+        path: '',
+        redirectTo: 'view'
+      },
+      {
         path: 'view',
         component: ViewLogComponent,
         data: {
