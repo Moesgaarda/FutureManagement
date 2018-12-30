@@ -9,7 +9,9 @@ import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { FileUploadService } from '../../_services/fileUpload.service';
 
+const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 @Component({
   templateUrl: './new-order.component.html'
 })
@@ -25,16 +27,21 @@ export class NewOrderComponent implements OnInit {
   unitTypeForAmount: string;
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
   descriptionTextsToAdd: string[] = [] as string[];
+  uploader: FileUploadService;
+
 
   constructor(
     private itemTemplateService: ItemTemplateService,
     private orderService: OrderService,
     private alertify: AlertifyService,
-    private router: Router
+    private router: Router,
+    private uploaderParameter: FileUploadService
   ) {
     this.templateDetails.templateProperties = [] as ItemPropertyName[];
     this.orderToAdd.products = [] as Item[];
     this.currentItem.template = {} as ItemTemplate;
+    this.uploader = uploaderParameter;
+    this.uploader.clearQueue();
   }
 
   async ngOnInit() {
@@ -79,7 +86,7 @@ export class NewOrderComponent implements OnInit {
           this.templateDetails = template;
         },
         error => {
-          this.alertify.error('kunne ikke hente skabelon');
+          this.alertify.error('Kunne ikke hente skabelon');
         },
         () => {
           this.detailsReady = true;
@@ -138,16 +145,21 @@ export class NewOrderComponent implements OnInit {
    *
    * @memberof NewOrderComponent
    */
-  addOrder() {
+  async addOrder() {
+    if (this.uploader.queuedFiles.length > 0) {
+      const fileArray = await this.uploader.upload('OrderFiles');
+      this.orderToAdd.files = fileArray;
+      this.orderToAdd.fileNames = [];
+      for (const file of this.uploader.queuedFiles) {
+        this.orderToAdd.fileNames.push(file.name);
+      }
+    }
     this.orderService.addOrder(this.orderToAdd).subscribe(
       data => {
-        console.log('added order');
         this.alertify.success('Tilføjede bestilling');
-        console.log(this.orderToAdd);
       },
       error => {
-        console.log('failed to add order');
-        this.alertify.error('kunne ikke tilføje bestillingen');
+        this.alertify.error('Kunne ikke tilføje bestillingen');
       },
       () => {
         this.router.navigate(['pages/tables/order-table']);
