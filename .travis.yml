@@ -18,6 +18,7 @@ matrix:
       sudo: required
       
       install:
+        - cd SPA
         - npm ci
       cache:
         directories:
