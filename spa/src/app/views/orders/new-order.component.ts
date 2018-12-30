@@ -55,7 +55,6 @@ export class NewOrderComponent implements OnInit {
     this.onOrderPage = !this.onOrderPage;
   }
 
-  
   /**
    * Gets all the ItemTemplates from the api
    *
@@ -72,7 +71,7 @@ export class NewOrderComponent implements OnInit {
    * Gets details for a specific ItemTemplate
    * Is used when the user chooses one ItemTemplate to add to the order
    * Because the templates that are retrieved when getting all templates at once don't have all the details of the ItemTemplate
-   * 
+   *
    * @memberof NewOrderComponent
    */
   async getTemplateDetails() {
