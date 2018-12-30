@@ -86,7 +86,7 @@ export class NewOrderComponent implements OnInit {
           this.templateDetails = template;
         },
         error => {
-          this.alertify.error('kunne ikke hente skabelon');
+          this.alertify.error('Kunne ikke hente skabelon');
         },
         () => {
           this.detailsReady = true;
@@ -156,13 +156,10 @@ export class NewOrderComponent implements OnInit {
     }
     this.orderService.addOrder(this.orderToAdd).subscribe(
       data => {
-        console.log('added order');
         this.alertify.success('Tilføjede bestilling');
-        console.log(this.orderToAdd);
       },
       error => {
-        console.log('failed to add order');
-        this.alertify.error('kunne ikke tilføje bestillingen');
+        this.alertify.error('Kunne ikke tilføje bestillingen');
       },
       () => {
         this.router.navigate(['pages/tables/order-table']);
