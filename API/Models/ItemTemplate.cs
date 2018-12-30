@@ -29,7 +29,7 @@ namespace API.Models{
 
         public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
                             ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, 
-                            DateTime created, ItemTemplate revisionedFrom, ICollection<TemplateFileName> files , 
+                            DateTime created, ItemTemplate revisionedFrom, ICollection<TemplateFileName> files, 
                             int lowerLimit, ItemTemplateCategory category){
             this.Name = name;
             this.UnitType = unitType;

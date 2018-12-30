@@ -59,6 +59,7 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
+
             List<TemplatePropertyRelation> propertiesToAdd = new List<TemplatePropertyRelation>();
             foreach(ItemPropertyNameForGetDto prop in templateDto.TemplateProperties){
                 propertiesToAdd.Add(new TemplatePropertyRelation{
@@ -78,17 +79,12 @@ namespace API.Controllers
                 }
             }
 
-            UnitType ut = new UnitType {
-                Name = templateDto.UnitType.Name
-            };
+            var unitTypeToAdd = new UnitType(templateDto.UnitType.Name);
+            var categoryToAdd = new ItemTemplateCategory(templateDto.Category.Name);
 
-            ItemTemplateCategory itc = new ItemTemplateCategory {
-                Name = templateDto.Category.Name
-            };
-            
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
-                ut,
+                unitTypeToAdd,
                 templateDto.Description,
                 propertiesToAdd,
                 templateDto.Parts,
@@ -98,7 +94,7 @@ namespace API.Controllers
                 templateDto.RevisionedFrom,
                 filesToAdd,
                 templateDto.LowerLimit,
-                itc
+                categoryToAdd
             );
 
             bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);
