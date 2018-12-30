@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { UsersRoutingModule } from './users-routing.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TechTableModule } from '../../_modules/techtable/techtable.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     CommonModule,
     NgSelectModule,
-    Ng2TableModule
+    Ng2TableModule,
+    TechTableModule
   ],
   declarations: [
     ViewUsersComponent,

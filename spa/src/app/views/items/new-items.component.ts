@@ -71,7 +71,7 @@ export class AddItemsComponent {
   }
 
   async getUsers() {
-    await this.userService.getActiveUsers().subscribe(users => {
+    await this.userService.getAll().subscribe(users => {
       this.userList = users;
     });
   }
