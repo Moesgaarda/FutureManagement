@@ -21,7 +21,7 @@ import { TechTableModule } from '../../_modules/techtable/techtable.module';
     NgSelectModule,
     Ng2TableModule,
     TechTableModule,
-    CommonModule,
+    CommonModule
   ],
   declarations: [
     ViewOrdersComponent,

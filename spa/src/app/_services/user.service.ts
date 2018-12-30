@@ -20,7 +20,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<User[]> {
+  getActiveUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'User/active');
   }
   getInactiveUsers(): Observable<User[]> {
