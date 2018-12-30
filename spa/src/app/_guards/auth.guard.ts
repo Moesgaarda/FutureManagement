@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       if (match) {
         return true;
       } else {
-        this.router.navigate(['no-access']);
+        this.router.navigate(['./no-access']);
         this.alertify.error('Du har ikke adgang til denne side');
       }
     }

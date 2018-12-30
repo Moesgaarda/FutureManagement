@@ -1,0 +1,12 @@
+<app-sidebar [fixed]="true" [display]="'lg'">
+  <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+  <app-sidebar-footer>
+    <li class="nav-item" ng-reflect-ng-class="nav-item" style="list-style: none;">
+      <a routerlinkactive="active" class="nav-link" ng-reflect-ng-class="nav-link" ng-reflect-router-link="/logout" ng-reflect-router-link-active="active"
+        (click)="logout()">
+        <i class="nav-icon icon-logout"></i> Log ud
+      </a>
+    </li>
+  </app-sidebar-footer>
+  <app-sidebar-minimizer></app-sidebar-minimizer>
+</app-sidebar>

@@ -4,15 +4,19 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { User } from '../_models/User';
+import { initDomAdapter } from '@angular/platform-browser/src/browser';
+import { AlertifyService } from './alertify.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
     baseUrl = environment.apiUrl + 'auth/';
     userToken: any;
     decodedToken: any;
+    currentUser: User;
     jwtHelper: JwtHelperService = new JwtHelperService();
-    constructor(private http: Http) { }
-    test: any;
+    constructor(private http: Http, private alertify: AlertifyService, private router: Router) { }
 
     login(model: any) {
 
@@ -21,9 +25,9 @@ export class AuthService {
             const user = response.json();
             if (user && user.token) {
                 localStorage.setItem('token', user.token);
+                localStorage.setItem('user', JSON.stringify(user.user));
                 this.decodedToken = this.jwtHelper.decodeToken(user.token);
                 this.userToken = user.token;
-                this.test = user.user;
             }
         });
     }
@@ -35,6 +39,24 @@ export class AuthService {
     loggedIn() {
         const token = localStorage.getItem('token');
         return !this.jwtHelper.isTokenExpired(token);
+    }
+
+    logout() {
+
+        this.router.navigate(['login']);
+        this.userToken = null;
+        localStorage.removeItem('token');
+        this.alertify.success('Logged ud');
+      }
+
+    getCurrentUserId() {
+        this.currentUser = JSON.parse(localStorage.getItem('user'));
+        return this.currentUser.id.toString();
+    }
+
+    getCurrentUser() {
+        this.currentUser = JSON.parse(localStorage.getItem('user'));
+        return this.currentUser;
     }
 
     roleMatch(allowedRoles): boolean {

@@ -112,15 +112,5 @@ export const navItems = [
   },
   {
     divider: true
-  },
-  {
-    divider: true
-  },
-  {
-    name: 'Log ud',
-    url: '/login',
-    icon: 'icon-login',
-    class: 'mt-auto',
-    variant: 'warning',
   }
 ];
