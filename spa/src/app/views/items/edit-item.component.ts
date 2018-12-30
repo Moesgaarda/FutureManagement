@@ -34,7 +34,6 @@ export class EditItemComponent implements OnInit {
     editItem() {
         this.itemService.editItem(this.item).subscribe(item => {}, error => {
             this.alertify.error('Kunne ikke gennemføre ændringerne');
-            console.log(this.item);
         }, () => {
             this.alertify.success('Ændringer gemt');
             this.router.navigate(['items/details/' + this.item.id]);

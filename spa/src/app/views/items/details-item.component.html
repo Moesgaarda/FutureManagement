@@ -4,10 +4,15 @@
       <div class="card-header">Detaljer omkring genstanden</div>
       <div class="card-body">
         <dl class="row">
-          <dt class="col-sm-3">Navn</dt>
-          <dd class="col-sm-9">
+          <dt class="col-sm-3">Skabelon</dt>
+          <dd class="col-sm-5">
             <p>{{item.template.name}}</p>
           </dd>
+          <dd class="col-sm-4">
+              <button class="btn btn-success input-group-text btn-lg" (click)="goToTemplate()">
+                  Se skabelon
+                </button>
+            </dd>
   
           <dt class="col-sm-3">Mængde</dt>
           <dd class="col-sm-9">
@@ -29,16 +34,16 @@
   
             <dt *ngIf="item.createdBy != null" class="col-sm-3">Lavet af</dt>
             <dd *ngIf="item.createdBy != null" class="col-sm-9">
-              <p>{{item.createdBy}}</p>
+              <p>{{item.createdBy.userName}}</p>
             </dd>
 
-            <dt class="col-sm-3">Ordre </dt>
-            <dd class="col-sm-9">
+            <dt *ngIf="item.order != null" class="col-sm-3">Ordre </dt>
+            <dd *ngIf="item.order != null" class="col-sm-5"><p>{{item.order.purchaseNumber}}</p></dd>
+            <dd *ngIf="item.order != null" class="col-sm-4">
               <button class="btn btn-success input-group-text btn-lg" (click)="goToOrder()">
-                Gå til ordre
+                Se ordre
               </button>
             </dd>
-
             <dt class="col-sm-12">
               <button type="button" class="btn btn-primary" style="margin-top: 2em" (click)="goToEditPage()">Rediger detaljer</button>
             </dt>
@@ -47,14 +52,17 @@
     </div>
   </div>
 
-  <div *ngIf="item.parts.length != 0" class="col-lg-4">
+  <div *ngIf="item.parts.length != 0 && partsLoaded" class="col-lg-4">
     <div class="card">
       <div class="card-header">Genstande brugt til produktionen af genstanden</div>
       <div class="card-body">
-        <dl class="row">
-            <dd class="col-sm-9">
-                <p *ngFor="let part of item.parts">{{part.amount}}x {{getPart(part.partId)}}</p>
-            </dd>      
+        <dl *ngFor="let part of item.parts; let i = index" class="row">
+            <dt class="col-sm-2">
+                {{part.amount}}x
+            </dt>
+            <dd class="col-sm-10">
+              <p>{{parts[i].template.name}}</p>
+            </dd>
         </dl>
       </div>
     </div>
