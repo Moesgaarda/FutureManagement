@@ -5,6 +5,7 @@ import * as _ from 'underscore';
 import { Item } from '../../_models/Item';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   templateUrl: './view-items.component.html',
@@ -138,7 +139,7 @@ export class ViewItemsComponent implements OnInit {
   ngOnInit() {
     this.loadItems();
   }
-  constructor(private itemService: ItemService) {
+  constructor(private itemService: ItemService, private alertify: AlertifyService) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
@@ -147,7 +148,6 @@ export class ViewItemsComponent implements OnInit {
       this.rows = items;
       this.data = items;
       this.onChangeTable(this.config);
-      this.allItems = items;
     });
 
   }
@@ -157,15 +157,20 @@ export class ViewItemsComponent implements OnInit {
   }
 
   getTableAsPdf() {
-    this.loadItems();
-    const docDefinition = {
-      content: [
-        { text: 'Alle genstande', style: 'header' },
-        this.table(this.allItems, ['id', 'template', 'placement', 'amount', 'isActive'],
-                            ['Id', 'Skabelonens navn', 'Placering', 'Mængde', 'Aktivt'])
-      ]
-    };
-    pdfMake.createPdf(docDefinition).open({}, window);
+    this.itemService.getAll().subscribe(items => {
+      this.allItems = items;
+    }, error => {
+      this.alertify.success('Kunne ikke hente lagerliste');
+    }, () => {
+      const docDefinition = {
+        content: [
+          { text: 'Alle genstande', style: 'header' },
+          this.table(this.allItems, ['id', 'template', 'placement', 'amount', 'isActive'],
+                              ['Id', 'Skabelonens navn', 'Placering', 'Mængde', 'Aktivt'])
+        ]
+      };
+      pdfMake.createPdf(docDefinition).open({}, window);
+    });
   }
 
   buildPdfTableBody(data, columns, headers) {
@@ -178,7 +183,11 @@ export class ViewItemsComponent implements OnInit {
           if (column === 'template') {
             dataRow.push(row[column].name);
           } else {
-            dataRow.push(row[column].toString());
+            if (row[column] != null) {
+              dataRow.push(row[column].toString());
+            } else {
+              dataRow.push('');
+            }
           }
         });
 
