@@ -160,7 +160,7 @@ export class ViewItemsComponent implements OnInit {
     this.itemService.getAll().subscribe(items => {
       this.allItems = items;
     }, error => {
-      this.alertify.success('Kunne ikke hente lagerliste');
+      this.alertify.error('Kunne ikke hente lagerliste');
     }, () => {
       const docDefinition = {
         content: [

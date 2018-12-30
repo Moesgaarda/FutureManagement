@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-lg-6">
+<div *ngIf="itemLoaded" class="row">
+  <div class="col-lg-4">
     <div class="card">
       <div class="card-header">Detaljer omkring genstanden</div>
       <div class="card-body">
@@ -39,35 +39,33 @@
               </button>
             </dd>
 
-            <dt class="col-sm-3">Genstande brugt til produktion </dt>
-            <dd class="col-sm-9">
-                <p *ngFor="let part of item.parts">{{part.amount}} {{getPart(part.partId)}}</p>
-            </dd>
-
-              
-
-  
-
+            <dt class="col-sm-12">
+              <button type="button" class="btn btn-primary" style="margin-top: 2em" (click)="goToEditPage()">Rediger detaljer</button>
+            </dt>
         </dl>
       </div>
     </div>
   </div>
 
-  <div class="col-lg-6">
+  <div *ngIf="item.parts.length != 0" class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Genstande brugt til produktionen af genstanden</div>
+      <div class="card-body">
+        <dl class="row">
+            <dd class="col-sm-9">
+                <p *ngFor="let part of item.parts">{{part.amount}}x {{getPart(part.partId)}}</p>
+            </dd>      
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
 
     <div class="card">
       <div class="card-header">Valgte egenskaber</div>
       <div class="card-body">
-        <div class="row demo-checkboxes-radio">
-          <div class="demo-checkboxes col-sm-4">
-            checkbox Malingsfarve
-            checkbox Behandling
-            checkbox Egenskab3
-            checkbox Egenskab4
-            checkbox Egenskab5
-            checkbox Egenskab6
-          </div>
-        </div>
+        <p *ngFor="let prop of item.properties">{{prop.description}}</p>
         <div class="input-group">
           <input type="text" placeholder="Tilføj ny egenskab" class="form-control" />
           <span class="input-group-append">

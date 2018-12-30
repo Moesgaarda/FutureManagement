@@ -4,6 +4,7 @@ import { Item } from '../../_models/Item';
 import { Order } from '../../_models/Order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   templateUrl: './details-item.component.html'
@@ -13,8 +14,10 @@ export class DetailsItemComponent implements OnInit {
   idForOrderDetail: number;
   baseUrl = environment.spaUrl;
   parts: Item [];
+  itemLoaded: boolean;
 
-  constructor(private itemService: ItemService, private route: ActivatedRoute, private router: Router
+  constructor(private itemService: ItemService, private route: ActivatedRoute, private router: Router,
+    private alertify: AlertifyService
   ) {}
 
   // tslint:disable-next-line:use-life-cycle-interface
@@ -27,8 +30,10 @@ export class DetailsItemComponent implements OnInit {
       .getItem(+this.route.snapshot.params['id'])
       .subscribe((item: Item) => {
         this.item = item;
-        this.idForOrderDetail = item.order.id;
-        console.log(this.item);
+      }, error => {
+        this.alertify.error('Kunne ikke hente info om genstanden');
+      }, () => {
+        this.itemLoaded = true;
       });
   }
 
@@ -40,4 +45,7 @@ export class DetailsItemComponent implements OnInit {
     return this.itemService.getItem(id);
   }
 
+  goToEditPage() {
+    this.router.navigate(['items/edit/' + this.item.id]);
+  }
 }

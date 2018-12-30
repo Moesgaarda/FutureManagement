@@ -4,6 +4,7 @@ import { ViewItemsComponent } from './view-items.component';
 import { AddItemsComponent } from './new-items.component';
 import { DetailsItemComponent } from './details-item.component';
 import { AuthGuard } from '../../_guards/auth.guard';
+import { EditItemComponent } from './edit-item.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,14 @@ const routes: Routes = [
         data: {
           title: 'Detaljer om genstand',
           roles: ['Items_View']
+        }
+      },
+      {
+        path: 'edit/:id',
+        component: EditItemComponent,
+        data: {
+          title: 'Rediger genstand',
+          roles: ['Items_Edit']
         }
       }
     ]
