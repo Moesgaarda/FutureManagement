@@ -12,6 +12,7 @@ matrix:
         chrome: stable
 
       before_script:
+        - cd spa
         - yarn global add @angular/cli
 
       cache:
