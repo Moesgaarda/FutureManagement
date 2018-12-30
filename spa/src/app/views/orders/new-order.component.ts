@@ -9,7 +9,7 @@ import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { User } from '../../_models/User';
+import { FileUploadService } from '../../_services/fileUpload.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 @Component({
@@ -27,8 +27,8 @@ export class NewOrderComponent implements OnInit {
   unitTypeForAmount: string;
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
   descriptionTextsToAdd: string[] = [] as string[];
-  internalOrder: boolean;
-  assignedUser: User;
+  uploader: FileUploadService;
+
 
   constructor(
     private itemTemplateService: ItemTemplateService,
