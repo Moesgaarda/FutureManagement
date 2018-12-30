@@ -18,7 +18,7 @@ matrix:
       sudo: required
       
       install:
-        - npm install
+        - npm ci
       cache:
         directories:
           - "$HOME/.npm"
