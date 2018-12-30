@@ -1,5 +1,24 @@
 matrix: 
   include: 
+    - language: node_js
+      node_js: 
+        - "node"
+      dist: trusty
+      sudo: required
+
+      before_install:
+        - cd spa
+
+      install:
+        - npm ci
+      cache:
+        directories:
+          - "$HOME/spa/.npm"
+          - "spa/node_modules"
+
+      script: 
+        - npm run build
+        
     - language: csharp
       mono: none
       dotnet: 2.1.401
@@ -11,21 +30,3 @@ matrix:
       script:
         - dotnet build
 
-    - language: node_js
-      node_js: 
-        - "node"
-      dist: trusty
-      sudo: required
-
-      before_install:
-        - cd spa
-              
-      install:
-        - npm ci
-      cache:
-        directories:
-          - "$HOME/.npm"
-          - "node_modules"
-
-      script: 
-        - npm run build
