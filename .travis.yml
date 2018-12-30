@@ -16,16 +16,13 @@ matrix:
         - "node"
       dist: trusty
       sudo: required
-            
+      
+      install:
+        - npm install
       cache:
         directories:
           - "$HOME/.npm"
-          - ./node_modules
-
-      addons:
-        chrome: stable
+          - "node_modules"
 
       script: 
-        - cd spa
-        - npm install
         - npm run build
