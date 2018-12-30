@@ -15,7 +15,7 @@ matrix:
         - cd spa
 
       install:
-        - npm ci
+        - npm install
       cache: npm
 
       script: 
