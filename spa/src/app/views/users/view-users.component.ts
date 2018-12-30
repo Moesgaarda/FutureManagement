@@ -16,7 +16,7 @@ export class ViewUsersComponent {
     {title: 'Brugernavn', name: 'username'},
     {title: 'Fornavn', name: 'name'},
     {title: 'Efternavn', name: 'surname'},
-    {title: 'Roller', name: 'email'} // TODO NYI
+    {title: 'Email', name: 'email'} // TODO NYI
 ];
   public page = 1;
   public itemsPerPage = 5;
@@ -96,8 +96,10 @@ export class ViewUsersComponent {
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {
-        if ((item[column.name].toString().toLowerCase()).match(this.config.filtering.filterString.toLowerCase())) {
-          flag = true;
+        if (item[column.name] !== undefined){
+          if ((item[column.name].toString().toLowerCase()).match(this.config.filtering.filterString.toLowerCase())) {
+            flag = true;
+          }
         }
       });
       if (flag) {
