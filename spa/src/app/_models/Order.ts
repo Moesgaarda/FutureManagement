@@ -13,4 +13,6 @@ export interface Order {
     height: number;
     unitType: string;
     products: Item[];
+    files: any;
+    fileNames: string[];
 }
