@@ -1,15 +1,10 @@
-env:
-  global:
-    - SKIP_SASS_BINARY_DOWNLOAD_FOR_CI=true
-    - SKIP_NODE_SASS_TESTS = true
-
 matrix: 
   include: 
     - language: node_js
       node_js: 
         - "node"
       dist: trusty
-      sudo: required
+      sudo: false
 
       before_install:
         - cd spa
