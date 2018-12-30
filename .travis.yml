@@ -2,7 +2,7 @@ matrix:
   include: 
     - language: node_js
       node_js: 
-        - "6"
+        - "node"
       dist: trusty
       sudo: required
 
@@ -11,10 +11,7 @@ matrix:
 
       install:
         - npm install
-      cache:
-        directories:
-          - "$HOME/spa/.npm"
-          - "spa/node_modules"
+      cache: npm
 
       script: 
         - npm run build
