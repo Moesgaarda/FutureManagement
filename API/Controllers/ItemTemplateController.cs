@@ -53,7 +53,7 @@ namespace API.Controllers
             return Ok(itemTemplateToReturn);
         }
 
-        [Authorize(Policy = "ItemTemplates_Add")]
+        [AllowAnonymous]
         [HttpPost("add")]
         public async Task<IActionResult> AddItemTemplate([FromBody]ItemTemplateForAddDto templateDto){
             if(!ModelState.IsValid){

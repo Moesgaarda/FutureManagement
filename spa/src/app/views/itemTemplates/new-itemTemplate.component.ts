@@ -127,7 +127,7 @@ export class NewItemTemplateComponent implements OnInit {
         this.templateToAdd.fileNames.push(file.name);
       }
     }
-
+    
     this.templateToAdd.parts = this.templatePartsToAdd;
     this.templateToAdd.unitType = this.unitType;
     this.templateToAdd.templateProperties = this.propertiesToAdd;
@@ -138,6 +138,7 @@ export class NewItemTemplateComponent implements OnInit {
       this.alertify.success('Tilføjede skabelon');
     }, error => {
       this.alertify.error('Kunne ikke tilføje skabelon');
+      console.log(error.message);
     }, () => {
       this.router.navigate(['itemTemplates/view']);
     });

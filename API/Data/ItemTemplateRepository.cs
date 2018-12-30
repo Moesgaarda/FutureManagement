@@ -35,9 +35,19 @@ namespace API.Data
             foreach(var file in template.Files){
                 file.FileData = await _context.FileData.FirstOrDefaultAsync(x => x.Id == file.FileData.Id);
             }
+
             if(template.RevisionedFrom != null){
                 template.RevisionedFrom = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == template.RevisionedFrom.Id);
             }
+
+            if(template.UnitType != null){
+                template.UnitType = await _context.UnitTypes.FirstOrDefaultAsync(x => x.Id == template.UnitType.Id);
+            }
+
+            if(template.Category != null){
+                template.Category = await _context.ItemTemplateCategories.FirstOrDefaultAsync(x => x.Id == template.Category.Id);
+            }
+
             await _context.ItemTemplates.AddAsync(template);
             int result = await _context.SaveChangesAsync();
 
