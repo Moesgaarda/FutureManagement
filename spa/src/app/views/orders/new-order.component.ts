@@ -64,7 +64,6 @@ export class NewOrderComponent implements OnInit {
 
   async getStatuses() {
     await this.orderService.getAllStatuses().then( statuses => {
-      console.log(statuses);
       this.statuses = statuses;
     });
   }
@@ -173,7 +172,7 @@ export class NewOrderComponent implements OnInit {
         this.alertify.error('Kunne ikke tilføje bestillingen');
       },
       () => {
-        this.router.navigate(['pages/tables/order-table']);
+        this.router.navigate(['orders/view']);
       }
     );
   }
