@@ -6,8 +6,10 @@ import { environment } from '../../../environments/environment';
 import * as _ from 'underscore';
 import { Injector } from '@angular/core';
 import { OrderService } from '../../_services/order.service';
+import { EventLogService } from "../../_services/eventLog.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
+import { UserService } from '../../_services/user.service';
 
 @Component({
   selector: 'app-techtable',
@@ -49,6 +51,10 @@ export class TechtableComponent implements OnInit {
       this.tableService = <ItemTemplateService>this.injector.get(ItemTemplateService);
     } else if (this.serviceType === 'OrderService') {
       this.tableService = <OrderService>this.injector.get(OrderService);
+    } else if (this.serviceType === 'EventLogService') {
+      this.tableService = <EventLogService>this.injector.get(EventLogService);
+    } else if (this.serviceType === 'UserService') {
+      this.tableService = <UserService>this.injector.get(UserService);
     } else {
       console.log('Unexpected service name: ' + this.serviceType);
     }
@@ -199,8 +205,11 @@ export class TechtableComponent implements OnInit {
       location.href = this.baseUrl + 'itemTemplates/details/' + data.row.id;
     } else if (this.serviceType === 'OrderService') {
       location.href = this.baseUrl + 'orders/details/' + data.row.id;
+    } else if (this.serviceType === 'EventLogService') {
+    } else if (this.serviceType === 'UserService') {
+      location.href = this.baseUrl + 'users/details/' + data.row.id;
     } else {
-      this.alertify.error('Unexpected service name: ' + this.serviceType);
+      console.log('Unexpected service name: ' + this.serviceType);
     }
   }
 

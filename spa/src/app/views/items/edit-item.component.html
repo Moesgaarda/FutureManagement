@@ -1,0 +1,70 @@
+<div *ngIf="itemLoaded" class="row">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Detaljer omkring genstanden</div>
+      <div class="card-body">
+        <form #f="ngForm">
+          <div class="row">
+            <div class="col-lg-3"><b>Mængde</b></div>
+            <div class="col-lg-9">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="{{ item.amount }}"
+                value="item.amount"
+                [(ngModel)]="item.amount"
+                name="amount"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3"><b>Placering</b></div>
+            <div class="col-lg-9">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="{{ item.placement }}"
+                value="item.amount"
+                name="placement"
+                [(ngModel)]="item.placement"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3"><b>Aktiv</b></div>
+            <div class="col-lg-9">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  [(ngModel)]="item.isActive"
+                  type="checkbox"
+                  value="item.isActive"
+                  id="isActive"
+                  ng-checked="item.isActive"
+                  name="isActive"
+                />
+                <label class="form-check-label" for="isActive"> </label>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-3">
+              <button
+                type="button"
+                class="btn btn-primary"
+                style="margin-top: 2em"
+                [disabled]="!f.dirty && f.valid"
+                (click)="editItem()"
+              >
+                Gem
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { Item } from './Item';
 import { OrderStatus } from './OrderStatus';
 
 export interface Order {
+    id: number;
     company: string;
     orderDate: Date;
     deliveryDate: Date;
