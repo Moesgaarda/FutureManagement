@@ -163,7 +163,6 @@ export class NewOrderComponent implements OnInit {
         this.orderToAdd.fileNames.push(file.name);
       }
     }
-    console.log(this.orderToAdd);
     this.orderService.addOrder(this.orderToAdd).subscribe(
       data => {
         this.alertify.success('Tilføjede bestilling');
