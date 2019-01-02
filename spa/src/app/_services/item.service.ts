@@ -27,6 +27,10 @@ export class ItemService {
         return this.http.get<Item[]>(this.baseUrl + 'Item/getActive');
     }
 
+    getLowInventory(): Observable<Item[]> {
+        return this.http.get<Item[]>(this.baseUrl + 'Item/getLowInventory');
+    }
+
     getInactiveItems(): Observable<Item[]> {
         return this.http.get<Item[]>(this.baseUrl + 'Item/getInactive');
     }

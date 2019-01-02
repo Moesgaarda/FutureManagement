@@ -17,6 +17,14 @@ export class OrderService {
         return this.http.get<Order[]>(this.baseUrl + 'Order/getAll');
     }
 
+    getIncomingOrders(): Observable<Order[]> {
+        return this.http.get<Order[]>(this.baseUrl + 'Order/getIncoming');
+    }
+
+    getNotDelivered(): Observable<Order[]> {
+        return this.http.get<Order[]>(this.baseUrl + 'Order/getNotDelivered');
+    }
+
     getOrder(id: number): Observable<Order> {
         return this.http.get<Order>(this.baseUrl + 'Order/get/' + id);
     }
