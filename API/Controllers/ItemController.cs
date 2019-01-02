@@ -77,7 +77,7 @@ namespace API.Controllers
             var itemsToReturn = new List<ItemForTableGetDto>();
 
             foreach(ItemForTableGetDto item in loadedItems){
-                if(!itemsToReturn.Any(x => x.Id == item.Template.Id)){
+                if(!itemsToReturn.Any(x => x.Template.Id == item.Template.Id)){
                     itemsToReturn.Add(item);
                 }
                 else
