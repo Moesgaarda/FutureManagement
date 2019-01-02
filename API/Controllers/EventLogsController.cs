@@ -30,8 +30,8 @@ namespace API.Controllers
         {
             List<EventLog> allEventLogs = await _repo.GetAllEventLogs();
 
-            // Reverse to get newest first.
-            allEventLogs.Reverse();
+            // Reorder to get newest first.
+            allEventLogs.OrderByDescending(e => e.Id).ToList();
 
             return Ok(allEventLogs);
         }
