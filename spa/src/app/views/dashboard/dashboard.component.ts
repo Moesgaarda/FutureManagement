@@ -9,7 +9,7 @@ import { AuthService } from '../../_services/auth.service';
 })
 
 export class DashboardComponent {
-  constructor(private authService: AuthService) {
+  constructor(protected authService: AuthService) {
   }
 }
 
