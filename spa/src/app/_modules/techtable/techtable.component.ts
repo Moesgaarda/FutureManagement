@@ -22,7 +22,7 @@ export class TechtableComponent implements OnInit {
   baseUrl = environment.spaUrl;
   public rows: Array<any> = [];
   @Input() columns: Array<any> = [];
-  @Input() printButton: boolean;
+  @Input() printButton: false;
   public page = 1;
   public itemsPerPage = 5;
   public maxSize = 5;
