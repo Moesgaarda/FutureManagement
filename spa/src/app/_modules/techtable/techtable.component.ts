@@ -6,34 +6,36 @@ import { environment } from '../../../environments/environment';
 import * as _ from 'underscore';
 import { Injector } from '@angular/core';
 import { OrderService } from '../../_services/order.service';
-import { EventLogService } from "../../_services/eventLog.service";
+import { EventLogService } from '../../_services/eventLog.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
 import { UserService } from '../../_services/user.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 @Component({
   selector: 'app-techtable',
   templateUrl: './techtable.component.html',
   styleUrls: ['./techtable.component.scss']
 })
-
 export class TechtableComponent implements OnInit {
   baseUrl = environment.spaUrl;
   public rows: Array<any> = [];
   @Input() columns: Array<any> = [];
-
+  @Input() printButton: boolean;
   public page = 1;
   public itemsPerPage = 5;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
+  private allItems: Array<any> = [];
   @Input() serviceType: string;
 
   private tableService;
   public config: any = {
     paging: true,
-    sorting: {columns: this.columns},
-    filtering: {filterString: ''},
+    sorting: { columns: this.columns },
+    filtering: { filterString: '' },
     className: ['table-striped', 'table-bordered']
   };
   private data: Array<any> = [];
@@ -48,7 +50,9 @@ export class TechtableComponent implements OnInit {
     if (this.serviceType === 'ItemService') {
       this.tableService = <ItemService>this.injector.get(ItemService);
     } else if (this.serviceType === 'ItemTemplateService') {
-      this.tableService = <ItemTemplateService>this.injector.get(ItemTemplateService);
+      this.tableService = <ItemTemplateService>(
+        this.injector.get(ItemTemplateService)
+      );
     } else if (this.serviceType === 'OrderService') {
       this.tableService = <OrderService>this.injector.get(OrderService);
     } else if (this.serviceType === 'EventLogService') {
@@ -62,6 +66,7 @@ export class TechtableComponent implements OnInit {
   }
 
   constructor(private injector: Injector, private alertify: AlertifyService) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
   /**
@@ -77,7 +82,6 @@ export class TechtableComponent implements OnInit {
     });
   }
 
-
   /**
    * ChangePage is called every time the page on the table is changed and handles
    * receiving the correct output for the user.
@@ -89,7 +93,8 @@ export class TechtableComponent implements OnInit {
    */
   public changePage(page: any, data: Array<any> = this.data): Array<any> {
     const start = (page.page - 1) * page.itemsPerPage;
-    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const end =
+      page.itemsPerPage > -1 ? start + page.itemsPerPage : data.length;
     return data.slice(start, end);
   }
 
@@ -154,7 +159,12 @@ export class TechtableComponent implements OnInit {
       let flag = false;
       this.columns.forEach((column: any) => {
         const correctPath = this.fixPropPath(column.name, item);
-        if ((correctPath.toString().toLowerCase()).match(this.config.filtering.filterString.toLowerCase())) {
+        if (
+          correctPath
+            .toString()
+            .toLowerCase()
+            .match(this.config.filtering.filterString.toLowerCase())
+        ) {
           flag = true;
         }
       });
@@ -176,7 +186,10 @@ export class TechtableComponent implements OnInit {
    * @returns {*} None
    * @memberof TechtableComponent
    */
-  public onChangeTable(config: any, page: any = {page: this.page, itemsPerPage: this.itemsPerPage}): any {
+  public onChangeTable(
+    config: any,
+    page: any = { page: this.page, itemsPerPage: this.itemsPerPage }
+  ): any {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
     }
@@ -187,7 +200,8 @@ export class TechtableComponent implements OnInit {
 
     const filteredData = this.changeFilter(this.data, this.config);
     const sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.rows =
+      page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
   }
 
@@ -213,13 +227,12 @@ export class TechtableComponent implements OnInit {
     }
   }
 
-
-   /**  method to sterialize path to a given property in a object
+  /**  method to sterialize path to a given property in a object
    *   Example:
-   *    item[column.name] --> item["template.name"]
+   *    item[column.name] --> item['template.name']
    *   This gives an undefined error
    *   It should be:
-   *     Item[column][name] --> Item["template"]["name"]
+   *     Item[column][name] --> Item['template']['name']
    *   This is what fixPropPath method does
    *
    * @param {*} path
@@ -229,9 +242,73 @@ export class TechtableComponent implements OnInit {
    */
   public fixPropPath(path, obj) {
     return path.split('.').reduce(function(prev, curr) {
-        return prev ? prev[curr] : null;
+      return prev ? prev[curr] : null;
     }, obj || self);
   }
 
+  /* Methods for printing table */
 
+  public getTableAsPdf() {
+    this.tableService.getAll().subscribe(
+      items => {
+        this.allItems = items;
+      },
+      error => {
+        this.alertify.error('Kunne ikke hente tabelinfo');
+      },
+      () => {
+        const docDefinition = {
+          content: [
+            { text: 'Alle genstande', style: 'header' },
+            this.table(
+              this.allItems,
+              ['id', 'template', 'placement', 'amount', 'isActive'],
+              ['Id', 'Skabelonens navn', 'Placering', 'Mængde', 'Aktivt']
+            )
+          ]
+        };
+        pdfMake.createPdf(docDefinition).open({}, window);
+      }
+    );
+  }
+
+  public buildPdfTableBody(data, columns, headers) {
+    const body = [];
+    body.push(headers);
+    data.forEach(function(row) {
+      const dataRow = [];
+
+      columns.forEach(function(column) {
+        if (column === 'template') {
+          dataRow.push(row[column].name);
+        } else {
+          if (row[column] != null) {
+            dataRow.push(row[column].toString());
+          } else {
+            dataRow.push('');
+          }
+        }
+      });
+
+      body.push(dataRow);
+    });
+
+    return body;
+  }
+
+  public table(data, columns, headers) {
+    const widths = [];
+    const width = (100.0 / columns.length).toString() + '%';
+
+    for (let i = 0; i < columns.length; i++) {
+      widths.push(width);
+    }
+    return {
+      table: {
+        headerRows: 1,
+        body: this.buildPdfTableBody(data, columns, headers),
+        widths: widths
+      }
+    };
+  }
 }
