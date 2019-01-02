@@ -30,13 +30,14 @@ export class TechtableComponent implements OnInit {
   public length = 0;
   private allItems: Array<any> = [];
   @Input() serviceType: string;
+  @Input() specialGet: string;
 
   private tableService;
   public config: any = {
     paging: true,
     sorting: { columns: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped', 'table-bordered']
+    className: ['table-striped', 'table-bordered', 'table-hover', 'sortable']
   };
   private data: Array<any> = [];
 
@@ -75,11 +76,31 @@ export class TechtableComponent implements OnInit {
    * @memberof TechtableComponent
    */
   async loadItems() {
-    await this.tableService.getAll().subscribe(items => {
-      this.rows = items;
-      this.data = items;
-      this.onChangeTable(this.config);
-    });
+    if (this.specialGet === 'getLowInventory') {
+      await this.tableService.getLowInventory().subscribe(items => {
+        this.rows = items;
+        this.data = items;
+        this.onChangeTable(this.config);
+      });
+    } else if (this.specialGet === 'getNotDelivered') {
+      await this.tableService.getNotDelivered().subscribe(items => {
+        this.rows = items;
+        this.data = items;
+        this.onChangeTable(this.config);
+      });
+    } else if (this.specialGet === 'getIncomingOrders') {
+      await this.tableService.getIncomingOrders().subscribe(items => {
+        this.rows = items;
+        this.data = items;
+        this.onChangeTable(this.config);
+      });
+    } else {
+      await this.tableService.getAll().subscribe(items => {
+        this.rows = items;
+        this.data = items;
+        this.onChangeTable(this.config);
+      });
+    }
   }
 
   /**
@@ -299,7 +320,6 @@ export class TechtableComponent implements OnInit {
   public table(data, columns, headers) {
     const widths = [];
     const width = (100.0 / columns.length).toString() + '%';
-
     for (let i = 0; i < columns.length; i++) {
       widths.push(width);
     }

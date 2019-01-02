@@ -3,7 +3,7 @@
     <div class="col-md-4">
       <input
         *ngIf="config.filtering"
-        placeholder="Filtrer skabeloner"
+        placeholder="Filtrer indhold"
         [ngTableFiltering]="config.filtering"
         class="form-control"
         (tableChanged)="onChangeTable(config)"

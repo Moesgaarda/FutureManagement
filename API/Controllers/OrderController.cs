@@ -94,6 +94,23 @@ namespace API.Controllers{
             return Ok(orders);
         }
 
+        [Authorize(Policy = "Order_View")]
+        [HttpGet("getIncoming")]
+        public async Task<IActionResult> GetIncoming(){
+            var orders = await _repo.GetAllOrders();
+            orders = orders.Where(x => x.DeliveryDate > DateTime.Now && x.DeliveryDate < DateTime.Now.AddMonths(2)).ToList();
+            return Ok(orders);
+        }
+
+        [Authorize(Policy = "Order_View")]
+        [HttpGet("getNotDelivered")]
+        public async Task<IActionResult> GetNotDelivered(){
+            var orders = await _repo.GetAllOrders();
+            // TODO Refactor when enums are re-added
+            orders = orders.Where(x => x.Status.Id == 1).ToList();
+            return Ok(orders);
+        }
+
         [Authorize(Policy = "Order_Edit")]
         [HttpPost("edit")]
         public async Task<IActionResult> EditOrder([FromBody]Order order){
