@@ -53,7 +53,6 @@ export class NewOrderComponent implements OnInit {
     await this.getUnitTypes();
     await this.getStatuses();
     // we only need the length measurements, so the second half of the unit types are cut off
-    this.unitTypes = this.unitTypes.slice(6, 9);
   }
 
   /**
