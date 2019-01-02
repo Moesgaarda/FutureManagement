@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" *ngIf="this.authService.roleMatch(['Items_View'])">
   <div class="card-header">Lav lagerbeholdning</div>
 
   <div class="card-body">
@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" *ngIf="this.authService.roleMatch(['Order_View'])">
   <div class="card-header">Ikke leverede bestillinger</div>
   <div class="card-body">
     <app-techtable
@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" *ngIf="this.authService.roleMatch(['Order_View'])">
   <div class="card-header">Indkomne bestillinger</div>
   <div class="card-body">
     <app-techtable

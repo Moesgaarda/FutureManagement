@@ -7,6 +7,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TechTableModule } from '../../_modules/techtable/techtable.module';
+import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -15,7 +17,10 @@ import { TechTableModule } from '../../_modules/techtable/techtable.module';
     ChartsModule,
     BsDropdownModule,
     ButtonsModule.forRoot(),
-    TechTableModule
+    TechTableModule,
+    FormsModule,
+    CommonModule,
+    NgSelectModule,
   ],
   declarations: [ DashboardComponent ]
 })
