@@ -12,5 +12,6 @@ namespace API.Dtos
         public int RevisionId { get; set; }
         public System.DateTime Created { get; set; }
         public ItemTemplate RevisionedFrom;
+        public int LowerLimit { get; set; }
     }
 }
