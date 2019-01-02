@@ -114,6 +114,8 @@ namespace API.Data
             
             ItemTemplate template = await _context.ItemTemplates
                     .Include(x => x.RevisionedFrom)
+                    .Include(x => x.Category)
+                    .Include(x => x.UnitType)
                     .Include(x => x.Parts)
                     .ThenInclude(x => x.Part)
                     .Include(x => x.TemplateProperties)

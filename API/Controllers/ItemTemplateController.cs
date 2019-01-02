@@ -43,7 +43,7 @@ namespace API.Controllers
             return Ok(itemTemplatesToReturn);
         }
 
-        [Authorize(Policy = "ItemTemplates_View")]
+        [AllowAnonymous]
         [HttpGet("get/{id}", Name = "GetItemTemplate")]
         public async Task<IActionResult> GetItemTemplate(int id){
             ItemTemplate itemTemplate = await _repo.GetItemTemplate(id);
@@ -53,7 +53,7 @@ namespace API.Controllers
             return Ok(itemTemplateToReturn);
         }
 
-        [AllowAnonymous]
+        [Authorize(Policy = "ItemTemplates_Add")]
         [HttpPost("add")]
         public async Task<IActionResult> AddItemTemplate([FromBody]ItemTemplateForAddDto templateDto){
             if(!ModelState.IsValid){
