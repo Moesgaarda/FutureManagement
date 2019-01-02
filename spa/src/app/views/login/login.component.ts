@@ -28,10 +28,6 @@ export class LoginComponent {
     return this.authService.loggedIn();
   }
 
-  toggleRegisterPage() {
-    this.router.navigate(['register']);
-  }
-
   returnToDashboard() {
     this.router.navigate(['']);
   }
