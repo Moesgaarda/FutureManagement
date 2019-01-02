@@ -27,6 +27,10 @@ export class ItemService {
         return this.http.get<Item[]>(this.baseUrl + 'Item/getActive');
     }
 
+    getLowInventory(): Observable<Item[]> {
+        return this.http.get<Item[]>(this.baseUrl + 'Item/getLowInventory');
+    }
+
     getInactiveItems(): Observable<Item[]> {
         return this.http.get<Item[]>(this.baseUrl + 'Item/getInactive');
     }
@@ -42,5 +46,9 @@ export class ItemService {
 
     addItem(item: Item): Observable<Item> {
         return this.http.post<Item>(this.baseUrl + 'Item/add', item, this.httpOptions);
+    }
+
+    editItem(item: Item): Observable<Item> {
+        return this.http.post<Item>(this.baseUrl + 'Item/edit', item, this.httpOptions);
     }
 }

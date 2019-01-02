@@ -13,5 +13,6 @@ namespace API.Dtos
         public System.DateTime Created { get; set; }
         public ItemTemplate RevisionedFrom;
         public ItemTemplateCategory Category;
+        public int LowerLimit { get; set; }
     }
 }

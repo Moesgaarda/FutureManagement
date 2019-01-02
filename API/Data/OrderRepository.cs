@@ -26,12 +26,19 @@ namespace API.Data
             }else{
                 order.OrderedBy = await _context.Users.FirstOrDefaultAsync(x => x.Id == 1);
             }
+            order.Status = await _context.OrderStatuses.FirstOrDefaultAsync(x => x.Id == order.Status.Id);
+            
             foreach(Item product in order.Products){
                 product.Template = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == product.Template.Id);
                 foreach(ItemPropertyDescription property in product.Properties){
                     property.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync(x => x.Id == property.PropertyName.Id);
                 }
                 
+            }
+            order.UnitType = await _context.UnitTypes.FirstOrDefaultAsync( x => x.Name == order.UnitType.Name);
+            
+            foreach(var file in order.Files){
+                file.FileData = await _context.FileData.FirstOrDefaultAsync(x => x.Id == file.FileData.Id);
             }
 
             await _context.Orders.AddAsync(order);
@@ -58,12 +65,18 @@ namespace API.Data
 
         public async Task<List<Order>> GetAllOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders
+                .Include(x => x.Status)
+                .ToListAsync();
         }
 
         public async Task<Order> GetOrder(int id)
         {
             return await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<List<OrderStatus>> GetAllStatuses(){
+            return await _context.OrderStatuses.ToListAsync();
         }
     }
 }

@@ -309,8 +309,6 @@ namespace API.Migrations
 
                     b.Property<bool>("InternalOrder");
 
-                    b.Property<string>("InvoicePath");
-
                     b.Property<int>("Length");
 
                     b.Property<DateTime>("OrderDate");
@@ -733,7 +731,7 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.ItemTemplate", b =>
                 {
                     b.HasOne("API.Models.ItemTemplateCategory", "Category")
-                        .WithMany("ItemTemplates")
+                        .WithMany()
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("API.Models.ItemTemplate", "RevisionedFrom")

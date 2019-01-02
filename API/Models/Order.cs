@@ -8,37 +8,38 @@ namespace API.Models{
         public Order(){
             this.OrderDate = DateTime.Now;
         }
-        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, 
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products){
+        public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, 
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, ICollection<OrderFileName> files, OrderStatus status){
 
             this.Company = company;
             this.OrderDate = DateTime.Now;
             this.DeliveryDate = deliveryDate;
             this.OrderedBy = orderedBy;
-            this.InvoicePath = invoicePath;
             this.PurchaseNumber = purchaseNumber;
             this.Width = width;
             this.Height = height;
             this.Length = length;
             this.UnitType = unitType;
             this.Products = products;
+            this.Files = files;
+            this.Status = status;
         }
 
-        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, string invoicePath, 
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products){
+        public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy,
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, OrderStatus status){
 
             this.Id = id;
             this.Company = company;
             this.OrderDate = DateTime.Now;
             this.DeliveryDate = deliveryDate;
             this.OrderedBy = orderedBy;
-            this.InvoicePath = invoicePath;
             this.PurchaseNumber = purchaseNumber;
             this.Width = width;
             this.Height = height;
             this.Length = length;
             this.UnitType = unitType;
             this.Products = products;
+            this.Status = status;
         }
 
         [Key]
@@ -47,7 +48,6 @@ namespace API.Models{
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public User OrderedBy { get; set; }
-        public string InvoicePath { get; set; }
         public int PurchaseNumber { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }

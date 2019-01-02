@@ -10,7 +10,11 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { UnitType } from '../../_models/UnitType';
+import { FileUploadService } from '../../_services/fileUpload.service';
+import { OrderStatus } from '../../_models/OrderStatus';
 
+
+const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 @Component({
   templateUrl: './new-order.component.html'
 })
@@ -26,21 +30,30 @@ export class NewOrderComponent implements OnInit {
   unitTypeList: UnitType[] = [] as UnitType[];
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
   descriptionTextsToAdd: string[] = [] as string[];
+  uploader: FileUploadService;
+  statuses: OrderStatus[];
+
 
   constructor(
     private itemTemplateService: ItemTemplateService,
     private orderService: OrderService,
     private alertify: AlertifyService,
-    private router: Router
+    private router: Router,
+    private uploaderParameter: FileUploadService
   ) {
     this.templateDetails.templateProperties = [] as ItemPropertyName[];
     this.orderToAdd.products = [] as Item[];
     this.currentItem.template = {} as ItemTemplate;
+    this.uploader = uploaderParameter;
+    this.uploader.clearQueue();
   }
 
   async ngOnInit() {
     await this.getTemplates();
     await this.getUnitTypes();
+    await this.getStatuses();
+    // we only need the length measurements, so the second half of the unit types are cut off
+    this.unitTypes = this.unitTypes.slice(6, 9);
   }
 
   /**
@@ -52,6 +65,12 @@ export class NewOrderComponent implements OnInit {
     this.onOrderPage = !this.onOrderPage;
   }
 
+
+  async getStatuses() {
+    await this.orderService.getAllStatuses().then( statuses => {
+      this.statuses = statuses;
+    });
+  }
 
   /**
    * Gets all the ItemTemplates from the api
@@ -86,7 +105,7 @@ export class NewOrderComponent implements OnInit {
           this.templateDetails = template;
         },
         error => {
-          this.alertify.error('kunne ikke hente skabelon');
+          this.alertify.error('Kunne ikke hente skabelon');
         },
         () => {
           this.detailsReady = true;
@@ -134,19 +153,24 @@ export class NewOrderComponent implements OnInit {
    *
    * @memberof NewOrderComponent
    */
-  addOrder() {
+  async addOrder() {
+    if (this.uploader.queuedFiles.length > 0) {
+      const fileArray = await this.uploader.upload('OrderFiles');
+      this.orderToAdd.files = fileArray;
+      this.orderToAdd.fileNames = [];
+      for (const file of this.uploader.queuedFiles) {
+        this.orderToAdd.fileNames.push(file.name);
+      }
+    }
     this.orderService.addOrder(this.orderToAdd).subscribe(
       data => {
-        console.log('added order');
         this.alertify.success('Tilføjede bestilling');
-        console.log(this.orderToAdd);
       },
       error => {
-        console.log('failed to add order');
-        this.alertify.error('kunne ikke tilføje bestillingen');
+        this.alertify.error('Kunne ikke tilføje bestillingen');
       },
       () => {
-        this.router.navigate(['pages/tables/order-table']);
+        this.router.navigate(['orders/view']);
       }
     );
   }

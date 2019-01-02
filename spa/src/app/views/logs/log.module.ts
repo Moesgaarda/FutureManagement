@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { LogRoutingModule } from './log-routing.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TechTableModule } from '../../_modules/techtable/techtable.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     CommonModule,
     NgSelectModule,
+    TechTableModule,
   ],
   declarations: [
     ViewLogComponent,
