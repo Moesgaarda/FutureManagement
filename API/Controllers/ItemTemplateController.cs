@@ -53,7 +53,7 @@ namespace API.Controllers
             return Ok(itemTemplateToReturn);
         }
 
-        [Authorize(Policy = "ItemTemplates_Add")]
+        [AllowAnonymous]
         [HttpPost("add")]
         public async Task<IActionResult> AddItemTemplate([FromBody]ItemTemplateForAddDto templateDto){
             if(!ModelState.IsValid){
@@ -79,8 +79,15 @@ namespace API.Controllers
                 }
             }
 
-            var unitTypeToAdd = new UnitType(templateDto.UnitType.Name);
-            var categoryToAdd = new ItemTemplateCategory(templateDto.Category.Name);
+            var unitTypeToAdd = new UnitType(
+                templateDto.UnitType.Id,
+                templateDto.UnitType.Name
+            );
+            
+            var categoryToAdd = new ItemTemplateCategory(
+                templateDto.Category.Id,
+                templateDto.Category.Name
+            );
 
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
