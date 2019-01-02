@@ -70,7 +70,6 @@ namespace API.Controllers
         
         [Authorize(Policy = "Items_View")]
         [HttpGet("getLowInventory")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetLowInventory(){
             var items = await _repo.GetActiveItems();
             var loadedItems = _mapper.Map<List<ItemForTableGetDto>>(items);
@@ -92,7 +91,6 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "Items_View")]
-        [AllowAnonymous]
         [HttpGet("get/{id}", Name = "GetItem")]
         public async Task<IActionResult> GetItem(int id){
             Item item = await _repo.GetItem(id);
