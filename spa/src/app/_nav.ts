@@ -11,6 +11,18 @@ export const navItems = [
     icon: 'icon-home',
   },
   {
+    name: 'Kunder',
+    icon: 'fa fa-child',
+    url: '/customers',
+    children: [
+      {
+        name: 'Vis kunder',
+        url: '/customers/view',
+        icon: 'fa fa-child',
+      }
+    ]
+  },
+  {
     name: 'Projekter',
     icon: 'fa fa-folder-o',
     url: '/projects',
@@ -24,6 +36,23 @@ export const navItems = [
         name: 'Tilføj nyt projekt',
         url: '/projects/new',
         icon: 'fa fa-folder-o'
+      }
+    ]
+  },
+  {
+    name: 'Bestillinger',
+    icon: 'fa fa-envelope-o',
+    url: '/orders',
+    children: [
+      {
+        name: 'Vis bestillinger',
+        url: '/orders/view',
+        icon: 'fa fa-envelope-o',
+      },
+      {
+        name: 'Tilføj ny bestilling',
+        url: '/orders/new',
+        icon: 'fa fa-envelope-o'
       }
     ]
   },
@@ -51,35 +80,6 @@ export const navItems = [
         name: 'Tilføj skabelon',
         url: '/itemTemplates/new',
         icon: 'fa fa-barcode'
-      }
-    ]
-  },
-  {
-    name: 'Kunder',
-    icon: 'fa fa-child',
-    url: '/customers',
-    children: [
-      {
-        name: 'Vis kunder',
-        url: '/customers/view',
-        icon: 'fa fa-child',
-      }
-    ]
-  },
-  {
-    name: 'Bestillinger',
-    icon: 'fa fa-envelope-o',
-    url: '/orders',
-    children: [
-      {
-        name: 'Vis bestillinger',
-        url: '/orders/view',
-        icon: 'fa fa-envelope-o',
-      },
-      {
-        name: 'Tilføj ny bestilling',
-        url: '/orders/new',
-        icon: 'fa fa-envelope-o'
       }
     ]
   },
