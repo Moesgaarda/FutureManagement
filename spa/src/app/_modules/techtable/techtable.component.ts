@@ -87,6 +87,7 @@ export class TechtableComponent implements OnInit {
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
+        console.log(items);
       });
     } else if (this.specialGet === 'getIncomingOrders') {
       await this.tableService.getIncomingOrders().subscribe(items => {
