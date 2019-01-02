@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using API.Enums;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -66,13 +67,40 @@ namespace API.Controllers
             return Ok(itemsToReturn);
         }
 
+        
         [Authorize(Policy = "Items_View")]
+        [HttpGet("getLowInventory")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLowInventory(){
+            var items = await _repo.GetActiveItems();
+            var loadedItems = _mapper.Map<List<ItemForTableGetDto>>(items);
+            var itemsToReturn = new List<ItemForTableGetDto>();
+
+            foreach(ItemForTableGetDto item in loadedItems){
+                if(!itemsToReturn.Any(x => x.Id == item.Template.Id)){
+                    itemsToReturn.Add(item);
+                }
+                else
+                {
+                    itemsToReturn.FirstOrDefault(x => x.Template.Id == item.Template.Id).Amount += item.Amount;
+                }
+            }
+            
+            itemsToReturn = itemsToReturn.Where(x => x.Amount < x.Template.LowerLimit).ToList();
+
+            return Ok(itemsToReturn);
+        }
+
+        [Authorize(Policy = "Items_View")]
+        [AllowAnonymous]
         [HttpGet("get/{id}", Name = "GetItem")]
         public async Task<IActionResult> GetItem(int id){
             Item item = await _repo.GetItem(id);
             ItemForGetDto itemToReturn = _mapper.Map<ItemForGetDto>(item);
             return Ok(itemToReturn);
         }
+
+
 
         [Authorize(Policy = "Items_Edit")]
         [HttpPost("edit")]

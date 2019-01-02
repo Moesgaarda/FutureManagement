@@ -7,5 +7,6 @@ namespace API.Dtos
         public int Id { get; set; }
         public string Name { get; set; }
         public UnitType UnitType {get; set;}
+        public int LowerLimit { get; set; }
     }
 }
