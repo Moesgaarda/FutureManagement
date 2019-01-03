@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ViewOrdersComponent } from './view-orders.component';
 import { DetailsOrderComponent } from './details-order.component';
 import { NewOrderComponent } from './new-order.component';
+import { EditOrderComponent} from './edit-order.component';
 import { AuthGuard } from '../../_guards/auth.guard';
 
 const routes: Routes = [
@@ -32,6 +33,14 @@ const routes: Routes = [
         data: {
           title: 'Detaljer for bestilling',
           roles: ['Order_View']
+        }
+      },
+      {
+        path: 'edit/:id',
+        component: EditOrderComponent,
+        data: {
+          title: 'Rediger bestilling',
+          roles: ['Order_Add']
         }
       },
       {
