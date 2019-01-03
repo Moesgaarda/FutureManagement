@@ -24,8 +24,16 @@ export class OrderService {
         return this.http.get<Order[]>(this.baseUrl + 'Order/getNotDelivered');
     }
 
-    getOrder(id: number): Observable<Order> {
-        return this.http.get<Order>(this.baseUrl + 'Order/get/' + id);
+    async getOrder(id: number): Promise<Order> {
+        return new Promise<Order>(resolve => {
+            resolve(this.http.get<Order>(this.baseUrl + 'Order/get/' + id).toPromise());
+        });
+    }
+
+    async getAllStatuses(): Promise<OrderStatus[]> {
+        return new Promise<OrderStatus[]>(resolve => {
+            resolve(this.http.get<OrderStatus[]>(this.baseUrl + 'Order/getAllStatuses').toPromise());
+        });
     }
 
     deleteOrder(id: number) {
