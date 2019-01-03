@@ -33,9 +33,8 @@ namespace API.Controllers{
 
         [Authorize(Policy = "Order_View")]
         [HttpGet("get/{id}", Name = "GetOrder")]
-        public async Task<IActionResult> GetOrder(int orderId){
-            var order = await _repo.GetOrder(orderId);
-            
+        public async Task<IActionResult> GetOrder(int id){
+            var order = await _repo.GetOrder(id);
             return Ok(order);
         }
 
