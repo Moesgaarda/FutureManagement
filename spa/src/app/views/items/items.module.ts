@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Ng2TableModule } from 'ng2-table';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { EditItemComponent } from './edit-item.component';
+import { TechTableModule } from '../../_modules/techtable/techtable.module';
 
 @NgModule({
   imports: [
@@ -20,11 +22,13 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     NgSelectModule,
     Ng2TableModule,
     PaginationModule.forRoot(),
+    TechTableModule
   ],
   declarations: [
     ViewItemsComponent,
     AddItemsComponent,
     DetailsItemComponent,
+    EditItemComponent
    ]
 })
 export class ItemsModule { }

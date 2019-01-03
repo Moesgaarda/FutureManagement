@@ -1,41 +1,18 @@
 <div class="card">
-  <div class="card-header">
-    Genstande
-  </div>
+  <div class="card-header">Genstande</div>
   <div class="card-body">
-    <div class="row">
-      <div class="col-md-4">
-        <input *ngIf="config.filtering" placeholder="Filtrer skabeloner"
-               [ngTableFiltering]="config.filtering"
-               class="form-control"
-               (tableChanged)="onChangeTable(config)"/>
-      </div>
-      <div class="col-md-8">
-        <button style="float: right" type="button" class="btn btn-success btn-rectangle input-group-text" (click)="getTableAsPdf()" 
-        data-toggle="tooltip" data-placement="top" title="Åbner en ny fane der indeholder alle genstande som pdf">
-          Vis alle (pdf)
-        </button>
-
-      </div>
-
-    </div>
-    <br>
-    <ng-table [config]="config"
-              (tableChanged)="onChangeTable(config)"
-              (cellClicked)="onCellClick($event)"
-              [rows]="rows" [columns]="columns">
-    </ng-table>
-    <pagination *ngIf="config.paging"
-                class="pagination-sm"
-                [(ngModel)]="page"
-                [totalItems]="length"
-                [itemsPerPage]="itemsPerPage"
-                [maxSize]="maxSize"
-                [boundaryLinks]="true"
-                [rotate]="false"
-                (pageChanged)="onChangeTable(config, $event)"
-                previousText="Tilbage" nextText="Frem" firstText="Første" lastText="Sidste"
-                (numPages)="numPages = $event">
-    </pagination>
+    <div class="row"></div>
+    <br />
+    <app-techtable
+      [serviceType]="'ItemService'"
+      [columns]="[
+        { title: 'Navn', name: 'template.name' },
+        { title: 'Mængde', name: 'amount' },
+        { title: 'Placering', name: 'placement' },
+        { title: 'Er aktiv', name: 'isActive' }
+      ]"
+      [printButton]="true"
+      >
+    </app-techtable>
   </div>
 </div>

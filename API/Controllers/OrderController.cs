@@ -73,7 +73,8 @@ namespace API.Controllers{
                     Name = OrderDto.UnitType
                 },
                 OrderDto.Products,
-                filesToAdd
+                filesToAdd, 
+                OrderDto.Status
             );
 
             bool result = await _repo.AddOrder(orderToCreate);
@@ -90,6 +91,23 @@ namespace API.Controllers{
         public async Task<IActionResult> GetAllOrders(){
             var orders = await _repo.GetAllOrders();
 
+            return Ok(orders);
+        }
+
+        [Authorize(Policy = "Order_View")]
+        [HttpGet("getIncoming")]
+        public async Task<IActionResult> GetIncoming(){
+            var orders = await _repo.GetAllOrders();
+            orders = orders.Where(x => x.DeliveryDate > DateTime.Now && x.DeliveryDate < DateTime.Now.AddMonths(2)).ToList();
+            return Ok(orders);
+        }
+
+        [Authorize(Policy = "Order_View")]
+        [HttpGet("getNotDelivered")]
+        public async Task<IActionResult> GetNotDelivered(){
+            var orders = await _repo.GetAllOrders();
+            // TODO Refactor when enums are re-added
+            orders = orders.Where(x => x.Status.Id == 1).ToList();
             return Ok(orders);
         }
 
@@ -139,6 +157,13 @@ namespace API.Controllers{
         [Authorize(Policy = "Order_Edit")]
         public Task<bool> UpdateOrderStatus(){
             throw new NotImplementedException(); //TODO Unit testing
+        }
+
+        [Authorize(Policy = "Order_View")]
+        [HttpGet("getAllStatuses", Name = "GetAllStatuses")]
+        public async Task<IActionResult> GetAllStatuses(){
+           var statuses = await _repo.GetAllStatuses();
+           return Ok(statuses);
         }
 
     }

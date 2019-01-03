@@ -10,6 +10,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { FileUploadService } from '../../_services/fileUpload.service';
+import { OrderStatus } from '../../_models/OrderStatus';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 @Component({
@@ -28,6 +29,7 @@ export class NewOrderComponent implements OnInit {
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
   descriptionTextsToAdd: string[] = [] as string[];
   uploader: FileUploadService;
+  statuses: OrderStatus[];
 
 
   constructor(
@@ -46,6 +48,7 @@ export class NewOrderComponent implements OnInit {
 
   async ngOnInit() {
     await this.getTemplates();
+    await this.getStatuses();
     // we only need the length measurements, so the second half of the unit types are cut off
     this.unitTypes = this.unitTypes.slice(6, 9);
   }
@@ -57,6 +60,12 @@ export class NewOrderComponent implements OnInit {
    */
   changePage() {
     this.onOrderPage = !this.onOrderPage;
+  }
+
+  async getStatuses() {
+    await this.orderService.getAllStatuses().then( statuses => {
+      this.statuses = statuses;
+    });
   }
 
   /**
@@ -162,7 +171,7 @@ export class NewOrderComponent implements OnInit {
         this.alertify.error('Kunne ikke tilføje bestillingen');
       },
       () => {
-        this.router.navigate(['pages/tables/order-table']);
+        this.router.navigate(['orders/view']);
       }
     );
   }
