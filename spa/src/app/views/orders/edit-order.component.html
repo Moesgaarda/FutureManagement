@@ -1,0 +1,20 @@
+<div *ngIf="isDataAvailable">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+
+        <div class="card-header">
+          <h5>Order: {{order.purchaseNumber}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Status</label>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="orderToAdd && orderToAdd.status">
+              <option *ngFor="let status of statuses" [ngValue]="status">{{status.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
