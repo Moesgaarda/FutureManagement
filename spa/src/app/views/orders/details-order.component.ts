@@ -1,111 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { OrderService } from '../../_services/order.service';
+import { Order } from '../../_models/Order';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DetailFile } from '../../_models/DetailFile';
+import { FileUploadService } from '../../_services/fileUpload.service';
 
 @Component({
   templateUrl: './details-order.component.html'
 })
-
 export class DetailsOrderComponent implements OnInit {
-  orderIdDisabled: boolean;
-  companyDisabled: boolean;
-  orderDateDisabled: boolean;
-  deliveryDateDisabled: boolean;
-  purchaseNumberDisabled: boolean;
-  lengthDisabled: boolean;
-  widthDisabled: boolean;
-  heightDisabled: boolean;
-  unitTypeDisabled: boolean;
+  isDataAvailable = false;
+  order: Order;
+  files: DetailFile[];
+  fileService: FileUploadService;
 
-  ngOnInit() {
-    this.orderIdDisabled = true;
-    this.companyDisabled = true;
-    this.orderDateDisabled = true;
-    this.deliveryDateDisabled = true;
-    this.purchaseNumberDisabled = true;
-    this.lengthDisabled = true;
-    this.widthDisabled = true;
-    this.heightDisabled = true;
-    this.unitTypeDisabled = true;
+  constructor(
+    private orderService: OrderService,
+    private route: ActivatedRoute,
+    private fileUploadService: FileUploadService,
+    private router: Router
+  ) {
+    this.fileService = fileUploadService;
   }
 
-  enableOrderId() {
-    if (this.orderIdDisabled) {
-      this.orderIdDisabled = false;
-    } else {
-      // indsæt i db
-      this.orderIdDisabled = true;
-    }
+  async ngOnInit() {
+    await this.loadOrderOnInIt();
   }
 
-  enableCompany() {
-    if (this.companyDisabled) {
-      this.companyDisabled = false;
-    } else {
-      // indsæt i db
-      this.companyDisabled = true;
-    }
+  async loadOrderOnInIt() {
+    await this.orderService.getOrder(+this.route.snapshot.params['id'])
+      .then(order => {
+        this.order = order;
+        this.isDataAvailable = true;
+      });
   }
 
-  enableOrderDate() {
-    if (this.orderDateDisabled) {
-      this.orderDateDisabled = false;
-    } else {
-      // indsæt i db
-      this.orderDateDisabled = true;
-    }
+  goToItemTemplateDetail(templateId: number) {
+    this.router.navigateByUrl('itemTemplates/details/' + templateId);
   }
 
-  enableDeliveryDate() {
-    if (this.deliveryDateDisabled) {
-      this.deliveryDateDisabled = false;
-    } else {
-      // indsæt i db
-      this.deliveryDateDisabled = true;
-    }
+  goToEditPage(orderId: number) {
+    this.router.navigateByUrl('order/edit/' + orderId);
   }
 
-  enableLength() {
-    if (this.lengthDisabled) {
-      this.lengthDisabled = false;
-    } else {
-      // indsæt i db
-      this.lengthDisabled = true;
-    }
-  }
-
-  enableWidth() {
-    if (this.widthDisabled) {
-      this.purchaseNumberDisabled = false;
-    } else {
-      // indsæt i db
-      this.widthDisabled = true;
-    }
-  }
-
-  enableHeight() {
-    if (this.heightDisabled) {
-      this.heightDisabled = false;
-    } else {
-      // indsæt i db
-      this.heightDisabled = true;
-    }
-  }
-
-  enableUnitType() {
-    if (this.unitTypeDisabled) {
-      this.unitTypeDisabled = false;
-    } else {
-      // indsæt i db
-      this.unitTypeDisabled = true;
-    }
-  }
-
-  enablePurchaseNumber() {
-    if (this.purchaseNumberDisabled) {
-      this.purchaseNumberDisabled = false;
-    } else {
-      // indsæt i db
-      this.purchaseNumberDisabled = true;
-    }
+  downloadFile(fileDetails: DetailFile) {
+    this.fileService.download(fileDetails, 'Order');
   }
 }
