@@ -7,6 +7,7 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { DetailsOrderComponent } from './details-order.component';
 import { ViewOrdersComponent } from './view-orders.component';
 import { NewOrderComponent } from './new-order.component';
+import { EditOrderComponent} from './edit-order.component'
 
 import { FormsModule } from '@angular/forms';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
@@ -26,7 +27,8 @@ import { TechTableModule } from '../../_modules/techtable/techtable.module';
   declarations: [
     ViewOrdersComponent,
     NewOrderComponent,
-    DetailsOrderComponent
+    DetailsOrderComponent,
+    EditOrderComponent
   ]
 })
 export class OrdersModule { }
