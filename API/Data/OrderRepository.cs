@@ -70,7 +70,17 @@ namespace API.Data
 
         public async Task<Order> GetOrder(int id)
         {
-            return await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            Order order =  await _context.Orders
+            .Include(x => x.Products)
+            .ThenInclude(x => x.Template)
+            .Include(x => x.OrderedBy)
+            .Include(x => x.Files)
+            .ThenInclude(x => x.FileData)
+            .Include(x => x.Status)
+            .Include(x => x.UnitType)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+            return order;
         }
     }
 }
