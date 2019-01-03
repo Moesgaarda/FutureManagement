@@ -56,6 +56,18 @@ namespace API.Controllers
 
         }
 
+        [Authorize()]
+        [HttpGet("get/my", Name = "GetMyUser")]
+        public async Task<IActionResult> GetMyUser()
+        {
+            
+            User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            User user = await _repo.GetUser(currentUser.Id);
+            UserForGetDto userToReturn = _mapper.Map<UserForGetDto>(user);
+
+            return Ok(userToReturn);            
+        }
+
         [Authorize(Policy = "User_View")]
         [HttpGet("get/{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
