@@ -1,102 +1,109 @@
-<div class="row">
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="card-header">Detaljer for ordren</div>
-      <div class="card-body">
-        <div class="form-group">
-          <label for="orderId">Ordre-ID</label>
-          <div class="input-group">
-            <input type="text" placeholder="Ordre-ID" class="form-control" id="orderId" [disabled]="orderIdDisabled" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="company">Firma</label>
-          <div class="input-group">
-            <input type="text" placeholder="Firma" class="form-control" id="company" id="company" [disabled]="companyDisabled" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="orderDate">Dato for ordren</label>
-          <div class="input-group">
-            <input type="text" placeholder="Dato for ordren" class="form-control" id="orderDate" [disabled]="orderDateDisabled" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="deliveryDate">Dato for ankomst</label>
-          <div class="input-group">
-            <input type="text" placeholder="Dato for ankomst" id="deliveryDate" class="form-control" [disabled]="deliveryDateDisabled">
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-lg-4">
-            <label for="length">Længde</label>
-            <div class="input-group">
-              <input type="text" placeholder="Længde" id="length" class="form-control" [disabled]="lengthDisabled">
-            </div>
-          </div>
-          <div class="form-group col-lg-4">
-            <label for="width">Bredde</label>
-            <div class="input-group">
-              <input type="text" placeholder="Længde" id="width" class="form-control" [disabled]="widthDisabled">
-            </div>
-          </div>
-          <div class="form-group col-lg-4">
-            <label for="width">Højde</label>
-            <div class="input-group">
-              <input type="text" placeholder="Højde" id="width" class="form-control" [disabled]="heightDisabled">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="unitType">Mængdeenhed</label>
-          <div class="input-group">
-            <input type="text" placeholder="Mængdeenhed" class="form-control" id="unitType" [disabled]="unitTypeDisabled" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="purchaseNumber">Bestillingsnummer</label>
-          <div class="input-group">
-            <input type="text" placeholder="Bestillingsnummer" id="purchaseNumber" class="form-control" [disabled]="purchaseNumberDisabled">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="orderedBy">Bestilt af</label>
-          <div class="input-group">
-            <input type="text" placeholder="Bestilt af" id="orderedBy" class="form-control" disabled>
-          </div>
-        </div>
+<div *ngIf="isDataAvailable">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
 
-        <div class="form-group">
-          <label for="productList">Liste af produkter</label>
-          <input type="text" placeholder="Liste af produkter" class="form-control" disabled />
-          <small class="form-text">En liste af de produkter der var i ordren</small>
+        <div class="card-header">
+          <h5>Order: {{order.purchaseNumber}}</h5>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group">
+            <label for="description">Firma:</label>
+            <div class="input-group-text">
+              {{order.company}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Bestilt af:</label>
+            <div class="input-group-text">
+              {{order.orderedBy.name}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Status:</label>
+            <div class="input-group-text">
+              {{order.status.name}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Dato for bestilling:</label>
+            <div class="input-group-text">
+              {{order.orderDate}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Dato for levering:</label>
+            <div class="input-group-text">
+              {{order.deliveryDate}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Størelse:</label>
+            <div class="input-group-text">
+              {{order.width}}x{{order.height}}x{{order.length}} {{order.unitType.name}}
+            </div>
+          </div>
+
+          <dt class="col-sm-12">
+            <button type="button" class="btn btn-primary" style="margin-top: 2em" (click)="goToEditPage(order.id)">Rediger
+              bestillingen</button>
+          </dt>
+
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-lg-6">
-
-    <div class="card">
-      <div class="card-header">Valgte egenskaber</div>
-      <div class="card-body">
-        <div class="row demo-checkboxes-radio">
-          <div class="demo-checkboxes col-sm-4">
-            checkbox - Malingsfarve
-            Behandling
-            Egenskab3
-            Egenskab4
-            Egenskab5
-            Egenskab6
-          </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">Produkter:</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Navn</th>
+                <th>Mængde</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of order.products">
+                <td>{{item.template.name}}</td>
+                <td>{{item.amount}}</td>
+                <td>
+                  <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.template.id)">
+                    Vis Detaljer
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="input-group">
-          <input type="text" placeholder="Tilføj ny egenskab" class="form-control" />
-          <span class="input-group-append">
-            <button class="btn btn-success input-group-text">
-              Tilføj
-            </button>
-          </span>
+      </div>
+      <div class="card">
+        <div class="card-header">Filer</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="80%">Navn</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of order.files">
+                <td>{{item.fileName}}</td>
+                <td>
+                  <button type="button" class="btn btn-block btn-success" (click)="downloadFile(item)">Download</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
