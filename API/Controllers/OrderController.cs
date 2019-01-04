@@ -105,8 +105,7 @@ namespace API.Controllers{
         [HttpGet("getNotDelivered")]
         public async Task<IActionResult> GetNotDelivered(){
             var orders = await _repo.GetAllOrders();
-            // TODO Refactor when enums are re-added
-            orders = orders.Where(x => x.Status.Id == 1).ToList();
+            orders = orders.Where(x => x.Status == OrderStatusEnum.Bestilt).ToList();
             return Ok(orders);
         }
 
@@ -156,13 +155,6 @@ namespace API.Controllers{
         [Authorize(Policy = "Order_Edit")]
         public Task<bool> UpdateOrderStatus(){
             throw new NotImplementedException(); //TODO Unit testing
-        }
-
-        [Authorize(Policy = "Order_View")]
-        [HttpGet("getAllStatuses", Name = "GetAllStatuses")]
-        public async Task<IActionResult> GetAllStatuses(){
-           var statuses = await _repo.GetAllStatuses();
-           return Ok(statuses);
         }
 
     }

@@ -4,7 +4,6 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { promise } from 'protractor';
-import { OrderStatus } from '../_models/OrderStatus';
 
 @Injectable()
 export class OrderService {
@@ -28,12 +27,6 @@ export class OrderService {
     async getOrder(id: number): Promise<Order> {
         return new Promise<Order>(resolve => {
             resolve(this.http.get<Order>(this.baseUrl + 'Order/get/' + id).toPromise());
-        });
-    }
-
-    async getAllStatuses(): Promise<OrderStatus[]> {
-        return new Promise<OrderStatus[]>(resolve => {
-            resolve(this.http.get<OrderStatus[]>(this.baseUrl + 'Order/getAllStatuses').toPromise());
         });
     }
 
