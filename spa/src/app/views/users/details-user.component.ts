@@ -34,7 +34,7 @@ export class DetailsUserComponent implements OnInit {
       this.userService.getMyUser(+this.route.snapshot.params['id']).subscribe( user => {
         this.user = user;
       }, error => {
-        this.alertify.error('Kunne ikke hente bruger');
+        this.alertify.error('Kunne ikke hente bruger aktuel bruger');
       }, () => {
         this.readyToLoad = true;
       }
@@ -44,7 +44,7 @@ export class DetailsUserComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
       }, error => {
-        this.alertify.error('Kunne ikke hente bruger');
+        this.alertify.error('Kunne ikke hente bruger fra database');
       }, () => {
         this.readyToLoad = true;
       }

@@ -42,11 +42,10 @@ export class AuthService {
     }
 
     logout() {
-
         this.router.navigate(['login']);
         this.userToken = null;
         localStorage.removeItem('token');
-        this.alertify.success('Logged ud');
+        this.alertify.success('Logget ud');
       }
 
     getCurrentUserId() {

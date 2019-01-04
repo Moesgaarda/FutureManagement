@@ -20,7 +20,7 @@ export class LoginComponent {
     }, error => {
       this.alertify.error('Kunne ikke logge ind');
     }, () => {
-      this.alertify.success('Logged ind');
+      this.alertify.success('Logget ind');
     });
   }
 
