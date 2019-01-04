@@ -106,7 +106,6 @@ namespace API.Controllers{
         [HttpGet("getNotDelivered")]
         public async Task<IActionResult> GetNotDelivered(){
             var orders = await _repo.GetAllOrders();
-            // TODO Refactor when enums are re-added
             orders = orders.Where(x => x.Status == OrderStatusEnum.Bestilt).ToList();
             return Ok(orders);
         }
