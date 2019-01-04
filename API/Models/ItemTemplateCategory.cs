@@ -5,6 +5,9 @@ namespace API.Models
 {
     public class ItemTemplateCategory
     {
+        public ItemTemplateCategory(){
+            
+        }
         public ItemTemplateCategory(int id, string name) {
             this.Id = id;
             this.Name = name;
