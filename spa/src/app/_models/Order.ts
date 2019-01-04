@@ -1,6 +1,6 @@
 import { User } from './User';
 import { Item } from './Item';
-import { OrderStatus } from './OrderStatus';
+import { OrderStatusEnum } from '../_enums/OrderStatusEnum.enum';
 
 export interface Order {
     id: number;
@@ -16,5 +16,5 @@ export interface Order {
     products: Item[];
     files: any;
     fileNames: string[];
-    status: OrderStatus;
+    status: OrderStatusEnum;
 }

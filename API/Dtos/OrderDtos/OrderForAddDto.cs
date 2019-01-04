@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using API.Models;
+using API.Enums;
 
 namespace API.Dtos.OrderDtos
 {
@@ -19,7 +20,7 @@ namespace API.Dtos.OrderDtos
         public List<Item> Products { get; set; }
         public int[] Files { get; set; }
         public string[] FileNames { get; set; }
-        public OrderStatus Status { get; set; }
+        public OrderStatusEnum Status { get; set; }
         public bool InternalOrder { get; set; }
     }
 }
