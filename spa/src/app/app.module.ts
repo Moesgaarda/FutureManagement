@@ -53,6 +53,7 @@ import { AuthService } from './_services/auth.service';
 import { FileUploadService} from './_services/fileUpload.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { Interceptor } from './_services/http.interceptor';
+import { CustomSidebarComponent } from './views/custom-sidebar/custom-sidebar.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { Interceptor } from './_services/http.interceptor';
     AppComponent,
     ...APP_CONTAINERS,
     LoginComponent,
+    CustomSidebarComponent
   ],
   providers: [{
     provide: LocationStrategy,

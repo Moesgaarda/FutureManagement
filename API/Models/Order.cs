@@ -9,7 +9,7 @@ namespace API.Models{
             this.OrderDate = DateTime.Now;
         }
         public Order(string company, DateTime orderDate, DateTime deliveryDate, User orderedBy, 
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, ICollection<OrderFileName> files, OrderStatus status){
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, ICollection<OrderFileName> files, OrderStatusEnum status){
 
             this.Company = company;
             this.OrderDate = DateTime.Now;
@@ -26,7 +26,7 @@ namespace API.Models{
         }
 
         public Order(int id, string company, DateTime orderDate, DateTime deliveryDate, User orderedBy,
-            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, OrderStatus status){
+            int purchaseNumber, int width, int height, int length, UnitType unitType, ICollection<Item> products, OrderStatusEnum status){
 
             this.Id = id;
             this.Company = company;
@@ -55,7 +55,7 @@ namespace API.Models{
         public UnitType UnitType { get; set; }
         public ICollection<Item> Products { get; set; }
         public ICollection<OrderFileName> Files { get; set; }
-        public OrderStatus Status { get; set; }
+        public OrderStatusEnum Status { get; set; }
         public bool InternalOrder { get; set; }
 
         /* If the order is internal, it should have an assigned user */

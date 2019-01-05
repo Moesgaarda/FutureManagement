@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { UnitType } from '../../_models/UnitType';
 import { FileUploadService } from '../../_services/fileUpload.service';
-import { OrderStatus } from '../../_models/OrderStatus';
+import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
 
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
@@ -31,7 +31,7 @@ export class NewOrderComponent implements OnInit {
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
   descriptionTextsToAdd: string[] = [] as string[];
   uploader: FileUploadService;
-  statuses: OrderStatus[];
+  statuses = Object.keys(OrderStatusEnum);
 
 
   constructor(
@@ -51,7 +51,7 @@ export class NewOrderComponent implements OnInit {
   async ngOnInit() {
     await this.getTemplates();
     await this.getUnitTypes();
-    await this.getStatuses();
+    this.statuses = this.statuses.slice((this.statuses.length / 2), this.statuses.length);
   }
 
   /**
@@ -61,13 +61,6 @@ export class NewOrderComponent implements OnInit {
    */
   changePage() {
     this.onOrderPage = !this.onOrderPage;
-  }
-
-
-  async getStatuses() {
-    await this.orderService.getAllStatuses().then( statuses => {
-      this.statuses = statuses;
-    });
   }
 
   /**
