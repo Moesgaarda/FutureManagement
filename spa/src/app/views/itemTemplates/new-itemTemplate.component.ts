@@ -132,6 +132,7 @@ export class NewItemTemplateComponent implements OnInit {
     this.templateToAdd.unitType = this.unitType;
     this.templateToAdd.templateProperties = this.propertiesToAdd;
     this.templateToAdd.category = this.category;
+    this.templateToAdd.created = new Date();
 
     // Uses the function defined in the service to add. Alertify notifies succes or failure, and user is sent to view table.
     this.templateService.addTemplate(this.templateToAdd).subscribe(data => {
