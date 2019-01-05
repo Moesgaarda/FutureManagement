@@ -16,27 +16,16 @@ export class LoginComponent {
 
   login() {
     this.authService.login(this.model).subscribe(data => {
-      this.alertify.success('Logged ind');
+      this.router.navigate(['']);
     }, error => {
       this.alertify.error('Kunne ikke logge ind');
     }, () => {
-      this.router.navigate(['']);
+      this.alertify.success('Logget ind');
     });
-  }
-
-  logout() {
-    this.authService.userToken = null;
-    localStorage.removeItem('token');
-    this.alertify.message('logged ud');
-    this.router.navigate(['login']);
   }
 
   loggedIn() {
     return this.authService.loggedIn();
-  }
-
-  toggleRegisterPage() {
-    this.router.navigate(['register']);
   }
 
   returnToDashboard() {
