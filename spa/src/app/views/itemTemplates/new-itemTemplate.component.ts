@@ -17,6 +17,7 @@ const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
 @Component({
   templateUrl: './new-itemTemplate.component.html',
+  styles: ['../../../scss/_custom.scss']
 })
 
 export class NewItemTemplateComponent implements OnInit {
@@ -139,7 +140,6 @@ export class NewItemTemplateComponent implements OnInit {
       this.alertify.success('Tilføjede skabelon');
     }, error => {
       this.alertify.error('Kunne ikke tilføje skabelon');
-      console.log(error.message);
     }, () => {
       this.router.navigate(['itemTemplates/view']);
     });

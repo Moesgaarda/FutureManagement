@@ -61,7 +61,7 @@ export class NewProjectComponent implements OnInit {
       await this.itemTemplateService.getItemTemplate(this.templateToGet.id).subscribe(template => {
         this.templateDetails = template;
       }, error => {
-        this.alertify.error('kunne ikke hente skabelon');
+        this.alertify.error('Kunne ikke hente skabelon');
       }, () => {
         this.detailsReady = true;
       });
