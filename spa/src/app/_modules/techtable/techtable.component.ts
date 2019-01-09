@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTemplate, UnitType } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
 import { environment } from '../../../environments/environment';
@@ -9,9 +9,11 @@ import { OrderService } from '../../_services/order.service';
 import { EventLogService } from '../../_services/eventLog.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
+import { UnitType } from '../../_models/UnitType';
 import { UserService } from '../../_services/user.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
 
 @Component({
   selector: 'app-techtable',

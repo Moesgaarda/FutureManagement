@@ -22,8 +22,8 @@
 
             <div class="form-group">
               <label>Mængdeenhed</label>
-              <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]    ="unitTypeEnum">
-                <option *ngFor="let enum of unitTypes" selected>{{enum}}</option>
+              <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="unitType">
+                <option *ngFor="let unit of unitTypeList" selected>{{unit.name}}</option>
               </select>
             </div>
 

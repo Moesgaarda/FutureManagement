@@ -2,8 +2,8 @@ import {ItemPropertyName} from './ItemPropertyName';
 import { ItemTemplatePart } from './ItemTemplatePart';
 import { ItemTemplatePartOf} from './ItemTemplatePartOf';
 import { DetailFile } from './DetailFile';
-
-export enum UnitType {mm = 1, cm, m, stk, paller, par}
+import { ItemTemplateCategory } from './ItemTemplateCategory';
+import { UnitType } from './UnitType';
 
 export interface ItemTemplate {
     id: number;
@@ -19,4 +19,5 @@ export interface ItemTemplate {
     partOf: ItemTemplatePartOf[];
     description: string;
     lowerLimit: number;
+    category: ItemTemplateCategory;
 }

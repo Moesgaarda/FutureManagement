@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../_models/Order';
-import { UnitType, ItemTemplate } from '../../_models/ItemTemplate';
+import { ItemTemplate } from '../../_models/ItemTemplate';
 import { Item } from '../../_models/Item';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
@@ -9,6 +9,7 @@ import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { UnitType } from '../../_models/UnitType';
 
 
 @Component({
@@ -17,27 +18,27 @@ import { environment } from '../../../environments/environment';
 
 export class NewProjectComponent implements OnInit {
   orderToAdd: Order = {} as Order;
-    unitTypes = Object.keys(UnitType);
-    currentItem: Item = {} as Item;
-    templates: ItemTemplate[] = [];
-    onOrderPage: boolean = true;
-    templateToGet: ItemTemplate = {} as ItemTemplate;
-    templateDetails: ItemTemplate = {} as ItemTemplate;
-    detailsReady: boolean;
-    unitTypeForAmount: string;
-    propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
-    descriptionTextsToAdd: string[] = [] as string[];
+  unitTypeList: UnitType [] = [] as UnitType[];
+  unitType: UnitType;
+  currentItem: Item = {} as Item;
+  templates: ItemTemplate[] = [];
+  onOrderPage = true;
+  templateToGet: ItemTemplate = {} as ItemTemplate;
+  templateDetails: ItemTemplate = {} as ItemTemplate;
+  detailsReady: boolean;
+  propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
+  descriptionTextsToAdd: string[] = [] as string[];
 
     constructor(private itemTemplateService: ItemTemplateService, private orderService: OrderService,
       private alertify: AlertifyService, private router: Router) {
-      this.getTemplates();
       this.templateDetails.templateProperties = [] as ItemPropertyName[];
       this.orderToAdd.products = [] as Item[];
       this.currentItem.template = {} as ItemTemplate;
     }
 
     ngOnInit() {
-      this.unitTypes = this.unitTypes.slice(this.unitTypes.length / 2);
+      this.getTemplates();
+      this.getUnitTypes();
     }
 
     changePage() {
@@ -47,24 +48,23 @@ export class NewProjectComponent implements OnInit {
     async getTemplates() {
       await this.itemTemplateService.getAll().subscribe(templates => {
         this.templates = templates;
-      })
+      });
+    }
 
+    async getUnitTypes() {
+      this.itemTemplateService.getUnitTypes().subscribe(unitTypes => {
+        this.unitTypeList = unitTypes;
+      });
     }
 
     async getTemplateDetails() {
       await this.itemTemplateService.getItemTemplate(this.templateToGet.id).subscribe(template => {
         this.templateDetails = template;
       }, error => {
-        this.alertify.error('kunne ikke hente skabelon');
+        this.alertify.error('Kunne ikke hente skabelon');
       }, () => {
         this.detailsReady = true;
-        this.getUnitTypeForTemplate();
       });
-    }
-
-
-    getUnitTypeForTemplate() {
-      this.unitTypeForAmount = UnitType[this.templateDetails.unitType];
     }
 
     removeItemFromOrder(i: number) {
@@ -84,7 +84,6 @@ export class NewProjectComponent implements OnInit {
       this.currentItem.isActive = true;
       this.orderToAdd.products.push(this.currentItem);
       this.changePage();
-      console.log(this.orderToAdd);
       this.currentItem = {} as Item;
       this.propertyDescriptionsToAdd = [] as ItemPropertyDescription[];
       this.templateDetails = {} as ItemTemplate;

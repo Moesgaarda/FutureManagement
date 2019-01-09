@@ -59,6 +59,7 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
+
             List<TemplatePropertyRelation> propertiesToAdd = new List<TemplatePropertyRelation>();
             foreach(ItemPropertyNameForGetDto prop in templateDto.TemplateProperties){
                 propertiesToAdd.Add(new TemplatePropertyRelation{
@@ -77,10 +78,20 @@ namespace API.Controllers
                     });
                 }
             }
+
+            var unitTypeToAdd = new UnitType(
+                templateDto.UnitType.Id,
+                templateDto.UnitType.Name
+            );
             
+            var categoryToAdd = new ItemTemplateCategory(
+                templateDto.Category.Id,
+                templateDto.Category.Name
+            );
+
             var itemTemplateToCreate = new ItemTemplate(
                 templateDto.Name,
-                templateDto.UnitType,
+                unitTypeToAdd,
                 templateDto.Description,
                 propertiesToAdd,
                 templateDto.Parts,
@@ -89,7 +100,8 @@ namespace API.Controllers
                 templateDto.Created,
                 templateDto.RevisionedFrom,
                 filesToAdd,
-                templateDto.LowerLimit
+                templateDto.LowerLimit,
+                categoryToAdd
             );
 
             bool succes = await _repo.AddItemTemplate(itemTemplateToCreate);
@@ -125,6 +137,79 @@ namespace API.Controllers
             }
 
             return result ? StatusCode(201) : BadRequest();
+        }
+
+        
+        [Authorize(Policy = "ItemTemplates_Add")]
+        [HttpPost("addCategory", Name = "AddTemplateCategory")]
+        public async Task<IActionResult> AddTemplateCategory([FromBody]TemplateCategoryForAddDto categoryDto){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var category = new ItemTemplateCategory(
+                categoryDto.Name
+            );
+
+            bool result = await _repo.AddTemplateCategory(category);
+
+            if(category.Name == null){
+                return BadRequest("Category name cannot be null.");
+            }
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "kategori", category.Name, category.Id, currentUser);
+            }
+
+            return result ? StatusCode(201) : BadRequest();
+        }
+
+        [Authorize(Policy = "ItemTemplates_Add")]
+        [HttpGet("getTemplateCategories", Name = "GetTemplateCategories")]
+        public async Task<IActionResult> GetTemplateCategories(){
+            var categories = await _repo.GetTemplateCategories();
+            var categoriesToReturn = _mapper.Map<List<TemplateCategoryForGetDto>>(categories);
+
+            categoriesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
+
+            return Ok(categoriesToReturn);
+        }
+
+        [Authorize(Policy = "ItemTemplates_Add")]
+        [HttpPost("addUnitType", Name = "AddUnitType")]
+        public async Task<IActionResult> AddUnitType([FromBody]UnitTypeForAddDto unitTypeDto){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var unitType = new UnitType(
+                unitTypeDto.Name
+            );
+
+            bool result = await _repo.AddUnitType(unitType);
+
+            if(unitType.Name == null){
+                return BadRequest("UnitType name cannot be null.");
+            }
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "mængdeenhed", unitType.Name, unitType.Id, currentUser);
+            }
+
+            return result ? StatusCode(201) : BadRequest();
+        }
+
+        [Authorize(Policy = "ItemTemplates_Add")]
+        [HttpGet("getUnitTypes", Name = "GetUnitTypes")]
+        public async Task<IActionResult> GetUnitTypes(){
+            var unitTypes = await _repo.GetUnitTypes();
+            var unitTypesToReturn = _mapper.Map<List<UnitTypeForGetDto>>(unitTypes);
+
+            unitTypesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
+
+            return Ok(unitTypesToReturn);
         }
 
         [Authorize(Policy = "ItemTemplates_Add")]

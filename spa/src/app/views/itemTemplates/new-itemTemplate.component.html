@@ -12,8 +12,16 @@
         <div class="form-group">
           <label>Mængdeenhed</label>
           <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="unitType">
-            <option *ngFor="let enum of unitTypes" selected>{{enum}}</option>
+            <option *ngFor="let unit of unitTypeList" [ngValue]="unit">{{unit.name}}</option>
           </select>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Lav en ny mængdeenhed" class="form-control" id="unitTypeField" [(ngModel)]="unitTypeToAddToDb && unitTypeToAddToDb.name" />
+          <span class="input-group-append">
+            <button class="btn btn-success input-group-text" (click)="addUnitType()" onclick="document.getElementById('propField').value = ''">
+              Tilføj
+            </button>
+          </span>
         </div>
         <div class="form-group">
           <label for="name">Nedre grænse</label>
@@ -26,6 +34,20 @@
           <div class="input-group">
             <textarea rows="5" placeholder="Beskrivelse" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.description"></textarea>
           </div>
+        </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="category">
+            <option *ngFor="let cat of categoryList" [ngValue]="cat">{{cat.name}}</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Lav en ny kategori" class="form-control" id="categoryField" [(ngModel)]="categoryToAddToDb && categoryToAddToDb.name" />
+          <span class="input-group-append">
+            <button class="btn btn-success input-group-text" (click)="addTemplateCategory()" onclick="document.getElementById('propField').value = ''">
+              Tilføj
+            </button>
+          </span>
         </div>
 
         <div class="form-group">
@@ -47,10 +69,11 @@
 
         <div class="form-group">
           <label for="name">Vælg mængder til de forskellige skabeloner</label>
-          <div class="input-group" *ngFor="let temp of selectedTemplates; let i=index">
-            <label>{{temp.name}}: </label>
-            <input type="number" placeholder="{{temp.name}}" class="form-control col-lg-8" name="amount{{i}}" [(ngModel)]="partAmounts[i]"/>
-          </div>
+          <br>
+            <ng-container *ngFor="let temp of selectedTemplates; let i=index">
+            <label><i>{{temp.name}} </i></label>
+            <input type="number" placeholder="{{temp.name}}" class="form-control" name="amount{{i}}" [(ngModel)]="partAmounts[i]"/>
+          </ng-container>
 
         </div>
         <div class="form-group">
@@ -64,38 +87,42 @@
     <div class="card">
       <div class="card-header">Egenskaber</div>
       <div class="card-body">
-        <div class="input-group">
-          <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
-        </div>
-        <br>
-        <div class="col-lg-6">
-          <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
-                                                                                               currentPage: currentPage, 
-                                                                                               totalItems: properties?.length }; let i=index">
-            <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
-              <ng-template #checkedBox>
-                <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)" checked/> {{prop.name}}
-              </ng-template>
-              <ng-template #uncheckedBox>
-                <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
-              </ng-template>   
-              <br>      
-        </ng-container>      
-        </div>
-        <br>
-        <pagination-controls (pageChange)="currentPage = $event"
-                             maxSize="7"
-                             previousLabel="Forrige"
-                             nextLabel="Næste">
-        </pagination-controls>
-
-        <div class="input-group">
-          <input type="text" placeholder="Tilføj ny egenskab" class="form-control" id="propField" [(ngModel)]="propToAddToDb && propToAddToDb.name" />
-          <span class="input-group-append">
-            <button class="btn btn-success input-group-text" (click)="addTemplateProperty()" onclick="document.getElementById('propField').value = ''">
-              Tilføj
-            </button>
-          </span>
+        <div class="card">
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
+            </div>
+            <br>
+            <div class="col-lg-6">
+              <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
+                                                                                          currentPage: currentPage, 
+                                                                                          totalItems: properties?.length }; let i=index">
+                <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
+                <ng-template #checkedBox>
+                  <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)" checked/> {{prop.name}}
+                </ng-template>
+                <ng-template #uncheckedBox>
+                  <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
+                </ng-template>   
+                <br>      
+              </ng-container>      
+            </div>
+            <br>
+            <pagination-controls (pageChange)="currentPage = $event"
+                                  maxSize="7"
+                                  previousLabel="Forrige"
+                                  nextLabel="Næste">
+            </pagination-controls>
+      
+            <div class="input-group">
+              <input type="text" placeholder="Tilføj ny egenskab" class="form-control" id="propField" [(ngModel)]="propToAddToDb && propToAddToDb.name" />
+              <span class="input-group-append">
+                <button class="btn btn-success input-group-text" (click)="addTemplateProperty()" onclick="document.getElementById('propField').value = ''">
+                  Tilføj
+                </button>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

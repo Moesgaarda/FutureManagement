@@ -35,9 +35,19 @@ namespace API.Data
             foreach(var file in template.Files){
                 file.FileData = await _context.FileData.FirstOrDefaultAsync(x => x.Id == file.FileData.Id);
             }
+
             if(template.RevisionedFrom != null){
                 template.RevisionedFrom = await _context.ItemTemplates.FirstOrDefaultAsync(x => x.Id == template.RevisionedFrom.Id);
             }
+
+            if(template.UnitType != null){
+                template.UnitType = await _context.UnitTypes.FirstOrDefaultAsync(x => x.Id == template.UnitType.Id);
+            }
+
+            if(template.Category != null){
+                template.Category = await _context.ItemTemplateCategories.FirstOrDefaultAsync(x => x.Id == template.Category.Id);
+            }
+
             await _context.ItemTemplates.AddAsync(template);
             int result = await _context.SaveChangesAsync();
 
@@ -50,6 +60,32 @@ namespace API.Data
             int result = await _context.SaveChangesAsync();
 
             return result > 0;
+        }
+
+        public async Task<bool> AddTemplateCategory(ItemTemplateCategory category)
+        {
+            await _context.ItemTemplateCategories.AddAsync(category);
+            int result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<List<ItemTemplateCategory>> GetTemplateCategories()
+        {
+            return await _context.ItemTemplateCategories.ToListAsync();
+        }
+
+        public async Task<bool> AddUnitType(UnitType unitType)
+        {
+            await _context.UnitTypes.AddAsync(unitType);
+            int result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<List<UnitType>> GetUnitTypes()
+        {
+            return await _context.UnitTypes.ToListAsync();
         }
 
 
@@ -78,6 +114,8 @@ namespace API.Data
             
             ItemTemplate template = await _context.ItemTemplates
                     .Include(x => x.RevisionedFrom)
+                    .Include(x => x.Category)
+                    .Include(x => x.UnitType)
                     .Include(x => x.Parts)
                     .ThenInclude(x => x.Part)
                     .Include(x => x.TemplateProperties)
