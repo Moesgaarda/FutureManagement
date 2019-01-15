@@ -3,7 +3,6 @@ import { OrderService } from '../../_services/order.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Order } from '../../_models/Order';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderStatus } from '../../_models/OrderStatus';
 
 @Component({
     templateUrl: './edit-order.component.html'
@@ -12,14 +11,12 @@ import { OrderStatus } from '../../_models/OrderStatus';
 export class EditOrderComponent implements OnInit {
     order: Order;
     isDataAvailable: boolean;
-    statuses: OrderStatus[];
 
     constructor(private orderService: OrderService, private alertify: AlertifyService, private route: ActivatedRoute,
         private router: Router) { }
 
     async ngOnInit() {
         await this.loadOrderOnInIt();
-        await this.getStatuses();
     }
 
     async loadOrderOnInIt() {
@@ -30,18 +27,12 @@ export class EditOrderComponent implements OnInit {
             });
     }
 
-    async getStatuses() {
-        await this.orderService.getAllStatuses().then(statuses => {
-            this.statuses = statuses;
+    updateStatus() {
+        this.orderService.statusUpdateOrder(this.order).subscribe(order => { }, error => {
+            this.alertify.error('Kunne ikke gennemføre ændringerne');
+        }, () => {
+            this.alertify.success('Status opdateret');
+            this.router.navigate(['order/details/' + this.order.id]);
         });
     }
-
-    //    editItem() {
-    //        this.itemService.editItem(this.item).subscribe(item => { }, error => {
-    //            this.alertify.error('Kunne ikke gennemføre ændringerne');
-    //        }, () => {
-    //            this.alertify.success('Ændringer gemt');
-    //            this.router.navigate(['items/details/' + this.item.id]);
-    //        });
-    //    }
 }

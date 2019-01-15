@@ -10,6 +10,13 @@ export class OrderService {
 
     baseUrl = environment.apiUrl;
 
+    httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Access-Control-Allow-Origin': '*',
+        }),
+      };
+
     constructor(private http: HttpClient) {}
 
     getAll(): Observable<Order[]> {
@@ -37,5 +44,9 @@ export class OrderService {
 
     addOrder(order: Order): Observable<Order> {
         return this.http.post<Order>(this.baseUrl + 'Order/add', order);
+    }
+
+    statusUpdateOrder(order: Order): Observable<Order> {
+        return this.http.post<Order>(this.baseUrl + 'Order/updateStatus', order, this.httpOptions);
     }
 }
