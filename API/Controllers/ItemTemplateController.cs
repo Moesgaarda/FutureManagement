@@ -97,7 +97,7 @@ namespace API.Controllers
                 templateDto.Parts,
                 templateDto.PartOf,
                 templateDto.RevisionId,
-                templateDto.Created,
+                DateTime.Now,
                 templateDto.RevisionedFrom,
                 filesToAdd,
                 templateDto.LowerLimit,
@@ -138,7 +138,6 @@ namespace API.Controllers
 
             return result ? StatusCode(201) : BadRequest();
         }
-
         
         [Authorize(Policy = "ItemTemplates_Add")]
         [HttpPost("addCategory", Name = "AddTemplateCategory")]

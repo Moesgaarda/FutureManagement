@@ -9,6 +9,7 @@ import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
 import { DetailFile } from '../../_models/DetailFile';
 import { FileUploadService } from '../../_services/fileUpload.service';
 import { UnitType } from '../../_models/UnitType';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   templateUrl: './details-itemTemplate.component.html'
@@ -24,7 +25,8 @@ export class DetailsItemTemplateComponent implements OnInit {
     private templateService: ItemTemplateService,
     private route: ActivatedRoute,
     private fileUploadService: FileUploadService,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) {
     this.fileService = fileUploadService;
   }
@@ -41,6 +43,7 @@ export class DetailsItemTemplateComponent implements OnInit {
         if (itemTemplate.revisionedFrom != null) {
           this.isRevisioned = true;
         }
+        console.log(this.itemTemplate);
     });
   }
 
