@@ -13,6 +13,7 @@ import { UnitType } from '../../_models/UnitType';
 import { UserService } from '../../_services/user.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
 
 
 @Component({
@@ -89,20 +90,48 @@ export class TechtableComponent implements OnInit {
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
+        // If we are getting orders, we must change the orderStatusEnum to a string
+        if (this.serviceType === 'OrderService') {
+          for(let i = 0; i < items.length; i++) {
+            items[i].status = (OrderStatusEnum[items[i].status]);
+            // TODO Format the dateTime instead of splitting it after time.
+            items[i].orderDate = items[i].orderDate.split("T", 1);
+            items[i].deliveryDate = items[i].deliveryDate.split("T", 1);
+          }
+        }
       });
     } else if (this.specialGet === 'getIncomingOrders') {
       await this.tableService.getIncomingOrders().subscribe(items => {
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
+        // If we are getting orders, we must change the orderStatusEnum to a string
+        if (this.serviceType === 'OrderService') {
+          for(let i = 0; i < items.length; i++) {
+            items[i].status = (OrderStatusEnum[items[i].status]);
+            items[i].orderDate = items[i].orderDate.split("T", 1);
+            items[i].deliveryDate = items[i].deliveryDate.split("T", 1);
+          }
+        }
       });
     } else {
       await this.tableService.getAll().subscribe(items => {
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
+
+        // If we are getting orders, we must change the orderStatusEnum to a string
+        if (this.serviceType === 'OrderService') {
+          for(let i = 0; i < items.length; i++) {
+            items[i].status = (OrderStatusEnum[items[i].status]);
+            items[i].orderDate = items[i].orderDate.split("T", 1);
+            items[i].deliveryDate = items[i].deliveryDate.split("T", 1);
+          }
+        }
       });
     }
+
+
   }
 
   /**
