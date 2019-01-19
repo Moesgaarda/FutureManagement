@@ -38,12 +38,6 @@ export class OrderService {
         });
     }
 
-    async getAllStatuses(): Promise<OrderStatusEnum[]> {
-        return new Promise<OrderStatusEnum[]>(resolve => {
-            resolve(this.http.get<OrderStatusEnum[]>(this.baseUrl + 'Order/getAllStatuses').toPromise());
-        });
-    }
-
     deleteOrder(id: number) {
         return this.http.post(this.baseUrl + 'Order/delete/' + id, {})
             .map(response => { });
