@@ -131,7 +131,7 @@ namespace API.Data
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
         {
-            return await _context.ItemTemplates.ToListAsync();
+            return await _context.ItemTemplates.Include(x => x.Category).ToListAsync();
         }
 
         public async Task<ItemPropertyName> GetPropertyName(int id)

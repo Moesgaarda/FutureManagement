@@ -4,7 +4,9 @@
       <div class="card">
       
         <div class="card-header">
-          <h5>{{itemTemplate.name}}</h5>
+          <h5>{{itemTemplate.name}} <div class="float-right" *ngIf="this.authService.roleMatch(['ItemTemplates_Add'])">
+            <button class="btn btn-secondary" (click)="goToRevisionTemplate()"> Revider</button>
+          </div></h5>
         </div>
         <div class="card-body">
         
@@ -39,15 +41,11 @@
           <div *ngIf="isRevisioned">
             <div class="form-group">
               <label for="revisionedFrom">Revideret fra</label>
-              <div class="input-group-text">
-                {{itemTemplate.revisionedFrom.name}}
+              <div class="input-group">
+                <button class="btn btn-outline-info" (click)="goToItemTemplateDetail(itemTemplate.revisionedFrom.id)">
+                  <span class="glyphicon glyphicon-trash"></span> {{itemTemplate.revisionedFrom.name}}
+                </button>
               </div>
-              <div class="input-group-text">
-                Revision nummer: {{itemTemplate.revisionId}}
-              </div>
-              <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(itemTemplate.revisionedFrom.id)">
-                Vis Original
-              </button>
             </div>
           </div>
         
@@ -148,5 +146,4 @@
     
     </div>
 
-  </div>
 </div>

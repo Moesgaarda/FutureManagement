@@ -4,6 +4,7 @@ namespace API.Models
 {
     public class UnitType
     {
+        public UnitType(){}
         public UnitType(int id, string name) {
             this.Id = id;
             this.Name = name;
@@ -13,7 +14,6 @@ namespace API.Models
             this.Name = name;
         }
         
-        public UnitType(){}
         
         [Key]
         public int Id { get; set; }

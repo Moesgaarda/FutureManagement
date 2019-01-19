@@ -9,6 +9,7 @@ import { FileUploadService } from '../../_services/fileUpload.service';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
 import { AlertifyService } from '../../_services/alertify.service';
 import { UnitType } from '../../_models/UnitType';
+import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 
 /**
  *Component that is used to Revise an ItemTemplate
@@ -41,6 +42,9 @@ export class ReviseItemTemplateComponent implements OnInit {
   itemsPerPage = 15;
   currentPage = 1;
   propFilter: string;
+  categoryList: ItemTemplateCategory[] = [] as ItemTemplateCategory[];
+  category: ItemTemplateCategory;
+  categoryToAddToDb: ItemTemplateCategory = {} as ItemTemplateCategory;
 
   constructor(private templateService: ItemTemplateService,
               private route: ActivatedRoute,
@@ -63,6 +67,7 @@ export class ReviseItemTemplateComponent implements OnInit {
     await this.getTemplates();
     await this.populateSelect();
     await this.getUnitTypes();
+    await this.getTemplateCategories();
     // this.putFilesIntoQueue();
   }
 
@@ -84,6 +89,7 @@ export class ReviseItemTemplateComponent implements OnInit {
         this.templateToRevise.fileNames = [];
         this.templateToRevise.files = [];
         this.templateToRevise.lowerLimit = itemTemplate.lowerLimit;
+        this.category = itemTemplate.category;
     });
   }
 
@@ -99,6 +105,12 @@ export class ReviseItemTemplateComponent implements OnInit {
     });
   }
 
+  async getTemplateCategories() {
+    await this.templateService.getTemplateCategories().subscribe(categories => {
+      this.categoryList = categories;
+    });
+  }
+
   /**
    *gets all the templates
    *
@@ -111,6 +123,21 @@ export class ReviseItemTemplateComponent implements OnInit {
   async getUnitTypes() {
     await this.templateService.getUnitTypes().subscribe(unitTypes => {
       this.unitTypeList = unitTypes;
+    });
+  }
+
+  async addTemplateCategory() {
+    for (let i = 0; i < this.categoryList.length; i++) {
+      console.log(this.categoryToAddToDb);
+      if (this.categoryList[i].name.toLowerCase() === this.categoryToAddToDb.name.toLowerCase()) {
+        this.alertify.error('En kategori med dette navn findes allerede!');
+        return;
+      }
+    }
+
+    await this.templateService.addTemplateCategory(this.categoryToAddToDb).subscribe( () => {
+      this.alertify.success('Tiføjede ' + this.categoryToAddToDb.name +  '!');
+      this.getTemplateCategories();
     });
   }
 
@@ -209,6 +236,8 @@ export class ReviseItemTemplateComponent implements OnInit {
       for (const file of this.uploader.queuedFiles) {
         this.templateToRevise.fileNames.push(file.name);
       }
+    } else {
+      this.templateToRevise.files = [] as number[];
     }
 
     for (const file of this.filesFromRevision) {
@@ -221,6 +250,7 @@ export class ReviseItemTemplateComponent implements OnInit {
     this.templateToRevise.unitType = this.unitType;
     this.templateToRevise.templateProperties = this.propertiesToAdd;
     this.templateToRevise.parts = this.templatePartsToAdd;
+    this.templateToRevise.category = this.category;
 
     // Revising from new template sets id to 1, otherwise increment
     if (this.templateToCopy.revisionId == null) {
