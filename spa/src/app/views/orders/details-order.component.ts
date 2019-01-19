@@ -4,6 +4,7 @@ import { Order } from '../../_models/Order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DetailFile } from '../../_models/DetailFile';
 import { FileUploadService } from '../../_services/fileUpload.service';
+import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
 
 @Component({
   templateUrl: './details-order.component.html'
@@ -13,6 +14,9 @@ export class DetailsOrderComponent implements OnInit {
   order: Order;
   files: DetailFile[];
   fileService: FileUploadService;
+  orderStatus: String;
+  deliveryDateString: String;
+  orderDateString: String;
 
   constructor(
     private orderService: OrderService,
@@ -31,6 +35,9 @@ export class DetailsOrderComponent implements OnInit {
     await this.orderService.getOrder(+this.route.snapshot.params['id'])
       .then(order => {
         this.order = order;
+        this.orderStatus = OrderStatusEnum[order.status];
+        this.orderDateString = order.orderDate.toString().split("T", 1)[0];
+        this.deliveryDateString = order.deliveryDate.toString().split("T", 1)[0];
         this.isDataAvailable = true;
       });
   }
@@ -40,7 +47,8 @@ export class DetailsOrderComponent implements OnInit {
   }
 
   goToEditPage(orderId: number) {
-    this.router.navigateByUrl('order/edit/' + orderId);
+    console.log(orderId);
+    this.router.navigateByUrl('orders/edit/' + orderId);
   }
 
   downloadFile(fileDetails: DetailFile) {
