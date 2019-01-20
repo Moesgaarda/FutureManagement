@@ -236,5 +236,12 @@ namespace API.Controllers
 
             return Ok(propertyDescriptionToReturn);
         }
+
+        [HttpGet("getAllInstancesInStock/{id}", Name = "GetAllInstancesInStock")]
+        public async Task<IActionResult> GetAllInstancesInStock(int id){
+            List<Item> items = await _repo.GetAllInstancesInStock(id);
+
+            return Ok(items);
+        }
     }
 }

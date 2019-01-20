@@ -129,5 +129,11 @@ namespace API.Data {
         {
             return await _context.ItemPropertyDescriptions.Where(x => x.Item.Id == itemId).Include(x => x.PropertyName).ToListAsync(); 
         }
+
+        public async Task<List<Item>> GetAllInstancesInStock(int templateId){
+            List<Item> itemsInStock = await _context.Items.Where(x => x.Template.Id == templateId && x.IsActive == true).ToListAsync();
+
+            return itemsInStock;
+        }
     }
 }

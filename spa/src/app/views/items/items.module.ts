@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ViewItemsComponent } from './view-items.component';
-import { AddItemsComponent } from './new-items.component';
+import { NewItemComponent } from './new-items.component';
 import { DetailsItemComponent } from './details-item.component';
 import { FormsModule } from '@angular/forms';
 import { ItemsRoutingModule } from './items-routing.module';
@@ -26,7 +26,7 @@ import { TechTableModule } from '../../_modules/techtable/techtable.module';
   ],
   declarations: [
     ViewItemsComponent,
-    AddItemsComponent,
+    NewItemComponent,
     DetailsItemComponent,
     EditItemComponent
    ]
