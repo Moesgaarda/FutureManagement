@@ -8,10 +8,20 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <label>Status</label>
-            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="orderToAdd && orderToAdd.status">
-              <option *ngFor="let status of statuses" [ngValue]="status">{{status.name}}</option>
+            <label>Status:</label>
+            <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="order.status && orderStatus">
+              <option *ngFor="let key of keys" [value]="key" [label]="keys[key]">{{orderStatusEnum[key]}}</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <div _ngcontent-c21="" class="form-group">
+              <dt class="col-sm-12">
+                <button _ngcontent-c21="" class="btn btn-success btn-rectangle input-group-text" (click)="updateStatus()">
+                  Gem status
+                </button>
+              </dt>
+            </div>
           </div>
         </div>
       </div>
