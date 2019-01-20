@@ -7,13 +7,7 @@ import { ItemTemplate } from '../../_models/ItemTemplate';
 import { Item } from '../../_models/Item';
 import { ItemItemRelation } from '../../_models/ItemItemRelation';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
-
-export enum Steps {
-  ItemTemplate,
-  Items,
-  Stock,
-  Info
-}
+import { NewItemSteps } from '../../_enums/NewItemSteps.enum';
 
 
 @Component({
@@ -21,12 +15,12 @@ export enum Steps {
 })
 
 export class NewItemComponent implements OnInit {
-  currentStep: Steps = Steps.ItemTemplate;
+  currentStep: NewItemSteps = NewItemSteps.ItemTemplate;
   itemTemplates: ItemTemplate[];
-  selectedTemplate: ItemTemplate;
   itemsToChooseFromList: ItemItemRelation[];
   missingItems: ItemTemplatePart[];
-  itemToAdd: Item;
+  itemToAdd: Item = {} as Item;
+  currentSelectItem: ItemTemplatePart;
 
 
   constructor(private templateService: ItemTemplateService,
@@ -45,24 +39,36 @@ export class NewItemComponent implements OnInit {
     });
   }
 
-  changeFromSelectItemTemplate() {
-    if(this.selectedTemplate.parts === undefined) {
-      this.currentStep = Steps.Info;
+  async changeFromSelectItemTemplate() {
+    await this.getTemplateDetails();
+    if (this.itemToAdd.template.parts === undefined) {
+      this.currentStep = NewItemSteps.Info;
     } else {
-      this.missingItems = this.selectedTemplate.parts;
+      this.itemToAdd.parts = [] as ItemItemRelation[];
+      this.missingItems = this.itemToAdd.template.parts;
+      for ( let part of this.missingItems) {
+        part.amount = part.amount * this.itemToAdd.amount;
+      }
+
+      this.currentStep = NewItemSteps.Items;
     }
   }
 
-  changeToSelectFromStock(template: ItemTemplate) {
-    this.itemService.getAllInstancesInStock(template).subscribe(items => {
-      this.itemsInStockToChooseFrom = items;
+  changeToSelectFromStock(templatePart: ItemTemplatePart) {
+    this.itemsToChooseFromList = [] as ItemItemRelation[];
+    console.log(templatePart);
+    this.currentSelectItem = templatePart;
+    this.itemService.getAllInstancesInStock(templatePart.part).subscribe(items => {
+      for (let i = 0; i < items.length; i++) {
+        this.itemsToChooseFromList.push({part : items[i], amount : 0});
+      }
     });
+    this.currentStep = NewItemSteps.Stock;
   }
 
   async getTemplateDetails() {
-    await this.templateService.getItemTemplate(this.selectedTemplate.id).subscribe(itemTemplate => {
-      this.selectedTemplate = itemTemplate;
-      console.log(this.selectedTemplate);
+    await this.templateService.getItemTemplateAsync(this.itemToAdd.template.id).then(itemTemplate => {
+      this.itemToAdd.template = itemTemplate;
     });
   }
 }

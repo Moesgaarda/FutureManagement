@@ -9,11 +9,20 @@
                 [multiple]="false"
                 bindLabel="name"
                 placeholder="Vælg skabelon"
-                [(ngModel)]="selectedTemplate"> 
+                [(ngModel)]="itemToAdd.template"> 
                 </ng-select>
-                <button class="btn btn-success" (click)="getTemplateDetails() && changeFromSelectItemTemplate()">
+                <button class="btn btn-success" (click)="changeFromSelectItemTemplate()">
                     videre
                 </button>
+
+                <div *ngIf="itemToAdd.template !== undefined">
+                    <div class="form-group">
+                        <label>Mængde</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)] ="itemToAdd.amount">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -32,11 +41,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of missingItems">
-                        <td>{{item.part.name}}</td>
-                        <td>{{item.amount}}</td>
+                    <tr *ngFor="let part of missingItems">
+                        <td>{{part.part.name}}</td>
+                        <td>{{part.amount}}</td>
                         <td>
-                            <button class="btn btn-primary" (click)="changeToSelectFromStock(item.part)">
+                            <button class="btn btn-primary" (click)="changeToSelectFromStock(part)">
                                 Vælg fra lager
                             </button>
                         </td>
@@ -46,16 +55,37 @@
         </div>
 
     </div>
-    <div *ngIf="itemsChoosenList != 0">
+    <div *ngIf="itemToAdd.parts.length != 0">
         <div class="card">
             <div class="card-header">Del genstande der er blevet valgt fra lageret</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Navn</th>
+                            <th>Placering</th>
+                            <th>Mængde</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let part of itemToAdd.parts">
+                            <td>{{part.part.template.name}}</td>
+                            <td>{{part.part.placement}}</td>
+                            <td>{{part.amount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 <!--choose Items from stock -->
 <div *ngIf="currentStep == 2">
-
+    <div class="card">
+        <div class="card-header"> Vælg {{currentSelectItem.amount}} {{currentSelectItem.part.name}} fra lageret</div>
+        <div></div>
+    </div>
 </div>
 
 <!--Aditional information-->

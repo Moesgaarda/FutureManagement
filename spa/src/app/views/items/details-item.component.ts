@@ -42,7 +42,7 @@ export class DetailsItemComponent implements OnInit {
 
   async loadParts() {
     this.item.parts.forEach(part => {
-      this.itemService.getItem(part.partId).subscribe(item => {
+      this.itemService.getItem(part.part.id).subscribe(item => {
         this.parts.push(item);
       }, error => {
         this.alertify.error('Kunne ikke hente info om genstanden');
