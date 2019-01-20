@@ -68,7 +68,6 @@ export class ReviseItemTemplateComponent implements OnInit {
     await this.populateSelect();
     await this.getUnitTypes();
     await this.getTemplateCategories();
-    // this.putFilesIntoQueue();
   }
 
   /**
@@ -128,7 +127,6 @@ export class ReviseItemTemplateComponent implements OnInit {
 
   async addTemplateCategory() {
     for (let i = 0; i < this.categoryList.length; i++) {
-      console.log(this.categoryToAddToDb);
       if (this.categoryList[i].name.toLowerCase() === this.categoryToAddToDb.name.toLowerCase()) {
         this.alertify.error('En kategori med dette navn findes allerede!');
         return;

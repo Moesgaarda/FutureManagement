@@ -43,7 +43,6 @@ export class DetailsItemTemplateComponent implements OnInit {
         if (itemTemplate.revisionedFrom != null) {
           this.isRevisioned = true;
         }
-        console.log(this.itemTemplate);
     });
   }
 
