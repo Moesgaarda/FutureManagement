@@ -33,7 +33,6 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "Categories_View")]
-        [AllowAnonymous]
         [HttpGet("getAll", Name = "GetCategorys")]
         public async Task<IActionResult> GetCategorys(){
             var categorys = await _repo.GetCategories();
