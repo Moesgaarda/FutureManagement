@@ -33,7 +33,6 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "UnitTypes_View")]
-        [AllowAnonymous]
         [HttpGet("getAll", Name = "GetUnitTypes")]
         public async Task<IActionResult> GetUnitTypes(){
             var unitTypes = await _repo.GetUnitTypes();

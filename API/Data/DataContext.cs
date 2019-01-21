@@ -32,6 +32,7 @@ namespace API.Data
         public DbSet<TemplateFileName> TemplateFileNames { get; set; }     
         public DbSet<OrderFileName> OrderFileNames { get; set; } 
         public DbSet<UnitType> UnitTypes { get; set; }
+        public DbSet<ItemTemplateCategory> TemplateCategories { get; set; }
         public DbSet<ProjectStatus> ProjectStatuses { get; set; }
         public DbSet<ItemTemplateCategory> ItemTemplateCategories { get; set; }
 
