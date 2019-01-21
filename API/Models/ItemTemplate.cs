@@ -9,7 +9,7 @@ namespace API.Models{
     public class ItemTemplate{
         public ItemTemplate(){}
         public ItemTemplate(int id, string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
-                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, DateTime created, 
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, DateTime created, 
                             ItemTemplate revisionedFrom, ICollection<TemplateFileName> files, 
                             int lowerLimit, ItemTemplateCategory category){
             this.Id = id;
@@ -20,7 +20,6 @@ namespace API.Models{
             this.Parts = parts;
             this.PartOf = partOf;
             this.Files = files;
-            this.RevisionID = revisionId;
             this.Created = created;
             this.RevisionedFrom = revisionedFrom;
             this.LowerLimit = lowerLimit;
@@ -28,7 +27,7 @@ namespace API.Models{
         }
 
         public ItemTemplate(string name, UnitType unitType, string description, ICollection<TemplatePropertyRelation> properties, 
-                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, int revisionId, 
+                            ICollection<ItemTemplatePart> parts, ICollection<ItemTemplatePart> partOf, 
                             DateTime created, ItemTemplate revisionedFrom, ICollection<TemplateFileName> files, 
                             int lowerLimit, ItemTemplateCategory category){
             this.Name = name;
@@ -38,7 +37,6 @@ namespace API.Models{
             this.Parts = parts;
             this.PartOf = partOf;
             this.Files = files;
-            this.RevisionID = revisionId;
             this.Created = created;
             this.RevisionedFrom = revisionedFrom;
             this.LowerLimit = lowerLimit;
@@ -48,7 +46,6 @@ namespace API.Models{
         [Key]
         public int Id { get;  set; }
         public string Name { get; set; }
-        public int RevisionID { get; set; }
         public DateTime Created { get; set; }
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
