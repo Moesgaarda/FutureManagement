@@ -4,7 +4,6 @@ import { Item } from '../_models/Item';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ItemTemplate } from '../_models/ItemTemplate';
-import { TouchSequence } from 'selenium-webdriver';
 
 
 @Injectable()
