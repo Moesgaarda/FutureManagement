@@ -185,7 +185,6 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "User_Add")]
-        [AllowAnonymous]
         [HttpPost("addRole")]
         public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
