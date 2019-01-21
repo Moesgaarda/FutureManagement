@@ -1,35 +1,41 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
     public class UnitTypeRepository : IUnitTypeRepository
     {
-        private DataContext _dbContext;
+        private DataContext _context;
 
         public UnitTypeRepository(DataContext dbContext){
-            this._dbContext = dbContext;
+            this._context = dbContext;
         }
 
-        public Task<bool> AddUnitType(UnitType unitType)
+        public async Task<bool> AddUnitType(UnitType unitType)
         {
-            throw new System.NotImplementedException();
+            await _context.UnitTypes.AddAsync(unitType);
+            int result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
+        public async Task<List<UnitType>> GetUnitTypes()
+        {
+            return await _context.UnitTypes.ToListAsync();
         }
 
-        public Task<bool> EditUnitType(UnitType unitType)
+        public async Task<UnitType> GetUnitType(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.UnitTypes.FirstOrDefaultAsync(x => x.Id == id);
         }
-
-        public Task<List<UnitType>> GetUnitTypes()
+        public async Task<bool> EditUnitType(UnitType unitType)
         {
-            throw new System.NotImplementedException();
-        }
+            var unitTypeToChange = _context.UnitTypes.FirstOrDefaultAsync(x => x.Id == unitType.Id);
+            _context.Entry(unitTypeToChange).CurrentValues.SetValues(unitType);
+            var result = await _context.SaveChangesAsync();
 
-        public Task<UnitType> GetUnitType(int id)
-        {
-            throw new System.NotImplementedException();
+            return result > 0;
         }
     }
 }
