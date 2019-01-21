@@ -5,7 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { UnitTypesRoutingModule } from './unitTypes-routing.module';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 
-import { DetailsUnitTypeComponent } from './details-unitType.component';
+import { EditUnitTypeComponent } from './edit-unitType.component';
 import { ViewUnitTypesComponent } from './view-unitTypes.component';
 import { NewUnitTypeComponent } from './new-unitType.component';
 
@@ -29,8 +29,7 @@ import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
   declarations: [
     ViewUnitTypesComponent,
     NewUnitTypeComponent,
-    DetailsUnitTypeComponent,
-    PropertyFilterPipe
+    EditUnitTypeComponent
   ]
 })
 export class UnitTypeModule { }

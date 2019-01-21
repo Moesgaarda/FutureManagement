@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewUnitTypesComponent } from './view-unitTypes.component';
-import { DetailsUnitTypeComponent } from './details-unitType.component';
+import { EditUnitTypeComponent } from './edit-unitType.component';
 import { NewUnitTypeComponent } from './new-unitType.component';
 import { AuthGuard } from '../../_guards/auth.guard';
 
@@ -37,7 +37,7 @@ const routes: Routes = [
       },
       {
         path: 'details/:id',
-        component: DetailsUnitTypeComponent,
+        component: EditUnitTypeComponent,
         data: {
           roles: ['UnitTypes_View'],
           title: 'Vis detaljer'
