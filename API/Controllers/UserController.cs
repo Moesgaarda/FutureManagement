@@ -184,8 +184,7 @@ namespace API.Controllers
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
-        //[Authorize(Policy = "User_Add")]
-        [AllowAnonymous]
+        [Authorize(Policy = "User_Add")]
         [HttpPost("addRole")]
         public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
