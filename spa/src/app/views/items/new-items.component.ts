@@ -48,9 +48,10 @@ export class NewItemComponent implements OnInit {
     } else {
       this.itemToAdd.parts = [] as ItemItemRelation[];
       this.missingItems = this.itemToAdd.template.parts;
-      for ( let part of this.missingItems) {
+      for ( const part of this.missingItems) {
         part.amount = part.amount * this.itemToAdd.amount;
       }
+
 
       this.currentStep = NewItemSteps.Items;
     }
@@ -68,17 +69,17 @@ export class NewItemComponent implements OnInit {
   }
 
   changeFromStockToSelect() {
-    let amountChoosen: number = 0;
-    let itemsChoosen: ItemItemRelation[] = [] as ItemItemRelation[];
+    let amountChoosen = 0;
+    const itemsChoosen: ItemItemRelation[] = [] as ItemItemRelation[];
     for (const item of this.itemsToChooseFromList) {
       if (item.amount > item.part.amount) {
         this.alertify.error('Der er kun ' + item.part.amount + ' på placering: ' + item.part.placement);
         break;
       } else {
-        let a: number = parseInt(amountChoosen.toString(), 0);
-        let b: number = parseInt(item.amount.toString(), 0);
+        const a: number = parseInt(amountChoosen.toString(), 0);
+        const b: number = parseInt(item.amount.toString(), 0);
         amountChoosen = a + b;
-        if (item.amount > 0){
+        if (item.amount > 0) {
           itemsChoosen.push(item);
         }
       }
@@ -87,7 +88,7 @@ export class NewItemComponent implements OnInit {
       this.alertify.error('Du har valgt ' + amountChoosen + ' men du skulle vælge ' + this.currentSelectItem.amount);
     } else {
       this.itemToAdd.parts = this.itemToAdd.parts.concat(itemsChoosen);
-      let removed = this.missingItems.splice(this.missingItems.indexOf(this.currentSelectItem), 1);
+      const removed = this.missingItems.splice(this.missingItems.indexOf(this.currentSelectItem), 1);
       this.currentStep = NewItemSteps.Items;
     }
   }
@@ -99,6 +100,7 @@ export class NewItemComponent implements OnInit {
     this.currentStep = NewItemSteps.Info;
   }
   addItem() {
+    this.itemToAdd.isActive = true;
     this.itemService.addItem(this.itemToAdd).subscribe(
       data => {
         this.alertify.success('Tilføjede genstand til lageret');
@@ -109,7 +111,7 @@ export class NewItemComponent implements OnInit {
       () => {
         this.router.navigate(['items/view']);
       }
-    )
+    );
   }
 
   async getTemplateDetails() {

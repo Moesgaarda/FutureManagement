@@ -213,7 +213,7 @@ namespace API.Controllers
                 item.Amount,
                 item.Template,
                 item.Order,
-                item.CreatedBy,
+                _userManager.FindByNameAsync(User.Identity.Name).Result,
                 item.Properties,
                 partsToAdd,
                 item.PartOf,
