@@ -96,8 +96,7 @@ namespace API.Controllers
                 propertiesToAdd,
                 templateDto.Parts,
                 templateDto.PartOf,
-                templateDto.RevisionId,
-                templateDto.Created,
+                DateTime.Now,
                 templateDto.RevisionedFrom,
                 filesToAdd,
                 templateDto.LowerLimit,
@@ -138,7 +137,6 @@ namespace API.Controllers
 
             return result ? StatusCode(201) : BadRequest();
         }
-
         
         [Authorize(Policy = "ItemTemplates_Add")]
         [HttpPost("addCategory", Name = "AddTemplateCategory")]
@@ -174,42 +172,6 @@ namespace API.Controllers
             categoriesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
 
             return Ok(categoriesToReturn);
-        }
-
-        [Authorize(Policy = "ItemTemplates_Add")]
-        [HttpPost("addUnitType", Name = "AddUnitType")]
-        public async Task<IActionResult> AddUnitType([FromBody]UnitTypeForAddDto unitTypeDto){
-            if(!ModelState.IsValid){
-                return BadRequest(ModelState);
-            }
-
-            var unitType = new UnitType(
-                unitTypeDto.Name
-            );
-
-            bool result = await _repo.AddUnitType(unitType);
-
-            if(unitType.Name == null){
-                return BadRequest("UnitType name cannot be null.");
-            }
-
-            if(result){
-                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                result = await _eventLogRepo.AddEventLog(EventType.Created, "mængdeenhed", unitType.Name, unitType.Id, currentUser);
-            }
-
-            return result ? StatusCode(201) : BadRequest();
-        }
-
-        [Authorize(Policy = "ItemTemplates_Add")]
-        [HttpGet("getUnitTypes", Name = "GetUnitTypes")]
-        public async Task<IActionResult> GetUnitTypes(){
-            var unitTypes = await _repo.GetUnitTypes();
-            var unitTypesToReturn = _mapper.Map<List<UnitTypeForGetDto>>(unitTypes);
-
-            unitTypesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
-
-            return Ok(unitTypesToReturn);
         }
 
         [Authorize(Policy = "ItemTemplates_Add")]

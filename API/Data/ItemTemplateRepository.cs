@@ -75,20 +75,6 @@ namespace API.Data
             return await _context.ItemTemplateCategories.ToListAsync();
         }
 
-        public async Task<bool> AddUnitType(UnitType unitType)
-        {
-            await _context.UnitTypes.AddAsync(unitType);
-            int result = await _context.SaveChangesAsync();
-
-            return result > 0;
-        }
-
-        public async Task<List<UnitType>> GetUnitTypes()
-        {
-            return await _context.UnitTypes.ToListAsync();
-        }
-
-
         /* TODO Maybe check if the Item is in the database
          * This approach is faster though and seems error free (only accesses the database once)
          * Could instead get the item first to check if it exist before removing it (need to access twice)
@@ -131,7 +117,7 @@ namespace API.Data
 
         public async Task<List<ItemTemplate>> GetItemTemplates()
         {
-            return await _context.ItemTemplates.ToListAsync();
+            return await _context.ItemTemplates.Include(x => x.Category).ToListAsync();
         }
 
         public async Task<ItemPropertyName> GetPropertyName(int id)

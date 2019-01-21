@@ -15,14 +15,6 @@
             <option *ngFor="let unit of unitTypeList" [ngValue]="unit">{{unit.name}}</option>
           </select>
         </div>
-        <div class="input-group">
-          <input type="text" placeholder="Lav en ny mængdeenhed" class="form-control" id="unitTypeField" [(ngModel)]="unitTypeToAddToDb && unitTypeToAddToDb.name" />
-          <span class="input-group-append">
-            <button class="btn btn-success input-group-text" (click)="addUnitType()" onclick="document.getElementById('propField').value = ''">
-              Tilføj
-            </button>
-          </span>
-        </div>
         <div class="form-group">
           <label for="name">Nedre grænse</label>
           <div class="input-group">
@@ -77,7 +69,7 @@
 
         </div>
         <div class="form-group">
-          <button class="btn btn-success btn-rectangle input-group-text" (click)="addTemplate()">Tilføj skabelonen</button>
+          <button class="btn btn-success" (click)="addTemplate()">Tilføj skabelonen</button>
         </div>
       </div>
     </div>

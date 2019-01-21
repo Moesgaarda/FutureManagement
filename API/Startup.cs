@@ -77,6 +77,7 @@ namespace API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IFileInputRepository, FileInputRepository>();
+            services.AddScoped<IUnitTypeRepository, UnitTypeRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -125,7 +126,10 @@ namespace API
                 options.AddPolicy("User_Edit", policy => policy.RequireRole("User_Edit"));
                 options.AddPolicy("User_Delete", policy => policy.RequireRole("User_Delete"));
                 options.AddPolicy("User_ActivateDeactivate", policy => policy.RequireRole("User_ActivateDeactivate"));
-                
+                options.AddPolicy("UnitTypes_View", policy => policy.RequireRole("UnitTypes_View"));
+                options.AddPolicy("UnitTypes_Add", policy => policy.RequireRole("UnitTypes_Add"));
+                options.AddPolicy("Categories_View", policy => policy.RequireRole("Categories_View"));
+                options.AddPolicy("Categories_Add", policy => policy.RequireRole("Categories_Add"));
                 
             });
         }

@@ -1,40 +1,50 @@
 import { environment } from '../../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemTemplate } from '../../_models/ItemTemplate';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ItemPropertyName } from '../../_models/ItemPropertyName';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
 import { DetailFile } from '../../_models/DetailFile';
 import { FileUploadService } from '../../_services/fileUpload.service';
 import { UnitType } from '../../_models/UnitType';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   templateUrl: './details-itemTemplate.component.html'
 })
-export class DetailsItemTemplateComponent implements OnInit {
+export class DetailsItemTemplateComponent implements OnInit, OnDestroy {
   isRevisioned = false;
   isDataAvailable = false;
   itemTemplate: ItemTemplate;
   files: DetailFile[];
   fileService: FileUploadService;
+  subscription: Subscription;
 
   constructor(
     private templateService: ItemTemplateService,
     private route: ActivatedRoute,
     private fileUploadService: FileUploadService,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) {
     this.fileService = fileUploadService;
   }
 
   async ngOnInit() {
-    await this.loadTemplateOnInIt();
+    this.subscription = this.route.params.subscribe(
+      (params: Params) => {
+        this.loadTemplateOnInIt(params);
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  async loadTemplateOnInIt() {
-    await this.templateService.getItemTemplateAsync(+this.route.snapshot.params['id'])
+  async loadTemplateOnInIt(params: Params) {
+    await this.templateService.getItemTemplateAsync(params['id'])
       .then(itemTemplate => {
         this.itemTemplate = itemTemplate;
         this.isDataAvailable = true;
@@ -49,5 +59,9 @@ export class DetailsItemTemplateComponent implements OnInit {
   }
   downloadFile(fileDetails: DetailFile) {
     this.fileService.download(fileDetails, 'Template');
+  }
+
+  goToRevisionTemplate(){
+    this.router.navigate(['itemTemplates/revise/' + this.itemTemplate.id]);
   }
 }

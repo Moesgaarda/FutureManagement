@@ -4,7 +4,9 @@
       <div class="card">
       
         <div class="card-header">
-          <h5>{{itemTemplate.name}}</h5>
+          <h5>{{itemTemplate.name}} <div class="float-right" *ngIf="this.authService.roleMatch(['ItemTemplates_Add'])">
+            <button class="btn btn-secondary" (click)="goToRevisionTemplate()"> Revider</button>
+          </div></h5>
         </div>
         <div class="card-body">
         
@@ -39,15 +41,11 @@
           <div *ngIf="isRevisioned">
             <div class="form-group">
               <label for="revisionedFrom">Revideret fra</label>
-              <div class="input-group-text">
-                {{itemTemplate.revisionedFrom.name}}
+              <div class="input-group">
+                <button class="btn btn-outline-info" (click)="goToItemTemplateDetail(itemTemplate.revisionedFrom.id)">
+                  <span class="glyphicon glyphicon-trash"></span> {{itemTemplate.revisionedFrom.name}}
+                </button>
               </div>
-              <div class="input-group-text">
-                Revision nummer: {{itemTemplate.revisionId}}
-              </div>
-              <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(itemTemplate.revisionedFrom.id)">
-                Vis Original
-              </button>
             </div>
           </div>
         
@@ -78,75 +76,79 @@
     </div>
 
     <div class="col-lg-6">
-      <div class="card">
-        <div class="card-header">Egenskaber</div>
-        <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Navn</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of itemTemplate.templateProperties">
-                <td>{{item.name}}</td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="itemTemplate.templateProperties.length != 0">
+        <div class="card">
+          <div class="card-header">Egenskaber</div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Navn</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemTemplate.templateProperties">
+                  <td>{{item.name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-header">Dele</div>
-        <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Navn</th>
-                <th>Mængde</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of itemTemplate.parts">
-                <td>{{item.part.name}}</td>
-                <td>{{item.amount}}</td>
-                <td>
-                  <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.part.id)">
-                    Vis Detaljer
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="itemTemplate.parts.length != 0">
+        <div class="card">
+          <div class="card-header">Dele</div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Navn</th>
+                  <th>Mængde</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemTemplate.parts">
+                  <td>{{item.part.name}}</td>
+                  <td>{{item.amount}}</td>
+                  <td>
+                    <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.part.id)">
+                      Vis detaljer
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-header">Del af</div>
-        <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Navn</th>
-                <th>Mængde</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of itemTemplate.partOf">
-                <td>{{item.template.name}}</td>
-                <td>{{item.amount}}</td>
-                <td>
-                  <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.template.id)">
-                    Vis Detaljer
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="itemTemplate.partOf.length !=0">
+        <div class="card">
+          <div class="card-header">Del af</div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Navn</th>
+                  <th>Mængde</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemTemplate.partOf">
+                  <td>{{item.template.name}}</td>
+                  <td>{{item.amount}}</td>
+                  <td>
+                    <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.template.id)">
+                      Vis detaljer
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     
     </div>
-
-  </div>
 </div>

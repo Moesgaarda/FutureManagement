@@ -14,6 +14,7 @@ import { UserService } from '../../_services/user.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
+import { UnitTypeService } from '../../_services/unitType.service';
 
 
 @Component({
@@ -63,7 +64,9 @@ export class TechtableComponent implements OnInit {
       this.tableService = <EventLogService>this.injector.get(EventLogService);
     } else if (this.serviceType === 'UserService') {
       this.tableService = <UserService>this.injector.get(UserService);
-    } else {
+    }  else if (this.serviceType === 'UnitTypeService') {
+      this.tableService = <UnitTypeService>this.injector.get(UnitTypeService);
+    }  else {
       console.log('Unexpected service name: ' + this.serviceType);
     }
     this.loadItems();
@@ -274,6 +277,8 @@ export class TechtableComponent implements OnInit {
     } else if (this.serviceType === 'EventLogService') {
     } else if (this.serviceType === 'UserService') {
       location.href = this.baseUrl + 'users/details/' + data.row.id;
+    } else if (this.serviceType === 'UnitTypeService') {
+      location.href = this.baseUrl + 'unitTypes/edit/' + data.row.id;
     } else {
       console.log('Unexpected service name: ' + this.serviceType);
     }

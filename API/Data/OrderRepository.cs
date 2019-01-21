@@ -71,7 +71,7 @@ namespace API.Data
         public async Task<List<Order>> GetAllOrders()
         {
             return await _context.Orders
-            .ToListAsync();
+                .ToListAsync();
         }
 
         public async Task<Order> GetOrder(int id)
