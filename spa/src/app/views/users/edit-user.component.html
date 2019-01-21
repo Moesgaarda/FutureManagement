@@ -15,7 +15,7 @@
                   <div *ngIf="userNameDisabled; then tempEditBox else tempSaveBox">
                   </div>
                   <ng-template #tempEditBox>
-                    <button class="btn btn-success input-group-text" (click)="enableUserName()">
+                    <button class="btn btn-primary input-group-text" (click)="enableUserName()">
                         Rediger
                     </button>
                 </ng-template>
@@ -23,7 +23,7 @@
                     <button class="btn btn-success input-group-text" (click)="enableUserName(true, usernameInput.value)">
                         Gem
                     </button>
-                    <button class="btn btn-success input-group-text" (click)="enableUserName(false,''); usernameInput.value = user.username"> 
+                    <button class="btn btn-warning input-group-text" (click)="enableUserName(false,''); usernameInput.value = user.username"> 
                         Annuller
                       </button>
                 </ng-template>
@@ -37,7 +37,7 @@
             <div class="input-group">
               <input type="text" placeholder="Navn" id="name" class="form-control" value="{{this.user?.name}}" [disabled]="nameDisabled"/>
               <span class="input-group-append">
-                  <button class="btn btn-success input-group-text" (click)="enableName()">
+                  <button class="btn btn-primary input-group-text" (click)="enableName()">
                     {{ nameDisabled ? 'Rediger' : 'Gem' }}
                   </button>
                 </span>
