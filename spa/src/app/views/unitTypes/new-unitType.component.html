@@ -10,10 +10,14 @@
               type="text"
               placeholder="Navn"
               class="form-control"
-              [(ngModel)]="unitType && unitTypeToAdd.name"
+              [(ngModel)]="unitType.name"
             />
           </div>
         </div>
+
+        <button type="button" class="btn btn-success btn-rectangle input-group-text" (click)="addUnitType()">
+          Tilføj mængdeenhed
+        </button>
       </div>
     </div>
   </div>

@@ -23,7 +23,7 @@ export class UnitTypeService {
 
 
     getAll(): Observable<UnitType[]> {
-        return this.http.get<UnitType[]>(this.baseUrl + 'UnitTypes/getAll');
+        return this.http.get<UnitType[]>(this.baseUrl + 'UnitType/getAll');
     }
 
     getUnitType(id: number): Observable<UnitType> {
@@ -31,7 +31,7 @@ export class UnitTypeService {
     }
 
     addUnitType(unitType: UnitType): Observable<UnitType> {
-        return this.http.post<UnitType>(this.baseUrl + 'UnitTypes/add', unitType, this.httpOptions);
+        return this.http.post<UnitType>(this.baseUrl + 'UnitType/add', unitType, this.httpOptions);
     }
 
     editUnitType(unitType: UnitType): Observable<UnitType> {
