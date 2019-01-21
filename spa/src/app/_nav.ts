@@ -93,10 +93,34 @@ export const navItems = [
       ]
     },
     {
-      name: 'Brugere',
-      icon: 'fa fa-user-o',
+      name: 'Administration',
+      icon: 'fa fa-cogs',
       url: '/base',
       children: [
+        {
+          name: 'Vis mængdeenheder',
+          url: '/unitTypes/view',
+          icon: 'fa fa-barcode',
+          role: 'UnitTypes_View',
+        },
+        {
+          name: 'Tilføj mængdeenhed',
+          url: '/unitTypes/new',
+          icon: 'fa fa-barcode',
+          role: 'UnitTypes_Add',
+        },
+        {
+          name: 'Vis kategorier',
+          url: '/categories/view',
+          icon: 'fa fa-tag',
+          role: 'Categories_View',
+        },
+        {
+          name: 'Tilføj kategori',
+          url: '/categories/new',
+          icon: 'fa fa-tag',
+          role: 'Categories_Add',
+        },
         {
           name: 'Vis brugere',
           url: '/users/view',
@@ -114,14 +138,14 @@ export const navItems = [
           url: '/userRoles/new',
           icon: 'fa fa-user-o',
           role: 'User_Add',
+        },
+        {
+          name: 'System log',
+          icon: 'fa fa-sticky-note-o',
+          url: '/logs/view',
+          role: 'EventLogs_View',
         }
       ]
-    },
-    {
-      name: 'Log',
-      icon: 'fa fa-sticky-note-o',
-      url: '/logs/view',
-      role: 'EventLogs_View',
     },
     {
       divider: true
