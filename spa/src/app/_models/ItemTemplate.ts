@@ -9,7 +9,6 @@ export interface ItemTemplate {
     id: number;
     name: string;
     unitType: UnitType;
-    revisionId: number;
     revisionedFrom: ItemTemplate;
     created: Date;
     files: any;
