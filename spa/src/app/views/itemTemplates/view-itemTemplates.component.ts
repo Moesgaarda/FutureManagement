@@ -124,6 +124,5 @@ export class ViewItemTemplatesComponent {
   }
 
   public onCellClick(data: any): any {
-    // console.log(data);
   }
 }
