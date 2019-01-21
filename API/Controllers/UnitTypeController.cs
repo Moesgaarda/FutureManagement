@@ -15,15 +15,15 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UnitTypeController
+    public class UnitTypeController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IItemTemplateRepository _repo;
+        private readonly IUnitTypeRepository _repo;
         private readonly IEventLogRepository _eventLogRepo;
         private readonly UserManager<User> _userManager;
 
 
-        public UnitTypeController(IItemTemplateRepository repo,
+        public UnitTypeController(IUnitTypeRepository repo,
             IMapper mapper, UserManager<User> userManager, IEventLogRepository eventLogRepo)
         {
             _mapper = mapper;
@@ -35,19 +35,46 @@ namespace API.Controllers
         [Authorize(Policy = "UnitTypes_View")]
         [HttpGet("getAll", Name = "GetUnitTypes")]
         public async Task<IActionResult> GetUnitTypes(){
-            throw new NotImplementedException();
+            var unitTypes = await _repo.GetUnitTypes();
+            var unitTypesToReturn = _mapper.Map<List<UnitTypeForGetDto>>(unitTypes);
+
+            unitTypesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
+
+            return Ok(unitTypesToReturn);
         }
 
         [Authorize(Policy = "UnitTypes_View")]
         [HttpGet("get/{id}", Name = "GetUnitType")]
         public async Task<IActionResult> GetUnitType(int id){
-            throw new NotImplementedException();
+            UnitType unitType = await _repo.GetUnitType(id);
+            UnitTypeForGetDto unitTypeToReturn = _mapper.Map<UnitTypeForGetDto>(unitType);
+
+            return Ok(unitTypeToReturn);
         }
 
         [Authorize(Policy = "UnitTypes_Add")]
         [HttpPost("add", Name = "AddUnitType")]
         public async Task<IActionResult> AddUnitType([FromBody]UnitTypeForAddDto unitTypeDto){
-            throw new NotImplementedException();
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            var unitType = new UnitType(
+                unitTypeDto.Name
+            );
+
+            bool result = await _repo.AddUnitType(unitType);
+
+            if(unitType.Name == null){
+                return BadRequest("UnitType name cannot be null.");
+            }
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "mængdeenhed", unitType.Name, unitType.Id, currentUser);
+            }
+
+            return result ? StatusCode(201) : BadRequest();
         }
 
         [Authorize(Policy = "UnitTypes_Add")]

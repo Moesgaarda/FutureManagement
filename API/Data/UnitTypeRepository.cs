@@ -22,7 +22,7 @@ namespace API.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<List<UnitType>> GetAllUnitTypes()
+        public Task<List<UnitType>> GetUnitTypes()
         {
             throw new System.NotImplementedException();
         }
