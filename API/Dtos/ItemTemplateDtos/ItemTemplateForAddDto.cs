@@ -20,7 +20,6 @@ namespace API.Dtos
         public ICollection<ItemPropertyNameForGetDto> TemplateProperties { get; set; }
         public ICollection<ItemTemplatePart> Parts { get; set; }
         public ICollection<ItemTemplatePart> PartOf { get; set; }
-        public int RevisionId { get; set; }
         public System.DateTime Created { get; set; }
         public ItemTemplate RevisionedFrom;
         public int[] Files { get; set; }
