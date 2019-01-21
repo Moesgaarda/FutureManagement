@@ -1,13 +1,35 @@
 // Here you can add other styles
 
+/* Custom background color for dropdown */
 .sidebar .nav-dropdown.open > .nav-dropdown-items{
   background-color: #3d454b;
 }
 
-.sortable {
+/* Changes cursor on techtables */
+.clickable {
   cursor: pointer;
 }
 
+/* Makes all card headers bold*/
 .card-header{
   font-weight: bold;
+}
+
+
+/* Related to fileupload styling */
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+html,
+body {
+  height: 100%;
 }
