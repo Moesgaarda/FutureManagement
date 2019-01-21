@@ -39,7 +39,7 @@ export class TechtableComponent implements OnInit {
     paging: true,
     sorting: { columns: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped', 'table-bordered', 'table-hover', 'sortable']
+    className: ['table-striped', 'table-bordered', 'table-hover', 'clickable']
   };
   private data: Array<any> = [];
 
