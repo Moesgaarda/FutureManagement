@@ -48,7 +48,7 @@ export class NewItemComponent implements OnInit {
     } else {
       this.itemToAdd.parts = [] as ItemItemRelation[];
       this.missingItems = this.itemToAdd.template.parts;
-      for ( const part of this.missingItems) {
+      for (const part of this.missingItems) {
         part.amount = part.amount * this.itemToAdd.amount;
       }
 
@@ -76,9 +76,9 @@ export class NewItemComponent implements OnInit {
         this.alertify.error('Der er kun ' + item.part.amount + ' på placering: ' + item.part.placement);
         break;
       } else {
-        const a: number = parseInt(amountChoosen.toString(), 0);
-        const b: number = parseInt(item.amount.toString(), 0);
-        amountChoosen = a + b;
+        const amountChoosenAsInt: number = parseInt(amountChoosen.toString(), 0);
+        const itemAmountAsInt: number = parseInt(item.amount.toString(), 0);
+        amountChoosen = amountChoosenAsInt + itemAmountAsInt;
         if (item.amount > 0) {
           itemsChoosen.push(item);
         }
@@ -106,7 +106,7 @@ export class NewItemComponent implements OnInit {
         this.alertify.success('Tilføjede genstand til lageret');
       },
       error => {
-        this.alertify.error('kunne ikke tilføje genstand');
+        this.alertify.error('Kunne ikke tilføje genstand');
       },
       () => {
         this.router.navigate(['items/view']);
