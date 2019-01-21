@@ -33,6 +33,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "UnitTypes_View")]
+        [AllowAnonymous]
         [HttpGet("getAll", Name = "GetUnitTypes")]
         public async Task<IActionResult> GetUnitTypes(){
             var unitTypes = await _repo.GetUnitTypes();
@@ -79,7 +80,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "UnitTypes_Add")]
         [HttpPost("edit", Name = "EditUnitType")]
-        public async Task<IActionResult> EditUnitType([FromBody]UnitTypeForEditDto unitTypeDto){
+        public async Task<IActionResult> EditUnitType([FromBody]UnitType unitTypeDto){
             if(unitTypeDto.Id == 0){
                 ModelState.AddModelError("Unit Type Error","Unit Type id cannot be 0.");
             }
@@ -88,7 +89,7 @@ namespace API.Controllers
             }
             
             var unitTypeToChange = await _repo.GetUnitType(unitTypeDto.Id);
-            bool result = await _repo.EditUnitType(unitTypeToChange);
+            bool result = await _repo.EditUnitType(unitTypeToChange, unitTypeDto);
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;

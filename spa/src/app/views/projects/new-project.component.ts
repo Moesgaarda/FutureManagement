@@ -92,12 +92,10 @@ export class NewProjectComponent implements OnInit {
 
     addOrder() {
       this.orderService.addOrder(this.orderToAdd).subscribe(data => {
-        console.log('added order');
         this.alertify.success('Tilføjede bestilling');
         console.log(this.orderToAdd);
       }, error => {
-        console.log('failed to add order');
-        this.alertify.error('kunne ikke tilføje bestillingen');
+        this.alertify.error('Kunne ikke tilføje bestillingen');
       }, () => {
         this.router.navigate(['projects/view']);
       });

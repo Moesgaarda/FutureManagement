@@ -184,7 +184,8 @@ namespace API.Controllers
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
-        [Authorize(Policy = "User_Add")]
+        //[Authorize(Policy = "User_Add")]
+        [AllowAnonymous]
         [HttpPost("addRole")]
         public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
@@ -197,7 +198,7 @@ namespace API.Controllers
                         User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                         await _eventLogRepo.AddEventLog(EventType.Created, "rolle", name, _roleManager.FindByNameAsync(name).Result.Id, currentUser);
                         return StatusCode(201);
-                    }
+                    } 
                 }
             }
             

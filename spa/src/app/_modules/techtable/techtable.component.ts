@@ -249,7 +249,7 @@ export class TechtableComponent implements OnInit {
     } else if (this.serviceType === 'UserService') {
       location.href = this.baseUrl + 'users/details/' + data.row.id;
     } else if (this.serviceType === 'UnitTypeService') {
-      location.href = this.baseUrl + 'unitType/edit/' + data.row.id;
+      location.href = this.baseUrl + 'unitTypes/edit/' + data.row.id;
     } else {
       console.log('Unexpected service name: ' + this.serviceType);
     }

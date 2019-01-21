@@ -1,35 +1,27 @@
 <div class="row">
-  <div class="clo-lg-6">
+  <div class="col-lg-6">
     <div class="card">
       <div class="card-header">
         Rediger mængdeenhed
         <div class="card-header">
           <div class="card-body">
             <div class="form-group">
-                <label for="useredit">
-                  Navn
-                </label>
-                <div class="input-group">
-                  <input #unitTypeInput type="text" placeholder="Navn" id="unitType" class="form-control" value="{{unitType?.name}}" [disabled]="editDisabled"/>
-                  <span class="input-group-append">
-                      <div *ngIf="editDisabled; then tempEditBox else tempSaveBox">
-                      </div>
-                      <ng-template #tempEditBox>
-                        <button class="btn btn-success input-group-text" (click)="enableEdit()">
-                            Rediger
-                        </button>
-                    </ng-template>
-                    <ng-template #tempSaveBox>
-                        <button class="btn btn-success input-group-text" (click)="enableEdit(true, unitTypeInput.value)">
-                            Gem
-                        </button>
-                        <button class="btn btn-success input-group-text" (click)="enableEdit(false,''); unitTypeInput.value = unitType.name"> 
-                            Annuller
-                        </button>
-                    </ng-template>
-                    </span>
-                </div>
+              <label for="useredit"> Navn </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  placeholder="Navn"
+                  id="unitType"
+                  class="form-control"
+                  value="{{ unitType?.name }}"
+                  [(ngModel)]="unitType.name"
+                />
               </div>
+
+              <button type="button" class="btn btn-primary" (click)="Save()">
+                Opdater
+              </button>
+            </div>
           </div>
         </div>
       </div>

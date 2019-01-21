@@ -29,13 +29,14 @@ namespace API.Data
         {
             return await _context.UnitTypes.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<bool> EditUnitType(UnitType unitType)
+        public async Task<bool> EditUnitType(UnitType oldUT, UnitType newUT)
         {
-            var unitTypeToChange = _context.UnitTypes.FirstOrDefaultAsync(x => x.Id == unitType.Id);
-            _context.Entry(unitTypeToChange).CurrentValues.SetValues(unitType);
-            var result = await _context.SaveChangesAsync();
-
-            return result > 0;
+            var result = await _context.UnitTypes.SingleOrDefaultAsync(x => x.Id == oldUT.Id);
+            if(result != null){
+                result.Name = newUT.Name;
+                return await _context.SaveChangesAsync() > 0;
+            }
+        return false;
         }
     }
 }

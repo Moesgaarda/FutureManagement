@@ -15,14 +15,14 @@ import { UnitTypeService } from '../../_services/unitType.service';
 
 export class NewUnitTypeComponent {
   baseUrl = environment.spaUrl;
-  unitType: UnitType;
+  unitType = {} as UnitType;
 
   constructor(private unitTypeService: UnitTypeService, private alertify: AlertifyService, private router: Router) {}
 
   addUnitType() {
       this.unitTypeService.addUnitType(this.unitType).subscribe(() => {
         this.alertify.success('Mængdeenhed blev oprettet');
-        this.router.navigate(['unitType/view/']);
+        this.router.navigate(['unitTypes/view/']);
       }, error => {
         this.alertify.error('Kunne ikke tilføje mængdeenhed');
       });

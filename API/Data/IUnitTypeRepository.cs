@@ -8,7 +8,7 @@ namespace API.Data
     {
         Task<List<UnitType>> GetUnitTypes();
         Task<UnitType> GetUnitType(int id);
-        Task<bool> EditUnitType(UnitType unitType);
+        Task<bool> EditUnitType(UnitType oldUT, UnitType newUT);
         Task<bool> AddUnitType(UnitType unitType);
     }
 }
