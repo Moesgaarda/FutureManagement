@@ -61,7 +61,7 @@ export class CustomSidebarComponent implements OnInit {
         name: 'Min bruger',
         url: '/users/details/' + this.authService.getCurrentUserId(),
         icon: 'fa fa-user-o',
-        variant: 'success',
+        variant: 'tertiary',
         class: 'mt-auto',
       }
     );
