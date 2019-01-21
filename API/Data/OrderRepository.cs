@@ -64,7 +64,6 @@ namespace API.Data
         public async Task<List<Order>> GetAllOrders()
         {
             return await _context.Orders
-                .Include(x => x.Status)
                 .ToListAsync();
         }
 

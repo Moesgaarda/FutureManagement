@@ -197,7 +197,7 @@ namespace API.Controllers
                         User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                         await _eventLogRepo.AddEventLog(EventType.Created, "rolle", name, _roleManager.FindByNameAsync(name).Result.Id, currentUser);
                         return StatusCode(201);
-                    }
+                    } 
                 }
             }
             

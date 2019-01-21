@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        Rediger mængdeenhed
+        <div class="card-header">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="useredit"> Navn </label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  placeholder="Navn"
+                  id="unitType"
+                  class="form-control"
+                  value="{{ unitType?.name }}"
+                  [(ngModel)]="unitType.name"
+                />
+              </div>
+
+              <button type="button" class="btn btn-primary" (click)="Save()">
+                Opdater
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

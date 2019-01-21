@@ -10,6 +10,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { UnitType } from '../../_models/UnitType';
+import { UnitTypeService } from '../../_services/unitType.service';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class NewProjectComponent implements OnInit {
   descriptionTextsToAdd: string[] = [] as string[];
 
     constructor(private itemTemplateService: ItemTemplateService, private orderService: OrderService,
-      private alertify: AlertifyService, private router: Router) {
+      private alertify: AlertifyService, private router: Router, private unitTypeService: UnitTypeService) {
       this.templateDetails.templateProperties = [] as ItemPropertyName[];
       this.orderToAdd.products = [] as Item[];
       this.currentItem.template = {} as ItemTemplate;
@@ -52,7 +53,7 @@ export class NewProjectComponent implements OnInit {
     }
 
     async getUnitTypes() {
-      this.itemTemplateService.getUnitTypes().subscribe(unitTypes => {
+      this.unitTypeService.getAll().subscribe(unitTypes => {
         this.unitTypeList = unitTypes;
       });
     }
@@ -92,12 +93,10 @@ export class NewProjectComponent implements OnInit {
 
     addOrder() {
       this.orderService.addOrder(this.orderToAdd).subscribe(data => {
-        console.log('added order');
         this.alertify.success('Tilføjede bestilling');
         console.log(this.orderToAdd);
       }, error => {
-        console.log('failed to add order');
-        this.alertify.error('kunne ikke tilføje bestillingen');
+        this.alertify.error('Kunne ikke tilføje bestillingen');
       }, () => {
         this.router.navigate(['projects/view']);
       });
