@@ -22,18 +22,16 @@ export class UnitTypeService {
     constructor(private http: HttpClient) {}
 
 
-    // TODO Should be moved to ItemTemplate repo
     getAll(): Observable<UnitType[]> {
         return this.http.get<UnitType[]>(this.baseUrl + 'UnitTypes/getAll');
     }
 
-    // TODO Should be moved to ItemTemplate repo
-    addUnitType(unitType: UnitType): Observable<UnitType> {
-        return this.http.post<UnitType>(this.baseUrl + 'ItemTemplate/addUnitType', unitType, this.httpOptions);
+    getUnitType(id: number): Observable<UnitType> {
+        return this.http.get<UnitType>(this.baseUrl + 'UnitType/get/' + id);
     }
 
-    getUnitType(id: number): Observable<Order> {
-        return this.http.get<Order>(this.baseUrl + 'UnitType/get/' + id);
+    addUnitType(unitType: UnitType): Observable<UnitType> {
+        return this.http.post<UnitType>(this.baseUrl + 'UnitTypes/add', unitType, this.httpOptions);
     }
 
     editUnitType(unitType: UnitType): Observable<UnitType> {
