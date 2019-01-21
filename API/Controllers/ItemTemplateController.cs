@@ -96,7 +96,6 @@ namespace API.Controllers
                 propertiesToAdd,
                 templateDto.Parts,
                 templateDto.PartOf,
-                templateDto.RevisionId,
                 DateTime.Now,
                 templateDto.RevisionedFrom,
                 filesToAdd,

@@ -9,7 +9,6 @@ namespace API.Dtos
         public int Id { get; set; }
         public string Name { get; set; }
         public string Files { get; set; }
-        public int RevisionId { get; set; }
         public System.DateTime Created { get; set; }
         public ItemTemplate RevisionedFrom;
         public ItemTemplateCategory Category;

@@ -250,8 +250,6 @@ namespace API.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("RevisionID");
-
                     b.Property<int?>("RevisionedFromId");
 
                     b.Property<int?>("UnitTypeId");
