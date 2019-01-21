@@ -25,7 +25,6 @@ namespace API.Data
         public DbSet<ItemTemplate> ItemTemplates { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Project> Projects { get; set; }         
-        public DbSet<Value> Values { get; set; }
         public DbSet<TemplatePropertyRelation> TemplatePropertyRelations { get; set; }
         public DbSet<ItemTemplatePart> ItemTemplateParts { get; set; }      
         public DbSet<ItemItemRelation> ItemItemRelations { get; set; }
