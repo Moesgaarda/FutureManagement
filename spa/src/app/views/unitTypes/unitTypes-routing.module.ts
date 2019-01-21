@@ -36,11 +36,11 @@ const routes: Routes = [
         },
       },
       {
-        path: 'details/:id',
+        path: 'edit/:id',
         component: EditUnitTypeComponent,
         data: {
-          roles: ['UnitTypes_View'],
-          title: 'Vis detaljer'
+          roles: ['UnitTypes_Add'],
+          title: 'Rediger mængdeenhed'
         }
       }
     ]
