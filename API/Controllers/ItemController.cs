@@ -198,13 +198,13 @@ namespace API.Controllers
             List<ItemItemRelation> partsToAdd = new List<ItemItemRelation>();
             foreach(ItemItemRelationPartOfForGet part in item.Parts){
                 partsToAdd.Add(new ItemItemRelation{
-                    PartId = part.PartId,
+                    Part = part.Part,
                     Amount = part.Amount
                 });
             }
 
             foreach(ItemItemRelation itemPart in partsToAdd) {
-                var itemToReduce = await _repo.GetItem(itemPart.PartId);
+                var itemToReduce = await _repo.GetItem(itemPart.Part.Id);
                 itemToReduce.Amount -= itemPart.Amount;
             }
 

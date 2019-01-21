@@ -39,9 +39,9 @@ namespace API.Data {
                 prop.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync (x => x.Id == prop.PropertyName.Id);
             }
 
-           /* foreach (var part in item.Parts){
-                part.Part = await _context.Items.FirstOrDefaultAsync(x => x.Id == part.PartId);
-            } */
+            foreach (var part in item.Parts){
+                part.Part = await _context.Items.FirstOrDefaultAsync(x => x.Id == part.Part.Id);
+            }
 
             await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync ();

@@ -9,6 +9,7 @@ import { ItemItemRelation } from '../../_models/ItemItemRelation';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
 import { NewItemSteps } from '../../_enums/NewItemSteps.enum';
 import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class NewItemComponent implements OnInit {
 
 
   constructor(private templateService: ItemTemplateService,
-  private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
+    private router: Router, private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
 
   }
 
@@ -98,7 +99,17 @@ export class NewItemComponent implements OnInit {
     this.currentStep = NewItemSteps.Info;
   }
   addItem() {
-    
+    this.itemService.addItem(this.itemToAdd).subscribe(
+      data => {
+        this.alertify.success('Tilføjede genstand til lageret');
+      },
+      error => {
+        this.alertify.error('kunne ikke tilføje genstand');
+      },
+      () => {
+        this.router.navigate(['items/view']);
+      }
+    )
   }
 
   async getTemplateDetails() {
