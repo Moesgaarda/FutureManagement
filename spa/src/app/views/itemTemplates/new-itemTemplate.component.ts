@@ -12,6 +12,7 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import * as _ from 'underscore';
 import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 import { UnitType } from '../../_models/UnitType';
+import { UnitTypeService } from '../../_services/unitType.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -49,7 +50,8 @@ export class NewItemTemplateComponent implements OnInit {
    * Sets up the different services, calls functions to load templates and properties.
    */
   constructor(private templateService: ItemTemplateService, private router: Router,
-     private alertify: AlertifyService, private uploaderParameter: FileUploadService) {
+     private alertify: AlertifyService, private uploaderParameter: FileUploadService,
+     private unitTypeService: UnitTypeService) {
     this.getTemplates();
     this.getTemplateProperties();
     this.getTemplateCategories();
@@ -86,7 +88,7 @@ export class NewItemTemplateComponent implements OnInit {
   }
 
   async getUnitTypes() {
-    await this.templateService.getUnitTypes().subscribe(unitTypes => {
+    await this.unitTypeService.getAll().subscribe(unitTypes => {
       this.unitTypeList = unitTypes;
     });
   }
@@ -173,20 +175,6 @@ export class NewItemTemplateComponent implements OnInit {
     await this.templateService.addTemplateCategory(this.categoryToAddToDb).subscribe( () => {
       this.alertify.success('Tiføjede ' + this.categoryToAddToDb.name +  '!');
       this.getTemplateCategories();
-    });
-  }
-
-  async addUnitType() {
-    for (let i = 0; i < this.unitTypeList.length; i++) {
-      if (this.unitTypeList[i].name.toLowerCase() === this.unitTypeToAddToDb.name.toLowerCase()) {
-        this.alertify.error('En mængdeenhed med dette navn findes allerede!');
-        return;
-      }
-    }
-
-    await this.templateService.addUnitType(this.unitTypeToAddToDb).subscribe( () => {
-      this.alertify.success('Tiføjede ' + this.unitTypeToAddToDb.name +  '!');
-      this.getUnitTypes();
     });
   }
 

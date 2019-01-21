@@ -68,6 +68,10 @@ export const routes: Routes = [
       {
         path: 'logs',
         loadChildren: './views/logs/log.module#LogModule'
+      },
+      {
+        path: 'unitTypes',
+        loadChildren: './views/unitTypes/unitTypes.module#UnitTypeModule'
       }
     ]
   }
