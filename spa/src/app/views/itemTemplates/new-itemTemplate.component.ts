@@ -178,20 +178,6 @@ export class NewItemTemplateComponent implements OnInit {
     });
   }
 
-  async addUnitType() {
-    for (let i = 0; i < this.unitTypeList.length; i++) {
-      if (this.unitTypeList[i].name.toLowerCase() === this.unitTypeToAddToDb.name.toLowerCase()) {
-        this.alertify.error('En mængdeenhed med dette navn findes allerede!');
-        return;
-      }
-    }
-
-    await this.unitTypeService.addUnitType(this.unitTypeToAddToDb).subscribe( () => {
-      this.alertify.success('Tiføjede ' + this.unitTypeToAddToDb.name +  '!');
-      this.getUnitTypes();
-    });
-  }
-
   checkBox(id) {
     for (const propToCheck of this.propertiesToAdd) {
       if (propToCheck.id === id) {
