@@ -10,5 +10,4 @@ import * as _ from 'underscore';
 })
 
 export class ViewItemTemplatesComponent {
-  constructor() {}
 }
