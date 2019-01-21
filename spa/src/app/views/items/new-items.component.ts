@@ -8,6 +8,7 @@ import { Item } from '../../_models/Item';
 import { ItemItemRelation } from '../../_models/ItemItemRelation';
 import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
 import { NewItemSteps } from '../../_enums/NewItemSteps.enum';
+import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class NewItemComponent implements OnInit {
   async changeFromSelectItemTemplate() {
     await this.getTemplateDetails();
     if (this.itemToAdd.template.parts === undefined) {
-      this.currentStep = NewItemSteps.Info;
+      this.changeToInfo();
     } else {
       this.itemToAdd.parts = [] as ItemItemRelation[];
       this.missingItems = this.itemToAdd.template.parts;
@@ -56,7 +57,6 @@ export class NewItemComponent implements OnInit {
 
   changeToSelectFromStock(templatePart: ItemTemplatePart) {
     this.itemsToChooseFromList = [] as ItemItemRelation[];
-    console.log(templatePart);
     this.currentSelectItem = templatePart;
     this.itemService.getAllInstancesInStock(templatePart.part).subscribe(items => {
       for (let i = 0; i < items.length; i++) {
@@ -64,6 +64,41 @@ export class NewItemComponent implements OnInit {
       }
     });
     this.currentStep = NewItemSteps.Stock;
+  }
+
+  changeFromStockToSelect() {
+    let amountChoosen: number = 0;
+    let itemsChoosen: ItemItemRelation[] = [] as ItemItemRelation[];
+    for (const item of this.itemsToChooseFromList) {
+      if (item.amount > item.part.amount) {
+        this.alertify.error('Der er kun ' + item.part.amount + ' på placering: ' + item.part.placement);
+        break;
+      } else {
+        let a: number = parseInt(amountChoosen.toString(), 0);
+        let b: number = parseInt(item.amount.toString(), 0);
+        amountChoosen = a + b;
+        if (item.amount > 0){
+          itemsChoosen.push(item);
+        }
+      }
+    }
+    if (amountChoosen !== this.currentSelectItem.amount) {
+      this.alertify.error('Du har valgt ' + amountChoosen + ' men du skulle vælge ' + this.currentSelectItem.amount);
+    } else {
+      this.itemToAdd.parts = this.itemToAdd.parts.concat(itemsChoosen);
+      let removed = this.missingItems.splice(this.missingItems.indexOf(this.currentSelectItem), 1);
+      this.currentStep = NewItemSteps.Items;
+    }
+  }
+  changeToInfo() {
+    this.itemToAdd.properties = [] as ItemPropertyDescription [];
+    for (const property of this.itemToAdd.template.templateProperties) {
+      this.itemToAdd.properties.push({description: '' , propertyName: property});
+    }
+    this.currentStep = NewItemSteps.Info;
+  }
+  addItem() {
+    
   }
 
   async getTemplateDetails() {

@@ -20,7 +20,14 @@
                             <input class="form-control" [(ngModel)] ="itemToAdd.amount">
                         </div>
                     </div>
+                    <div class="from-group">
+                        <label>Placering</label>
+                        <div class="input-group">
+                            <input class="from-control" [(ngModel)] = "itemToAdd.placement">
+                        </div>
+                    </div>
                 </div>
+                <br>
                 <button class="btn btn-success" (click)="changeFromSelectItemTemplate()">
                     videre
                 </button>
@@ -58,7 +65,16 @@
     </div>
     <div *ngIf="itemToAdd.parts.length != 0">
         <div class="card">
-            <div class="card-header">Del genstande der er blevet valgt fra lageret</div>
+            <div class="card-header">
+                Del genstande der er blevet valgt fra lageret
+                <div *ngIf="missingItems.length == 0">
+                    <div class="float-right">
+                        <button class="btn btn-primary" (click)="changeToInfo()">
+                                    Videre
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
@@ -84,7 +100,14 @@
 <!--choose Items from stock -->
 <div *ngIf="currentStep == 2">
     <div class="card">
-        <div class="card-header"> Vælg {{currentSelectItem.amount}} {{currentSelectItem.part.name}} fra lageret</div>
+        <div class="card-header"> 
+            Vælg {{currentSelectItem.amount}} {{currentSelectItem.part.name}} fra lageret 
+            <div class="float-right">
+                    <button class="btn btn-primary" (click)="changeFromStockToSelect()">
+                        Videre
+                    </button>
+            </div>
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>
@@ -93,7 +116,7 @@
                         <th>Placering</th>
                         <th>Mængde på lager</th>
                         <th>Valgte mængde at tilføje</th>
-                        </tr>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of itemsToChooseFromList">
@@ -112,7 +135,52 @@
     </div>
 </div>
 
-<!--Aditional information-->
+<!--Add info site-->
 <div *ngIf="currentStep == 3">
-    <p> didid</p>
+    <div class="card">
+        <div class="card-header">
+            Tilføj Informationer
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Placering</label>
+                        <div class="input-group">
+                            <input class="form-control" [(ngModel)]="itemToAdd.placement">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div *ngIf="itemToAdd.properties.length != 0">
+                <div class="card">
+                    <div class="card-head">
+                        Egenskaber
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Egenskab</th>
+                                    <th>Beskrivelse</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let property of itemToAdd.properties">
+                                    <td>{{property.propertyName.name}}</td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input class="form-control" [(ngModel)]="property.description">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
