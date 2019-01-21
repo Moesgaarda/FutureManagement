@@ -77,7 +77,7 @@ namespace API.Controllers
             return result ? StatusCode(201) : BadRequest();
         }
 
-        [Authorize(Policy = "Categorys_Add")]
+        [Authorize(Policy = "Categories_Add")]
         [HttpPost("edit", Name = "EditCategory")]
         public async Task<IActionResult> EditCategory([FromBody]ItemTemplateCategory categoryDto){
             if(categoryDto.Id == 0){
