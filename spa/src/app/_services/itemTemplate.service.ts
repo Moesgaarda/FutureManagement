@@ -60,13 +60,4 @@ export class ItemTemplateService {
         return this.http.get<ItemTemplateCategory[]>(this.baseUrl + 'ItemTemplate/getTemplateCategories');
     }
 
-    getUnitTypes(): Observable<UnitType[]> {
-        return this.http.get<UnitType[]>(this.baseUrl + 'ItemTemplate/getUnitTypes');
-    }
-
-    addUnitType(unitType: UnitType): Observable<UnitType> {
-        return this.http.post<UnitType>(this.baseUrl + 'ItemTemplate/addUnitType', unitType, this.httpOptions);
-    }
-
-
 }

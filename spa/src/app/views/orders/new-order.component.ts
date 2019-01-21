@@ -12,6 +12,7 @@ import { environment } from '../../../environments/environment';
 import { UnitType } from '../../_models/UnitType';
 import { FileUploadService } from '../../_services/fileUpload.service';
 import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
+import { UnitTypeService } from '../../_services/unitType.service';
 
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
@@ -39,7 +40,8 @@ export class NewOrderComponent implements OnInit {
     private orderService: OrderService,
     private alertify: AlertifyService,
     private router: Router,
-    private uploaderParameter: FileUploadService
+    private uploaderParameter: FileUploadService,
+    private unitTypeService: UnitTypeService
   ) {
     this.templateDetails.templateProperties = [] as ItemPropertyName[];
     this.orderToAdd.products = [] as Item[];
@@ -75,7 +77,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   async getUnitTypes() {
-    await this.itemTemplateService.getUnitTypes().subscribe(unitTypes => {
+    await this.unitTypeService.getAll().subscribe(unitTypes => {
       this.unitTypeList = unitTypes;
     });
   }
