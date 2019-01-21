@@ -80,7 +80,23 @@ namespace API.Controllers
         [Authorize(Policy = "UnitTypes_Add")]
         [HttpPost("edit", Name = "EditUnitType")]
         public async Task<IActionResult> EditUnitType([FromBody]UnitTypeForEditDto unitTypeDto){
-            throw new NotImplementedException();
+            if(unitTypeDto.Id == 0){
+                ModelState.AddModelError("Unit Type Error","Unit Type id cannot be 0.");
+            }
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            
+            var unitTypeToChange = await _repo.GetUnitType(unitTypeDto.Id);
+            bool result = await _repo.EditUnitType(unitTypeToChange);
+
+            if(result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                // TODO This logging is incorrent, pls help Andreas
+                result = await _eventLogRepo.AddEventLogChange("genstand", unitTypeDto.Name, unitTypeDto.Id, currentUser, unitTypeDto, unitTypeDto);
+            }
+
+            return result ? StatusCode(200) : StatusCode(400);
         }
     }
 }
