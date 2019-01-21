@@ -26,5 +26,5 @@ export class NewUnitTypeComponent {
       }, error => {
         this.alertify.error('Kunne ikke tilføje mængdeenhed');
       });
-
+  }
 }
