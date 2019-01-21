@@ -250,16 +250,10 @@ export class ReviseItemTemplateComponent implements OnInit {
     this.templateToRevise.parts = this.templatePartsToAdd;
     this.templateToRevise.category = this.category;
 
-    // Revising from new template sets id to 1, otherwise increment
-    if (this.templateToCopy.revisionId == null) {
-      this.templateToRevise.revisionId = 1;
-    } else {
-      this.templateToRevise.revisionId = this.templateToCopy.revisionId++;
-    }
     this.templateService.addTemplate(this.templateToRevise).subscribe(data => {
       this.alertify.success('Tilføjede revidering af skabelon');
     }, error => {
-      this.alertify.error('kunne ikke tilføje revidering');
+      this.alertify.error('Kunne ikke tilføje revidering');
     }, () => {
       this.router.navigate(['itemTemplates/view']);
     });
