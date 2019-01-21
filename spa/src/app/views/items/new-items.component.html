@@ -4,6 +4,7 @@
         <div class ="form-group">
             <div class="card-header">Vælg en Skabelon</div>
             <div class="card-body">
+
                 <ng-select 
                 [items]="itemTemplates"
                 [multiple]="false"
@@ -11,9 +12,6 @@
                 placeholder="Vælg skabelon"
                 [(ngModel)]="itemToAdd.template"> 
                 </ng-select>
-                <button class="btn btn-success" (click)="changeFromSelectItemTemplate()">
-                    videre
-                </button>
 
                 <div *ngIf="itemToAdd.template !== undefined">
                     <div class="form-group">
@@ -23,6 +21,9 @@
                         </div>
                     </div>
                 </div>
+                <button class="btn btn-success" (click)="changeFromSelectItemTemplate()">
+                    videre
+                </button>
             </div>
         </div>
     </div>
@@ -84,7 +85,30 @@
 <div *ngIf="currentStep == 2">
     <div class="card">
         <div class="card-header"> Vælg {{currentSelectItem.amount}} {{currentSelectItem.part.name}} fra lageret</div>
-        <div></div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>     
+                        <th>Navn</th>
+                        <th>Placering</th>
+                        <th>Mængde på lager</th>
+                        <th>Valgte mængde at tilføje</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of itemsToChooseFromList">
+                        <td>{{item.part.template.name}}</td>
+                        <td>{{item.part.placement}}</td>
+                        <td>{{item.part.amount}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input class="form-control" [(ngModel)] ="item.amount">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
