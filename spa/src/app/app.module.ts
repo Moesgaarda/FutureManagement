@@ -54,6 +54,7 @@ import { FileUploadService} from './_services/fileUpload.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { Interceptor } from './_services/http.interceptor';
 import { CustomSidebarComponent } from './views/custom-sidebar/custom-sidebar.component';
+import { UnitTypeService } from './_services/unitType.service';
 
 
 @NgModule({
@@ -95,6 +96,7 @@ import { CustomSidebarComponent } from './views/custom-sidebar/custom-sidebar.co
   OrderService,
   CustomerService,
   EventLogService,
+  UnitTypeService,
   AuthService,
   AlertifyService,
   FileUploadService,
