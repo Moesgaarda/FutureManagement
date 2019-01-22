@@ -25,7 +25,6 @@ namespace API.Data
         public DbSet<ItemTemplate> ItemTemplates { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Project> Projects { get; set; }         
-        public DbSet<Value> Values { get; set; }
         public DbSet<TemplatePropertyRelation> TemplatePropertyRelations { get; set; }
         public DbSet<ItemTemplatePart> ItemTemplateParts { get; set; }      
         public DbSet<ItemItemRelation> ItemItemRelations { get; set; }
@@ -33,6 +32,7 @@ namespace API.Data
         public DbSet<TemplateFileName> TemplateFileNames { get; set; }     
         public DbSet<OrderFileName> OrderFileNames { get; set; } 
         public DbSet<UnitType> UnitTypes { get; set; }
+        public DbSet<ItemTemplateCategory> TemplateCategories { get; set; }
         public DbSet<ProjectStatus> ProjectStatuses { get; set; }
         public DbSet<ItemTemplateCategory> ItemTemplateCategories { get; set; }
 

@@ -1,83 +1,201 @@
-<div class="row">
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">Ny genstand til lageret</div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="placement">Genstandens placering</label>
-                <div class="input-group">
-                  <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="itemToAdd.placement" required/>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="amount">Mængde</label>
-                <div class="input-group">
-                  <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="itemToAdd.amount" required/>
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Vælg skabelon</label>
-                <select class="form-control dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails()" required>
-                  <option *ngFor="let temp of templates" [ngValue]="temp">{{temp.name}}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="madeBy">Lavet af</label>
-                <select class="form-control dropdown-toggle" [(ngModel)]="itemToAdd.createdBy" required>
-                  <option *ngFor="let user of userList" [ngValue]="user">{{user.name}} - {{user.username}}</option>
-                </select>
-              </div>
-              <br>
-              <div class="form-group">
-                <label for="itemList">Genstandsliste</label>
-                <div class="form-group">
-                  <ng-select
-                    [items]="items"
-                    [multiple]="true"
-                    [closeOnSelect]="false"
-                    [hideSelected]="true"
-                    bindLabel="placement"
-                    placeholder="Vælg genstande"
-                    [(ngModel)]="selectedItemParts">               
-                  </ng-select>
-                  <small class="form-text">En liste af genstande der bruges til at fremstille denne genstand.
-                  </small>
-                </div>
-              </div>
-                <label for="amount"><h6>Hvor mange af de forskellige genstande er brugt?</h6></label>
-                <div class="row">
-                  <div *ngFor="let part of selectedItemParts; let i=index" class="col-lg-6"> 
-                    <div class="card">
-                      <div class="card-header">{{selectedItemParts[i].placement}}</div>
-                        <div class="card-body">
-                          <input type="number" class="form-control" [(ngModel)]="selectedItemPartAmounts[i]" placeholder="0"/>
-                        </div>
-                      </div>
-                      <br>
-                  </div>
-                </div>
-                <button class="btn btn-success btn-rectangle input-group-text" (click)="addItem()">Tilføj genstand</button>
+<!--Choose ItemTemplate-->
+<div *ngIf="currentStep == 0">
+  <div class="card">
+    <div class="form-group">
+      <div class="card-header">Vælg en Skabelon</div>
+      <div class="card-body">
+        <ng-select
+          [items]="itemTemplates"
+          [multiple]="false"
+          bindLabel="name"
+          placeholder="Vælg skabelon"
+          [(ngModel)]="itemToAdd.template"
+        >
+        </ng-select>
+
+        <div *ngIf="itemToAdd.template !== undefined">
+          <div class="form-group">
+            <label>Mængde</label>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="itemToAdd.amount" />
             </div>
           </div>
         </div>
-      
-      <div class="col-lg-6">
-        <div class="card">
-          <div class="card-header">Egenskaber der ligger på den valgte skabelon</div>
-            <div class="card-body">
-              <div *ngIf="!detailsReady">
-                Vælg en skabelon og dennes egenskaber vil vises her
-              </div>
-              <div *ngIf="detailsReady">
-                <div *ngFor="let prop of templateDetails.templateProperties; let i=index">
-                  {{prop.name}}
-                  <br>
-                  <input type="text" placeholder="{{prop.name}}" class="form-control" [(ngModel)]="descriptionTextsToAdd[i]" required>
-                  <br>
-                </div>
-              </div>
-            </div>
+        <br />
+        <button
+          class="btn btn-success"
+          (click)="changeFromSelectItemTemplate()"
+        >
+          videre
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--List Of items on choosen ItemTemplate-->
+<div *ngIf="currentStep == 1">
+  <div class="card">
+    <div class="card-header">
+      Del genstande der mangler at blive valgt fra lageret
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Navn</th>
+            <th>Mængde</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let part of missingItems">
+            <td>{{ part.part.name }}</td>
+            <td>{{ part.amount }}</td>
+            <td>
+              <button
+                class="btn btn-primary"
+                (click)="changeToSelectFromStock(part)"
+              >
+                Vælg fra lager
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="itemToAdd.parts.length != 0">
+    <div class="card">
+      <div class="card-header">
+        Del genstande der er blevet valgt fra lageret
+        <div *ngIf="missingItems.length == 0">
+          <div class="float-right">
+            <button class="btn btn-primary" (click)="changeToInfo()">
+              Videre
+            </button>
+          </div>
         </div>
       </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Navn</th>
+              <th>Placering</th>
+              <th>Mængde</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let part of itemToAdd.parts">
+              <td>{{ part.part.template.name }}</td>
+              <td>{{ part.part.placement }}</td>
+              <td>{{ part.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-      
+
+<!--choose Items from stock -->
+<div *ngIf="currentStep == 2">
+  <div class="card">
+    <div class="card-header">
+      Vælg {{ currentSelectItem.amount }} {{ currentSelectItem.part.name }} fra
+      lageret
+      <div class="float-right">
+        <button class="btn btn-primary" (click)="changeFromStockToSelect()">
+          Videre
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Navn</th>
+            <th>Placering</th>
+            <th>Mængde på lager</th>
+            <th>Valgte mængde at tilføje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itemsToChooseFromList">
+            <td>{{ item.part.template.name }}</td>
+            <td>{{ item.part.placement }}</td>
+            <td>{{ item.part.amount }}</td>
+            <td>
+              <div class="input-group">
+                <input class="form-control" [(ngModel)]="item.amount" />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--Add info site-->
+<div *ngIf="currentStep == 3">
+  <div class="card">
+    <div class="card-header">
+      Tilføj informationer
+      <div class="float-right">
+        <button class="btn btn-primary" (click)="addItem()">Færdiggør</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Placering</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="input-group">
+                    <input placeholder="Indtast placering"
+                      class="form-control"
+                      [(ngModel)]="itemToAdd.placement"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-lg-6">
+          <div *ngIf="itemToAdd.properties.length != 0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Egenskab</th>
+                  <th>Beskrivelse</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let property of itemToAdd.properties">
+                  <td>{{ property.propertyName.name }}</td>
+                  <td>
+                    <div class="input-group">
+                      <input
+                        placeholder="Indtast beskrivelse"
+                        class="form-control"
+                        [(ngModel)]="property.description"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
