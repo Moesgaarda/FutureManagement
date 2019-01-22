@@ -10,7 +10,7 @@
               type="text"
               placeholder="Firma"
               class="form-control"
-              [(ngModel)]="orderToAdd && orderToAdd.company"
+              [(ngModel)]="orderToAdd.company"
             />
           </div>
         </div>
@@ -21,7 +21,7 @@
               type="date"
               placeholder="Leveringstidspunkt"
               class="form-control"
-              [(ngModel)]="orderToAdd && orderToAdd.deliveryDate"
+              [(ngModel)]="orderToAdd.deliveryDate"
             />
           </div>
         </div>
@@ -32,7 +32,7 @@
               type="text"
               placeholder="Højde"
               class="form-control"
-              [(ngModel)]="orderToAdd && orderToAdd.height"
+              [(ngModel)]="orderToAdd.height"
             />
           </div>
         </div>
@@ -43,7 +43,7 @@
               type="text"
               placeholder="Længde"
               class="form-control"
-              [(ngModel)]="orderToAdd && orderToAdd.length"
+              [(ngModel)]="orderToAdd.length"
             />
           </div>
         </div>
@@ -54,7 +54,7 @@
               type="text"
               placeholder="Bredde"
               class="form-control"
-              [(ngModel)]="orderToAdd && orderToAdd.width"
+              [(ngModel)]="orderToAdd.width"
             />
           </div>
         </div>
@@ -62,7 +62,7 @@
           <label>Mængdeenhed</label>
           <select
             class="form-control btn btn-success dropdown-toggle"
-            [(ngModel)]="orderToAdd && orderToAdd.unitType"
+            [(ngModel)]="orderToAdd.unitType"
           >
             <option *ngFor="let unit of unitTypeList" selected>{{ unit.name }}</option>
           </select>
@@ -74,13 +74,13 @@
               type="text"
               placeholder="Købsnummer"
               class="form-control"
-              [(ngModel)]="orderToAdd && orderToAdd.purchaseNumber"
+              [(ngModel)]="orderToAdd.purchaseNumber"
             />
           </div>
         </div>
         <div class="form-group">
           <label>Status</label>
-          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="orderToAdd && orderToAdd.status">
+          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="orderToAdd.status">
             <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
           </select>
         </div>

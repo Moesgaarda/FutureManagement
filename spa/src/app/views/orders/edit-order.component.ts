@@ -15,13 +15,25 @@ export class EditOrderComponent implements OnInit {
     orderStatus: string;
     orderStatusEnum = OrderStatusEnum;
     keys: string[];
+    dateAsString = '';
+    date: Date;
+    year = '';
+    month = '';
+    day = '';
+    dataAvailable = false;
+
 
     constructor(private orderService: OrderService, private alertify: AlertifyService, private route: ActivatedRoute,
         private router: Router) { }
 
     async ngOnInit() {
+        this.keys = Object.keys(this.orderStatusEnum);
+        this.keys = this.keys.slice(this.keys.length / 2 );
         await this.loadOrderOnInIt();
-        this.keys = Object.keys(this.orderStatusEnum).filter(f => !isNaN(Number(f)));
+        this.convertDate();
+        this.date = new Date(this.dateAsString);
+        console.log(this.order);
+        this.dataAvailable = true;
     }
 
     async loadOrderOnInIt() {
@@ -33,17 +45,31 @@ export class EditOrderComponent implements OnInit {
             });
     }
 
-    updateStatus() {
+    saveOrder() {
         this.order.status = this.orderStatusEnum[this.orderStatus];
         console.log(this.order);
-        this.orderService.statusUpdateOrder(this.order).subscribe(
+        this.orderService.editOrder(this.order).subscribe(
             order => {
                 this.alertify.success('Status opdateret');
             },
             error => {
                 this.alertify.error('Kunne ikke gennemføre ændringerne');
             }, () => {
-                this.router.navigate(['order/details/' + this.order.id]);
+                this.router.navigate(['orders/details/' + this.order.id]);
             });
+    }
+
+    convertDate() {
+        for (let i = 0; i < 10; i++) {
+            if(i <= 3){
+                this.year = this.year.concat(this.order.deliveryDate[i]);
+            } else if(i === 5 || i === 6) {
+                this.month = this.month.concat(this.order.deliveryDate[i]);
+            } else if (i === 8 || i === 9){
+                this.day = this.day.concat(this.order.deliveryDate[i]);
+            }
+        }
+        this.dateAsString = this.day + '/' + this.month + '/' + this.year;
+
     }
 }

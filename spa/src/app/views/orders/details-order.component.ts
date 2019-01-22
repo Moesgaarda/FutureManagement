@@ -47,7 +47,6 @@ export class DetailsOrderComponent implements OnInit {
   }
 
   goToEditPage(orderId: number) {
-    console.log(orderId);
     this.router.navigateByUrl('orders/edit/' + orderId);
   }
 

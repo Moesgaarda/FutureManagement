@@ -172,31 +172,5 @@ namespace API.Controllers
 
             return result ? StatusCode(200) : BadRequest();
         }
-
-        [Authorize(Policy = "Order_Edit")]
-        [HttpPost("editStatus")]
-        public async Task<IActionResult> UpdateOrderStatus([FromBody]Order order)
-        {
-            if (order.Id == 0)
-            {
-                ModelState.AddModelError("Order Error", "Order id can not be 0.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var orderToChange = await _context.Orders.FirstAsync(x => x.Id == order.Id);
-            bool result = await _repo.EditOrder(order, orderToChange);
-
-            if (result)
-            {
-                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                result = await _eventLogRepo.AddEventLogChange("bestilling", "Købsnummer: " + order.PurchaseNumber.ToString(), order.Id, currentUser, order, orderToChange);
-            }
-
-            return result ? StatusCode(200) : StatusCode(400);
-        }
-
     }
 }
