@@ -198,13 +198,13 @@ namespace API.Controllers
             List<ItemItemRelation> partsToAdd = new List<ItemItemRelation>();
             foreach(ItemItemRelationPartOfForGet part in item.Parts){
                 partsToAdd.Add(new ItemItemRelation{
-                    PartId = part.PartId,
+                    Part = part.Part,
                     Amount = part.Amount
                 });
             }
 
             foreach(ItemItemRelation itemPart in partsToAdd) {
-                var itemToReduce = await _repo.GetItem(itemPart.PartId);
+                var itemToReduce = await _repo.GetItem(itemPart.Part.Id);
                 itemToReduce.Amount -= itemPart.Amount;
             }
 
@@ -213,7 +213,7 @@ namespace API.Controllers
                 item.Amount,
                 item.Template,
                 item.Order,
-                item.CreatedBy,
+                _userManager.FindByNameAsync(User.Identity.Name).Result,
                 item.Properties,
                 partsToAdd,
                 item.PartOf,
@@ -235,6 +235,13 @@ namespace API.Controllers
             List<ItemPropertyDescriptionForGetDto> propertyDescriptionToReturn = _mapper.Map<List<ItemPropertyDescriptionForGetDto>>(propertyDescription);
 
             return Ok(propertyDescriptionToReturn);
+        }
+
+        [HttpGet("getAllInstancesInStock/{id}", Name = "GetAllInstancesInStock")]
+        public async Task<IActionResult> GetAllInstancesInStock(int id){
+            List<Item> items = await _repo.GetAllInstancesInStock(id);
+
+            return Ok(items);
         }
     }
 }

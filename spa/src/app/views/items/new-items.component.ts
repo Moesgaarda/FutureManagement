@@ -1,180 +1,122 @@
-import { Component } from '@angular/core';
-import { Item } from '../../_models/Item';
-import { ItemTemplate } from '../../_models/ItemTemplate';
+import { Component, OnInit } from '@angular/core';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
 import { UserService } from '../../_services/user.service';
-import { Observable } from 'rxjs';
-import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
-import { User } from '../../_models/User';
-import { ItemItemRelation } from '../../_models/ItemItemRelation';
-import { environment } from '../../../environments/environment';
 import { AlertifyService } from '../../_services/alertify.service';
+import { ItemTemplate } from '../../_models/ItemTemplate';
+import { Item } from '../../_models/Item';
+import { ItemItemRelation } from '../../_models/ItemItemRelation';
+import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
+import { NewItemSteps } from '../../_enums/NewItemSteps.enum';
+import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
+import { Router } from '@angular/router';
+
 
 @Component({
   templateUrl: './new-items.component.html',
 })
 
-export class AddItemsComponent {
+export class NewItemComponent implements OnInit {
+  currentStep: NewItemSteps = NewItemSteps.ItemTemplate;
+  itemTemplates: ItemTemplate[];
+  itemsToChooseFromList: ItemItemRelation[];
+  missingItems: ItemTemplatePart[];
   itemToAdd: Item = {} as Item;
-  templates: ItemTemplate[] = [];
-  items: Item[] = [];
-  selectedItemParts: Item[] = [];
-  selectedItemPartAmounts: number[] = [];
-  properties: ItemPropertyDescription[] =  [];
-  templateToGet: ItemTemplate = {} as ItemTemplate;
-  templateDetails: ItemTemplate = {} as ItemTemplate;
-  detailsReady: boolean;
-  propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
-  descriptionTextsToAdd: string[] = [] as string[];
-  userList: User[] = [];
-  itemItemRelations: ItemItemRelation[] = [];
-  selectPlacement: string[] = [];
-  selectTemplateName: string[] = [];
-  selectTextToDisplay: string[] = [];
-  itemNamesToShow: Item[] = [];
-  baseUrl = environment.spaUrl;
+  currentSelectItem: ItemTemplatePart;
+
 
   constructor(private templateService: ItemTemplateService,
-  private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
-    this.getTemplates();
-    this.getItems();
-    this.getUsers();
+    private router: Router, private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
+
   }
 
-  async getTemplates() {
-    await this.templateService.getAll().subscribe(templates => {
-      this.templates = templates;
+  ngOnInit() {
+    this.getAllItemTemplates();
+  }
+
+
+  async getAllItemTemplates() {
+    await this.templateService.getAll().subscribe( itemTemplates => {
+      this.itemTemplates = itemTemplates;
     });
+  }
+
+  async changeFromSelectItemTemplate() {
+    await this.getTemplateDetails();
+    if (this.itemToAdd.template.parts === undefined) {
+      this.changeToInfo();
+    } else {
+      this.itemToAdd.parts = [] as ItemItemRelation[];
+      this.missingItems = this.itemToAdd.template.parts;
+      for (const part of this.missingItems) {
+        part.amount = part.amount * this.itemToAdd.amount;
+      }
+
+
+      this.currentStep = NewItemSteps.Items;
+    }
+  }
+
+  changeToSelectFromStock(templatePart: ItemTemplatePart) {
+    this.itemsToChooseFromList = [] as ItemItemRelation[];
+    this.currentSelectItem = templatePart;
+    this.itemService.getAllInstancesInStock(templatePart.part).subscribe(items => {
+      for (let i = 0; i < items.length; i++) {
+        this.itemsToChooseFromList.push({part : items[i], amount : 0});
+      }
+    });
+    this.currentStep = NewItemSteps.Stock;
+  }
+
+  changeFromStockToSelect() {
+    let amountChoosen = 0;
+    const itemsChoosen: ItemItemRelation[] = [] as ItemItemRelation[];
+    for (const item of this.itemsToChooseFromList) {
+      if (item.amount > item.part.amount) {
+        this.alertify.error('Der er kun ' + item.part.amount + ' på placering: ' + item.part.placement);
+        break;
+      } else {
+        const amountChoosenAsInt: number = parseInt(amountChoosen.toString(), 0);
+        const itemAmountAsInt: number = parseInt(item.amount.toString(), 0);
+        amountChoosen = amountChoosenAsInt + itemAmountAsInt;
+        if (item.amount > 0) {
+          itemsChoosen.push(item);
+        }
+      }
+    }
+    if (amountChoosen !== this.currentSelectItem.amount) {
+      this.alertify.error('Du har valgt ' + amountChoosen + ' men du skulle vælge ' + this.currentSelectItem.amount);
+    } else {
+      this.itemToAdd.parts = this.itemToAdd.parts.concat(itemsChoosen);
+      const removed = this.missingItems.splice(this.missingItems.indexOf(this.currentSelectItem), 1);
+      this.currentStep = NewItemSteps.Items;
+    }
+  }
+  changeToInfo() {
+    this.itemToAdd.properties = [] as ItemPropertyDescription [];
+    for (const property of this.itemToAdd.template.templateProperties) {
+      this.itemToAdd.properties.push({description: '' , propertyName: property});
+    }
+    this.currentStep = NewItemSteps.Info;
+  }
+  addItem() {
+    this.itemToAdd.isActive = true;
+    this.itemService.addItem(this.itemToAdd).subscribe(
+      data => {
+        this.alertify.success('Tilføjede genstand til lageret');
+      },
+      error => {
+        this.alertify.error('Kunne ikke tilføje genstand');
+      },
+      () => {
+        this.router.navigate(['items/view']);
+      }
+    );
   }
 
   async getTemplateDetails() {
-    await this.templateService.getItemTemplate(this.templateToGet.id).subscribe(template => {
-      this.templateDetails = template;
+    await this.templateService.getItemTemplateAsync(this.itemToAdd.template.id).then(itemTemplate => {
+      this.itemToAdd.template = itemTemplate;
     });
-    this.detailsReady = true;
-  }
-
-  /**
-   * ngSelect cannot show the name properly without the mapping made in this method. The mapping removes the
-   * name property and replaces it with placement.
-   * @memberof AddItemsComponent
-   */
-  async getItems() {
-    await this.itemService.getActiveItems().subscribe(items => {
-      this.items = items.map((name) => {
-        name.placement = name.template.name + ' - (' + name.placement + ') - Mængde: '
-          + name.amount + ' ' + name.template.unitType.name;
-        return name;
-      });
-    });
-  }
-
-  async getUsers() {
-    await this.userService.getAll().subscribe(users => {
-      this.userList = users;
-    });
-  }
-
-  /**
-   * Calls method to run checks. If they all succeed, descriptions of properties are
-   * added in the right format through the for loop, the rest of the properties are
-   * given values and user is redirected.
-   * @memberof AddItemsComponent
-   */
-  addItem() {
-    let checksPassed = false;
-    checksPassed = this.performChecks(checksPassed);
-
-    if (checksPassed) {
-      for (let i = 0; i < this.templateDetails.templateProperties.length; i++) {
-        this.propertyDescriptionsToAdd.push({
-          description: this.descriptionTextsToAdd[i],
-          propertyName: this.templateDetails.templateProperties[i],
-        });
-      }
-
-      this.itemToAdd.parts = this.itemItemRelations;
-      this.itemToAdd.properties = this.propertyDescriptionsToAdd;
-      this.itemToAdd.template = this.templateDetails;
-      this.itemToAdd.isActive = true;
-      this.itemService.addItem(this.itemToAdd).subscribe();
-
-      location.href = this.baseUrl + 'items/view';
-    }
-  }
-
-  performChecks(checkPassed: boolean): boolean {
-    checkPassed = this.checkAmountIsNotZero(checkPassed);
-
-    if (checkPassed) {
-      checkPassed = this.checkAmountIsFilled(checkPassed);
-    }
-
-    if (checkPassed) {
-      checkPassed = this.checkStockAboveZero(checkPassed);
-    }
-
-    return checkPassed;
-  }
-
-
-  /**
-   * Checks to prevent from picking 0. If they pick an amount and then delete it shows as null, so checks for that too.
-   * @param {boolean} checkPassed
-   * @returns {boolean}
-   * @memberof AddItemsComponent
-   */
-  checkAmountIsNotZero(checkPassed: boolean): boolean {
-    for (let i = 0; i < this.selectedItemPartAmounts.length; i++) {
-      if (this.selectedItemPartAmounts[i] === 0 || this.selectedItemPartAmounts[i] === null) {
-        this.alertify.error('Du kan ikke vælge 0 af en genstand');
-        return;
-      }
-    }
-
-    return checkPassed = true;
-  }
-
-  /**
-   * If length of itemParts and itemPartsAmounts are not the same, they forgot to fill out a value.
-   * @param {boolean} checkPassed
-   * @returns {boolean}
-   * @memberof AddItemsComponent
-   */
-  checkAmountIsFilled(checkPassed: boolean): boolean {
-    checkPassed = false;
-    if (this.selectedItemPartAmounts.length !== this.selectedItemParts.length) {
-      this.alertify.error('Du mangler at udfylde mængde på en af dine genstande');
-        return;
-    }
-
-    return checkPassed = true;
-  }
-
-  /**
-   * Makes sure you cannot create an item if you do not have enough of the required items.
-   * If it passes it adds the items used to the itemItemrelation with amount.
-   * @param {boolean} checkPassed
-   * @returns {boolean}
-   * @memberof AddItemsComponent
-   */
-  checkStockAboveZero(checkPassed: boolean): boolean {
-    checkPassed = false;
-    for ( let i = 0; i < this.selectedItemParts.length; i++) {
-      for (let j = 0; j < this.items.length; j++) {
-        if (this.items[j].id === this.selectedItemParts[i].id && this.items[j].amount < this.selectedItemPartAmounts[i]) {
-          this.alertify.error('Lageret har ikke nok af genstand ' + this.items[j].placement);
-          return;
-        }
-      }
-
-      this.itemItemRelations.push({
-        amount: this.selectedItemPartAmounts[i],
-        partId: this.selectedItemParts[i].id,
-      });
-    }
-
-    return checkPassed = true;
   }
 }

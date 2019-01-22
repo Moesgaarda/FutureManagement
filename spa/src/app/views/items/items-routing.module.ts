@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ViewItemsComponent } from './view-items.component';
-import { AddItemsComponent } from './new-items.component';
+import { NewItemComponent } from './new-items.component';
 import { DetailsItemComponent } from './details-item.component';
 import { AuthGuard } from '../../_guards/auth.guard';
 import { EditItemComponent } from './edit-item.component';
@@ -28,7 +28,7 @@ const routes: Routes = [
       },
       {
         path: 'new',
-        component: AddItemsComponent,
+        component: NewItemComponent,
         data: {
           title: 'Tilføj ny genstand',
           roles: ['Items_Add']
