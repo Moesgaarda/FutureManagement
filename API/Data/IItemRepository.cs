@@ -18,5 +18,6 @@ namespace API.Data
         Task<bool> DeactivateItem(Item item);
         Task<bool> HasDependencies(Item item);
         Task<List<ItemPropertyDescription>> GetPropertyDescriptions(int itemId);
+        Task<List<Item>> GetAllInstancesInStock(int templateId);
     }
 }

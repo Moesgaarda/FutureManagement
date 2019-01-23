@@ -184,7 +184,7 @@
         <div class="form-group">
           <label>Vælg skabelon</label>
           <select
-            class="form-control btn btn-success dropdown-toggle"
+            class="form-control dropdown-toggle"
             [(ngModel)]="templateToGet"
             (change)="getTemplateDetails()"
           >
@@ -219,7 +219,7 @@
           <button
             _ngcontent-c21=""
             (click)="changePage()"
-            class="btn btn-success btn-rectangle input-group-text"
+            class="btn btn-primary btn-rectangle input-group-text"
           >
             Tilbage
           </button>
@@ -227,7 +227,7 @@
             _ngcontent-c21=""
             (click)="addItemToOrder()"
             [disabled]="!detailsReady"
-            class="btn btn-success btn-rectangle input-group-text"
+            class="btn btn-primary btn-rectangle input-group-text"
           >
             Tilføj genstand
           </button>

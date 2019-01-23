@@ -22,7 +22,7 @@
 
             <div class="form-group">
               <label>Mængdeenhed</label>
-              <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="unitType">
+              <select class="form-control dropdown-toggle" [(ngModel)]="unitType">
                 <option *ngFor="let unit of unitTypeList" [ngValue] = "unit">{{unit.name}}</option>
               </select>
             </div>
@@ -36,7 +36,7 @@
 
             <div class="form-group">
               <label>Kategori</label>
-              <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="category">
+              <select class="form-control dropdown-toggle" [(ngModel)]="category">
                 <option *ngFor="let cat of categoryList" [ngValue]="cat">{{cat.name}}</option>
               </select>
             </div>
@@ -86,27 +86,6 @@
                   </div>
               
               </div>
-
-        <style>
-                .my-drop-zone {
-                  border: dotted 3px lightgray;
-                }
-          
-                .nv-file-over {
-                  border: dotted 3px red;
-                }
-          
-                /* Default class applied to drop zones on over */
-          
-                .another-file-over-class {
-                  border: dotted 3px green;
-                }
-          
-                html,
-                body {
-                  height: 100%;
-                }
-              </style>
           
               <div class="card">
                 <div class="card-header">Tilføj filer</div>

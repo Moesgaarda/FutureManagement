@@ -72,6 +72,10 @@ export const routes: Routes = [
       {
         path: 'unitTypes',
         loadChildren: './views/unitTypes/unitTypes.module#UnitTypeModule'
+      },
+      {
+        path: 'categories',
+        loadChildren: './views/categories/categories.module#CategoryModule'
       }
     ]
   }

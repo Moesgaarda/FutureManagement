@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { Item } from '../_models/Item';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ItemTemplate } from '../_models/ItemTemplate';
 
 
 @Injectable()
@@ -50,5 +51,9 @@ export class ItemService {
 
     editItem(item: Item): Observable<Item> {
         return this.http.post<Item>(this.baseUrl + 'Item/edit', item, this.httpOptions);
+    }
+
+    getAllInstancesInStock(template: ItemTemplate): Observable<Item[]> {
+        return this.http.get<Item[]>(this.baseUrl + 'Item/getAllInstancesInStock/' + template.id);
     }
 }

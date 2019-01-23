@@ -39,9 +39,9 @@ namespace API.Data {
                 prop.PropertyName = await _context.ItemPropertyNames.FirstOrDefaultAsync (x => x.Id == prop.PropertyName.Id);
             }
 
-           /* foreach (var part in item.Parts){
-                part.Part = await _context.Items.FirstOrDefaultAsync(x => x.Id == part.PartId);
-            } */
+            foreach (var part in item.Parts){
+                part.Part = await _context.Items.FirstOrDefaultAsync(x => x.Id == part.Part.Id);
+            }
 
             await _context.Items.AddAsync(item);
             int result = await _context.SaveChangesAsync ();
@@ -128,6 +128,14 @@ namespace API.Data {
         public async Task<List<ItemPropertyDescription>> GetPropertyDescriptions(int itemId)
         {
             return await _context.ItemPropertyDescriptions.Where(x => x.Item.Id == itemId).Include(x => x.PropertyName).ToListAsync(); 
+        }
+
+        public async Task<List<Item>> GetAllInstancesInStock(int templateId){
+            List<Item> itemsInStock = await _context.Items.Where(x => x.Template.Id == templateId && x.IsActive == true)
+            .Include(x => x.Template)
+            .ToListAsync();
+
+            return itemsInStock;
         }
     }
 }
