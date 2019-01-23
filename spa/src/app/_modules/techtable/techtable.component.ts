@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
@@ -15,8 +15,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
 import { UnitTypeService } from '../../_services/unitType.service';
-
-
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-techtable',
   templateUrl: './techtable.component.html',
@@ -98,8 +97,8 @@ export class TechtableComponent implements OnInit {
           for(let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             // TODO Format the dateTime instead of splitting it after time.
-            items[i].orderDate = items[i].orderDate.split("T", 1);
-            items[i].deliveryDate = items[i].deliveryDate.split("T", 1);
+            items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
+            items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }
         }
       });
@@ -112,8 +111,8 @@ export class TechtableComponent implements OnInit {
         if (this.serviceType === 'OrderService') {
           for(let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
-            items[i].orderDate = items[i].orderDate.split("T", 1);
-            items[i].deliveryDate = items[i].deliveryDate.split("T", 1);
+            items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
+            items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }
         }
       });
@@ -127,8 +126,8 @@ export class TechtableComponent implements OnInit {
         if (this.serviceType === 'OrderService') {
           for(let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
-            items[i].orderDate = items[i].orderDate.split("T", 1);
-            items[i].deliveryDate = items[i].deliveryDate.split("T", 1);
+            items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
+            items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }
         }
       });

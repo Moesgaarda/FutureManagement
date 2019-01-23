@@ -4,53 +4,53 @@
       <div class="card">
 
         <div class="card-header">
-          <h5>Order: {{order.purchaseNumber}}</h5>
+          <h5>Bestilling: {{order.purchaseNumber}}</h5>
         </div>
         <div class="card-body">
 
           <div class="form-group">
-            <label for="description">Firma:</label>
+            <label for="description">Firma</label>
             <div class="input-group-text">
               {{order.company}}
             </div>
           </div>
 
           <div class="form-group">
-            <label for="created">Bestilt af:</label>
+            <label for="created">Bestilt af</label>
             <div class="input-group-text">
               {{order.orderedBy.name}}
             </div>
           </div>
           <div class="form-group">
-            <label for="created">Status:</label>
+            <label for="created">Status</label>
             <div class="input-group-text">
               {{orderStatus}}
             </div>
           </div>
 
           <div class="form-group">
-            <label for="created">Dato for bestilling:</label>
+            <label for="created">Dato for bestilling</label>
             <div class="input-group-text">
               {{orderDateString}}
             </div>
           </div>
 
           <div class="form-group">
-            <label for="created">Dato for levering:</label>
+            <label for="created">Dato for levering</label>
             <div class="input-group-text">
               {{deliveryDateString}}
             </div>
           </div>
 
           <div class="form-group">
-            <label for="created">Størelse:</label>
+            <label for="created">Størelse</label>
             <div class="input-group-text">
               {{order.width}}x{{order.height}}x{{order.length}} {{order.unitType.name}}
             </div>
           </div>
 
           <dt class="col-sm-12">
-            <button type="button" class="btn btn-primary" style="margin-top: 2em" (click)="goToEditPage(order.id)">Rediger
+            <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">Rediger
               bestillingen</button>
           </dt>
 
@@ -60,7 +60,7 @@
 
     <div class="col-lg-6">
       <div class="card">
-        <div class="card-header">Produkter:</div>
+        <div class="card-header">Produkter</div>
         <div class="card-body">
           <table class="table">
             <thead>
@@ -75,7 +75,7 @@
                 <td>{{item.template.name}}</td>
                 <td>{{item.amount}}</td>
                 <td>
-                  <button class="btn btn-success input-group-text" (click)="goToItemTemplateDetail(item.template.id)">
+                  <button class="btn btn-primary btn-sm" (click)="goToItemTemplateDetail(item.template.id)">
                     Vis Detaljer
                   </button>
                 </td>
@@ -98,7 +98,7 @@
               <tr *ngFor="let item of order.files">
                 <td>{{item.fileName}}</td>
                 <td>
-                  <button type="button" class="btn btn-block btn-success" (click)="downloadFile(item)">Download</button>
+                  <button type="button" class="btn btn-success" (click)="downloadFile(item)">Download</button>
                 </td>
               </tr>
             </tbody>

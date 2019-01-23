@@ -26,7 +26,7 @@ export class NewOrderComponent implements OnInit {
   onOrderPage = true;
   templateToGet: ItemTemplate = {} as ItemTemplate;
   templateDetails: ItemTemplate = {} as ItemTemplate;
-  detailsReady: boolean;
+  detailsReady = false;
   unitType: UnitType;
   unitTypeList: UnitType[] = [] as UnitType[];
   propertyDescriptionsToAdd: ItemPropertyDescription[] = [] as ItemPropertyDescription[];
@@ -63,6 +63,7 @@ export class NewOrderComponent implements OnInit {
    */
   changePage() {
     this.onOrderPage = !this.onOrderPage;
+    this.detailsReady = false;
   }
 
   /**
@@ -96,6 +97,8 @@ export class NewOrderComponent implements OnInit {
       .subscribe(
         template => {
           this.templateDetails = template;
+          this.currentItem.template = this.templateDetails;
+
         },
         error => {
           this.alertify.error('Kunne ikke hente skabelon');
@@ -131,7 +134,6 @@ export class NewOrderComponent implements OnInit {
     }
 
     this.currentItem.properties = this.propertyDescriptionsToAdd;
-    this.currentItem.template = this.templateDetails;
     this.currentItem.isActive = true;
     this.orderToAdd.products.push(this.currentItem);
     this.changePage();
@@ -139,6 +141,7 @@ export class NewOrderComponent implements OnInit {
     this.propertyDescriptionsToAdd = [] as ItemPropertyDescription[];
     this.templateDetails = {} as ItemTemplate;
     this.templateToGet = {} as ItemTemplate;
+    this.detailsReady = false;
   }
 
   /**

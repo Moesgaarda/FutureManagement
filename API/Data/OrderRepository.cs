@@ -53,13 +53,6 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<bool> DeleteOrder(Order order)
-        {
-            _context.Orders.Remove(order);
-            int result = await _context.SaveChangesAsync();
-            return result > 0;
-        }
-
         public async Task<bool> EditOrder(Order order, Order orderToChange)
         {
             _context.Entry(orderToChange).CurrentValues.SetValues(order);

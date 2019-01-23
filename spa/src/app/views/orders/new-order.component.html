@@ -61,10 +61,12 @@
         <div class="form-group">
           <label>Mængdeenhed</label>
           <select
-            class="form-control btn btn-success dropdown-toggle"
+            class="form-control dropdown-toggle"
             [(ngModel)]="orderToAdd.unitType"
           >
-            <option *ngFor="let unit of unitTypeList" selected>{{ unit.name }}</option>
+            <option *ngFor="let unit of unitTypeList" selected>{{
+              unit.name
+            }}</option>
           </select>
         </div>
         <div class="form-group">
@@ -80,58 +82,72 @@
         </div>
         <div class="form-group">
           <label>Status</label>
-          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="orderToAdd.status">
-            <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
+          <select
+            class="form-control dropdown-toggle"
+            [(ngModel)]="orderToAdd.status"
+          >
+            <option *ngFor="let status of statuses" [ngValue]="status">{{
+              status
+            }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <div _ngcontent-c21="" class="form-group">
-            <button
-              _ngcontent-c21=""
-              (click)="addOrder()"
-              class="btn btn-success btn-rectangle input-group-text"
-            >
-              Tilføj bestilling
-            </button>
-          </div>
+          <button class="btn btn-success" (click)="addOrder()">
+            Tilføj bestilling
+          </button>
         </div>
       </div>
     </div>
     <div class="card">
       <div class="card-header">Tilføj filer</div>
       <div class="card-body">
-        <div class="col-lg-12" style="margin-bottom: 40px">
-        <form enctype="multipart/form-data">
-          <input #file type="file" enctype="multipart/form-data" multiple (change)="uploader.queue(file.files)">
+        <div class="col-lg-12">
+          <form enctype="multipart/form-data">
+            <input
+              #file
+              type="file"
+              enctype="multipart/form-data"
+              multiple
+              (change)="uploader.queue(file.files)"
+            />
             <br />
             <br />
 
-          <table class="table">
-            <thead>
-              <tr>
-                <th width="50%">Navn</th>
-                <th>Størrelse</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of uploader.queuedFiles">
-                <td>
-                  <strong>{{ item.name}}</strong>
-                </td>
-                <td>{{ item.size/1024/1024 | number:'.2' }} MB</td>
-                <td>
-                    <button type="button" class="btn btn-danger btn-s" (click)="uploader.removeFromQueue(file)">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="50%">Navn</th>
+                  <th>Størrelse</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of uploader.queuedFiles">
+                  <td>
+                    <strong>{{ item.name }}</strong>
+                  </td>
+                  <td>{{ item.size / 1024 / 1024 | number: ".2" }} MB</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-s"
+                      (click)="uploader.removeFromQueue(file)"
+                    >
                       <span class="glyphicon glyphicon-trash"></span> Fjern
                     </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
 
           <div>
-            <button type="button" class="btn btn-danger btn-s"(click)="uploader.clearQueue()" [disabled]="!uploader.queuedFiles.length">
+            <button
+              type="button"
+              class="btn btn-danger btn-s"
+              (click)="uploader.clearQueue()"
+              [disabled]="!uploader.queuedFiles.length"
+            >
               <span class="glyphicon glyphicon-trash"></span> Fjern alle
             </button>
           </div>
@@ -161,15 +177,9 @@
           </ul>
         </div>
         <div class="form-group">
-          <div _ngcontent-c21="" class="form-group">
-            <button
-              _ngcontent-c21=""
-              (click)="changePage()"
-              class="btn btn-success btn-rectangle input-group-text"
-            >
-              Tilføj genstand
-            </button>
-          </div>
+          <button class="btn btn-success" (click)="changePage()">
+            Tilføj genstand
+          </button>
         </div>
       </div>
     </div>
@@ -205,32 +215,27 @@
           </div>
         </div>
         <div class="form-group" *ngIf="detailsReady">
-          <label for="amount">Mængde ({{ currentItem.template.unitType.name }})</label>
+          <label for="amount">Mængde</label>
           <div class="input-group">
             <input
               type="number"
-              placeholder="Mængde"
+              placeholder="Mængde  i {{ currentItem.template.unitType.name }}"
               class="form-control"
               [(ngModel)]="currentItem.amount"
             />
           </div>
         </div>
         <div class="btn-group">
-          <button
-            _ngcontent-c21=""
-            (click)="changePage()"
-            class="btn btn-primary btn-rectangle input-group-text"
-          >
+          <button class="btn btn-warning" (click)="changePage()">
             Tilbage
           </button>
-          <button
-            _ngcontent-c21=""
-            (click)="addItemToOrder()"
-            [disabled]="!detailsReady"
-            class="btn btn-primary btn-rectangle input-group-text"
-          >
-            Tilføj genstand
-          </button>
+            <button
+              class="btn btn-success"
+              (click)="addItemToOrder()"
+              [disabled]="!detailsReady"
+            >
+              Tilføj genstand
+            </button>
         </div>
       </div>
     </div>
@@ -244,23 +249,28 @@
       <div class="card-body">
         <div *ngIf="detailsReady">
           <div class="table-responsive-sm">
-              <table class="table">
-                  <tbody>
-                    <tr *ngFor="let prop of templateDetails.templateProperties; let i=index">
-                      <td>
-                        <b>{{prop.name}}</b>
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          placeholder="{{prop.name}}"
-                          class="form-control"
-                          [(ngModel)]="descriptionTextsToAdd[i]"
-                        />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <table class="table">
+              <tbody>
+                <tr
+                  *ngFor="
+                    let prop of templateDetails.templateProperties;
+                    let i = index
+                  "
+                >
+                  <td>
+                    <b>{{ prop.name }}</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="{{ prop.name }}"
+                      class="form-control"
+                      [(ngModel)]="descriptionTextsToAdd[i]"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -146,31 +146,5 @@ namespace API.Controllers
 
             return result ? StatusCode(200) : StatusCode(400);
         }
-
-        [Authorize(Policy = "Order_Delete")]
-        [HttpPost("delete/{id}", Name = "DeleteOrder")]
-        public async Task<IActionResult> DeleteOrder(int id)
-        {
-            if (id == 0)
-            {
-                ModelState.AddModelError("Order Error", "Can not delete order with id 0.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var order = await _repo.GetOrder(id);
-
-            bool result = await _repo.DeleteOrder(order);
-
-            if (result)
-            {
-                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                result = await _eventLogRepo.AddEventLog(EventType.Deleted, "bestilling", "Købsnummer: " + order.PurchaseNumber.ToString(), order.Id, currentUser);
-            }
-
-            return result ? StatusCode(200) : BadRequest();
-        }
     }
 }

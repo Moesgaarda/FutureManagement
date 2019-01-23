@@ -38,11 +38,6 @@ export class OrderService {
         });
     }
 
-    deleteOrder(id: number) {
-        return this.http.post(this.baseUrl + 'Order/delete/' + id, {})
-            .map(response => { });
-    }
-
     addOrder(order: Order): Observable<Order> {
         return this.http.post<Order>(this.baseUrl + 'Order/add', order);
     }
