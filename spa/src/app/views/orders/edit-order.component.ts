@@ -1,9 +1,13 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, Pipe, PipeTransform  } from '@angular/core';
+import { DatePipe, formatDate } from '@angular/common';
 import { OrderService } from '../../_services/order.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Order } from '../../_models/Order';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum'
+import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
+import { UnitType } from '../../_models/UnitType';
+import { UnitTypeService } from '../../_services/unitType.service';
+import { stringify } from '@angular/core/src/util';
 
 @Component({
     templateUrl: './edit-order.component.html'
@@ -15,61 +19,69 @@ export class EditOrderComponent implements OnInit {
     orderStatus: string;
     orderStatusEnum = OrderStatusEnum;
     keys: string[];
-    dateAsString = '';
-    date: Date;
-    year = '';
-    month = '';
-    day = '';
+    editDate = false;
+    deliveryDateAsString: string;
+    orderDate: Date;
     dataAvailable = false;
-
+    unitTypes: UnitType[] = [] as UnitType[];
+    originalOrder: string;
 
     constructor(private orderService: OrderService, private alertify: AlertifyService, private route: ActivatedRoute,
-        private router: Router) { }
+        private router: Router, private unitTypeService: UnitTypeService) { }
 
     async ngOnInit() {
         this.keys = Object.keys(this.orderStatusEnum);
         this.keys = this.keys.slice(this.keys.length / 2 );
         await this.loadOrderOnInIt();
-        this.convertDate();
-        this.date = new Date(this.dateAsString);
-        console.log(this.order);
-        this.dataAvailable = true;
+        this.deliveryDateAsString = formatDate(this.order.deliveryDate, 'dd/MM/yyyy', 'en-US');
     }
 
     async loadOrderOnInIt() {
         await this.orderService.getOrder(+this.route.snapshot.params['id'])
             .then(order => {
                 this.order = order;
+                this.originalOrder = JSON.stringify(order).toLocaleLowerCase();
                 this.orderStatus = OrderStatusEnum[order.status].toString();
-                this.isDataAvailable = true;
             });
+        await this.unitTypeService.getAll()
+            .subscribe(unitTypes => {
+                this.unitTypes = unitTypes;
+            });
+        this.dataAvailable = true;
+    }
+
+    toggleEditDate() {
+        this.editDate = !this.editDate;
+        this.orderDate = this.order.deliveryDate;
+    }
+
+    cancelEditDate() {
+        this.order.deliveryDate = this.orderDate;
+        this.editDate = !this.editDate;
+    }
+
+    saveEditDate() {
+        this.deliveryDateAsString = formatDate(this.order.deliveryDate, 'dd/MM/yyyy', 'en-US');
+        this.editDate = !this.editDate;
     }
 
     saveOrder() {
         this.order.status = this.orderStatusEnum[this.orderStatus];
-        console.log(this.order);
-        this.orderService.editOrder(this.order).subscribe(
-            order => {
-                this.alertify.success('Status opdateret');
-            },
-            error => {
-                this.alertify.error('Kunne ikke gennemføre ændringerne');
-            }, () => {
-                this.router.navigate(['orders/details/' + this.order.id]);
-            });
-    }
-
-    convertDate() {
-        for (let i = 0; i < 10; i++) {
-            if(i <= 3){
-                this.year = this.year.concat(this.order.deliveryDate[i]);
-            } else if(i === 5 || i === 6) {
-                this.month = this.month.concat(this.order.deliveryDate[i]);
-            } else if (i === 8 || i === 9){
-                this.day = this.day.concat(this.order.deliveryDate[i]);
-            }
+        if (this.originalOrder === JSON.stringify(this.order).toLocaleLowerCase()) {
+            this.alertify.success('Der var ingen ændringer at gemme');
+            this.router.navigate(['orders/details/' + this.order.id]);
+        } else {
+            this.orderService.editOrder(this.order).subscribe(
+                data => {
+                    this.alertify.success('Ændringer gemt');
+                },
+                error => {
+                    this.alertify.error('Kunne ikke gemme ændringer');
+                },
+                () => {
+                    this.router.navigate(['orders/details/' + this.order.id]);
+                }
+            );
         }
-        this.dateAsString = this.day + '/' + this.month + '/' + this.year;
-
     }
 }

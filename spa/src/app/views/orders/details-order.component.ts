@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DetailFile } from '../../_models/DetailFile';
 import { FileUploadService } from '../../_services/fileUpload.service';
 import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
+import { formatDate } from '@angular/common';
 
 @Component({
   templateUrl: './details-order.component.html'
@@ -36,8 +37,8 @@ export class DetailsOrderComponent implements OnInit {
       .then(order => {
         this.order = order;
         this.orderStatus = OrderStatusEnum[order.status];
-        this.orderDateString = order.orderDate.toString().split("T", 1)[0];
-        this.deliveryDateString = order.deliveryDate.toString().split("T", 1)[0];
+        this.orderDateString = formatDate(order.orderDate, 'dd/MM/yyyy', 'en-US');
+        this.deliveryDateString = formatDate(this.order.deliveryDate, 'dd/MM/yyyy', 'en-US');
         this.isDataAvailable = true;
       });
   }
