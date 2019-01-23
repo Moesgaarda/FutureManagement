@@ -13,6 +13,7 @@ import * as _ from 'underscore';
 import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 import { UnitType } from '../../_models/UnitType';
 import { UnitTypeService } from '../../_services/unitType.service';
+import { CategoryService } from '../../_services/category.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -51,7 +52,7 @@ export class NewItemTemplateComponent implements OnInit {
    */
   constructor(private templateService: ItemTemplateService, private router: Router,
      private alertify: AlertifyService, private uploaderParameter: FileUploadService,
-     private unitTypeService: UnitTypeService) {
+     private unitTypeService: UnitTypeService, private categoryService: CategoryService) {
     this.getTemplates();
     this.getTemplateProperties();
     this.getTemplateCategories();
@@ -82,7 +83,7 @@ export class NewItemTemplateComponent implements OnInit {
   }
 
   async getTemplateCategories() {
-    await this.templateService.getTemplateCategories().subscribe(categories => {
+    await this.categoryService.getAll().subscribe(categories => {
       this.categoryList = categories;
     });
   }
@@ -161,20 +162,6 @@ export class NewItemTemplateComponent implements OnInit {
     await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe( () => {
       this.alertify.success('Tiføjede ' + this.propToAddToDb.name +  '!');
       this.getTemplateProperties();
-    });
-  }
-
-  async addTemplateCategory() {
-    for (let i = 0; i < this.categoryList.length; i++) {
-      if (this.categoryList[i].name.toLowerCase() === this.categoryToAddToDb.name.toLowerCase()) {
-        this.alertify.error('En kategori med dette navn findes allerede!');
-        return;
-      }
-    }
-
-    await this.templateService.addTemplateCategory(this.categoryToAddToDb).subscribe( () => {
-      this.alertify.success('Tiføjede ' + this.categoryToAddToDb.name +  '!');
-      this.getTemplateCategories();
     });
   }
 
