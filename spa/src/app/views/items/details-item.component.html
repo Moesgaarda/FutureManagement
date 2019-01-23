@@ -9,7 +9,7 @@
             <p>{{item.template.name}}</p>
           </dd>
           <dd class="col-sm-4">
-              <button class="btn btn-success input-group-text btn-lg" (click)="goToTemplate()">
+              <button class="btn btn-primary input-group-text btn-lg" (click)="goToTemplate()">
                   Se skabelon
                 </button>
             </dd>
@@ -40,7 +40,7 @@
             <dt *ngIf="item.order != null" class="col-sm-3">Ordre </dt>
             <dd *ngIf="item.order != null" class="col-sm-5"><p>{{item.order.purchaseNumber}}</p></dd>
             <dd *ngIf="item.order != null" class="col-sm-4">
-              <button class="btn btn-success input-group-text btn-lg" (click)="goToOrder()">
+              <button class="btn btn-primary input-group-text btn-lg" (click)="goToOrder()">
                 Se ordre
               </button>
             </dd>

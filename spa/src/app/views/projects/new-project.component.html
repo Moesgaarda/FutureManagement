@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
           <label>Mængdeenhed</label>
-          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="orderToAdd && orderToAdd.unitType">
+          <select class="form-control dropdown-toggle" [(ngModel)]="orderToAdd && orderToAdd.unitType">
             <option *ngFor="let unit of unitTypeList" selected>{{unit.name}}</option>
           </select>
         </div>
@@ -99,7 +99,7 @@
       <div class="card-body">
         <div class="form-group">
           <label>Vælg skabelon</label>
-          <select class="form-control btn btn-success dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails()">
+          <select class="form-control dropdown-toggle" [(ngModel)]="templateToGet" (change)="getTemplateDetails()">
             <option *ngFor="let temp of templates" [ngValue]="temp">{{temp.name}}</option>
           </select>
         </div>
