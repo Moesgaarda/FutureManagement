@@ -96,7 +96,6 @@ export class TechtableComponent implements OnInit {
         if (this.serviceType === 'OrderService') {
           for(let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
-            // TODO Format the dateTime instead of splitting it after time.
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }

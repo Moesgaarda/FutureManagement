@@ -14,16 +14,16 @@
           </div>
           <div *ngIf="!editDate; else editContent">
             <div class="form-group">
-              <label>Dato for levering</label>
+              <label>Leveringsdato</label>
               <div class="input-group-text">{{ deliveryDateAsString }}</div>
               <button class="btn btn-primary btn-sm" (click)="toggleEditDate()">
-                Rediger leverings dato
+                Rediger leveringsdato
               </button>
             </div>
           </div>
           <ng-template #editContent>
             <div class="form-group">
-              <label>Dato for levering</label>
+              <label>Leveringsdato</label>
               <div class="input-group">
                 <input
                   type="date"
@@ -64,7 +64,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>MængdeEnhed</label>
+            <label>Mængdeenhed</label>
             <select
               class="form-control dropdown-toggle"
               [(ngModel)]="order.unitType"
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Status:</label>
+            <label>Status</label>
             <select
               class="form-control dropdown-toggle"
               [(ngModel)]="orderStatus"
