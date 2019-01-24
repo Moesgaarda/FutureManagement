@@ -11,6 +11,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { UnitType } from '../../_models/UnitType';
 import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 import { UnitTypeService } from '../../_services/unitType.service';
+import { CategoryService } from '../../_services/category.service';
 
 /**
  *Component that is used to Revise an ItemTemplate
@@ -52,7 +53,8 @@ export class ReviseItemTemplateComponent implements OnInit {
               private router: Router,
               private uploaderParameter: FileUploadService,
               private alertify: AlertifyService,
-              private unitTypeService: UnitTypeService) {
+              private unitTypeService: UnitTypeService,
+              private categoryService: CategoryService) {
                 this.uploader = uploaderParameter;
                 this.uploader.clearQueue();
               }
@@ -107,7 +109,7 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   async getTemplateCategories() {
-    await this.templateService.getTemplateCategories().subscribe(categories => {
+    await this.categoryService.getAll().subscribe(categories => {
       this.categoryList = categories;
     });
   }
@@ -124,20 +126,6 @@ export class ReviseItemTemplateComponent implements OnInit {
   async getUnitTypes() {
     await this.unitTypeService.getAll().subscribe(unitTypes => {
       this.unitTypeList = unitTypes;
-    });
-  }
-
-  async addTemplateCategory() {
-    for (let i = 0; i < this.categoryList.length; i++) {
-      if (this.categoryList[i].name.toLowerCase() === this.categoryToAddToDb.name.toLowerCase()) {
-        this.alertify.error('En kategori med dette navn findes allerede!');
-        return;
-      }
-    }
-
-    await this.templateService.addTemplateCategory(this.categoryToAddToDb).subscribe( () => {
-      this.alertify.success('Tiføjede ' + this.categoryToAddToDb.name +  '!');
-      this.getTemplateCategories();
     });
   }
 

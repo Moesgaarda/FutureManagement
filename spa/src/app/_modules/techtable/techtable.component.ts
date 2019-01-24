@@ -14,6 +14,7 @@ import { UserService } from '../../_services/user.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { UnitTypeService } from '../../_services/unitType.service';
+import { CategoryService } from '../../_services/category.service';
 
 
 @Component({
@@ -65,6 +66,8 @@ export class TechtableComponent implements OnInit {
       this.tableService = <UserService>this.injector.get(UserService);
     }  else if (this.serviceType === 'UnitTypeService') {
       this.tableService = <UnitTypeService>this.injector.get(UnitTypeService);
+    }  else if (this.serviceType === 'CategoryService') {
+      this.tableService = <CategoryService>this.injector.get(CategoryService);
     }  else {
       console.log('Unexpected service name: ' + this.serviceType);
     }
