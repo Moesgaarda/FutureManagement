@@ -6,7 +6,7 @@ import { ItemPropertyName } from '../../_models/ItemPropertyName';
 import { TemplatePropertyService } from '../../_services/templateProperty.service';
 
 @Component({
-  templateUrl: './edit-TemplateProperty.component.html'
+  templateUrl: './edit-templateProperty.component.html'
 })
 export class EditTemplatePropertyComponent implements OnInit {
 
