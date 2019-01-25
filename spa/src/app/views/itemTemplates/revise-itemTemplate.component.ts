@@ -12,6 +12,7 @@ import { UnitType } from '../../_models/UnitType';
 import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 import { UnitTypeService } from '../../_services/unitType.service';
 import { CategoryService } from '../../_services/category.service';
+import { TemplatePropertyService } from '../../_services/templateProperty.service';
 
 /**
  *Component that is used to Revise an ItemTemplate
@@ -54,7 +55,8 @@ export class ReviseItemTemplateComponent implements OnInit {
               private uploaderParameter: FileUploadService,
               private alertify: AlertifyService,
               private unitTypeService: UnitTypeService,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService,
+              private templatePropertyService: TemplatePropertyService) {
                 this.uploader = uploaderParameter;
                 this.uploader.clearQueue();
               }
@@ -103,7 +105,7 @@ export class ReviseItemTemplateComponent implements OnInit {
    * @memberof ReviseItemTemplateComponent
    */
   async getTemplateProperties() {
-    await this.templateService.getTemplateProperties().subscribe(properties => {
+    await this.templatePropertyService.getAll().subscribe(properties => {
       this.properties = properties;
     });
   }

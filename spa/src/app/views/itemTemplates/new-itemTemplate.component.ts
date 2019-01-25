@@ -51,8 +51,8 @@ export class NewItemTemplateComponent implements OnInit {
    * Sets up the different services, calls functions to load templates and properties.
    */
   constructor(private templateService: ItemTemplateService, private router: Router,
-     private alertify: AlertifyService, private uploaderParameter: FileUploadService,
-     private unitTypeService: UnitTypeService, private categoryService: CategoryService) {
+      private alertify: AlertifyService, private uploaderParameter: FileUploadService,
+      private unitTypeService: UnitTypeService, private categoryService: CategoryService) {
     this.getTemplates();
     this.getTemplateProperties();
     this.getTemplateCategories();
@@ -145,23 +145,6 @@ export class NewItemTemplateComponent implements OnInit {
       this.alertify.error('Kunne ikke tilføje skabelon');
     }, () => {
       this.router.navigate(['itemTemplates/view']);
-    });
-  }
-
-  async addTemplateProperty() {
-    // Checks if the name of the property being added already exists in the database.
-    // Converts to lowercase, so multiples do not exist.
-    for (let i = 0; i < this.properties.length; i++) {
-      if (this.properties[i].name.toLowerCase() === this.propToAddToDb.name.toLowerCase()) {
-        this.alertify.error('En egenskab med dette navn findes allerede!');
-        return;
-      }
-    }
-
-    // It is added if not found in the DB.
-    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe( () => {
-      this.alertify.success('Tiføjede ' + this.propToAddToDb.name +  '!');
-      this.getTemplateProperties();
     });
   }
 

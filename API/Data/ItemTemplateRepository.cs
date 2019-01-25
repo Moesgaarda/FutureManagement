@@ -86,7 +86,7 @@ namespace API.Data
         {
             return await _context.ItemTemplates.Include(x => x.Category).ToListAsync();
         }
-        
+
         public async Task<bool> ActivateItemTemplate(ItemTemplate template){
             template.IsActive = true;
             _context.ItemTemplates.Update(template);
@@ -102,7 +102,7 @@ namespace API.Data
 
             return result > 0;
         }
-         public async Task<List<TemplateFileName>> GetFiles(int id){
+        public async Task<List<TemplateFileName>> GetFiles(int id){
             List<TemplateFileName> files = await _context.TemplateFileNames.Where(x => x.ItemTemplate.Id == id).ToListAsync();
             return files;
         }
