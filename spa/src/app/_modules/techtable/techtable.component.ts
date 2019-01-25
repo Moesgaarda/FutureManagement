@@ -16,6 +16,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
 import { UnitTypeService } from '../../_services/unitType.service';
 import { formatDate } from '@angular/common';
+import { CategoryService } from '../../_services/category.service';
+
 @Component({
   selector: 'app-techtable',
   templateUrl: './techtable.component.html',
@@ -65,6 +67,8 @@ export class TechtableComponent implements OnInit {
       this.tableService = <UserService>this.injector.get(UserService);
     }  else if (this.serviceType === 'UnitTypeService') {
       this.tableService = <UnitTypeService>this.injector.get(UnitTypeService);
+    }  else if (this.serviceType === 'CategoryService') {
+      this.tableService = <CategoryService>this.injector.get(CategoryService);
     }  else {
       console.log('Unexpected service name: ' + this.serviceType);
     }
