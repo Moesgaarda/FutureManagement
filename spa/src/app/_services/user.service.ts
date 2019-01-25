@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/User';
 import { Jsonp } from '@angular/http';
 import { URLSearchParams } from '@angular/http';
+import { UserRole } from '../_models/UserRole';
 
 
 @Injectable()
@@ -52,5 +53,8 @@ export class UserService {
         'Content-Type': 'application/json',
       }), responseType: 'json',
       });
+  }
+  getAllRoles(): Observable<string[]> {
+    return this.http.get<string[]>(this.baseUrl + 'User/GetAllRoles');
   }
 }

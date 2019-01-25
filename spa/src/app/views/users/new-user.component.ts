@@ -4,6 +4,8 @@ import { AuthService } from '../../_services/auth.service';
 import { UserForRegister } from '../../_models/UserForRegister';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../_services/user.service';
+import { UserRole } from '../../_models/UserRole';
 
 
 @Component({
@@ -16,17 +18,26 @@ export class NewUserComponent implements OnInit {
   user: UserForRegister = {} as UserForRegister;
   passwordConfirm = '';
   isValid = true;
+  roles: string[] = [];
+  roleFilter: string;
+  itemsPerPage = 15;
+  currentPage = 1;
+  rolesToAdd: string[] = [] as string[];
 
-  constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router) {
+  constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router,
+              private userService: UserService) {
 
   }
   ngOnInit(): void {
     this.user.password = '';
+    this.userService.getAllRoles().subscribe(userRoles => {
+      this.roles = userRoles;
+    });
   }
   createUser() {
     if (this.user.password === this.passwordConfirm) {
       this.authService.register(this.user).subscribe(() => {
-        this.alertify.success('Bruger var oprettet');
+        this.alertify.success('Brugeren blev oprettet');
         this.router.navigate(['users/view/']);
       }, error => {
         this.alertify.error('Kunne ikke tilføje bruger');
@@ -37,5 +48,26 @@ export class NewUserComponent implements OnInit {
   }
   goToUserTable() {
     this.router.navigate(['/users/view/']);
+  }
+
+  onCheckboxChange(role, event) {
+    if (event.target.checked) {
+      this.rolesToAdd.push(role);
+    } else {
+      for (let i = 0; i < this.roles.length; i++) {
+        if (this.rolesToAdd[i] === role) {
+          this.rolesToAdd.splice(i, 1);
+        }
+      }
+    }
+  }
+
+  checkBox(roleName) {
+    for (const roleToCheck of this.rolesToAdd) {
+      if (roleToCheck === roleName) {
+        return true;
+      }
+    }
+    return false;
   }
 }

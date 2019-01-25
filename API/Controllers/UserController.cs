@@ -204,6 +204,15 @@ namespace API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Policy = "User_View")]      
+        [HttpGet("GetAllRoles")]
+        public async Task<IActionResult> GetUserRoles(){
+            List<string> roles = _roleManager.Roles.Select(x => x.Name).ToList();
+
+            return Ok(roles);
+        }
+
+
 
     }
 }

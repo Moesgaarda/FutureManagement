@@ -11,6 +11,8 @@ import { UsersRoutingModule } from './users-routing.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TechTableModule } from '../../_modules/techtable/techtable.module';
+import { UserRoleFilterPipe } from '../../_pipes/role-filter.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -20,13 +22,15 @@ import { TechTableModule } from '../../_modules/techtable/techtable.module';
     CommonModule,
     NgSelectModule,
     Ng2TableModule,
-    TechTableModule
+    TechTableModule,
+    NgxPaginationModule,
   ],
   declarations: [
     ViewUsersComponent,
     NewUserComponent,
     EditUserComponent,
-    DetailsUserComponent
+    DetailsUserComponent,
+    UserRoleFilterPipe
   ]
 })
 export class UsersModule {}

@@ -1,9 +1,9 @@
 <div class="row">
-        <div class="clo-lg-6">
+        <div class="col-lg-6">
             <div class="card">
             <div class="card-header">
-              <font size="5">Opret ny burger</font>
-              <div class="card-header">
+              <font size="5">Opret ny bruger</font>
+            </div>
             <div class="card-body">
               
               <p><font color="red"> Felter markeret med * skal udfyldes</font></p>
@@ -75,9 +75,41 @@
                     />
                   </div>
                 </div>
+                <button type="button" class="btn btn-success btn-rectangle input-group-text" (click)="createUser()">
+                  Tilføj bruger
+                </button>
             </div>
         </div>
-        </div>
-        <button type="button" class="btn btn-primary btn-rectangle input-group-text" (click)="createUser()">
-          Tilføj bruger
-        </button>
+
+        <div class="card">
+            <div class="card-header">
+              <font size="5">Vælg roller til brugeren</font>
+            </div>
+              <div class="card-body">
+                  <div class="input-group">
+                      <input type="text" placeholder="Filtrer roller" class="form-control"  [(ngModel)]="roleFilter"/>
+                    </div>
+                    <br>
+                    <div class="col-lg-6">
+                      <ng-container *ngFor="let r of roles | userRoleFilter: roleFilter | paginate: {itemsPerPage: itemsPerPage, 
+                                                                                                  currentPage: currentPage, 
+                                                                                                  totalItems: roles?.length }; let i=index">
+                        <div *ngIf="checkBox(r); then checkedBox else uncheckedBox"> </div>
+                        <ng-template #checkedBox>
+                          <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)" checked/> {{r}}
+                        </ng-template>
+                        <ng-template #uncheckedBox>
+                          <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)"/> {{r}}
+                        </ng-template>   
+                        <br>      
+                      </ng-container>      
+                    </div>
+                    <br>
+                    <pagination-controls (pageChange)="currentPage = $event"
+                                          maxSize="7"
+                                          previousLabel="Forrige"
+                                          nextLabel="Næste">
+                    </pagination-controls>
+                    </div>
+                    </div>
+      
