@@ -1,9 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
-import { TemplatePropertyService } from '../../_services/TemplateProperty.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ItemPropertyName } from '../../_models/ItemPropertyName';
+import { TemplatePropertyService } from '../../_services/templateProperty.service';
 
 @Component({
   templateUrl: './edit-TemplateProperty.component.html'
