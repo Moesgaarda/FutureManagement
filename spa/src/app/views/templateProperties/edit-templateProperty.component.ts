@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ItemPropertyName } from '../../_models/ItemPropertyName';
 
-
 @Component({
   templateUrl: './edit-TemplateProperty.component.html'
 })
