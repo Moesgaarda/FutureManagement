@@ -54,39 +54,6 @@ namespace API.Data
             return result > 0;  // The task result contains the number of objects written to the underlying database.
         }
 
-        public async Task<bool> AddPropertyName(ItemPropertyName propertyName)
-        {
-            await _context.ItemPropertyNames.AddAsync(propertyName);
-            int result = await _context.SaveChangesAsync();
-
-            return result > 0;
-        }
-
-        public async Task<bool> AddTemplateCategory(ItemTemplateCategory category)
-        {
-            await _context.ItemTemplateCategories.AddAsync(category);
-            int result = await _context.SaveChangesAsync();
-
-            return result > 0;
-        }
-
-        public async Task<List<ItemTemplateCategory>> GetTemplateCategories()
-        {
-            return await _context.ItemTemplateCategories.ToListAsync();
-        }
-
-        /* TODO Maybe check if the Item is in the database
-         * This approach is faster though and seems error free (only accesses the database once)
-         * Could instead get the item first to check if it exist before removing it (need to access twice)
-         * Could maybe use an already local version of the entity instead of the id?
-         */
-        public async Task<bool> DeleteItemTemplate(ItemTemplate template)
-        {
-            _context.ItemTemplates.Remove(template); 
-            int result = await _context.SaveChangesAsync();     
-            return result > 0;
-        }
-
         public async Task<bool> EditItemTemplate(ItemTemplate template)
         {
             var templateToChange = _context.ItemTemplates.First(x => x.Id == template.Id);
@@ -119,17 +86,7 @@ namespace API.Data
         {
             return await _context.ItemTemplates.Include(x => x.Category).ToListAsync();
         }
-
-        public async Task<ItemPropertyName> GetPropertyName(int id)
-        {
-            return await _context.ItemPropertyNames.FirstAsync(x => x.Id == id);
-        }
         
-        public async Task<List<ItemPropertyName>> GetPropertyNames()
-        {
-            return await _context.ItemPropertyNames.ToListAsync();
-        }
-
         public async Task<bool> ActivateItemTemplate(ItemTemplate template){
             template.IsActive = true;
             _context.ItemTemplates.Update(template);

@@ -131,6 +131,8 @@ namespace API
                 options.AddPolicy("UnitTypes_Add", policy => policy.RequireRole("UnitTypes_Add"));
                 options.AddPolicy("Categories_View", policy => policy.RequireRole("Categories_View"));
                 options.AddPolicy("Categories_Add", policy => policy.RequireRole("Categories_Add"));
+                options.AddPolicy("TemplateProperties_View", policy => policy.RequireRole("TemplateProperties_View"));
+                options.AddPolicy("TemplateProperties_Add", policy => policy.RequireRole("TemplateProperties_Add"));
                 
             });
         }
