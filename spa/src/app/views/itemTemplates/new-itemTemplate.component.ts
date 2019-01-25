@@ -14,6 +14,7 @@ import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 import { UnitType } from '../../_models/UnitType';
 import { UnitTypeService } from '../../_services/unitType.service';
 import { CategoryService } from '../../_services/category.service';
+import { TemplatePropertyService } from '../../_services/templateProperty.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -52,7 +53,8 @@ export class NewItemTemplateComponent implements OnInit {
    */
   constructor(private templateService: ItemTemplateService, private router: Router,
       private alertify: AlertifyService, private uploaderParameter: FileUploadService,
-      private unitTypeService: UnitTypeService, private categoryService: CategoryService) {
+      private unitTypeService: UnitTypeService, private categoryService: CategoryService,
+      private templatePropertyService: TemplatePropertyService) {
     this.getTemplates();
     this.getTemplateProperties();
     this.getTemplateCategories();
@@ -77,7 +79,7 @@ export class NewItemTemplateComponent implements OnInit {
    *Loads all properties and subscrubes since properties array is not an observable.
    */
   async getTemplateProperties() {
-    await this.templateService.getTemplateProperties().subscribe(properties => {
+    await this.templatePropertyService.getAll().subscribe(properties => {
       this.properties = properties;
     });
   }

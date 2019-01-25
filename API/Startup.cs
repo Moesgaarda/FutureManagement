@@ -79,6 +79,7 @@ namespace API
             services.AddScoped<IFileInputRepository, FileInputRepository>();
             services.AddScoped<IUnitTypeRepository, UnitTypeRepository>();
             services.AddScoped<ITemplateCategoryRepository, TemplateCategoryRepository>();
+            services.AddScoped<ITemplatePropertyRepository, TemplatePropertyRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
