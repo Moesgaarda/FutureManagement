@@ -21,7 +21,7 @@ export class NewTemplatePropertyComponent {
 
   addTemplateProperty() {
       this.templatePropertyService.addTemplateProperty(this.templateProperty).subscribe(() => {
-        this.alertify.success('egenskab blev oprettet');
+        this.alertify.success('Egenskab blev oprettet');
         this.router.navigate(['templateProperties/view/']);
       }, error => {
         this.alertify.error('Kunne ikke tilføje egenskab');
