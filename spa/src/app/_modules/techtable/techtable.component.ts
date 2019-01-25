@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
@@ -13,9 +13,10 @@ import { UnitType } from '../../_models/UnitType';
 import { UserService } from '../../_services/user.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
 import { UnitTypeService } from '../../_services/unitType.service';
+import { formatDate } from '@angular/common';
 import { CategoryService } from '../../_services/category.service';
-
 
 @Component({
   selector: 'app-techtable',
@@ -95,20 +96,47 @@ export class TechtableComponent implements OnInit {
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
+        // If we are getting orders, we must change the orderStatusEnum to a string
+        if (this.serviceType === 'OrderService') {
+          for(let i = 0; i < items.length; i++) {
+            items[i].status = (OrderStatusEnum[items[i].status]);
+            items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
+            items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
+          }
+        }
       });
     } else if (this.specialGet === 'getIncomingOrders') {
       await this.tableService.getIncomingOrders().subscribe(items => {
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
+        // If we are getting orders, we must change the orderStatusEnum to a string
+        if (this.serviceType === 'OrderService') {
+          for(let i = 0; i < items.length; i++) {
+            items[i].status = (OrderStatusEnum[items[i].status]);
+            items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
+            items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
+          }
+        }
       });
     } else {
       await this.tableService.getAll().subscribe(items => {
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
+
+        // If we are getting orders, we must change the orderStatusEnum to a string
+        if (this.serviceType === 'OrderService') {
+          for(let i = 0; i < items.length; i++) {
+            items[i].status = (OrderStatusEnum[items[i].status]);
+            items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
+            items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
+          }
+        }
       });
     }
+
+
   }
 
   /**

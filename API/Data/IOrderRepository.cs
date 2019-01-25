@@ -10,6 +10,5 @@ namespace API.Data
         Task<Order> GetOrder(int id);
         Task<bool> AddOrder(Order order);
         Task<bool> EditOrder(Order order, Order orderToChange);
-        Task<bool> DeleteOrder(Order order);
     }
 }

@@ -4,13 +4,21 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { promise } from 'protractor';
+import { OrderStatusEnum } from '../_enums/OrderStatusEnum.enum';
 
 @Injectable()
 export class OrderService {
 
     baseUrl = environment.apiUrl;
 
-    constructor(private http: HttpClient) {}
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        }),
+    };
+
+    constructor(private http: HttpClient) { }
 
     getAll(): Observable<Order[]> {
         return this.http.get<Order[]>(this.baseUrl + 'Order/getAll');
@@ -24,16 +32,17 @@ export class OrderService {
         return this.http.get<Order[]>(this.baseUrl + 'Order/getNotDelivered');
     }
 
-    getOrder(id: number): Observable<Order> {
-        return this.http.get<Order>(this.baseUrl + 'Order/get/' + id);
-    }
-
-    deleteOrder(id: number) {
-        return this.http.post(this.baseUrl + 'Order/delete/' + id, {})
-        .map(response => {});
+    async getOrder(id: number): Promise<Order> {
+        return new Promise<Order>(resolve => {
+            resolve(this.http.get<Order>(this.baseUrl + 'Order/get/' + id).toPromise());
+        });
     }
 
     addOrder(order: Order): Observable<Order> {
         return this.http.post<Order>(this.baseUrl + 'Order/add', order);
+    }
+
+    editOrder(order: Order): Observable<Order> {
+        return this.http.post<Order>(this.baseUrl + 'Order/edit', order, this.httpOptions);
     }
 }

@@ -1,6 +1,7 @@
 import { User } from './User';
 import { Item } from './Item';
 import { OrderStatusEnum } from '../_enums/OrderStatusEnum.enum';
+import { UnitType } from './UnitType';
 
 export interface Order {
     id: number;
@@ -12,7 +13,7 @@ export interface Order {
     width: number;
     length: number;
     height: number;
-    unitType: string;
+    unitType: UnitType;
     products: Item[];
     files: any;
     fileNames: string[];
