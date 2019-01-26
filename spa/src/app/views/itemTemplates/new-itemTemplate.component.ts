@@ -14,6 +14,7 @@ import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
 import { UnitType } from '../../_models/UnitType';
 import { UnitTypeService } from '../../_services/unitType.service';
 import { CategoryService } from '../../_services/category.service';
+import { TemplatePropertyService } from '../../_services/templateProperty.service';
 
 const URL = environment.apiUrl  + 'FileInput/uploadfiles';
 
@@ -51,8 +52,9 @@ export class NewItemTemplateComponent implements OnInit {
    * Sets up the different services, calls functions to load templates and properties.
    */
   constructor(private templateService: ItemTemplateService, private router: Router,
-     private alertify: AlertifyService, private uploaderParameter: FileUploadService,
-     private unitTypeService: UnitTypeService, private categoryService: CategoryService) {
+      private alertify: AlertifyService, private uploaderParameter: FileUploadService,
+      private unitTypeService: UnitTypeService, private categoryService: CategoryService,
+      private templatePropertyService: TemplatePropertyService) {
     this.getTemplates();
     this.getTemplateProperties();
     this.getTemplateCategories();
@@ -77,7 +79,7 @@ export class NewItemTemplateComponent implements OnInit {
    *Loads all properties and subscrubes since properties array is not an observable.
    */
   async getTemplateProperties() {
-    await this.templateService.getTemplateProperties().subscribe(properties => {
+    await this.templatePropertyService.getAll().subscribe(properties => {
       this.properties = properties;
     });
   }
@@ -145,23 +147,6 @@ export class NewItemTemplateComponent implements OnInit {
       this.alertify.error('Kunne ikke tilføje skabelon');
     }, () => {
       this.router.navigate(['itemTemplates/view']);
-    });
-  }
-
-  async addTemplateProperty() {
-    // Checks if the name of the property being added already exists in the database.
-    // Converts to lowercase, so multiples do not exist.
-    for (let i = 0; i < this.properties.length; i++) {
-      if (this.properties[i].name.toLowerCase() === this.propToAddToDb.name.toLowerCase()) {
-        this.alertify.error('En egenskab med dette navn findes allerede!');
-        return;
-      }
-    }
-
-    // It is added if not found in the DB.
-    await this.templateService.addTemplateProperty(this.propToAddToDb).subscribe( () => {
-      this.alertify.success('Tiføjede ' + this.propToAddToDb.name +  '!');
-      this.getTemplateProperties();
     });
   }
 
