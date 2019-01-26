@@ -56,6 +56,7 @@ import { Interceptor } from './_services/http.interceptor';
 import { CustomSidebarComponent } from './views/custom-sidebar/custom-sidebar.component';
 import { UnitTypeService } from './_services/unitType.service';
 import { CategoryService } from './_services/category.service';
+import { TemplatePropertyService } from './_services/templateProperty.service';
 
 
 @NgModule({
@@ -102,6 +103,7 @@ import { CategoryService } from './_services/category.service';
   AlertifyService,
   FileUploadService,
   CategoryService,
+  TemplatePropertyService,
   AuthGuard
   ],
   bootstrap: [ AppComponent ]

@@ -116,6 +116,18 @@ export const navItems = [
           role: 'Categories_View',
         },
         {
+          name: 'Vis egenskaber',
+          url: '/templateProperties/view',
+          icon: 'fa fa-check-square-o',
+          role: 'TemplateProperties_View',
+        },
+        {
+          name: 'Tilføj egenskab',
+          url: '/templateProperties/new',
+          icon: 'fa fa-check-square-o',
+          role: 'TemplateProperties_Add',
+        },
+        {
           name: 'Tilføj kategori',
           url: '/categories/new',
           icon: 'fa fa-tag',

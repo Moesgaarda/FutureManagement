@@ -76,6 +76,10 @@ export const routes: Routes = [
       {
         path: 'categories',
         loadChildren: './views/categories/categories.module#CategoryModule'
+      },
+      {
+        path: 'templateProperties',
+        loadChildren: './views/templateProperties/templateProperties.module#TemplatePropertyModule'
       }
     ]
   }

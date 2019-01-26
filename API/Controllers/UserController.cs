@@ -194,7 +194,7 @@ namespace API.Controllers
                     var result = _roleManager.CreateAsync(new Role{Name = name}).Result;
 
                     if(result.Succeeded){
-                        User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                        User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result; 
                         await _eventLogRepo.AddEventLog(EventType.Created, "rolle", name, _roleManager.FindByNameAsync(name).Result.Id, currentUser);
                         return StatusCode(201);
                     } 
