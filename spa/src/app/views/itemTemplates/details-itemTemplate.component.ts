@@ -47,6 +47,7 @@ export class DetailsItemTemplateComponent implements OnInit, OnDestroy {
     await this.templateService.getItemTemplateAsync(params['id'])
       .then(itemTemplate => {
         this.itemTemplate = itemTemplate;
+
         this.isDataAvailable = true;
         if (itemTemplate.revisionedFrom != null) {
           this.isRevisioned = true;

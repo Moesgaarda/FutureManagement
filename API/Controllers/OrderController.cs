@@ -39,7 +39,8 @@ namespace API.Controllers
         public async Task<IActionResult> GetOrder(int id)
         {
             var order = await _repo.GetOrder(id);
-            return Ok(order);
+            OrderForGetDto orderToReturn = _mapper.Map<OrderForGetDto>(order);
+            return Ok(orderToReturn);
         }
 
         [Authorize(Policy = "Order_Add")]
@@ -135,6 +136,29 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
+            var orderToChange = await _context.Orders.FirstAsync(x => x.Id == order.Id);
+            bool result = await _repo.EditOrder(order, orderToChange);
+
+            if (result)
+            {
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                result = await _eventLogRepo.AddEventLogChange("bestilling", "Købsnummer: " + order.PurchaseNumber.ToString(), order.Id, currentUser, order, orderToChange);
+            }
+
+            return result ? StatusCode(200) : StatusCode(400);
+        }
+
+        [Authorize(Policy = "Order_View")]
+        [HttpPost("editOrderStatus")]
+        public async Task<IActionResult> EditOrderStatus([FromBody]Order order){
+            if (order.Id == 0)
+            {
+                ModelState.AddModelError("Order Error", "Order id can not be 0.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var orderToChange = await _context.Orders.FirstAsync(x => x.Id == order.Id);
             bool result = await _repo.EditOrder(order, orderToChange);
 
