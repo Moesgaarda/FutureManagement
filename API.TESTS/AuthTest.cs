@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.FileExtensions;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
+using Moq;
 
 namespace API.TESTS
 {
@@ -20,8 +22,13 @@ namespace API.TESTS
     {
         private readonly DataContext _dbContext;
         private readonly IConfiguration _config;
-
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         public AuthTest(){
+            var store = new Mock<IUserStore<User>>();
+            var _userManager = new Mock<UserManager<User>>(store.Object);
+            var _signInManager = new Mock<SignInManager<User>>(store.Object);
+
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
@@ -42,7 +49,7 @@ namespace API.TESTS
         [Fact]
         public async void LoginSuccesfulTest(){
             var repo = new AuthRepository(_dbContext);
-            var controller = new AuthController(repo, _config);
+            var controller = new AuthController(repo, _config, _userManager, _signInManager);
 
             var userLoginDto = new UserForLoginDto("admin", "password");
             var user = new UserForRegisterDto("admin", "password");
