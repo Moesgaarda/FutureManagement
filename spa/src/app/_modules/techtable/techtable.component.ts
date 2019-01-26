@@ -17,6 +17,7 @@ import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
 import { UnitTypeService } from '../../_services/unitType.service';
 import { formatDate } from '@angular/common';
 import { CategoryService } from '../../_services/category.service';
+import { TemplatePropertyService } from '../../_services/templateProperty.service';
 
 @Component({
   selector: 'app-techtable',
@@ -69,7 +70,9 @@ export class TechtableComponent implements OnInit {
       this.tableService = <UnitTypeService>this.injector.get(UnitTypeService);
     }  else if (this.serviceType === 'CategoryService') {
       this.tableService = <CategoryService>this.injector.get(CategoryService);
-    }  else {
+    }  else if (this.serviceType === 'TemplatePropertyService') {
+      this.tableService = <TemplatePropertyService>this.injector.get(TemplatePropertyService);
+    } else {
       console.log('Unexpected service name: ' + this.serviceType);
     }
     this.loadItems();
@@ -283,6 +286,8 @@ export class TechtableComponent implements OnInit {
       location.href = this.baseUrl + 'unitTypes/edit/' + data.row.id;
     } else if (this.serviceType === 'CategoryService') {
       location.href = this.baseUrl + 'categories/edit/' + data.row.id;
+    } else if (this.serviceType === 'TemplatePropertyService') {
+      location.href = this.baseUrl + 'templateProperties/edit/' + data.row.id;
     } else {
       console.log('Unexpected service name: ' + this.serviceType);
     }
