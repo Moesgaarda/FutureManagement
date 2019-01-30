@@ -1,6 +1,7 @@
 using System;
 using API.Models;
 using System.Collections.Generic;
+using API.Dtos.UserDtos;
 
 namespace API.Dtos
 {
@@ -10,7 +11,7 @@ namespace API.Dtos
         public string UserName { get; set; }
         public string Name { get; set;}
         public string Surname{ get; set; }
-        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserRoleDto> UserRoles { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public bool IsActive { get; set; }
