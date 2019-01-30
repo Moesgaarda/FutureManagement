@@ -57,6 +57,6 @@ export class EditUserComponent implements OnInit {
   }
   addUserRole(newRoleName: string) {
     console.log('asdadsasd');
-    this.userService.addUserRole(newRoleName).subscribe(r => {});
+    //this.userService.addUserRole(newRoleName).subscribe(r => {});
   }
 }

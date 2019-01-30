@@ -7,6 +7,7 @@ import { User } from '../_models/User';
 import { Jsonp } from '@angular/http';
 import { URLSearchParams } from '@angular/http';
 import { UserRole } from '../_models/UserRole';
+import { RoleName } from '../_models/RoleName';
 
 
 @Injectable()
@@ -46,15 +47,10 @@ export class UserService {
   editUser(user: User) {
     return this.http.post<User>(this.baseUrl + 'User/edit', user);
   }
-  addUserRole(newRole: string) {
-    const param = new URLSearchParams();
-    param.append('name', newRole);
-    return this.http.post<string>(this.baseUrl + 'User/addRole', `\"${newRole}\"`, { headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }), responseType: 'json',
-      });
+  addUserRole(newRole: RoleName) {
+    return this.http.post<RoleName>(this.baseUrl + 'User/addRole' + newRole, {});
   }
-  getAllRoles(): Observable<string[]> {
-    return this.http.get<string[]>(this.baseUrl + 'User/GetAllRoles');
+  getAllRoles(): Observable<RoleName[]> {
+    return this.http.get<RoleName[]>(this.baseUrl + 'User/GetAllRoles');
   }
 }

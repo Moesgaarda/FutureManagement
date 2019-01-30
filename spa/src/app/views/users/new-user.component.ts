@@ -6,6 +6,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../_services/user.service';
 import { UserRole } from '../../_models/UserRole';
+import { RoleName } from '../../_models/RoleName';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class NewUserComponent implements OnInit {
   user: UserForRegister = {} as UserForRegister;
   passwordConfirm = '';
   isValid = true;
-  roles: string[] = [];
+  roles: RoleName[] = [];
   roleFilter: string;
   itemsPerPage = 15;
   currentPage = 1;

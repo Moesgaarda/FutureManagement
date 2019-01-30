@@ -96,10 +96,10 @@
                                                                                                   totalItems: roles?.length }; let i=index">
                         <div *ngIf="checkBox(r); then checkedBox else uncheckedBox"> </div>
                         <ng-template #checkedBox>
-                          <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)" checked/> {{r}}
+                          <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)" checked/> {{r.name}}
                         </ng-template>
                         <ng-template #uncheckedBox>
-                          <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)"/> {{r}}
+                          <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)"/> {{r.name}}
                         </ng-template>   
                         <br>      
                       </ng-container>      

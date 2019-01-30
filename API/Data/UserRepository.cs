@@ -22,13 +22,19 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<bool> AddRole(UserRole newRole)
+        public async Task<bool> AddRole(RoleName newRole)
         {
 
-            _dbContext.UserRoles.Add(newRole);
+            _dbContext.RoleNames.Add(newRole);
             int result = await _dbContext.SaveChangesAsync();
 
             return result > 0;
+        }
+
+        public async Task<List<RoleName>> GetUserRoles()
+        {
+
+            return await _dbContext.RoleNames.ToListAsync();
         }
 
         public Task<bool> AddUser(User user)

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertifyService } from '../../_services/alertify.service';
+import { RoleName } from '../../_models/RoleName';
+import { UserService } from '../../_services/user.service';
 
 
 
@@ -9,7 +11,10 @@ import { AlertifyService } from '../../_services/alertify.service';
 
 export class NewUserRolesComponent implements OnInit {
 
-  constructor(private alertify: AlertifyService) {}
+  roleNames: RoleName[] = [] as RoleName[];
+  roleToAdd: RoleName;
+
+  constructor(private alertify: AlertifyService, private userService: UserService) {}
 
   // TODO  Skal ændres til at bruge en model når backend for userroles virker
   // dette objekt er kun til test af UI.
@@ -35,7 +40,9 @@ export class NewUserRolesComponent implements OnInit {
   ];
 
   ngOnInit() {
-
+    this.userService.getAllRoles().subscribe(roleNames => {
+      this.roleNames = roleNames;
+    });
   }
 
   /**
@@ -70,5 +77,6 @@ export class NewUserRolesComponent implements OnInit {
   addRole() {
     // TODO lav metoden når backend til userroles virker
     this.alertify.error('Kunne ikke tilføje rolle');
+    console.log(this.userRoles);
   }
 }

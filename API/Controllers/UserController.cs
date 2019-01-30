@@ -186,28 +186,26 @@ namespace API.Controllers
 
         [Authorize(Policy = "User_Add")]
         [HttpPost("addRole")]
-        public async Task<IActionResult> AddNewRole([FromBody]string name)
+        public async Task<IActionResult> AddNewRole([FromBody]RoleName role)
         {   
-            if(name != null){
-                bool roleCheck = await _roleManager.RoleExistsAsync(name.ToUpper());
-                if (!roleCheck){
-                    var result = _roleManager.CreateAsync(new Role{Name = name}).Result;
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
 
-                    if(result.Succeeded){
-                        User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                        await _eventLogRepo.AddEventLog(EventType.Created, "rolle", name, _roleManager.FindByNameAsync(name).Result.Id, currentUser);
-                        return StatusCode(201);
-                    } 
-                }
+            bool result = await _repo.AddRole(role);
+
+            if (result){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                await _eventLogRepo.AddEventLog(EventType.Created, "rolle", role.Name, role.Id, currentUser);
             }
             
-            return BadRequest();
+            return result ? StatusCode(201) : BadRequest();
         }
 
         [Authorize(Policy = "User_View")]      
         [HttpGet("GetAllRoles")]
         public async Task<IActionResult> GetUserRoles(){
-            List<string> roles = _roleManager.Roles.Select(x => x.Name).ToList();
+            var roles = await _repo.GetUserRoles();
 
             return Ok(roles);
         }
