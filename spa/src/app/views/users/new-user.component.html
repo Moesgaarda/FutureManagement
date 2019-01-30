@@ -20,7 +20,7 @@
                   Kodeord*
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="Kodeord" id="name" type="password" class="form-control" [(ngModel)]="user.password" />
+                  <input type="text" placeholder="Kodeord" id="password" type="password" class="form-control" [(ngModel)]="user.password" />
                 </div>
               </div>
               <div class="form-group">
@@ -28,7 +28,7 @@
                   Bekræft kodeord*
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="Bekræft kodeord" id="name"  type="password" class="form-control" [(ngModel)]="passwordConfirm" />
+                  <input type="text" placeholder="Bekræft kodeord" id="passwordConfirm"  type="password" class="form-control" [(ngModel)]="passwordConfirm" />
                 </div>
                 <div *ngIf="user.password !== passwordConfirm"> <font color="red">Kodeord er ikke ens</font></div>
               </div>             
