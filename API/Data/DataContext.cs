@@ -35,6 +35,7 @@ namespace API.Data
         public DbSet<ItemTemplateCategory> TemplateCategories { get; set; }
         public DbSet<ProjectStatus> ProjectStatuses { get; set; }
         public DbSet<ItemTemplateCategory> ItemTemplateCategories { get; set; }
+        public DbSet<RoleName> RoleNames {get; set;}
 
 
         
