@@ -22,19 +22,24 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<bool> AddRole(RoleName newRole)
+        public async Task<bool> AddRoleCategory(RoleCategory newRoleCategory)
         {
-
-            _dbContext.RoleNames.Add(newRole);
+            _dbContext.RoleCategories.Add(newRoleCategory);
             int result = await _dbContext.SaveChangesAsync();
 
             return result > 0;
         }
 
-        public async Task<List<RoleName>> GetRoleNames()
+        public async Task<bool> AddRole(Role newRole)
         {
 
-            return await _dbContext.RoleNames.ToListAsync();
+            return false;
+        }
+
+        public async Task<List<RoleCategory>> GetRoleCategories()
+        {
+
+            return await _dbContext.RoleCategories.ToListAsync();
         }
 
         public Task<bool> AddUser(User user)

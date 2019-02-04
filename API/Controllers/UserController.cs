@@ -186,26 +186,35 @@ namespace API.Controllers
 
         [Authorize(Policy = "User_Add")]
         [HttpPost("addRole")]
-        public async Task<IActionResult> AddNewRole([FromBody]RoleName role)
+        public async Task<IActionResult> AddNewRole([FromBody]string name, string displayName)
         {   
-            if(!ModelState.IsValid){
-                return BadRequest(ModelState);
-            }
+            if(name != null && displayName != null){
+                bool roleCheck = await _roleManager.RoleExistsAsync(name.ToUpper());
+                if (!roleCheck){
+                    var result = _roleManager.CreateAsync(new Role{Name = name}).Result;
 
-            bool result = await _repo.AddRole(role);
-
-            if (result){
-                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                await _eventLogRepo.AddEventLog(EventType.Created, "rolle", role.Name, role.Id, currentUser);
+                    if(result.Succeeded){
+                        User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result; 
+                        await _eventLogRepo.AddEventLog(EventType.Created, "rolle", name, _roleManager.FindByNameAsync(name).Result.Id, currentUser);
+                        return StatusCode(201);
+                    } 
+                }
             }
             
-            return result ? StatusCode(201) : BadRequest();
+            return BadRequest();
+        }
+
+        [Authorize(Policy = "User_Add")]
+        [HttpPost("addRole")]
+        public async Task<IActionResult> AddNewRoleCategory([FromBody]RoleCategory role)
+        {   
+            return Ok();
         }
 
         [Authorize(Policy = "User_View")]      
-        [HttpGet("GetAllRoleNames")]
-        public async Task<IActionResult> GetRoleNames(){
-            var roles = await _repo.GetRoleNames();
+        [HttpGet("GetAllRoleCategories")]
+        public async Task<IActionResult> GetRoleCategories(){
+            var roles = await _repo.GetRoleCategories();
 
             return Ok(roles);
         }

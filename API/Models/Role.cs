@@ -13,6 +13,7 @@ namespace API.Models
             this.DisplayName = displayName;
         }
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<RoleCategoryRoleRelation> RoleCategoryRoleRelations { get; set; }
         public string DisplayName{get; set;}
         
     }
