@@ -12,7 +12,7 @@ namespace API.Data
         Task<User> GetUser(int id);
         Task<User> ShowDetails(User user);
         Task<bool> AddRoleCategory(RoleCategory newRoleCategory);
-        Task<bool> AddRole(Role newRole);
+        Task<bool> AddRole(UserRole newRole);
         Task<List<RoleCategory>> GetRoleCategories();
         Task<bool> AddUser(User user);
         Task<bool> EditUser(User user, User userToChange);
