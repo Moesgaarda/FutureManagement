@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertifyService } from '../../_services/alertify.service';
 import { RoleName } from '../../_models/RoleName';
 import { UserService } from '../../_services/user.service';
+import { UserRole } from '../../_models/UserRole';
 
 
 
@@ -12,13 +13,14 @@ import { UserService } from '../../_services/user.service';
 export class NewUserRolesComponent implements OnInit {
 
   roleNames: RoleName[] = [] as RoleName[];
+  userRoles: UserRole[] = [] as UserRole[];
   roleToAdd: RoleName;
 
   constructor(private alertify: AlertifyService, private userService: UserService) {}
 
   // TODO  Skal ændres til at bruge en model når backend for userroles virker
   // dette objekt er kun til test af UI.
-  userRoles: { id: number, name: string, hasRole: boolean, subRoles: { id: number, name: string, hasRole: boolean }[] }[] = [
+  /* userRoles: { id: number, name: string, hasRole: boolean, subRoles: { id: number, name: string, hasRole: boolean }[] }[] = [
     {
       'id': 0, 'name': 'Kunder', hasRole: false, subRoles: [
         { id: 0, name: 'Vis alle kunder', hasRole: false }, { id: 1, name: 'Opret kunde', hasRole: false },
@@ -37,11 +39,14 @@ export class NewUserRolesComponent implements OnInit {
         { id: 2, name: 'Rediger bestilling', hasRole: false }
       ],
     }
-  ];
+  ];*/
 
   ngOnInit() {
-    this.userService.getAllRoles().subscribe(roleNames => {
+    this.userService.getAllRoleNames().subscribe(roleNames => {
       this.roleNames = roleNames;
+    });
+    this.userService.getAllUserRoles().subscribe(userRoles => {
+      this.userRoles = userRoles;
     });
   }
 
@@ -52,11 +57,11 @@ export class NewUserRolesComponent implements OnInit {
    * @memberof NewUserRolesComponent
    */
   changeHasRole(id: number) {
-    if (this.userRoles[id].hasRole === true) {
+    /*if (this.userRoles[id].hasRole === true) {
       this.userRoles[id].hasRole = false;
     } else {
       this.userRoles[id].hasRole = true;
-    }
+    }*/
   }
 
   /**
@@ -67,11 +72,11 @@ export class NewUserRolesComponent implements OnInit {
    * @memberof NewUserRolesComponent
    */
   changeHasSubRole(roleId: number, subRoleId: number) {
-    if (this.userRoles[roleId].subRoles[subRoleId].hasRole === true) {
+    /*if (this.userRoles[roleId].subRoles[subRoleId].hasRole === true) {
       this.userRoles[roleId].subRoles[subRoleId].hasRole = false;
     } else {
       this.userRoles[roleId].subRoles[subRoleId].hasRole = true;
-    }
+    }*/
   }
 
   addRole() {

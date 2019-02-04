@@ -31,7 +31,7 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<List<RoleName>> GetUserRoles()
+        public async Task<List<RoleName>> GetRoleNames()
         {
 
             return await _dbContext.RoleNames.ToListAsync();

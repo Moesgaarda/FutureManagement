@@ -31,7 +31,7 @@ export class NewUserComponent implements OnInit {
   }
   ngOnInit(): void {
     this.user.password = '';
-    this.userService.getAllRoles().subscribe(userRoles => {
+    this.userService.getAllRoleNames().subscribe(userRoles => {
       this.roles = userRoles;
     });
   }

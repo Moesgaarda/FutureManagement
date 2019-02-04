@@ -50,7 +50,10 @@ export class UserService {
   addUserRole(newRole: RoleName) {
     return this.http.post<RoleName>(this.baseUrl + 'User/addRole' + newRole, {});
   }
-  getAllRoles(): Observable<RoleName[]> {
-    return this.http.get<RoleName[]>(this.baseUrl + 'User/GetAllRoles');
+  getAllRoleNames(): Observable<RoleName[]> {
+    return this.http.get<RoleName[]>(this.baseUrl + 'User/GetAllRoleNames');
+  }
+  getAllUserRoles(): Observable<UserRole[]> {
+    return this.http.get<UserRole[]>(this.baseUrl + 'User/GetAllUserRoles');
   }
 }

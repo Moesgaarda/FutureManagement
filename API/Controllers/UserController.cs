@@ -203,11 +203,19 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "User_View")]      
-        [HttpGet("GetAllRoles")]
-        public async Task<IActionResult> GetUserRoles(){
-            var roles = await _repo.GetUserRoles();
+        [HttpGet("GetAllRoleNames")]
+        public async Task<IActionResult> GetRoleNames(){
+            var roles = await _repo.GetRoleNames();
 
             return Ok(roles);
+        }
+
+        [Authorize(Policy = "User_View")]      
+        [HttpGet("GetAllUserRoles")]
+        public async Task<IOrderedEnumerable<Role>> GetUserRoles() {
+            var roles = await _roleManager.Roles.ToListAsync();
+            var sortedRoles =  roles.OrderBy(x => x.Name);
+            return sortedRoles;
         }
 
 
