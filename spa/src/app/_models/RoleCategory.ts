@@ -1,6 +1,6 @@
 import { UserRole } from './UserRole';
 
-export interface RoleName {
+export interface RoleCategory {
     id: number;
     name: string;
     userRoles: UserRole[];

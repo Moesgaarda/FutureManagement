@@ -7,7 +7,7 @@ import { User } from '../_models/User';
 import { Jsonp } from '@angular/http';
 import { URLSearchParams } from '@angular/http';
 import { UserRole } from '../_models/UserRole';
-import { RoleName } from '../_models/RoleName';
+import { RoleCategory } from '../_models/RoleCategory';
 
 
 @Injectable()
@@ -47,13 +47,13 @@ export class UserService {
   editUser(user: User) {
     return this.http.post<User>(this.baseUrl + 'User/edit', user);
   }
-  addUserRole(newRole: RoleName) {
-    return this.http.post<RoleName>(this.baseUrl + 'User/addRole' + newRole, {});
+  addRoleCategory(newRoleCategory: RoleCategory) {
+    return this.http.post<RoleCategory>(this.baseUrl + 'User/addRoleCategory' + newRoleCategory, {});
   }
-  getAllRoleNames(): Observable<RoleName[]> {
-    return this.http.get<RoleName[]>(this.baseUrl + 'User/GetAllRoleNames');
+  getAllRoleCategories(): Observable<RoleCategory[]> {
+    return this.http.get<RoleCategory[]>(this.baseUrl + 'User/GetAllRoleCategories');
   }
-  getAllUserRoles(): Observable<UserRole[]> {
-    return this.http.get<UserRole[]>(this.baseUrl + 'User/GetAllUserRoles');
+  getAllRoles(): Observable<UserRole[]> {
+    return this.http.get<UserRole[]>(this.baseUrl + 'User/GetAllRoles');
   }
 }

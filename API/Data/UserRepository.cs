@@ -30,10 +30,13 @@ namespace API.Data
             return result > 0;
         }
 
-        public async Task<bool> AddRole(Role newRole)
+        public async Task<bool> AddRole(UserRole newRole)
         {
 
-            return false;
+            _dbContext.UserRoles.Add(newRole);
+            int result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<List<RoleCategory>> GetRoleCategories()

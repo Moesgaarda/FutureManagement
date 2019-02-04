@@ -186,9 +186,9 @@ namespace API.Controllers
 
         [Authorize(Policy = "User_Add")]
         [HttpPost("addRole")]
-        public async Task<IActionResult> AddNewRole([FromBody]string name, string displayName)
+        public async Task<IActionResult> AddNewRole([FromBody]string name)
         {   
-            if(name != null && displayName != null){
+            if(name != null){
                 bool roleCheck = await _roleManager.RoleExistsAsync(name.ToUpper());
                 if (!roleCheck){
                     var result = _roleManager.CreateAsync(new Role{Name = name}).Result;
@@ -205,7 +205,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "User_Add")]
-        [HttpPost("addRole")]
+        [HttpPost("addRoleCategory")]
         public async Task<IActionResult> AddNewRoleCategory([FromBody]RoleCategory role)
         {   
             return Ok();
@@ -220,7 +220,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "User_View")]      
-        [HttpGet("GetAllUserRoles")]
+        [HttpGet("GetAllRoles")]
         public async Task<IOrderedEnumerable<Role>> GetUserRoles() {
             var roles = await _roleManager.Roles.ToListAsync();
             var sortedRoles =  roles.OrderBy(x => x.Name);

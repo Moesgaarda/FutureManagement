@@ -3,7 +3,7 @@ import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { environment } from '../../../environments/environment.prod';
-import { RoleName } from '../../_models/RoleName';
+import { RoleCategory } from '../../_models/RoleCategory';
 
 @Component({
   templateUrl: './edit-user.component.html'
@@ -56,8 +56,8 @@ export class EditUserComponent implements OnInit {
   goToUserTable() {
     location.href = this.baseUrl + '/users/view/';
   }
-  addUserRole(newRoleName: RoleName) {
+  addUserRole(newRoleCategory: RoleCategory) {
     console.log('asdadsasd');
-    this.userService.addUserRole(newRoleName).subscribe(r => {});
+    // this.userService.addRole(newRoleName).subscribe(r => {});
   }
 }
