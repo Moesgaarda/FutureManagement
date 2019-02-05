@@ -18,6 +18,7 @@
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
               style="border-width: 2px"
+              
             />
           </div>
         </div>
@@ -42,8 +43,8 @@
                   <input
                     type="checkbox"
                     class="switch-input"
-                    (change)="changeHasRole(role.id)"
-                    [attr.aria-expanded]="role.hasRole"
+                    
+                    
                     aria-controls="toggleElement"
                   />
                   <span class="switch-slider"></span>
@@ -51,7 +52,7 @@
               </h3>
             </div>
 
-            <div class="card-body" id="toggleElement" [collapse]="!role.hasRole">
+            <!--<div class="card-body" id="toggleElement" [collapse]="!role.hasRole">
               <ul class="list-group list-group-flush">
                 <li *ngFor="let subRole of role.subRoles" class="list-group-item">
                   <h5 style="vertical-align:text-top">
@@ -70,7 +71,7 @@
                   </h5>
                 </li>
               </ul>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
