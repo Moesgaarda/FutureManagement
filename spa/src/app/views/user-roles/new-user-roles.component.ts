@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertifyService } from '../../_services/alertify.service';
+import { RoleCategory } from '../../_models/RoleCategory';
+import { UserService } from '../../_services/user.service';
+import { UserRole } from '../../_models/UserRole';
 
 
 
@@ -9,11 +12,15 @@ import { AlertifyService } from '../../_services/alertify.service';
 
 export class NewUserRolesComponent implements OnInit {
 
-  constructor(private alertify: AlertifyService) {}
+  roleCategories: RoleCategory[] = [] as RoleCategory[];
+  userRoles: UserRole[] = [] as UserRole[];
+  roleCategoryToAdd: RoleCategory;
+
+  constructor(private alertify: AlertifyService, private userService: UserService) {}
 
   // TODO  Skal ændres til at bruge en model når backend for userroles virker
   // dette objekt er kun til test af UI.
-  userRoles: { id: number, name: string, hasRole: boolean, subRoles: { id: number, name: string, hasRole: boolean }[] }[] = [
+  /* userRoles: { id: number, name: string, hasRole: boolean, subRoles: { id: number, name: string, hasRole: boolean }[] }[] = [
     {
       'id': 0, 'name': 'Kunder', hasRole: false, subRoles: [
         { id: 0, name: 'Vis alle kunder', hasRole: false }, { id: 1, name: 'Opret kunde', hasRole: false },
@@ -32,10 +39,15 @@ export class NewUserRolesComponent implements OnInit {
         { id: 2, name: 'Rediger bestilling', hasRole: false }
       ],
     }
-  ];
+  ];*/
 
   ngOnInit() {
-
+    this.userService.getAllRoleCategories().subscribe(roleCategories => {
+      this.roleCategories = roleCategories;
+    });
+    this.userService.getAllRoles().subscribe(userRoles => {
+      this.userRoles = userRoles;
+    });
   }
 
   /**
@@ -45,11 +57,11 @@ export class NewUserRolesComponent implements OnInit {
    * @memberof NewUserRolesComponent
    */
   changeHasRole(id: number) {
-    if (this.userRoles[id].hasRole === true) {
+    /*if (this.userRoles[id].hasRole === true) {
       this.userRoles[id].hasRole = false;
     } else {
       this.userRoles[id].hasRole = true;
-    }
+    }*/
   }
 
   /**
@@ -60,15 +72,16 @@ export class NewUserRolesComponent implements OnInit {
    * @memberof NewUserRolesComponent
    */
   changeHasSubRole(roleId: number, subRoleId: number) {
-    if (this.userRoles[roleId].subRoles[subRoleId].hasRole === true) {
+    /*if (this.userRoles[roleId].subRoles[subRoleId].hasRole === true) {
       this.userRoles[roleId].subRoles[subRoleId].hasRole = false;
     } else {
       this.userRoles[roleId].subRoles[subRoleId].hasRole = true;
-    }
+    }*/
   }
 
   addRole() {
     // TODO lav metoden når backend til userroles virker
     this.alertify.error('Kunne ikke tilføje rolle');
+    console.log(this.userRoles);
   }
 }

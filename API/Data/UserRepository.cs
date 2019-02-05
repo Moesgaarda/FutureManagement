@@ -22,6 +22,14 @@ namespace API.Data
             return result > 0;
         }
 
+        public async Task<bool> AddRoleCategory(RoleCategory newRoleCategory)
+        {
+            _dbContext.RoleCategories.Add(newRoleCategory);
+            int result = await _dbContext.SaveChangesAsync();
+
+            return result > 0;
+        }
+
         public async Task<bool> AddRole(UserRole newRole)
         {
 
@@ -29,6 +37,12 @@ namespace API.Data
             int result = await _dbContext.SaveChangesAsync();
 
             return result > 0;
+        }
+
+        public async Task<List<RoleCategory>> GetRoleCategories()
+        {
+
+            return await _dbContext.RoleCategories.ToListAsync();
         }
 
         public Task<bool> AddUser(User user)
