@@ -31,7 +31,7 @@
           <div class="form-group">
             <label for="unitType">Telefonnummer</label>
             <div class="input-group-text" placeholder="Ikke opgivet">
-              {{user.phone}}
+              <div *ngIf="user.phone != null"> asd {{user.phone}}</div>
             </div>
           </div>
           
