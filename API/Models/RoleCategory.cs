@@ -13,6 +13,7 @@ namespace API.Models
         }
         public RoleCategory(string name, ICollection<RoleCategoryRoleRelation> roleCategoryRoleRelations) {
             this.Name = name;
+            this.RoleCategoryRoleRelations = roleCategoryRoleRelations;
         }
 
         [Key]
