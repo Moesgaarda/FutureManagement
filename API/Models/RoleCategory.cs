@@ -7,11 +7,11 @@ namespace API.Models
     {
         public RoleCategory() {
         }
-        public RoleCategory(int id, string name) {
+        public RoleCategory(int id, string name, ICollection<RoleCategoryRoleRelation> roleCategoryRoleRelations) {
             this.Id = id;
             this.Name = name;
         }
-        public RoleCategory(string name) {
+        public RoleCategory(string name, ICollection<RoleCategoryRoleRelation> roleCategoryRoleRelations) {
             this.Name = name;
         }
 

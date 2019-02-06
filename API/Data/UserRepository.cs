@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Data
 {
@@ -24,6 +26,10 @@ namespace API.Data
 
         public async Task<bool> AddRoleCategory(RoleCategory newRoleCategory)
         {
+            foreach(var role in newRoleCategory.RoleCategoryRoleRelations){
+                role.Role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Id == role.RoleId);
+            }
+
             _dbContext.RoleCategories.Add(newRoleCategory);
             int result = await _dbContext.SaveChangesAsync();
 

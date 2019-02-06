@@ -18,7 +18,7 @@
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
               style="border-width: 2px"
-              
+              [(ngModel)]="roleNameToAdd"
             />
           </div>
         </div>
@@ -35,7 +35,7 @@
           <div class="card">
             <div class="card-header">
               <h3>
-                {{ role.name }}
+                {{ role.displayName }}
                 <label
                   class="switch switch-lg switch-3d switch-primary"
                   style="float: right"
@@ -43,8 +43,7 @@
                   <input
                     type="checkbox"
                     class="switch-input"
-                    
-                    
+                    (change)="onSwitchChange(role, $event)"
                     aria-controls="toggleElement"
                   />
                   <span class="switch-slider"></span>
