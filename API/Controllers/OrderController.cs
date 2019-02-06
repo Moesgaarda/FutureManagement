@@ -27,7 +27,6 @@ namespace API.Controllers
         public OrderController(DataContext context, IMapper mapper, IOrderRepository repo,
                                 UserManager<User> userManager, IEventLogRepository eventLogRepo)
         {
-            _context = context;
             _repo = repo;
             _mapper = mapper;
             _userManager = userManager;
@@ -136,7 +135,7 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var orderToChange = await _context.Orders.FirstAsync(x => x.Id == order.Id);
+            var orderToChange = await _repo.GetOrder(order.Id);
             bool result = await _repo.EditOrder(order, orderToChange);
 
             if (result)
@@ -159,7 +158,8 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var orderToChange = await _context.Orders.FirstAsync(x => x.Id == order.Id);
+
+            var orderToChange = await _repo.GetOrder(order.Id);
             bool result = await _repo.EditOrder(order, orderToChange);
 
             if (result)

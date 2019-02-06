@@ -62,7 +62,7 @@ export class DetailsOrderComponent implements OnInit {
       this.isEditing = false;
     } else {
       this.order.status = this.orderStatusEnum[this.orderStatus];
-      this.orderService.editOrder(this.order).subscribe(
+      this.orderService.editOrderStatus(this.order).subscribe(
         data => {
             this.alertify.success('Ændringer gemt');
         },

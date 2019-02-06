@@ -33,6 +33,8 @@ export class NewOrderComponent implements OnInit {
   descriptionTextsToAdd: string[] = [] as string[];
   uploader: FileUploadService;
   statuses = Object.keys(OrderStatusEnum);
+  orderStatusEnum = OrderStatusEnum;
+  orderStatus: string;
 
 
   constructor(
@@ -134,7 +136,7 @@ export class NewOrderComponent implements OnInit {
     }
 
     this.currentItem.properties = this.propertyDescriptionsToAdd;
-    this.currentItem.isActive = true;
+    this.currentItem.isActive = false;
     this.orderToAdd.products.push(this.currentItem);
     this.changePage();
     this.currentItem = {} as Item;
@@ -150,12 +152,22 @@ export class NewOrderComponent implements OnInit {
    * @memberof NewOrderComponent
    */
   async addOrder() {
+    this.orderToAdd.status = this.orderStatusEnum[this.orderStatus];
     if (this.uploader.queuedFiles.length > 0) {
       const fileArray = await this.uploader.upload('OrderFiles');
       this.orderToAdd.files = fileArray;
       this.orderToAdd.fileNames = [];
       for (const file of this.uploader.queuedFiles) {
         this.orderToAdd.fileNames.push(file.name);
+      }
+    }
+    if (this.orderToAdd.status === OrderStatusEnum.Ankommet) {
+      for ( const item of this.orderToAdd.products) {
+        item.isActive = true;
+      }
+    } else {
+      for ( const item of this.orderToAdd.products) {
+        item.isActive = false;
       }
     }
     this.orderService.addOrder(this.orderToAdd).subscribe(

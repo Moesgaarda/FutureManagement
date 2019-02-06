@@ -12,19 +12,19 @@ namespace API.Dtos.OrderDtos
         public string Company { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public User OrderedBy { get; set; }
+        public UserForItemGetDto OrderedBy { get; set; }
         public int PurchaseNumber { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public int Length { get; set; }
         public UnitType UnitType { get; set; }
-        public ICollection<Item> Products { get; set; }
+        public ICollection<ItemForTableGetDto> Products { get; set; }
         public ICollection<FileNameForGetDto> Files { get; set; }
         public OrderStatusEnum Status { get; set; }
         public bool InternalOrder { get; set; }
 
         /* If the order is internal, it should have an assigned user */
-        public User AssignedUser { get; set; }
-        public User SignedBy { get; set; }
+        public UserForItemGetDto AssignedUser { get; set; }
+        public UserForItemGetDto SignedBy { get; set; }
     }
 }
