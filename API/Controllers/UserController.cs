@@ -204,6 +204,30 @@ namespace API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Policy = "User_Add")]
+        [HttpPost("addRoleCategory")]
+        public async Task<IActionResult> AddNewRoleCategory([FromBody]RoleCategory role)
+        {   
+            return Ok();
+        }
+
+        [Authorize(Policy = "User_View")]      
+        [HttpGet("GetAllRoleCategories")]
+        public async Task<IActionResult> GetRoleCategories(){
+            var roles = await _repo.GetRoleCategories();
+
+            return Ok(roles);
+        }
+
+        [Authorize(Policy = "User_View")]      
+        [HttpGet("GetAllRoles")]
+        public async Task<IOrderedEnumerable<Role>> GetUserRoles() {
+            var roles = await _roleManager.Roles.ToListAsync();
+            var sortedRoles =  roles.OrderBy(x => x.Name);
+            return sortedRoles;
+        }
+
+
 
     }
 }

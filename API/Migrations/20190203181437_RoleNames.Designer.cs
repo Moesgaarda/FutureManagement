@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190203181437_RoleNames")]
+    partial class RoleNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -426,8 +428,6 @@ namespace API.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("DisplayName");
-
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
@@ -443,7 +443,7 @@ namespace API.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("API.Models.RoleCategory", b =>
+            modelBuilder.Entity("API.Models.RoleName", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -452,20 +452,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleCategories");
-                });
-
-            modelBuilder.Entity("API.Models.RoleCategoryRoleRelation", b =>
-                {
-                    b.Property<int>("RoleCategoryId");
-
-                    b.Property<int>("RoleId");
-
-                    b.HasKey("RoleCategoryId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("RoleCategoryRoleRelation");
+                    b.ToTable("RoleNames");
                 });
 
             modelBuilder.Entity("API.Models.TemplateFileName", b =>
@@ -583,9 +570,13 @@ namespace API.Migrations
 
                     b.Property<int>("RoleId");
 
+                    b.Property<int?>("RoleNameId");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleNameId");
 
                     b.ToTable("AspNetUserRoles");
                 });
@@ -805,19 +796,6 @@ namespace API.Migrations
                         .HasForeignKey("UnitTypeId");
                 });
 
-            modelBuilder.Entity("API.Models.RoleCategoryRoleRelation", b =>
-                {
-                    b.HasOne("API.Models.RoleCategory", "RoleCategory")
-                        .WithMany("RoleCategoryRoleRelations")
-                        .HasForeignKey("RoleCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("API.Models.Role", "Role")
-                        .WithMany("RoleCategoryRoleRelations")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("API.Models.TemplateFileName", b =>
                 {
                     b.HasOne("API.Models.FileData", "FileData")
@@ -855,6 +833,10 @@ namespace API.Migrations
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("API.Models.RoleName")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleNameId");
 
                     b.HasOne("API.Models.User", "User")
                         .WithMany("UserRoles")

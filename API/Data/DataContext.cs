@@ -35,7 +35,8 @@ namespace API.Data
         public DbSet<ItemTemplateCategory> TemplateCategories { get; set; }
         public DbSet<ProjectStatus> ProjectStatuses { get; set; }
         public DbSet<ItemTemplateCategory> ItemTemplateCategories { get; set; }
-
+        public DbSet<RoleCategory> RoleCategories {get; set;}
+        public DbSet<RoleCategoryRoleRelation> RoleCategoryRoleRelation { get; set; }
 
         
         // TODO Could use refactoring to look like userrole.
@@ -61,6 +62,18 @@ namespace API.Data
                     .IsRequired();
             });
 
+            modelBuilder.Entity<RoleCategoryRoleRelation>()
+                .HasKey( rr => new { rr.RoleCategoryId, rr.RoleId});
+
+            modelBuilder.Entity<RoleCategoryRoleRelation>()
+                .HasOne( rr => rr.RoleCategory)
+                .WithMany( rc => rc.RoleCategoryRoleRelations)
+                .HasForeignKey( rr => rr.RoleCategoryId);
+                
+            modelBuilder.Entity<RoleCategoryRoleRelation>()
+                .HasOne( rr => rr.Role)
+                .WithMany( r => r.RoleCategoryRoleRelations)
+                .HasForeignKey( rr => rr.RoleId);
 
             modelBuilder.Entity<TemplatePropertyRelation>()
                 .HasKey(t => new { t.TemplateId, t.PropertyId });    
