@@ -23,7 +23,8 @@ export class NewUserComponent implements OnInit {
   roleFilter: string;
   itemsPerPage = 15;
   currentPage = 1;
-  rolesToAdd: string[] = [] as string[];
+  rolesToAdd: RoleCategory[] = [] as RoleCategory[];
+  roleCategoryNames: string[] = [] as string[];
 
   constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router,
               private userService: UserService) {
@@ -31,11 +32,12 @@ export class NewUserComponent implements OnInit {
   }
   ngOnInit(): void {
     this.user.password = '';
-    this.userService.getAllRoleCategories().subscribe(userRoles => {
-      this.roles = userRoles;
+    this.userService.getAllRoleCategories().subscribe(roleCategories => {
+      this.roles = roleCategories;
     });
   }
   createUser() {
+    this.user.RoleCategory = this.rolesToAdd;
     if (this.user.password === this.passwordConfirm) {
       this.authService.register(this.user).subscribe(() => {
         this.alertify.success('Brugeren blev oprettet');
@@ -46,7 +48,9 @@ export class NewUserComponent implements OnInit {
     } else {
       this.alertify.error('Brugeren var ikke valid');
     }
+    console.log(this.user);
   }
+
   goToUserTable() {
     this.router.navigate(['/users/view/']);
   }

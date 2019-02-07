@@ -29,7 +29,7 @@ namespace API.Data
         public async Task<bool> AddRoleCategory(RoleCategory newRoleCategory)
         {
             foreach(var role in newRoleCategory.RoleCategoryRoleRelations){
-                role.Role = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == role.RoleId);
+                role.Role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == role.RoleId);
             }
 
             _dbContext.RoleCategories.Add(newRoleCategory);
@@ -49,7 +49,6 @@ namespace API.Data
 
         public async Task<List<RoleCategory>> GetRoleCategories()
         {
-
             return await _dbContext.RoleCategories.ToListAsync();
         }
 
