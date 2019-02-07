@@ -162,11 +162,11 @@ export class NewOrderComponent implements OnInit {
       }
     }
     if (this.orderToAdd.status === OrderStatusEnum.Ankommet) {
-      for ( const item of this.orderToAdd.products) {
+      for (const item of this.orderToAdd.products) {
         item.isActive = true;
       }
     } else {
-      for ( const item of this.orderToAdd.products) {
+      for (const item of this.orderToAdd.products) {
         item.isActive = false;
       }
     }

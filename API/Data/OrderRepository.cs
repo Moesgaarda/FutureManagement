@@ -61,7 +61,7 @@ namespace API.Data
                     item.IsActive = true;
                 }
             }else if(order.Status != OrderStatusEnum.Ankommet && orderToChange.Status == OrderStatusEnum.Ankommet){
-                foreach( Item item in orderToChange.Products){
+                foreach(Item item in orderToChange.Products){
                     item.IsActive = false;
                 }
             }
