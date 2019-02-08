@@ -1,5 +1,5 @@
 export interface DetailFile {
-    id: number;
-    fileName: string;
-    fileDataId: number;
+  id: number;
+  fileName: string;
+  fileDataId: number;
 }

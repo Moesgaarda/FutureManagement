@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../_services/order.service';
-import { environment } from '../../../environments/environment';
-import * as _ from 'underscore';
+import {Component} from '@angular/core';
 
 @Component({
   templateUrl: './view-orders.component.html',

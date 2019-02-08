@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ViewUnitTypesComponent } from './view-unitTypes.component';
-import { EditUnitTypeComponent } from './edit-unitType.component';
-import { NewUnitTypeComponent } from './new-unitType.component';
-import { AuthGuard } from '../../_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ViewUnitTypesComponent} from './view-unitTypes.component';
+import {EditUnitTypeComponent} from './edit-unitType.component';
+import {NewUnitTypeComponent} from './new-unitType.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -51,4 +51,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UnitTypesRoutingModule {}
+export class UnitTypesRoutingModule {
+}

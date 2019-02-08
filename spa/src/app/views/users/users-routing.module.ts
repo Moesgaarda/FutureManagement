@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ViewUsersComponent } from './view-users.component';
-import { NewUserComponent } from './new-user.component';
-import { EditUserComponent } from './edit-user.component';
-import { DetailsUserComponent } from './details-user.component';
-import { AuthGuard } from '../../_guards/auth.guard';
-
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ViewUsersComponent} from './view-users.component';
+import {NewUserComponent} from './new-user.component';
+import {EditUserComponent} from './edit-user.component';
+import {DetailsUserComponent} from './details-user.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 
 const routes: Routes = [
@@ -40,8 +39,8 @@ const routes: Routes = [
         path: 'edit/:id',
         component: EditUserComponent,
         data: {
-            title: 'Rediger bruger',
-            roles: ['User_Edit']
+          title: 'Rediger bruger',
+          roles: ['User_Edit']
         }
       },
       {
@@ -60,4 +59,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UsersRoutingModule {}
+export class UsersRoutingModule {
+}

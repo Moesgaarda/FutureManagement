@@ -8,56 +8,56 @@
             <div class="col-lg-3"><b>Mængde</b></div>
             <div class="col-lg-9">
               <input
-                class="form-control"
-                type="text"
-                placeholder="{{ item.amount }}"
-                value="item.amount"
                 [(ngModel)]="item.amount"
+                class="form-control"
                 name="amount"
+                placeholder="{{ item.amount }}"
+                type="text"
+                value="item.amount"
               />
             </div>
           </div>
-          <br />
+          <br/>
           <div class="row">
             <div class="col-lg-3"><b>Placering</b></div>
             <div class="col-lg-9">
               <input
-                class="form-control"
-                type="text"
-                placeholder="{{ item.placement }}"
-                value="item.amount"
-                name="placement"
                 [(ngModel)]="item.placement"
+                class="form-control"
+                name="placement"
+                placeholder="{{ item.placement }}"
+                type="text"
+                value="item.amount"
               />
             </div>
           </div>
-          <br />
+          <br/>
           <div class="row">
             <div class="col-lg-3"><b>Aktiv</b></div>
             <div class="col-lg-9">
               <div class="form-check">
                 <input
-                  class="form-check-input"
                   [(ngModel)]="item.isActive"
+                  class="form-check-input"
+                  id="isActive"
+                  name="isActive"
+                  ng-checked="item.isActive"
                   type="checkbox"
                   value="item.isActive"
-                  id="isActive"
-                  ng-checked="item.isActive"
-                  name="isActive"
                 />
                 <label class="form-check-label" for="isActive"> </label>
               </div>
             </div>
           </div>
-          <br />
+          <br/>
           <div class="row">
             <div class="col-lg-3">
               <button
-                type="button"
+                (click)="editItem()"
+                [disabled]="!f.dirty && f.valid"
                 class="btn btn-primary"
                 style="margin-top: 2em"
-                [disabled]="!f.dirty && f.valid"
-                (click)="editItem()"
+                type="button"
               >
                 Gem
               </button>

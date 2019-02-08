@@ -1,11 +1,11 @@
-import { User } from './User';
+import {User} from './User';
 
 
 export interface EventLog {
-    id: number;
-    user: User;
-    description: string;
-    date: Date;
-    localIP: string;
+  id: number;
+  user: User;
+  description: string;
+  date: Date;
+  localIP: string;
 
 }

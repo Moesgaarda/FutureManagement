@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ViewCustomersComponent } from './view-customers.component';
+import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {ViewCustomersComponent} from './view-customers.component';
 
-import { CustomersRoutingModule } from './customers-routing.module';
-import { NewCustomerComponent } from './new-customer.component';
-import { DetailsCustomerComponent } from './details-customer.component';
+import {CustomersRoutingModule} from './customers-routing.module';
+import {NewCustomerComponent} from './new-customer.component';
+import {DetailsCustomerComponent} from './details-customer.component';
 
 @NgModule({
   imports: [
@@ -15,6 +15,7 @@ import { DetailsCustomerComponent } from './details-customer.component';
   declarations: [
     ViewCustomersComponent,
     NewCustomerComponent,
-    DetailsCustomerComponent ]
+    DetailsCustomerComponent]
 })
-export class CustomersModule { }
+export class CustomersModule {
+}

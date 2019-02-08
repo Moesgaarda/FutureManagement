@@ -2,51 +2,51 @@
   <div class="row">
     <div class="col-md-4">
       <input
+        (tableChanged)="onChangeTable(config)"
         *ngIf="config.filtering"
-        placeholder="Filtrer indhold"
         [ngTableFiltering]="config.filtering"
         class="form-control"
-        (tableChanged)="onChangeTable(config)"
+        placeholder="Filtrer indhold"
       />
     </div>
-    <div class="col-md-8" *ngIf="printButton">
+    <div *ngIf="printButton" class="col-md-8">
       <button
-        style="float: right"
-        type="button"
-        class="btn btn-primary btn-rectangle input-group-text"
         (click)="getTableAsPdf()"
-        data-toggle="tooltip"
+        class="btn btn-primary btn-rectangle input-group-text"
         data-placement="top"
+        data-toggle="tooltip"
+        style="float: right"
         title="Åbner en ny fane der indeholder alle elementer som pdf"
+        type="button"
       >
         Vis alle (pdf)
       </button>
     </div>
   </div>
-  <br />
+  <br/>
   <ng-table
-    [config]="config"
-    (tableChanged)="onChangeTable(config)"
     (cellClicked)="onCellClick($event)"
-    [rows]="rows"
+    (tableChanged)="onChangeTable(config)"
     [columns]="columns"
+    [config]="config"
+    [rows]="rows"
   >
   </ng-table>
   <pagination
+    (numPages)="numPages = $event"
+    (pageChanged)="onChangeTable(config, $event)"
     *ngIf="config.paging"
-    class="pagination-sm"
     [(ngModel)]="page"
-    [totalItems]="length"
+    [boundaryLinks]="true"
     [itemsPerPage]="itemsPerPage"
     [maxSize]="maxSize"
-    [boundaryLinks]="true"
     [rotate]="false"
-    (pageChanged)="onChangeTable(config, $event)"
-    previousText="Tilbage"
-    nextText="Frem"
+    [totalItems]="length"
+    class="pagination-sm"
     firstText="Første"
     lastText="Sidste"
-    (numPages)="numPages = $event"
+    nextText="Frem"
+    previousText="Tilbage"
   >
   </pagination>
 </div>

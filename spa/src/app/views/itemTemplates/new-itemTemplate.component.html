@@ -6,30 +6,33 @@
         <div class="form-group">
           <label for="name">Navn på skabelonen</label>
           <div class="input-group">
-            <input type="text" placeholder="Navn" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.name" />
+            <input [(ngModel)]="templateToAdd && templateToAdd.name" class="form-control" placeholder="Navn"
+                   type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label>Mængdeenhed</label>
-          <select class="form-control dropdown-toggle" [(ngModel)]="unitType">
+          <select [(ngModel)]="unitType" class="form-control dropdown-toggle">
             <option *ngFor="let unit of unitTypeList" [ngValue]="unit">{{unit.name}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="name">Nedre grænse</label>
           <div class="input-group">
-            <input type="text" placeholder="Nedre grænse for denne skabelon på lageret" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.lowerLimit"/>
+            <input [(ngModel)]="templateToAdd && templateToAdd.lowerLimit" class="form-control" placeholder="Nedre grænse for denne skabelon på lageret"
+                   type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label for="name">Beskrivelse</label>
           <div class="input-group">
-            <textarea rows="5" placeholder="Beskrivelse" class="form-control" [(ngModel)]="templateToAdd && templateToAdd.description"></textarea>
+            <textarea [(ngModel)]="templateToAdd && templateToAdd.description" class="form-control" placeholder="Beskrivelse"
+                      rows="5"></textarea>
           </div>
         </div>
         <div class="form-group">
           <label>Kategori</label>
-          <select class="form-control dropdown-toggle" [(ngModel)]="category">
+          <select [(ngModel)]="category" class="form-control dropdown-toggle">
             <option *ngFor="let cat of categoryList" [ngValue]="cat">{{cat.name}}</option>
           </select>
         </div>
@@ -38,13 +41,13 @@
           <label for="templateList">Skabelonliste</label>
           <div class="form-group">
             <ng-select
-              [items]="templates | async"
-              [multiple]="true"
+              [(ngModel)]="selectedTemplates"
               [closeOnSelect]="false"
               [hideSelected]="true"
+              [items]="templates | async"
+              [multiple]="true"
               bindLabel="name"
-              placeholder="Vælg skabeloner"
-              [(ngModel)]="selectedTemplates">
+              placeholder="Vælg skabeloner">
             </ng-select>
             <small class="form-text">En liste af skabeloner der bruges til at fremstille denne skabelon.
             </small>
@@ -54,14 +57,15 @@
         <div class="form-group">
           <label for="name">Vælg mængder til de forskellige skabeloner</label>
           <br>
-            <ng-container *ngFor="let temp of selectedTemplates; let i=index">
+          <ng-container *ngFor="let temp of selectedTemplates; let i=index">
             <label><i>{{temp.name}} </i></label>
-            <input type="number" placeholder="{{temp.name}}" class="form-control" name="amount{{i}}" [(ngModel)]="partAmounts[i]"/>
+            <input [(ngModel)]="partAmounts[i]" class="form-control" name="amount{{i}}" placeholder="{{temp.name}}"
+                   type="number"/>
           </ng-container>
 
         </div>
         <div class="form-group">
-          <button class="btn btn-success" (click)="addTemplate()">Tilføj skabelonen</button>
+          <button (click)="addTemplate()" class="btn btn-success">Tilføj skabelonen</button>
         </div>
       </div>
     </div>
@@ -74,28 +78,30 @@
         <div class="card">
           <div class="card-body">
             <div class="input-group">
-              <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
+              <input [(ngModel)]="propFilter" class="form-control" placeholder="Filtrer egenskaber" type="text"/>
             </div>
             <br>
             <div class="col-lg-6">
-              <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
-                                                                                          currentPage: currentPage, 
+              <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage,
+                                                                                          currentPage: currentPage,
                                                                                           totalItems: properties?.length }; let i=index">
-                <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
+                <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"></div>
                 <ng-template #checkedBox>
-                  <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)" checked/> {{prop.name}}
+                  <input (change)="onCheckboxChange(prop,$event)" checked class="form-check-input"
+                         type="checkbox"/> {{prop.name}}
                 </ng-template>
                 <ng-template #uncheckedBox>
-                  <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
-                </ng-template>   
-                <br>      
-              </ng-container>      
+                  <input (change)="onCheckboxChange(prop,$event)" class="form-check-input"
+                         type="checkbox"/> {{prop.name}}
+                </ng-template>
+                <br>
+              </ng-container>
             </div>
             <br>
             <pagination-controls (pageChange)="currentPage = $event"
-                                  maxSize="7"
-                                  previousLabel="Forrige"
-                                  nextLabel="Næste">
+                                 maxSize="7"
+                                 nextLabel="Næste"
+                                 previousLabel="Forrige">
             </pagination-controls>
           </div>
         </div>
@@ -106,36 +112,37 @@
       <div class="card-header">Tilføj filer</div>
       <div class="card-body">
         <div class="col-lg-12" style="margin-bottom: 40px">
-        <form enctype="multipart/form-data">
-          <input #file type="file" enctype="multipart/form-data" multiple (change)="uploader.queue(file.files)">
-            <br />
-            <br />
+          <form enctype="multipart/form-data">
+            <input #file (change)="uploader.queue(file.files)" enctype="multipart/form-data" multiple type="file">
+            <br/>
+            <br/>
 
-          <table class="table">
-            <thead>
+            <table class="table">
+              <thead>
               <tr>
                 <th width="50%">Navn</th>
                 <th>Størrelse</th>
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               <tr *ngFor="let item of uploader.queuedFiles">
                 <td>
                   <strong>{{ item.name}}</strong>
                 </td>
-                <td>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+                <td>{{ item.size / 1024 / 1024 | number:'.2' }} MB</td>
                 <td>
-                    <button type="button" class="btn btn-danger btn-s" (click)="uploader.removeFromQueue(file)">
-                      <span class="glyphicon glyphicon-trash"></span> Fjern
-                    </button>
+                  <button (click)="uploader.removeFromQueue(file)" class="btn btn-danger btn-s" type="button">
+                    <span class="glyphicon glyphicon-trash"></span> Fjern
+                  </button>
                 </td>
               </tr>
-            </tbody>
-          </table>
-        </form>
+              </tbody>
+            </table>
+          </form>
 
           <div>
-            <button type="button" class="btn btn-danger btn-s"(click)="uploader.clearQueue()" [disabled]="!uploader.queuedFiles.length">
+            <button (click)="uploader.clearQueue()" [disabled]="!uploader.queuedFiles.length" class="btn btn-danger btn-s"
+                    type="button">
               <span class="glyphicon glyphicon-trash"></span> Fjern alle
             </button>
           </div>

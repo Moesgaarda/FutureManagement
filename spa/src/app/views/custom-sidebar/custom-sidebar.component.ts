@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AuthService } from '../../_services/auth.service';
-import { User } from '../../_models/User';
+import {Component, Input, OnInit} from '@angular/core';
+import {AuthService} from '../../_services/auth.service';
+import {User} from '../../_models/User';
 
 
 @Component({
@@ -15,6 +15,12 @@ export class CustomSidebarComponent implements OnInit {
   changes: MutationObserver;
   sidebarMinimized: boolean;
 
+  constructor(private authService: AuthService) {
+
+    this.changes = new MutationObserver((mutations) => {
+      this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
+    });
+  }
 
   ngOnInit() {
     this.addNavItems().then(() => {
@@ -22,7 +28,7 @@ export class CustomSidebarComponent implements OnInit {
     });
   }
 
-  async addNavItems () {
+  async addNavItems() {
     let children = [];
     let navItemIndex = 0;
     this.navItems.forEach((navItem) => {
@@ -47,9 +53,9 @@ export class CustomSidebarComponent implements OnInit {
         }
       } else if (navItem.role) {
         if (this.authService.roleMatch([navItem.role])) {
-            this.userNavItems.push(navItem);
-            navItemIndex += 1;
-          }
+          this.userNavItems.push(navItem);
+          navItemIndex += 1;
+        }
       } else {
         this.userNavItems.push(navItem);
         navItemIndex += 1;
@@ -65,14 +71,6 @@ export class CustomSidebarComponent implements OnInit {
         class: 'mt-auto',
       }
     );
-  }
-
-
-  constructor(private authService: AuthService) {
-
-    this.changes = new MutationObserver((mutations) => {
-      this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
-    });
   }
 
   logout() {

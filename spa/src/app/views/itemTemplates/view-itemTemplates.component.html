@@ -4,9 +4,9 @@
   </div>
 
   <div class="card-body">
-    <app-techtable [serviceType]="'ItemTemplateService'" [columns]="[{title: 'Navn', name: 'name'}, 
+    <app-techtable [columns]="[{title: 'Navn', name: 'name'},
                                                                     {title: 'Oprettet', name: 'created'},
-                                                                    {title: 'Kategori', name: 'category.name'}]">
+                                                                    {title: 'Kategori', name: 'category.name'}]" [serviceType]="'ItemTemplateService'">
     </app-techtable>
   </div>
 </div>

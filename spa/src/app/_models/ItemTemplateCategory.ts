@@ -1,5 +1,4 @@
-
 export interface ItemTemplateCategory {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ItemTemplateService } from '../../_services/itemTemplate.service';
-import { ItemService } from '../../_services/item.service';
-import { UserService } from '../../_services/user.service';
-import { AlertifyService } from '../../_services/alertify.service';
-import { ItemTemplate } from '../../_models/ItemTemplate';
-import { Item } from '../../_models/Item';
-import { ItemItemRelation } from '../../_models/ItemItemRelation';
-import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
-import { NewItemSteps } from '../../_enums/NewItemSteps.enum';
-import { ItemPropertyDescription } from '../../_models/ItemPropertyDescription';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ItemTemplateService} from '../../_services/itemTemplate.service';
+import {ItemService} from '../../_services/item.service';
+import {UserService} from '../../_services/user.service';
+import {AlertifyService} from '../../_services/alertify.service';
+import {ItemTemplate} from '../../_models/ItemTemplate';
+import {Item} from '../../_models/Item';
+import {ItemItemRelation} from '../../_models/ItemItemRelation';
+import {ItemTemplatePart} from '../../_models/ItemTemplatePart';
+import {NewItemSteps} from '../../_enums/NewItemSteps.enum';
+import {ItemPropertyDescription} from '../../_models/ItemPropertyDescription';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class NewItemComponent implements OnInit {
 
 
   constructor(private templateService: ItemTemplateService,
-    private router: Router, private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
+              private router: Router, private itemService: ItemService, private userService: UserService, private alertify: AlertifyService) {
 
   }
 
@@ -36,7 +36,7 @@ export class NewItemComponent implements OnInit {
 
 
   async getAllItemTemplates() {
-    await this.templateService.getAll().subscribe( itemTemplates => {
+    await this.templateService.getAll().subscribe(itemTemplates => {
       this.itemTemplates = itemTemplates;
     });
   }
@@ -62,7 +62,7 @@ export class NewItemComponent implements OnInit {
     this.currentSelectItem = templatePart;
     this.itemService.getAllInstancesInStock(templatePart.part).subscribe(items => {
       for (let i = 0; i < items.length; i++) {
-        this.itemsToChooseFromList.push({part : items[i], amount : 0});
+        this.itemsToChooseFromList.push({part: items[i], amount: 0});
       }
     });
     this.currentStep = NewItemSteps.Stock;
@@ -92,13 +92,15 @@ export class NewItemComponent implements OnInit {
       this.currentStep = NewItemSteps.Items;
     }
   }
+
   changeToInfo() {
     this.itemToAdd.properties = [] as ItemPropertyDescription [];
     for (const property of this.itemToAdd.template.templateProperties) {
-      this.itemToAdd.properties.push({description: '' , propertyName: property});
+      this.itemToAdd.properties.push({description: '', propertyName: property});
     }
     this.currentStep = NewItemSteps.Info;
   }
+
   addItem() {
     this.itemToAdd.isActive = true;
     this.itemService.addItem(this.itemToAdd).subscribe(

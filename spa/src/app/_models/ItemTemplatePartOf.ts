@@ -1,6 +1,6 @@
-import { ItemTemplate } from './ItemTemplate';
+import {ItemTemplate} from './ItemTemplate';
 
 export interface ItemTemplatePartOf {
-    template: ItemTemplate;
-    amount: number;
+  template: ItemTemplate;
+  amount: number;
 }

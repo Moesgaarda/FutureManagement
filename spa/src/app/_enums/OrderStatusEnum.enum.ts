@@ -1,6 +1,6 @@
 export enum OrderStatusEnum {
-    Tilbud,
-    Bestilt,
-    Ankommet,
-    Annulleret
+  Tilbud,
+  Bestilt,
+  Ankommet,
+  Annulleret
 }

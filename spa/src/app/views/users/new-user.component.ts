@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { AuthService } from '../../_services/auth.service';
-import { UserForRegister } from '../../_models/UserForRegister';
-import { AlertifyService } from '../../_services/alertify.service';
-import { Router } from '@angular/router';
-import { UserService } from '../../_services/user.service';
-import { UserRole } from '../../_models/UserRole';
-import { RoleCategory } from '../../_models/RoleCategory';
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../environments/environment';
+import {AuthService} from '../../_services/auth.service';
+import {UserForRegister} from '../../_models/UserForRegister';
+import {AlertifyService} from '../../_services/alertify.service';
+import {Router} from '@angular/router';
+import {UserService} from '../../_services/user.service';
+import {RoleCategory} from '../../_models/RoleCategory';
 
 
 @Component({
@@ -30,12 +29,14 @@ export class NewUserComponent implements OnInit {
               private userService: UserService) {
 
   }
+
   ngOnInit(): void {
     this.user.password = '';
     this.userService.getAllRoleCategories().subscribe(roleCategories => {
       this.roles = roleCategories;
     });
   }
+
   createUser() {
     this.user.RoleCategory = this.rolesToAdd;
     if (this.user.password === this.passwordConfirm) {

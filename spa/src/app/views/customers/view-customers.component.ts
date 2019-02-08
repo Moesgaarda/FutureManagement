@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { environment } from '../../../environments/environment';
-import * as _ from 'underscore';
-import { Customer } from '../../_models/Customer';
-import { CustomerService } from '../../_services/customer.service';
+import {Component} from '@angular/core';
+import {LocalDataSource} from 'ng2-smart-table';
+import {Customer} from '../../_models/Customer';
+import {CustomerService} from '../../_services/customer.service';
 
 
 @Component({

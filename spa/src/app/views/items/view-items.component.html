@@ -2,9 +2,8 @@
   <div class="card-header">Genstande</div>
   <div class="card-body">
     <div class="row"></div>
-    <br />
+    <br/>
     <app-techtable
-      [serviceType]="'ItemService'"
       [columns]="[
         { title: 'Navn', name: 'template.name' },
         { title: 'Mængde', name: 'amount' },
@@ -12,7 +11,8 @@
         { title: 'Er aktiv', name: 'isActive' }
       ]"
       [printButton]="true"
-      >
+      [serviceType]="'ItemService'"
+    >
     </app-techtable>
   </div>
 </div>

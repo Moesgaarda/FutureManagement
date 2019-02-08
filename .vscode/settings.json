@@ -1,29 +1,32 @@
 {
-    "deploy": {
-      "packages": [
-        {
-          "name": "Version 30.07.2018",
-          "description": "FutureManagement Version 30.07.2018",
-          "files": ["API/bin/Debug/netcoreapp2.0/publish/**"]
-        }
-      ],
-      "targets": [
-        {
-          "type": "sftp",
-          "name": "DevlopmentTestServer",
-          "description": "Remote Development Test Server",
-          "dir": "/var/FutureManagement",
-          "mappings": [
-              {
-                  "source": "/API/bin/Debug/netcoreapp2.0/publish",
-                  "target": "/"
-              }
-          ],
-          "host": "future.lundsgaardkammersgaard.dk",
-          "port": 22,
-          "user": "futman", "password": "5d2fbfd717be11990e70e23606",
-          "checkBeforeDeploy": true
-        }
-      ]
-    }
+  "deploy": {
+    "packages": [
+      {
+        "name": "Version 30.07.2018",
+        "description": "FutureManagement Version 30.07.2018",
+        "files": [
+          "API/bin/Debug/netcoreapp2.0/publish/**"
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "type": "sftp",
+        "name": "DevlopmentTestServer",
+        "description": "Remote Development Test Server",
+        "dir": "/var/FutureManagement",
+        "mappings": [
+          {
+            "source": "/API/bin/Debug/netcoreapp2.0/publish",
+            "target": "/"
+          }
+        ],
+        "host": "future.lundsgaardkammersgaard.dk",
+        "port": 22,
+        "user": "futman",
+        "password": "5d2fbfd717be11990e70e23606",
+        "checkBeforeDeploy": true
+      }
+    ]
   }
+}

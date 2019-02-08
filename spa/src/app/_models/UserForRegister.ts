@@ -1,13 +1,13 @@
-import { RoleCategory } from './RoleCategory';
+import {RoleCategory} from './RoleCategory';
 
 export interface UserForRegister {
-    username: string;
-    password: string;
-    name: string;
-    surname: string;
-    birthdate: Date;
-    isActive: boolean;
-    email: string;
-    phone: string;
-    RoleCategory: RoleCategory[];
+  username: string;
+  password: string;
+  name: string;
+  surname: string;
+  birthdate: Date;
+  isActive: boolean;
+  email: string;
+  phone: string;
+  RoleCategory: RoleCategory[];
 }

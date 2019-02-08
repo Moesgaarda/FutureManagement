@@ -50,8 +50,9 @@
           </div>
 
           <dt class="col-sm-12">
-            <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">Rediger
-              bestillingen</button>
+            <button (click)="goToEditPage(order.id)" class="btn btn-primary" type="button">Rediger
+              bestillingen
+            </button>
           </dt>
 
         </div>
@@ -64,22 +65,22 @@
         <div class="card-body">
           <table class="table">
             <thead>
-              <tr>
-                <th>Navn</th>
-                <th>Mængde</th>
-                <th></th>
-              </tr>
+            <tr>
+              <th>Navn</th>
+              <th>Mængde</th>
+              <th></th>
+            </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of order.products">
-                <td>{{item.template.name}}</td>
-                <td>{{item.amount}}</td>
-                <td>
-                  <button class="btn btn-primary btn-sm" (click)="goToItemTemplateDetail(item.template.id)">
-                    Vis detaljer
-                  </button>
-                </td>
-              </tr>
+            <tr *ngFor="let item of order.products">
+              <td>{{item.template.name}}</td>
+              <td>{{item.amount}}</td>
+              <td>
+                <button (click)="goToItemTemplateDetail(item.template.id)" class="btn btn-primary btn-sm">
+                  Vis detaljer
+                </button>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -89,18 +90,18 @@
         <div class="card-body">
           <table class="table">
             <thead>
-              <tr>
-                <th width="80%">Navn</th>
-                <th></th>
-              </tr>
+            <tr>
+              <th width="80%">Navn</th>
+              <th></th>
+            </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of order.files">
-                <td>{{item.fileName}}</td>
-                <td>
-                  <button type="button" class="btn btn-success" (click)="downloadFile(item)">Download</button>
-                </td>
-              </tr>
+            <tr *ngFor="let item of order.files">
+              <td>{{item.fileName}}</td>
+              <td>
+                <button (click)="downloadFile(item)" class="btn btn-success" type="button">Download</button>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>

@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ViewProjectsComponent } from './view-projects.component';
-import { NewProjectComponent } from './new-project.component';
-import { DetailsProjectComponent } from './details-project.component';
+import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {ViewProjectsComponent} from './view-projects.component';
+import {NewProjectComponent} from './new-project.component';
+import {DetailsProjectComponent} from './details-project.component';
 
-import { ProjectsRoutingModule } from './projects-routing.module';
+import {ProjectsRoutingModule} from './projects-routing.module';
 
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { NgSelectModule } from '@ng-select/ng-select';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -24,6 +24,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   declarations: [
     ViewProjectsComponent,
     NewProjectComponent,
-    DetailsProjectComponent ]
+    DetailsProjectComponent]
 })
-export class ProjectsModule { }
+export class ProjectsModule {
+}

@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ViewCustomersComponent } from './view-customers.component';
-import { NewCustomerComponent } from './new-customer.component';
-import { DetailsCustomerComponent } from './details-customer.component';
-import { AuthGuard } from '../../_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ViewCustomersComponent} from './view-customers.component';
+import {NewCustomerComponent} from './new-customer.component';
+import {DetailsCustomerComponent} from './details-customer.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -49,4 +49,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CustomersRoutingModule {}
+export class CustomersRoutingModule {
+}

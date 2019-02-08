@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ViewOrdersComponent } from './view-orders.component';
-import { DetailsOrderComponent } from './details-order.component';
-import { NewOrderComponent } from './new-order.component';
-import { EditOrderComponent} from './edit-order.component';
-import { AuthGuard } from '../../_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ViewOrdersComponent} from './view-orders.component';
+import {DetailsOrderComponent} from './details-order.component';
+import {NewOrderComponent} from './new-order.component';
+import {EditOrderComponent} from './edit-order.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -59,4 +59,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OrdersRoutingModule {}
+export class OrdersRoutingModule {
+}

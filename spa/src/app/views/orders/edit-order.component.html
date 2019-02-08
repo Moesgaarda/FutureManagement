@@ -9,14 +9,14 @@
           <div class="form-group">
             <label>Firma</label>
             <div class="input-group">
-              <input class="form-control" [(ngModel)]="order.company" />
+              <input [(ngModel)]="order.company" class="form-control"/>
             </div>
           </div>
           <div *ngIf="!editDate; else editContent">
             <div class="form-group">
               <label>Leveringsdato</label>
               <div class="input-group-text">{{ deliveryDateAsString }}</div>
-              <button class="btn btn-primary btn-sm" (click)="toggleEditDate()">
+              <button (click)="toggleEditDate()" class="btn btn-primary btn-sm">
                 Rediger leveringsdato
               </button>
             </div>
@@ -26,19 +26,19 @@
               <label>Leveringsdato</label>
               <div class="input-group">
                 <input
-                  type="date"
-                  placeholder="Leveringstidspunkt"
-                  class="form-control"
                   [(ngModel)]="order.deliveryDate"
+                  class="form-control"
+                  placeholder="Leveringstidspunkt"
+                  type="date"
                 />
               </div>
               <div class="btn-toolbar">
-                <button class="btn btn-success btn-sm" (click)="saveEditDate()">
+                <button (click)="saveEditDate()" class="btn btn-success btn-sm">
                   Gem dato
                 </button>
                 <button
-                  class="btn btn-danger btn-sm"
                   (click)="cancelEditDate()"
+                  class="btn btn-danger btn-sm"
                 >
                   Annuller
                 </button>
@@ -48,52 +48,52 @@
           <div class="form-group">
             <label>Højde</label>
             <div class="input-group">
-              <input class="form-control" [(ngModel)]="order.height" />
+              <input [(ngModel)]="order.height" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
             <label>Længde</label>
             <div class="input-group">
-              <input class="form-control" [(ngModel)]="order.length" />
+              <input [(ngModel)]="order.length" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
             <label>Bredde</label>
             <div class="input-group">
-              <input class="form-control" [(ngModel)]="order.width" />
+              <input [(ngModel)]="order.width" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
             <label>Mængdeenhed</label>
             <select
-              class="form-control dropdown-toggle"
               [(ngModel)]="order.unitType"
+              class="form-control dropdown-toggle"
             >
               <option *ngFor="let unit of unitTypes" [ngValue]="unit">{{
                 unit.name
-              }}</option>
+                }}</option>
             </select>
           </div>
           <div class="form-group">
             <label>Købsnummer</label>
             <div class="input-group">
-              <input class="form-control" [(ngModel)]="order.purchaseNumber" />
+              <input [(ngModel)]="order.purchaseNumber" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
             <label>Status</label>
             <select
-              class="form-control dropdown-toggle"
               [(ngModel)]="orderStatus"
+              class="form-control dropdown-toggle"
             >
               <option *ngFor="let key of keys" [ngValue]="key">{{
                 key
-              }}</option>
+                }}</option>
             </select>
           </div>
 
           <div class="form-group">
-            <button class="btn btn-success" (click)="saveOrder()">
+            <button (click)="saveOrder()" class="btn btn-success">
               Gem ændringer
             </button>
           </div>

@@ -7,15 +7,15 @@
           <label for="name">Navn på kategori</label>
           <div class="input-group">
             <input
-              type="text"
-              placeholder="Navn"
-              class="form-control"
               [(ngModel)]="category.name"
+              class="form-control"
+              placeholder="Navn"
+              type="text"
             />
           </div>
         </div>
 
-        <button type="button" class="btn btn-success btn-rectangle input-group-text" (click)="addCategory()">
+        <button (click)="addCategory()" class="btn btn-success btn-rectangle input-group-text" type="button">
           Tilføj kategori
         </button>
       </div>

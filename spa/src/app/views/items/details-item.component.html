@@ -9,21 +9,21 @@
             <p>{{item.template.name}}</p>
           </dd>
           <dd class="col-sm-4">
-              <button class="btn btn-primary input-group-text btn-lg" (click)="goToTemplate()">
-                  Se skabelon
-                </button>
-            </dd>
-  
+            <button (click)="goToTemplate()" class="btn btn-primary input-group-text btn-lg">
+              Se skabelon
+            </button>
+          </dd>
+
           <dt class="col-sm-3">Mængde</dt>
           <dd class="col-sm-9">
             <p>{{item.amount}}</p>
           </dd>
-  
+
           <dt class="col-sm-3">Placering</dt>
           <dd class="col-sm-9">
             <p>{{item.placement}}</p>
           </dd>
-  
+
           <dt class="col-sm-3">Aktivt</dt>
           <dd *ngIf="item.isActive" class="col-sm-9">
             <p>Ja</p>
@@ -31,22 +31,24 @@
           <dd *ngIf="!item.isActive" class="col-sm-9">
             <p>Nej</p>
           </dd>
-  
-            <dt *ngIf="item.createdBy != null" class="col-sm-3">Lavet af</dt>
-            <dd *ngIf="item.createdBy != null" class="col-sm-9">
-              <p>{{item.createdBy.name}}</p>
-            </dd>
 
-            <dt *ngIf="item.order != null" class="col-sm-3">Ordre </dt>
-            <dd *ngIf="item.order != null" class="col-sm-5"><p>{{item.order.purchaseNumber}}</p></dd>
-            <dd *ngIf="item.order != null" class="col-sm-4">
-              <button class="btn btn-primary input-group-text btn-lg" (click)="goToOrder()">
-                Se ordre
-              </button>
-            </dd>
-            <dt class="col-sm-12">
-              <button type="button" class="btn btn-primary" style="margin-top: 2em" (click)="goToEditPage()">Rediger detaljer</button>
-            </dt>
+          <dt *ngIf="item.createdBy != null" class="col-sm-3">Lavet af</dt>
+          <dd *ngIf="item.createdBy != null" class="col-sm-9">
+            <p>{{item.createdBy.name}}</p>
+          </dd>
+
+          <dt *ngIf="item.order != null" class="col-sm-3">Ordre</dt>
+          <dd *ngIf="item.order != null" class="col-sm-5"><p>{{item.order.purchaseNumber}}</p></dd>
+          <dd *ngIf="item.order != null" class="col-sm-4">
+            <button (click)="goToOrder()" class="btn btn-primary input-group-text btn-lg">
+              Se ordre
+            </button>
+          </dd>
+          <dt class="col-sm-12">
+            <button (click)="goToEditPage()" class="btn btn-primary" style="margin-top: 2em" type="button">Rediger
+              detaljer
+            </button>
+          </dt>
         </dl>
       </div>
     </div>
@@ -57,12 +59,12 @@
       <div class="card-header">Genstande brugt til produktionen af genstanden</div>
       <div class="card-body">
         <dl *ngFor="let part of item.parts; let i = index" class="row">
-            <dt class="col-sm-2">
-                {{part.amount}}x
-            </dt>
-            <dd class="col-sm-10">
-              <p>{{parts[i].template.name}}</p>
-            </dd>
+          <dt class="col-sm-2">
+            {{part.amount}}x
+          </dt>
+          <dd class="col-sm-10">
+            <p>{{parts[i].template.name}}</p>
+          </dd>
         </dl>
       </div>
     </div>
@@ -75,7 +77,7 @@
       <div class="card-body">
         <p *ngFor="let prop of item.properties">{{prop.description}}</p>
         <div class="input-group">
-          <input type="text" placeholder="Tilføj ny egenskab" class="form-control" />
+          <input class="form-control" placeholder="Tilføj ny egenskab" type="text"/>
           <span class="input-group-append">
             <button class="btn btn-success input-group-text">
               Tilføj

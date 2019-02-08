@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { ItemTemplateService } from '../../_services/itemTemplate.service';
-import { ItemTemplate } from '../../_models/ItemTemplate';
-import { ItemPropertyName } from '../../_models/ItemPropertyName';
-import { Observable } from 'rxjs';
-import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
-import { environment } from '../../../environments/environment';
-import { Router } from '@angular/router';
-import { AlertifyService } from '../../_services/alertify.service';
-import { FileUploadService } from '../../_services/fileUpload.service';
-import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import {Component, OnInit} from '@angular/core';
+import {ItemTemplateService} from '../../_services/itemTemplate.service';
+import {ItemTemplate} from '../../_models/ItemTemplate';
+import {ItemPropertyName} from '../../_models/ItemPropertyName';
+import {Observable} from 'rxjs';
+import {ItemTemplatePart} from '../../_models/ItemTemplatePart';
+import {environment} from '../../../environments/environment';
+import {Router} from '@angular/router';
+import {AlertifyService} from '../../_services/alertify.service';
+import {FileUploadService} from '../../_services/fileUpload.service';
 import * as _ from 'underscore';
-import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
-import { UnitType } from '../../_models/UnitType';
-import { UnitTypeService } from '../../_services/unitType.service';
-import { CategoryService } from '../../_services/category.service';
-import { TemplatePropertyService } from '../../_services/templateProperty.service';
+import {ItemTemplateCategory} from '../../_models/ItemTemplateCategory';
+import {UnitType} from '../../_models/UnitType';
+import {UnitTypeService} from '../../_services/unitType.service';
+import {CategoryService} from '../../_services/category.service';
+import {TemplatePropertyService} from '../../_services/templateProperty.service';
 
-const URL = environment.apiUrl  + 'FileInput/uploadfiles';
+const URL = environment.apiUrl + 'FileInput/uploadfiles';
 
 @Component({
   templateUrl: './new-itemTemplate.component.html',
@@ -52,9 +51,9 @@ export class NewItemTemplateComponent implements OnInit {
    * Sets up the different services, calls functions to load templates and properties.
    */
   constructor(private templateService: ItemTemplateService, private router: Router,
-      private alertify: AlertifyService, private uploaderParameter: FileUploadService,
-      private unitTypeService: UnitTypeService, private categoryService: CategoryService,
-      private templatePropertyService: TemplatePropertyService) {
+              private alertify: AlertifyService, private uploaderParameter: FileUploadService,
+              private unitTypeService: UnitTypeService, private categoryService: CategoryService,
+              private templatePropertyService: TemplatePropertyService) {
     this.getTemplates();
     this.getTemplateProperties();
     this.getTemplateCategories();

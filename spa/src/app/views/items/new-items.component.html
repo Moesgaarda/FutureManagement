@@ -5,11 +5,11 @@
       <div class="card-header">Vælg en Skabelon</div>
       <div class="card-body">
         <ng-select
+          [(ngModel)]="itemToAdd.template"
           [items]="itemTemplates"
           [multiple]="false"
           bindLabel="name"
           placeholder="Vælg skabelon"
-          [(ngModel)]="itemToAdd.template"
         >
         </ng-select>
 
@@ -17,14 +17,14 @@
           <div class="form-group">
             <label>Mængde</label>
             <div class="input-group">
-              <input class="form-control" [(ngModel)]="itemToAdd.amount" />
+              <input [(ngModel)]="itemToAdd.amount" class="form-control"/>
             </div>
           </div>
         </div>
-        <br />
+        <br/>
         <button
-          class="btn btn-success"
           (click)="changeFromSelectItemTemplate()"
+          class="btn btn-success"
         >
           videre
         </button>
@@ -42,24 +42,24 @@
     <div class="card-body">
       <table class="table">
         <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Mængde</th>
-          </tr>
+        <tr>
+          <th>Navn</th>
+          <th>Mængde</th>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let part of missingItems">
-            <td>{{ part.part.name }}</td>
-            <td>{{ part.amount }}</td>
-            <td>
-              <button
-                class="btn btn-primary"
-                (click)="changeToSelectFromStock(part)"
-              >
-                Vælg fra lager
-              </button>
-            </td>
-          </tr>
+        <tr *ngFor="let part of missingItems">
+          <td>{{ part.part.name }}</td>
+          <td>{{ part.amount }}</td>
+          <td>
+            <button
+              class="btn btn-primary"
+              (click)="changeToSelectFromStock(part)"
+            >
+              Vælg fra lager
+            </button>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -79,18 +79,18 @@
       <div class="card-body">
         <table class="table">
           <thead>
-            <tr>
-              <th>Navn</th>
-              <th>Placering</th>
-              <th>Mængde</th>
-            </tr>
+          <tr>
+            <th>Navn</th>
+            <th>Placering</th>
+            <th>Mængde</th>
+          </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let part of itemToAdd.parts">
-              <td>{{ part.part.template.name }}</td>
-              <td>{{ part.part.placement }}</td>
-              <td>{{ part.amount }}</td>
-            </tr>
+          <tr *ngFor="let part of itemToAdd.parts">
+            <td>{{ part.part.template.name }}</td>
+            <td>{{ part.part.placement }}</td>
+            <td>{{ part.amount }}</td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -113,24 +113,24 @@
     <div class="card-body">
       <table class="table">
         <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Placering</th>
-            <th>Mængde på lager</th>
-            <th>Valgte mængde at tilføje</th>
-          </tr>
+        <tr>
+          <th>Navn</th>
+          <th>Placering</th>
+          <th>Mængde på lager</th>
+          <th>Valgte mængde at tilføje</th>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of itemsToChooseFromList">
-            <td>{{ item.part.template.name }}</td>
-            <td>{{ item.part.placement }}</td>
-            <td>{{ item.part.amount }}</td>
-            <td>
-              <div class="input-group">
-                <input class="form-control" [(ngModel)]="item.amount" />
-              </div>
-            </td>
-          </tr>
+        <tr *ngFor="let item of itemsToChooseFromList">
+          <td>{{ item.part.template.name }}</td>
+          <td>{{ item.part.placement }}</td>
+          <td>{{ item.part.amount }}</td>
+          <td>
+            <div class="input-group">
+              <input class="form-control" [(ngModel)]="item.amount"/>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -151,21 +151,21 @@
         <div class="col-lg-6">
           <table class="table">
             <thead>
-              <tr>
-                <th>Placering</th>
-              </tr>
+            <tr>
+              <th>Placering</th>
+            </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div class="input-group">
-                    <input placeholder="Indtast placering"
-                      class="form-control"
-                      [(ngModel)]="itemToAdd.placement"
-                    />
-                  </div>
-                </td>
-              </tr>
+            <tr>
+              <td>
+                <div class="input-group">
+                  <input placeholder="Indtast placering"
+                         class="form-control"
+                         [(ngModel)]="itemToAdd.placement"
+                  />
+                </div>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -173,24 +173,24 @@
           <div *ngIf="itemToAdd.properties.length != 0">
             <table class="table">
               <thead>
-                <tr>
-                  <th>Egenskab</th>
-                  <th>Beskrivelse</th>
-                </tr>
+              <tr>
+                <th>Egenskab</th>
+                <th>Beskrivelse</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let property of itemToAdd.properties">
-                  <td>{{ property.propertyName.name }}</td>
-                  <td>
-                    <div class="input-group">
-                      <input
-                        placeholder="Indtast beskrivelse"
-                        class="form-control"
-                        [(ngModel)]="property.description"
-                      />
-                    </div>
-                  </td>
-                </tr>
+              <tr *ngFor="let property of itemToAdd.properties">
+                <td>{{ property.propertyName.name }}</td>
+                <td>
+                  <div class="input-group">
+                    <input
+                      placeholder="Indtast beskrivelse"
+                      class="form-control"
+                      [(ngModel)]="property.description"
+                    />
+                  </div>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>

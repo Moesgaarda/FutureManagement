@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../_services/auth.service';
-import { Router } from '@angular/router';
-import { AlertifyService } from '../../_services/alertify.service';
+import {Component} from '@angular/core';
+import {AuthService} from '../../_services/auth.service';
+import {Router} from '@angular/router';
+import {AlertifyService} from '../../_services/alertify.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +12,8 @@ export class LoginComponent {
   model: any = {};
   registerMode = false;
 
-  constructor(public authService: AuthService, private router: Router, private alertify: AlertifyService) {}
+  constructor(public authService: AuthService, private router: Router, private alertify: AlertifyService) {
+  }
 
   login() {
     this.authService.login(this.model).subscribe(data => {

@@ -1,23 +1,18 @@
-import { Component, OnInit, Input} from '@angular/core';
-import { ItemTemplate } from '../../_models/ItemTemplate';
-import { ItemTemplateService } from '../../_services/itemTemplate.service';
-import { ItemService } from '../../_services/item.service';
-import { environment } from '../../../environments/environment';
-import * as _ from 'underscore';
-import { Injector } from '@angular/core';
-import { OrderService } from '../../_services/order.service';
-import { EventLogService } from '../../_services/eventLog.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AlertifyService } from '../../_services/alertify.service';
-import { UnitType } from '../../_models/UnitType';
-import { UserService } from '../../_services/user.service';
+import {Component, Injector, Input, OnInit} from '@angular/core';
+import {ItemTemplateService} from '../../_services/itemTemplate.service';
+import {ItemService} from '../../_services/item.service';
+import {environment} from '../../../environments/environment';
+import {OrderService} from '../../_services/order.service';
+import {EventLogService} from '../../_services/eventLog.service';
+import {AlertifyService} from '../../_services/alertify.service';
+import {UserService} from '../../_services/user.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
-import { UnitTypeService } from '../../_services/unitType.service';
-import { formatDate } from '@angular/common';
-import { CategoryService } from '../../_services/category.service';
-import { TemplatePropertyService } from '../../_services/templateProperty.service';
+import {OrderStatusEnum} from '../../_enums/OrderStatusEnum.enum';
+import {UnitTypeService} from '../../_services/unitType.service';
+import {formatDate} from '@angular/common';
+import {CategoryService} from '../../_services/category.service';
+import {TemplatePropertyService} from '../../_services/templateProperty.service';
 
 @Component({
   selector: 'app-techtable',
@@ -34,18 +29,21 @@ export class TechtableComponent implements OnInit {
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
-  private allItems: Array<any> = [];
   @Input() serviceType: string;
   @Input() specialGet: string;
-
-  private tableService;
   public config: any = {
     paging: true,
-    sorting: { columns: this.columns },
-    filtering: { filterString: '' },
+    sorting: {columns: this.columns},
+    filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered', 'table-hover', 'clickable']
   };
+  private allItems: Array<any> = [];
+  private tableService;
   private data: Array<any> = [];
+
+  constructor(private injector: Injector, private alertify: AlertifyService) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+  }
 
   // TODO Add additional services or figure out how to use the string literal as service
   /**
@@ -66,20 +64,16 @@ export class TechtableComponent implements OnInit {
       this.tableService = <EventLogService>this.injector.get(EventLogService);
     } else if (this.serviceType === 'UserService') {
       this.tableService = <UserService>this.injector.get(UserService);
-    }  else if (this.serviceType === 'UnitTypeService') {
+    } else if (this.serviceType === 'UnitTypeService') {
       this.tableService = <UnitTypeService>this.injector.get(UnitTypeService);
-    }  else if (this.serviceType === 'CategoryService') {
+    } else if (this.serviceType === 'CategoryService') {
       this.tableService = <CategoryService>this.injector.get(CategoryService);
-    }  else if (this.serviceType === 'TemplatePropertyService') {
+    } else if (this.serviceType === 'TemplatePropertyService') {
       this.tableService = <TemplatePropertyService>this.injector.get(TemplatePropertyService);
     } else {
       console.log('Unexpected service name: ' + this.serviceType);
     }
     this.loadItems();
-  }
-
-  constructor(private injector: Injector, private alertify: AlertifyService) {
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
   /**
@@ -101,7 +95,7 @@ export class TechtableComponent implements OnInit {
         this.onChangeTable(this.config);
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
@@ -115,7 +109,7 @@ export class TechtableComponent implements OnInit {
         this.onChangeTable(this.config);
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
@@ -130,7 +124,7 @@ export class TechtableComponent implements OnInit {
 
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
@@ -248,7 +242,7 @@ export class TechtableComponent implements OnInit {
    */
   public onChangeTable(
     config: any,
-    page: any = { page: this.page, itemsPerPage: this.itemsPerPage }
+    page: any = {page: this.page, itemsPerPage: this.itemsPerPage}
   ): any {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
@@ -307,7 +301,7 @@ export class TechtableComponent implements OnInit {
    * @memberof TechtableComponent
    */
   public fixPropPath(path, obj) {
-    return path.split('.').reduce(function(prev, curr) {
+    return path.split('.').reduce(function (prev, curr) {
       return prev ? prev[curr] : null;
     }, obj || self);
   }
@@ -325,7 +319,7 @@ export class TechtableComponent implements OnInit {
       () => {
         const docDefinition = {
           content: [
-            { text: 'Alle genstande', style: 'header' },
+            {text: 'Alle genstande', style: 'header'},
             this.table(
               this.allItems,
               ['id', 'template', 'placement', 'amount', 'isActive'],
@@ -341,10 +335,10 @@ export class TechtableComponent implements OnInit {
   public buildPdfTableBody(data, columns, headers) {
     const body = [];
     body.push(headers);
-    data.forEach(function(row) {
+    data.forEach(function (row) {
       const dataRow = [];
 
-      columns.forEach(function(column) {
+      columns.forEach(function (column) {
         if (column === 'template') {
           dataRow.push(row[column].name);
         } else {

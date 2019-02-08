@@ -12,8 +12,8 @@
             Brugernavn*
           </label>
           <div class="input-group">
-            <input type="text" placeholder="Brugernavn" id="username" class="form-control"
-              [(ngModel)]="user.username" />
+            <input [(ngModel)]="user.username" class="form-control" id="username" placeholder="Brugernavn"
+                   type="text"/>
           </div>
         </div>
         <div class="form-group">
@@ -21,8 +21,8 @@
             Kodeord*
           </label>
           <div class="input-group">
-            <input type="text" placeholder="Kodeord" id="name" type="password" class="form-control"
-              [(ngModel)]="user.password" />
+            <input [(ngModel)]="user.password" class="form-control" id="name" placeholder="Kodeord" type="text"
+                   type="password"/>
           </div>
         </div>
         <div class="form-group">
@@ -30,8 +30,8 @@
             Bekræft kodeord*
           </label>
           <div class="input-group">
-            <input type="text" placeholder="Bekræft kodeord" id="name" type="password" class="form-control"
-              [(ngModel)]="passwordConfirm" />
+            <input [(ngModel)]="passwordConfirm" class="form-control" id="name" placeholder="Bekræft kodeord" type="text"
+                   type="password"/>
           </div>
           <div *ngIf="user.password !== passwordConfirm">
             <font color="red">Kodeord er ikke ens</font>
@@ -42,7 +42,7 @@
             Fornavn*
           </label>
           <div class="input-group">
-            <input type="text" placeholder="Fornavn" id="name" class="form-control" [(ngModel)]="user.name" />
+            <input [(ngModel)]="user.name" class="form-control" id="name" placeholder="Fornavn" type="text"/>
           </div>
         </div>
         <div class="form-group">
@@ -50,7 +50,7 @@
             Efternavn*
           </label>
           <div class="input-group">
-            <input type="text" placeholder="Efternavn" id="surName" class="form-control" [(ngModel)]="user.surname" />
+            <input [(ngModel)]="user.surname" class="form-control" id="surName" placeholder="Efternavn" type="text"/>
           </div>
         </div>
         <div class="form-group">
@@ -58,7 +58,7 @@
             E-mail
           </label>
           <div class="input-group">
-            <input type="text" placeholder="E-mail" id="eMail" class="form-control" [(ngModel)]="user.email" />
+            <input [(ngModel)]="user.email" class="form-control" id="eMail" placeholder="E-mail" type="text"/>
           </div>
         </div>
         <div class="form-group">
@@ -66,16 +66,16 @@
             Telefonnummer
           </label>
           <div class="input-group">
-            <input type="text" placeholder="Telefonnummer" id="phone" class="form-control" [(ngModel)]="user.phone" />
+            <input [(ngModel)]="user.phone" class="form-control" id="phone" placeholder="Telefonnummer" type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label for="birthdate">Fødselsdag</label>
           <div class="input-group">
-            <input type="date" placeholder="Fødselsdag" class="form-control" [(ngModel)]="user.birthdate" />
+            <input [(ngModel)]="user.birthdate" class="form-control" placeholder="Fødselsdag" type="date"/>
           </div>
         </div>
-        <button type="button" class="btn btn-success btn-rectangle input-group-text" (click)="createUser()">
+        <button (click)="createUser()" class="btn btn-success btn-rectangle input-group-text" type="button">
           Tilføj bruger
         </button>
       </div>
@@ -87,27 +87,27 @@
       <div class="card-header">Vælg roller til brugeren</div>
       <div class="card-body">
         <div class="input-group">
-          <input type="text" placeholder="Filtrer roller" class="form-control" [(ngModel)]="roleFilter" />
+          <input [(ngModel)]="roleFilter" class="form-control" placeholder="Filtrer roller" type="text"/>
         </div>
         <br>
         <div class="col-lg-6">
           <ng-container
-            *ngFor="let r of roles  | userRoleFilter: roleFilter | paginate: {itemsPerPage: itemsPerPage, 
-                                                                                                  currentPage: currentPage, 
+            *ngFor="let r of roles  | userRoleFilter: roleFilter | paginate: {itemsPerPage: itemsPerPage,
+                                                                                                  currentPage: currentPage,
                                                                                                   totalItems: roles?.length }; let i=index">
-            <div *ngIf="checkBox(r); then checkedBox else uncheckedBox"> </div>
+            <div *ngIf="checkBox(r); then checkedBox else uncheckedBox"></div>
             <ng-template #checkedBox>
-              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)" checked />
+              <input (change)="onCheckboxChange(r, $event)" checked class="form-check-input" type="checkbox"/>
               {{r.name}}
             </ng-template>
             <ng-template #uncheckedBox>
-              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)" /> {{r.name}}
+              <input (change)="onCheckboxChange(r, $event)" class="form-check-input" type="checkbox"/> {{r.name}}
             </ng-template>
             <br>
           </ng-container>
         </div>
         <br>
-        <pagination-controls (pageChange)="currentPage = $event" maxSize="7" previousLabel="Forrige" nextLabel="Næste">
+        <pagination-controls (pageChange)="currentPage = $event" maxSize="7" nextLabel="Næste" previousLabel="Forrige">
         </pagination-controls>
       </div>
     </div>

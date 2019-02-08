@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ViewCategoriesComponent } from './view-categories.component';
-import { EditCategoryComponent } from './edit-category.component';
-import { NewCategoryComponent } from './new-category.component';
-import { AuthGuard } from '../../_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ViewCategoriesComponent} from './view-categories.component';
+import {EditCategoryComponent} from './edit-category.component';
+import {NewCategoryComponent} from './new-category.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -51,4 +51,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CategoriesRoutingModule {}
+export class CategoriesRoutingModule {
+}

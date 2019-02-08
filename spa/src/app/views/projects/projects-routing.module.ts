@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ViewProjectsComponent } from './view-projects.component';
-import { DetailsProjectComponent } from './details-project.component';
-import { NewProjectComponent } from './new-project.component';
-import { AuthGuard } from '../../_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ViewProjectsComponent} from './view-projects.component';
+import {DetailsProjectComponent} from './details-project.component';
+import {NewProjectComponent} from './new-project.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -49,4 +49,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProjectsRoutingModule {}
+export class ProjectsRoutingModule {
+}

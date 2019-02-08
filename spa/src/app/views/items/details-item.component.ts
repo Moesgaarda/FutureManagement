@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ItemService } from '../../_services/item.service';
-import { Item } from '../../_models/Item';
-import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
-import { AlertifyService } from '../../_services/alertify.service';
+import {Component, OnInit} from '@angular/core';
+import {ItemService} from '../../_services/item.service';
+import {Item} from '../../_models/Item';
+import {ActivatedRoute, Router} from '@angular/router';
+import {environment} from '../../../environments/environment';
+import {AlertifyService} from '../../_services/alertify.service';
 
 
 @Component({
@@ -19,8 +19,9 @@ export class DetailsItemComponent implements OnInit {
 
 
   constructor(private itemService: ItemService, private route: ActivatedRoute, private router: Router,
-    private alertify: AlertifyService
-  ) {}
+              private alertify: AlertifyService
+  ) {
+  }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {

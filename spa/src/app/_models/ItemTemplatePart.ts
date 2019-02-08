@@ -1,7 +1,7 @@
-import { ItemTemplate } from './ItemTemplate';
+import {ItemTemplate} from './ItemTemplate';
 
 export interface ItemTemplatePart {
-    part: ItemTemplate;
-    templateId: number;
-    amount: number;
+  part: ItemTemplate;
+  templateId: number;
+  amount: number;
 }

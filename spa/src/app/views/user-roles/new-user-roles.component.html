@@ -13,12 +13,12 @@
               <span class="input-group-text">Rollenavn</span>
             </div>
             <input
-              type="text"
-              class="form-control"
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              style="border-width: 2px"
               [(ngModel)]="roleNameToAdd"
+              aria-describedby="inputGroup-sizing-default"
+              aria-label="Default"
+              class="form-control"
+              style="border-width: 2px"
+              type="text"
             />
           </div>
         </div>
@@ -41,10 +41,10 @@
                   style="float: right"
                 >
                   <input
-                    type="checkbox"
-                    class="switch-input"
                     (change)="onSwitchChange(role, $event)"
                     aria-controls="toggleElement"
+                    class="switch-input"
+                    type="checkbox"
                   />
                   <span class="switch-slider"></span>
                 </label>
@@ -76,9 +76,9 @@
       </div>
 
       <div class="form-group">
-        <button style="font-size: 1.17em; line-height: 3em; padding-left: 2em; padding-right: 2em"
-          class="btn btn-success btn-rectangle input-group-text "
-          (click)="addRole()"
+        <button (click)="addRole()"
+                class="btn btn-success btn-rectangle input-group-text "
+                style="font-size: 1.17em; line-height: 3em; padding-left: 2em; padding-right: 2em"
         >
           Tilføj rolle
         </button>

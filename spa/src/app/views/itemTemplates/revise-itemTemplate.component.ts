@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ItemTemplateService } from '../../_services/itemTemplate.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ItemTemplate } from '../../_models/ItemTemplate';
-import { ItemPropertyName } from '../../_models/ItemPropertyName';
-import { Observable } from 'rxjs';
-import { DetailFile } from '../../_models/DetailFile';
-import { FileUploadService } from '../../_services/fileUpload.service';
-import { ItemTemplatePart } from '../../_models/ItemTemplatePart';
-import { AlertifyService } from '../../_services/alertify.service';
-import { UnitType } from '../../_models/UnitType';
-import { ItemTemplateCategory } from '../../_models/ItemTemplateCategory';
-import { UnitTypeService } from '../../_services/unitType.service';
-import { CategoryService } from '../../_services/category.service';
-import { TemplatePropertyService } from '../../_services/templateProperty.service';
+import {Component, OnInit} from '@angular/core';
+import {ItemTemplateService} from '../../_services/itemTemplate.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ItemTemplate} from '../../_models/ItemTemplate';
+import {ItemPropertyName} from '../../_models/ItemPropertyName';
+import {Observable} from 'rxjs';
+import {DetailFile} from '../../_models/DetailFile';
+import {FileUploadService} from '../../_services/fileUpload.service';
+import {ItemTemplatePart} from '../../_models/ItemTemplatePart';
+import {AlertifyService} from '../../_services/alertify.service';
+import {UnitType} from '../../_models/UnitType';
+import {ItemTemplateCategory} from '../../_models/ItemTemplateCategory';
+import {UnitTypeService} from '../../_services/unitType.service';
+import {CategoryService} from '../../_services/category.service';
+import {TemplatePropertyService} from '../../_services/templateProperty.service';
 
 /**
  *Component that is used to Revise an ItemTemplate
@@ -57,9 +57,9 @@ export class ReviseItemTemplateComponent implements OnInit {
               private unitTypeService: UnitTypeService,
               private categoryService: CategoryService,
               private templatePropertyService: TemplatePropertyService) {
-                this.uploader = uploaderParameter;
-                this.uploader.clearQueue();
-              }
+    this.uploader = uploaderParameter;
+    this.uploader.clearQueue();
+  }
 
   /**
    * method that is calle when the compononent is initialised.
@@ -95,7 +95,7 @@ export class ReviseItemTemplateComponent implements OnInit {
         this.templateToRevise.files = [];
         this.templateToRevise.lowerLimit = itemTemplate.lowerLimit;
         this.category = itemTemplate.category;
-    });
+      });
   }
 
 
@@ -158,7 +158,7 @@ export class ReviseItemTemplateComponent implements OnInit {
    * @param {DetailFile} file The file to be removed
    * @memberof ReviseItemTemplateComponent
    */
-  removeFileToRevice (file: DetailFile) {
+  removeFileToRevice(file: DetailFile) {
     this.filesFromRevision.splice(this.filesFromRevision.indexOf(file), 1);
   }
 
@@ -233,7 +233,7 @@ export class ReviseItemTemplateComponent implements OnInit {
     for (const file of this.filesFromRevision) {
       this.templateToRevise.files.push(file.fileDataId);
       this.templateToRevise.fileNames.push(file.fileName);
-  }
+    }
 
     this.templateToRevise.templateProperties = this.propertiesToAdd;
     this.templateToRevise.revisionedFrom = this.templateToCopy;

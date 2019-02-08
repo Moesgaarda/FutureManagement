@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpRequest, HttpClient, HttpParams } from '@angular/common/http';
-import { ResponseType } from '@angular/http';
-import { saveAs } from 'file-saver';
-import { DetailFile } from '../_models/DetailFile';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
+import {saveAs} from 'file-saver';
+import {DetailFile} from '../_models/DetailFile';
 
 @Injectable()
 export class FileUploadService {
@@ -12,7 +11,9 @@ export class FileUploadService {
   public message: string;
   public queuedFiles: File [] = [];
   fileIds: number[];
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+  }
 
   /**
    *Adds files to the Upload queue
@@ -53,26 +54,27 @@ export class FileUploadService {
    * @memberof FileUploadService
    */
   async upload(origin: string): Promise<number []> {
-      if (this.queuedFiles.length === 0) {
-        return;
-      }
-      const formData = new FormData();
-      formData.append('origin', origin);
-      for (const file of this.queuedFiles) {
-        formData.append(file.name, file);
-      }
-      const uploadReq = new HttpRequest('POST', this.baseUrl + 'FileInput/uploadfiles', formData, {
-        reportProgress: true,
-      });
-      const result = await this.http.post(this.baseUrl + 'FileInput/uploadfiles', formData).toPromise();
-      return result as number [];
+    if (this.queuedFiles.length === 0) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append('origin', origin);
+    for (const file of this.queuedFiles) {
+      formData.append(file.name, file);
+    }
+    const uploadReq = new HttpRequest('POST', this.baseUrl + 'FileInput/uploadfiles', formData, {
+      reportProgress: true,
+    });
+    const result = await this.http.post(this.baseUrl + 'FileInput/uploadfiles', formData).toPromise();
+    return result as number [];
   }
+
   async download(fileDetails: DetailFile, origin: string) {
     const headers = new Headers();
     headers.append('content-type', 'application/json');
     const id = fileDetails.fileDataId.toString();
     const params = new HttpParams().set('id', id).set('origin', origin);
-    this.http.get(this.baseUrl + 'FileInput/downloadfile', { responseType: 'blob', params: params }).subscribe(blob => {
+    this.http.get(this.baseUrl + 'FileInput/downloadfile', {responseType: 'blob', params: params}).subscribe(blob => {
       saveAs(blob, fileDetails.fileName, {
         type: 'text/plain;charset=utf-8'
       });

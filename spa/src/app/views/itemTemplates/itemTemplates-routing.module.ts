@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ViewItemTemplatesComponent } from './view-itemTemplates.component';
-import { NewItemTemplateComponent } from './new-itemTemplate.component';
-import { DetailsItemTemplateComponent } from './details-itemTemplate.component';
-import { ReviseItemTemplateComponent } from './revise-itemTemplate.component';
-import { AuthGuard } from '../../_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ViewItemTemplatesComponent} from './view-itemTemplates.component';
+import {NewItemTemplateComponent} from './new-itemTemplate.component';
+import {DetailsItemTemplateComponent} from './details-itemTemplate.component';
+import {ReviseItemTemplateComponent} from './revise-itemTemplate.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -60,4 +60,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ItemTemplatesRoutingModule {}
+export class ItemTemplatesRoutingModule {
+}

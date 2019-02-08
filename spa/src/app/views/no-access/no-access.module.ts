@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
-import { NoAccessComponent } from './no-access.component';
-import { NoAccessRoutingModule } from './no-access-routing.module';
+import {NgModule} from '@angular/core';
+import {NoAccessComponent} from './no-access.component';
+import {NoAccessRoutingModule} from './no-access-routing.module';
 
 @NgModule({
   imports: [
     NoAccessRoutingModule,
   ],
   declarations: [
-      NoAccessComponent,
-   ]
+    NoAccessComponent,
+  ]
 })
-export class NoAccessModule { }
+export class NoAccessModule {
+}

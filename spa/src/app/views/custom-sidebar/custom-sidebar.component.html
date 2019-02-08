@@ -1,9 +1,11 @@
-<app-sidebar [fixed]="true" [display]="'lg'">
-  <app-sidebar-nav *ngIf="readyToLoad" [navItems]="userNavItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+<app-sidebar [display]="'lg'" [fixed]="true">
+  <app-sidebar-nav *ngIf="readyToLoad" [disabled]="sidebarMinimized" [navItems]="userNavItems"
+                   [perfectScrollbar]></app-sidebar-nav>
   <app-sidebar-footer>
     <li class="nav-item" ng-reflect-ng-class="nav-item" style="list-style: none;">
-      <a style="cursor: pointer;" routerlinkactive="active" class="nav-link" ng-reflect-ng-class="nav-link" ng-reflect-router-link="/logout" ng-reflect-router-link-active="active"
-        (click)="logout()">
+      <a (click)="logout()" class="nav-link" ng-reflect-ng-class="nav-link" ng-reflect-router-link="/logout"
+         ng-reflect-router-link-active="active" routerlinkactive="active"
+         style="cursor: pointer;">
         <i class="nav-icon icon-logout"></i> Log ud
       </a>
     </li>

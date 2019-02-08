@@ -54,14 +54,16 @@ namespace API.Data
             return user;
         }
 
-        /* public List<Role> GetRoles(ICollection<RoleCategory> roleCategories){
+        public List<Role> GetRoles(ICollection<RoleCategory> roleCategories){
             var result = new List<Role>();
-            foreach (var role in roleCategories)
-            {
-                //result.Add(role.RoleCategoryRoleRelations.Role);
+            foreach (var role in roleCategories){
+                var realRole = _context.RoleCategories.FirstOrDefault(x => x.Id == role.Id);
+                foreach (var item in realRole.RoleCategoryRoleRelations){
+                    result.Add(item.Role);
+                }
             }
             return result;
-        } */
+        }
 
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

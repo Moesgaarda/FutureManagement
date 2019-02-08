@@ -1,19 +1,18 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { UnitTypesRoutingModule } from './unitTypes-routing.module';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {UnitTypesRoutingModule} from './unitTypes-routing.module';
+import {Ng2TableModule} from 'ng2-table/ng2-table';
 
-import { EditUnitTypeComponent } from './edit-unitType.component';
-import { ViewUnitTypesComponent } from './view-unitTypes.component';
-import { NewUnitTypeComponent } from './new-unitType.component';
+import {EditUnitTypeComponent} from './edit-unitType.component';
+import {ViewUnitTypesComponent} from './view-unitTypes.component';
+import {NewUnitTypeComponent} from './new-unitType.component';
 
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { TechTableModule} from '../../_modules/techtable/techtable.module';
-import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {TechTableModule} from '../../_modules/techtable/techtable.module';
 
 @NgModule({
   imports: [
@@ -32,4 +31,5 @@ import { PropertyFilterPipe } from '../../_pipes/property-filter.pipe';
     EditUnitTypeComponent
   ]
 })
-export class UnitTypeModule { }
+export class UnitTypeModule {
+}

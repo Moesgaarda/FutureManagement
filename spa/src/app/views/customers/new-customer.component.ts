@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import {Component} from '@angular/core';
 
 @Component({
   templateUrl: './new-customer.component.html'

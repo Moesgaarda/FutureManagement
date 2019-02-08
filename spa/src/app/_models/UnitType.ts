@@ -1,5 +1,4 @@
-
 export interface UnitType {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }

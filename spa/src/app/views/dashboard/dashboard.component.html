@@ -1,15 +1,15 @@
-<div class="card" *ngIf="this.authService.roleMatch(['Items_View'])">
+<div *ngIf="this.authService.roleMatch(['Items_View'])" class="card">
   <div class="card-header">Lav lagerbeholdning</div>
 
   <div class="card-body">
     <app-techtable
-      [serviceType]="'ItemService'"
       [columns]="[
         { title: 'Navn', name: 'template.name' },
         { title: 'Nedre grænse', name: 'template.lowerLimit' },
         { title: 'Mængde', name: 'amount' },
         { title: 'Placering', name: 'placement' }
       ]"
+      [serviceType]="'ItemService'"
       [specialGet]="'getLowInventory'"
     >
     </app-techtable>

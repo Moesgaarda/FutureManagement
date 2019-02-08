@@ -2,14 +2,16 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="card">
-      
+
         <div class="card-header">
-          <h5>{{itemTemplate.name}} <div class="float-right" *ngIf="this.authService.roleMatch(['ItemTemplates_Add'])">
-            <button class="btn btn-secondary" (click)="goToRevisionTemplate()"> Revider</button>
-          </div></h5>
+          <h5>{{itemTemplate.name}}
+            <div *ngIf="this.authService.roleMatch(['ItemTemplates_Add'])" class="float-right">
+              <button (click)="goToRevisionTemplate()" class="btn btn-secondary"> Revider</button>
+            </div>
+          </h5>
         </div>
         <div class="card-body">
-        
+
           <div class="form-group">
             <label for="description">Beskrivelse</label>
             <div class="input-group-text">
@@ -30,7 +32,7 @@
               {{itemTemplate.lowerLimit}}
             </div>
           </div>
-          
+
           <div class="form-group">
             <label for="created">Oprettet</label>
             <div class="input-group-text">
@@ -42,35 +44,35 @@
             <div class="form-group">
               <label for="revisionedFrom">Revideret fra</label>
               <div class="input-group">
-                <button class="btn btn-outline-info" (click)="goToItemTemplateDetail(itemTemplate.revisionedFrom.id)">
+                <button (click)="goToItemTemplateDetail(itemTemplate.revisionedFrom.id)" class="btn btn-outline-info">
                   <span class="glyphicon glyphicon-trash"></span> {{itemTemplate.revisionedFrom.name}}
                 </button>
               </div>
             </div>
           </div>
-        
+
         </div>
       </div>
-      
+
       <div class="card">
         <div class="card-header">Filer</div>
         <div class="card-body">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th width="80%">Navn</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of itemTemplate.files">
-                    <td>{{item.fileName}}</td>
-                    <td>
-                      <button type="button" class="btn btn-block btn-success" (click)="downloadFile(item)">Download</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <table class="table">
+            <thead>
+            <tr>
+              <th width="80%">Navn</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of itemTemplate.files">
+              <td>{{item.fileName}}</td>
+              <td>
+                <button (click)="downloadFile(item)" class="btn btn-block btn-success" type="button">Download</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -82,14 +84,14 @@
           <div class="card-body">
             <table class="table">
               <thead>
-                <tr>
-                  <th>Navn</th>
-                </tr>
+              <tr>
+                <th>Navn</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of itemTemplate.templateProperties">
-                  <td>{{item.name}}</td>
-                </tr>
+              <tr *ngFor="let item of itemTemplate.templateProperties">
+                <td>{{item.name}}</td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -102,21 +104,21 @@
           <div class="card-body">
             <table class="table">
               <thead>
-                <tr>
-                  <th>Navn</th>
-                  <th>Mængde</th>
-                </tr>
+              <tr>
+                <th>Navn</th>
+                <th>Mængde</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of itemTemplate.parts">
-                  <td>{{item.part.name}}</td>
-                  <td>{{item.amount}}</td>
-                  <td>
-                    <button class="btn btn-primary input-group-text" (click)="goToItemTemplateDetail(item.part.id)">
-                      Vis detaljer
-                    </button>
-                  </td>
-                </tr>
+              <tr *ngFor="let item of itemTemplate.parts">
+                <td>{{item.part.name}}</td>
+                <td>{{item.amount}}</td>
+                <td>
+                  <button (click)="goToItemTemplateDetail(item.part.id)" class="btn btn-primary input-group-text">
+                    Vis detaljer
+                  </button>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -129,26 +131,26 @@
           <div class="card-body">
             <table class="table">
               <thead>
-                <tr>
-                  <th>Navn</th>
-                  <th>Mængde</th>
-                </tr>
+              <tr>
+                <th>Navn</th>
+                <th>Mængde</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of itemTemplate.partOf">
-                  <td>{{item.template.name}}</td>
-                  <td>{{item.amount}}</td>
-                  <td>
-                    <button class="btn btn-primary input-group-text" (click)="goToItemTemplateDetail(item.template.id)">
-                      Vis detaljer
-                    </button>
-                  </td>
-                </tr>
+              <tr *ngFor="let item of itemTemplate.partOf">
+                <td>{{item.template.name}}</td>
+                <td>{{item.amount}}</td>
+                <td>
+                  <button (click)="goToItemTemplateDetail(item.template.id)" class="btn btn-primary input-group-text">
+                    Vis detaljer
+                  </button>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-    
+
     </div>
-</div>
+  </div>

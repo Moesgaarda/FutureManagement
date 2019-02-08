@@ -3,7 +3,6 @@
 
   <div class="card-body">
     <app-techtable
-      [serviceType]="'OrderService'"
       [columns]="[
         { title: 'Firma', name: 'company' },
         { title: 'Ordrenummer', name: 'purchaseNumber' },
@@ -11,6 +10,7 @@
         { title: 'Leveringsdato', name: 'deliveryDate' },
         { title: 'Status', name: 'status' }
       ]"
+      [serviceType]="'OrderService'"
     >
     </app-techtable>
   </div>

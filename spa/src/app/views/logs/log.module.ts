@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { ViewLogComponent } from './view-log.component';
-import { FormsModule } from '@angular/forms';
-import { LogRoutingModule } from './log-routing.module';
-import { CommonModule } from '@angular/common';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { TechTableModule } from '../../_modules/techtable/techtable.module';
+import {ViewLogComponent} from './view-log.component';
+import {FormsModule} from '@angular/forms';
+import {LogRoutingModule} from './log-routing.module';
+import {CommonModule} from '@angular/common';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {TechTableModule} from '../../_modules/techtable/techtable.module';
 
 @NgModule({
   imports: [
@@ -17,6 +17,7 @@ import { TechTableModule } from '../../_modules/techtable/techtable.module';
   ],
   declarations: [
     ViewLogComponent,
-   ]
+  ]
 })
-export class LogModule { }
+export class LogModule {
+}

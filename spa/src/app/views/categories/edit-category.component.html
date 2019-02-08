@@ -9,16 +9,16 @@
               <label for="useredit"> Navn </label>
               <div class="input-group">
                 <input
-                  type="text"
-                  placeholder="Navn"
-                  id="category"
-                  class="form-control"
-                  value="{{ category?.name }}"
                   [(ngModel)]="category.name"
+                  class="form-control"
+                  id="category"
+                  placeholder="Navn"
+                  type="text"
+                  value="{{ category?.name }}"
                 />
               </div>
 
-              <button type="button" class="btn btn-primary" (click)="Save()">
+              <button (click)="Save()" class="btn btn-primary" type="button">
                 Opdater
               </button>
             </div>

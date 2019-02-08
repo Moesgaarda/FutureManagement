@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 // Import Containers
-import { DefaultLayoutComponent } from './containers';
-import { LoginComponent } from './views/login/login.component';
-import { AuthGuard } from './_guards/auth.guard';
+import {DefaultLayoutComponent} from './containers';
+import {LoginComponent} from './views/login/login.component';
+import {AuthGuard} from './_guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -86,7 +85,8 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

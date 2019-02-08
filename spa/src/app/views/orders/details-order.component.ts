@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../_services/order.service';
-import { Order } from '../../_models/Order';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DetailFile } from '../../_models/DetailFile';
-import { FileUploadService } from '../../_services/fileUpload.service';
-import { OrderStatusEnum } from '../../_enums/OrderStatusEnum.enum';
-import { formatDate } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {OrderService} from '../../_services/order.service';
+import {Order} from '../../_models/Order';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DetailFile} from '../../_models/DetailFile';
+import {FileUploadService} from '../../_services/fileUpload.service';
+import {OrderStatusEnum} from '../../_enums/OrderStatusEnum.enum';
+import {formatDate} from '@angular/common';
 
 @Component({
   templateUrl: './details-order.component.html'

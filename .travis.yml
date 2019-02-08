@@ -1,21 +1,21 @@
-matrix: 
+matrix:
   fast_finish: true
 
-  include: 
+  include:
     - language: node_js
       sudo: false
-      node_js: 
+      node_js:
         - "8"
 
       install:
         - cd spa
         - npm install
-      cache: 
+      cache:
         directories:
           - spa/node_modules
           - SPA/node_modules
 
-      script: 
+      script:
         - npm run build
 
     - language: csharp

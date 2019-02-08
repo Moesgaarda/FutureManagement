@@ -6,56 +6,60 @@
         <div class="form-group">
           <label for="company">Firma</label>
           <div class="input-group">
-            <input type="text" placeholder="Firma" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.company" />
+            <input [(ngModel)]="orderToAdd && orderToAdd.company" class="form-control" placeholder="Firma" type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label for="deliveryDate">Leveringstidspunkt</label>
           <div class="input-group">
-            <input type="date" placeholder="Leveringstidspunkt" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.deliveryDate" />
+            <input [(ngModel)]="orderToAdd && orderToAdd.deliveryDate" class="form-control" placeholder="Leveringstidspunkt"
+                   type="date"/>
           </div>
         </div>
         <div class="form-group">
           <label for="height">Højde</label>
           <div class="input-group">
-            <input type="text" placeholder="Højde" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.height" />
+            <input [(ngModel)]="orderToAdd && orderToAdd.height" class="form-control" placeholder="Højde" type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label for="length">Længde</label>
           <div class="input-group">
-            <input type="text" placeholder="Længde" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.length" />
+            <input [(ngModel)]="orderToAdd && orderToAdd.length" class="form-control" placeholder="Længde" type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label for="width">Bredde</label>
           <div class="input-group">
-            <input type="text" placeholder="Bredde" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.width" />
+            <input [(ngModel)]="orderToAdd && orderToAdd.width" class="form-control" placeholder="Bredde" type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label>Mængdeenhed</label>
-          <select class="form-control dropdown-toggle" [(ngModel)]="orderToAdd && orderToAdd.unitType">
+          <select [(ngModel)]="orderToAdd && orderToAdd.unitType" class="form-control dropdown-toggle">
             <option *ngFor="let unit of unitTypeList" selected>{{unit.name}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="invoicePath">invoicePath</label>
           <div class="input-group">
-            <input type="text" placeholder="invoicePath" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.invoicePath" />
+            <input [(ngModel)]="orderToAdd && orderToAdd.invoicePath" class="form-control" placeholder="invoicePath"
+                   type="text"/>
           </div>
         </div>
         <div class="form-group">
           <label for="purchaseNumber">Købsnummer</label>
           <div class="input-group">
-            <input type="text" placeholder="Købsnummer" class="form-control" [(ngModel)]="orderToAdd && orderToAdd.purchaseNumber" />
+            <input [(ngModel)]="orderToAdd && orderToAdd.purchaseNumber" class="form-control" placeholder="Købsnummer"
+                   type="text"/>
           </div>
         </div>
         <div class="form-group">
 
           <div _ngcontent-c21="" class="form-group">
-            <button _ngcontent-c21="" (click)="addOrder()" class="btn btn-success btn-rectangle input-group-text">Tilføj
-              bestilling</button>
+            <button (click)="addOrder()" _ngcontent-c21="" class="btn btn-success btn-rectangle input-group-text">Tilføj
+              bestilling
+            </button>
           </div>
 
         </div>
@@ -70,7 +74,7 @@
           <ul class="list-group">
             <div *ngFor="let item of orderToAdd.products; let i=index">
               <li class="list-group-item">{{item.template.name}} ({{item.amount}})
-                <button type="button" (click)="removeItemFromOrder(i)" class="close" aria-label="Close">
+                <button (click)="removeItemFromOrder(i)" aria-label="Close" class="close" type="button">
                   <span aria-hidden="false">&times;</span>
                 </button>
               </li>
@@ -80,8 +84,10 @@
         <div class="form-group">
 
           <div _ngcontent-c21="" class="form-group">
-            <button _ngcontent-c21="" (click)="changePage()" class="btn btn-success btn-rectangle input-group-text">Tilføj
-              genstand</button>
+            <button (click)="changePage()" _ngcontent-c21="" class="btn btn-success btn-rectangle input-group-text">
+              Tilføj
+              genstand
+            </button>
           </div>
 
         </div>
@@ -106,19 +112,23 @@
         <div class="form-group" *ngIf="detailsReady">
           <label for="placement">Genstandens placering</label>
           <div class="input-group">
-            <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="currentItem.amount" />
+            <input type="text" placeholder="Placering" class="form-control" [(ngModel)]="currentItem.amount"/>
           </div>
         </div>
         <div class="form-group" *ngIf="detailsReady">
           <label for="amount">Mængde ({{currentItem.template.unitType.name}})</label>
           <div class="input-group">
-            <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="currentItem.amount" />
+            <input type="number" placeholder="Mængde" class="form-control" [(ngModel)]="currentItem.amount"/>
           </div>
         </div>
         <div class="btn-group">
-          <button _ngcontent-c21="" (click)="changePage()" class="btn btn-success btn-rectangle input-group-text">Tilbage</button>
-          <button _ngcontent-c21="" (click)="addItemToOrder()" [disabled]="!detailsReady" class="btn btn-success btn-rectangle input-group-text">Tilføj
-            genstand</button>
+          <button _ngcontent-c21="" (click)="changePage()" class="btn btn-success btn-rectangle input-group-text">
+            Tilbage
+          </button>
+          <button _ngcontent-c21="" (click)="addItemToOrder()" [disabled]="!detailsReady"
+                  class="btn btn-success btn-rectangle input-group-text">Tilføj
+            genstand
+          </button>
         </div>
       </div>
     </div>

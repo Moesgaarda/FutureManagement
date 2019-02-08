@@ -1,20 +1,20 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { NoAccessComponent } from './no-access.component';
-import { AuthGuard } from '../../_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {NoAccessComponent} from './no-access.component';
+import {AuthGuard} from '../../_guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
     children: [
-        {
-          path: '',
-          component: NoAccessComponent,
-          data: {
-            title: 'Ingen Adgang'
-          }
-        },
+      {
+        path: '',
+        component: NoAccessComponent,
+        data: {
+          title: 'Ingen Adgang'
+        }
+      },
     ]
   }
 ];
@@ -23,4 +23,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NoAccessRoutingModule {}
+export class NoAccessRoutingModule {
+}

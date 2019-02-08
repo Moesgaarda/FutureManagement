@@ -43,16 +43,15 @@ namespace API.Controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto){
- 
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
-            //_repo.GetRoles(userForRegisterDto.RoleCategory);
+            var rolesToAddToUser = _repo.GetRoles(userForRegisterDto.RoleCategory);
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 
-           /* foreach (var role in userForRegisterDto.RoleCategory) {
+            foreach (var role in rolesToAddToUser) {
                 await _userManager.AddToRoleAsync(userToCreate, role.Name);
             }
-            */
+            
 
             var userToReturn = _mapper.Map<UserForGetDto>(userToCreate);
 

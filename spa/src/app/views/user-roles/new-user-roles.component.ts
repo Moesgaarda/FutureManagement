@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertifyService } from '../../_services/alertify.service';
-import { RoleCategory } from '../../_models/RoleCategory';
-import { UserService } from '../../_services/user.service';
-import { UserRole } from '../../_models/UserRole';
-
+import {Component, OnInit} from '@angular/core';
+import {AlertifyService} from '../../_services/alertify.service';
+import {RoleCategory} from '../../_models/RoleCategory';
+import {UserService} from '../../_services/user.service';
+import {UserRole} from '../../_models/UserRole';
 
 
 @Component({
@@ -17,7 +16,8 @@ export class NewUserRolesComponent implements OnInit {
   roleNameToAdd: string;
   userRolesToAdd: UserRole[] = [] as UserRole[];
 
-  constructor(private alertify: AlertifyService, private userService: UserService) {}
+  constructor(private alertify: AlertifyService, private userService: UserService) {
+  }
 
   ngOnInit() {
     this.userService.getAllRoleCategories().subscribe(roleCategories => {

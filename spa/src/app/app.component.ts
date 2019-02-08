@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthService } from './_services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {AuthService} from './_services/auth.service';
 
 @Component({
   // tslint:disable-next-line
@@ -11,7 +11,8 @@ import { AuthService } from './_services/auth.service';
 export class AppComponent implements OnInit {
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.router.events.subscribe((evt) => {

@@ -7,15 +7,15 @@
           <label for="name">Navn på egenskab</label>
           <div class="input-group">
             <input
-              type="text"
-              placeholder="Navn"
-              class="form-control"
               [(ngModel)]="templateProperty.name"
+              class="form-control"
+              placeholder="Navn"
+              type="text"
             />
           </div>
         </div>
 
-        <button type="button" class="btn btn-success btn-rectangle input-group-text" (click)="addTemplateProperty()">
+        <button (click)="addTemplateProperty()" class="btn btn-success btn-rectangle input-group-text" type="button">
           Tilføj egenskab
         </button>
       </div>
