@@ -4,6 +4,7 @@
     <div class="row"></div>
     <br />
     <app-techtable
+      [itemsPerPage]=10
       [serviceType]="'ItemService'"
       [columns]="[
         { title: 'Navn', name: 'template.name' },
