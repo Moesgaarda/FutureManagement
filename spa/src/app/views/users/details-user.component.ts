@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../_services/auth.service';
 import { AlertifyService } from '../../_services/alertify.service';
@@ -20,7 +20,8 @@ export class DetailsUserComponent implements OnInit {
   baseUrl = environment.spaUrl;
 
   constructor(private userService: UserService, private route: ActivatedRoute,
-    private authService: AuthService, private alertify: AlertifyService ) {
+    public authService: AuthService, private alertify: AlertifyService,
+    private router: Router, ) {
    }
 
   ngOnInit() {
@@ -34,7 +35,7 @@ export class DetailsUserComponent implements OnInit {
       this.userService.getMyUser(+this.route.snapshot.params['id']).subscribe( user => {
         this.user = user;
       }, error => {
-        this.alertify.error('Kunne ikke hente bruger aktuel bruger');
+        this.alertify.error('Kunne ikke hente den aktuelle bruger');
       }, () => {
         this.readyToLoad = true;
       }
@@ -44,7 +45,7 @@ export class DetailsUserComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
       }, error => {
-        this.alertify.error('Kunne ikke hente bruger fra database');
+        this.alertify.error('Kunne ikke hente brugeren');
       }, () => {
         this.readyToLoad = true;
       }
@@ -52,7 +53,7 @@ export class DetailsUserComponent implements OnInit {
     }
   }
 
-  goToUserTable() {
-    location.href = this.baseUrl + '/users/view/';
+  goToEditPage(userId: number) {
+    this.router.navigateByUrl('users/edit/' + userId);
   }
 }
