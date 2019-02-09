@@ -65,6 +65,19 @@ export class EditOrderComponent implements OnInit {
         this.editDate = !this.editDate;
     }
 
+
+    /**
+     * Compares the value of unitType on the object to the possibilities.
+     * If equal, it is used as default
+     * @param {UnitType} u1
+     * @param {UnitType} u2
+     * @returns {boolean}
+     * @memberof EditOrderComponent
+     */
+    compareDefaultUnitType(u1: UnitType, u2: UnitType): boolean {
+        return u1 && u2 ? u1.id === u2.id : u1 === u2;
+    }
+
     saveOrder() {
         this.order.status = this.orderStatusEnum[this.orderStatus];
         if (this.originalOrder === JSON.stringify(this.order).toLocaleLowerCase()) {
