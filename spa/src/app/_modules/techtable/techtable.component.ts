@@ -101,7 +101,7 @@ export class TechtableComponent implements OnInit {
         this.onChangeTable(this.config);
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
@@ -115,7 +115,7 @@ export class TechtableComponent implements OnInit {
         this.onChangeTable(this.config);
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
@@ -130,7 +130,7 @@ export class TechtableComponent implements OnInit {
 
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
@@ -340,6 +340,7 @@ export class TechtableComponent implements OnInit {
 
   public buildPdfTableBody(data, columns, headers) {
     const body = [];
+    let amountAndUnitType: string;
     body.push(headers);
     data.forEach(function(row) {
       const dataRow = [];
@@ -349,13 +350,26 @@ export class TechtableComponent implements OnInit {
           dataRow.push(row[column].name);
         } else {
           if (row[column] != null) {
-            dataRow.push(row[column].toString());
+            if (column === 'amount') {
+              amountAndUnitType = row[column].toString();
+              if (row['template'].unitType != null) {
+                amountAndUnitType += ' ' + row['template'].unitType.name.toString();
+              }
+              dataRow.push(amountAndUnitType);
+            } else if (column === 'isActive') {
+              if (row[column] === true) {
+                dataRow.push('Ja');
+              } else {
+                dataRow.push('Nej');
+              }
+            } else {
+              dataRow.push(row[column]);
+            }
           } else {
             dataRow.push('');
           }
         }
       });
-
       body.push(dataRow);
     });
 
