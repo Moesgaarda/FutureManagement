@@ -4,7 +4,13 @@
       <div class="card">
 
         <div class="card-header">
-          <h5>Bestilling: {{order.purchaseNumber}}</h5>
+          <h5>Bestilling: {{order.purchaseNumber}}
+            <div class="float-right" *ngIf="authService.roleMatch(['Order_Edit'])">
+                <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">
+                  Rediger bestillingen
+                </button>
+            </div>
+          </h5>
         </div>
         <div class="card-body">
 
@@ -38,12 +44,16 @@
             </div>
             <ng-template #show_status>
                 <label>Status</label>
-                <div class="input-group-text">
-                  {{orderStatus}}
+                <div class="input-group">
+                  <div class="form-control">
+                      {{orderStatus}}
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary btn-sm" (click)="editStatus()">
+                      Rediger status
+                    </button>
+                  </div>
                 </div>
-                <button class="btn btn-primary btn-sm" (click)="editStatus()">
-                  Rediger status
-                </button>
             </ng-template>
           </div>
 
@@ -65,13 +75,6 @@
             <label for="created">Størelse</label>
             <div class="input-group-text">
               {{order.width}}x{{order.height}}x{{order.length}} {{order.unitType.name}}
-            </div>
-          </div>
-          <div *ngIf="authService.roleMatch(['Order_Edit'])">  
-            <div class="form-group">
-              <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">
-                Rediger bestillingen
-              </button>
             </div>
           </div>
         </div>
