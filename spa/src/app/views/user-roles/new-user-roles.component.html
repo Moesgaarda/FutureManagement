@@ -18,7 +18,7 @@
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
               style="border-width: 2px"
-              
+              [(ngModel)]="roleNameToAdd"
             />
           </div>
         </div>
@@ -35,7 +35,7 @@
           <div class="card">
             <div class="card-header">
               <h3>
-                {{ role.name }}
+                {{ role.displayName }}
                 <label
                   class="switch switch-lg switch-3d switch-primary"
                   style="float: right"
@@ -43,35 +43,13 @@
                   <input
                     type="checkbox"
                     class="switch-input"
-                    
-                    
+                    (change)="onSwitchChange(role, $event)"
                     aria-controls="toggleElement"
                   />
                   <span class="switch-slider"></span>
                 </label>
               </h3>
             </div>
-
-            <!--<div class="card-body" id="toggleElement" [collapse]="!role.hasRole">
-              <ul class="list-group list-group-flush">
-                <li *ngFor="let subRole of role.subRoles" class="list-group-item">
-                  <h5 style="vertical-align:text-top">
-                    {{ subRole.name }}
-                    <label
-                      class="switch switch-lg switch-3d switch-primary"
-                      style="margin-bottom: 0em;margin-top: 1px; float: right"
-                    >
-                      <input
-                        type="checkbox"
-                        class="switch-input"
-                        (change)="changeHasSubRole(role.id, subRole.id)"
-                      />
-                      <span class="switch-slider"></span>
-                    </label>
-                  </h5>
-                </li>
-              </ul>
-            </div>-->
           </div>
         </div>
       </div>
