@@ -29,11 +29,31 @@ export class EditUserComponent implements OnInit {
       });
   }
   editUser() {
-    this.userService.editUser(this.user).subscribe(user => {}, error => {
-      this.alertify.error('Kunne ikke gennemføre ændringerne');
-  }, () => {
-      this.alertify.success('Ændringer gemt');
-      this.router.navigate(['users/details/' + this.user.id]);
-  });
+    this.userService.editUser(this.user).subscribe(user => {}, 
+      error => {
+        this.alertify.error('Kunne ikke gennemføre ændringerne');
+      },
+      () => {
+        this.alertify.success('Ændringer gemt');
+        this.router.navigate(['users/details/' + this.user.id]);
+      });
+  }
+  deactivateUser() {
+    this.userService.deActivateUser(this.user.id).subscribe(i => {},
+      error => {
+        this.alertify.error('Kunne ikke deaktivere brugeren');
+      },
+      () => {
+        this.alertify.success('Brugeren blev deaktiveret');
+      });
+  }
+  activateUser() {
+    this.userService.activateUser(this.user.id).subscribe(i => {},
+      error => {
+        this.alertify.error('Kunne ikke aktivere brugeren');
+      },
+      () => {
+        this.alertify.success('Brugeren blev aktiveret');
+      });
   }
 }

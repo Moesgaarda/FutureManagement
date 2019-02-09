@@ -90,6 +90,23 @@ namespace API.Controllers
                 return BadRequest();
             }
             var userToChange = _context.Users.First(x => x.Id == user.Id);
+
+            user.AccessFailedCount = userToChange.AccessFailedCount;
+            user.Changes = userToChange.Changes;
+            user.ConcurrencyStamp = userToChange.ConcurrencyStamp;
+            user.EmailConfirmed = userToChange.EmailConfirmed;
+            user.IsActive = userToChange.IsActive;
+            user.LockoutEnabled = userToChange.LockoutEnabled;
+            user.LockoutEnd = userToChange.LockoutEnd;
+            if(!String.IsNullOrEmpty(user.Email)){
+                user.NormalizedEmail = user.Email.ToUpper();
+            }
+            user.NormalizedUserName = user.UserName.ToUpper();
+            user.PasswordHash = userToChange.PasswordHash;
+            user.PhoneNumberConfirmed = userToChange.PhoneNumberConfirmed;
+            user.SecurityStamp = userToChange.SecurityStamp;
+            user.TwoFactorEnabled = userToChange.TwoFactorEnabled;
+
             bool succes = await _repo.EditUser(user, userToChange);
 
             if(succes){

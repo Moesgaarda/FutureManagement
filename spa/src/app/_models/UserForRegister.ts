@@ -6,5 +6,5 @@ export interface UserForRegister {
     birthdate: Date;
     isActive: boolean;
     email: string;
-    phone: string;
+    phoneNumber: string;
 }

@@ -41,6 +41,9 @@ export class UserService {
     return this.http.post(this.baseUrl + 'User/delete/' + id, {})
     .map(response => {});
   }
+  activateUser(id: number) {
+    return this.http.post(this.baseUrl + 'User/activate/' + id, {});
+  }
   deActivateUser(id: number) {
     return this.http.post(this.baseUrl + 'User/deactivate/' + id, {});
   }

@@ -9,5 +9,5 @@ export interface User {
     birthdate: Date;
     isActive: boolean;
     email: string;
-    phone: string;
+    phoneNumber: string;
 }
