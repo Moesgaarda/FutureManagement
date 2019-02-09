@@ -1,0 +1,79 @@
+<div *ngIf="isDataAvailable">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card">
+
+                <div class="card-header">
+                    <h5>Bestilling: {{order.purchaseNumber}}</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label for="description">Firma</label>
+                        <div class="input-group-text">
+                            {{order.company}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="created">Bestilt af</label>
+                        <div class="input-group-text">
+                            {{order.orderedBy.name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="created">Status</label>
+                        <div class="input-group-text">
+                            {{orderStatus}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="created">Dato for bestilling</label>
+                        <div class="input-group-text">
+                            {{orderDateString}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="created">Dato for levering</label>
+                        <div class="input-group-text">
+                            {{deliveryDateString}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="created">Størelse</label>
+                        <div class="input-group-text">
+                            {{order.width}}x{{order.height}}x{{order.length}} {{order.unitType.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="card">
+                <div class="card-header">Produkter i bestillingen</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Navn</th>
+                                <th>Mængde</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of order.products">
+                                <td>{{item.template.name}}</td>
+                                <td>{{item.amount}}</td>
+                                <td><input type="text"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

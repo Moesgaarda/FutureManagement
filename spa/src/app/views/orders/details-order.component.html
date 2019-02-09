@@ -49,10 +49,16 @@
             </div>
           </div>
 
-          <dt class="col-sm-12">
-            <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">Rediger
-              bestillingen</button>
-          </dt>
+          <div class="form-group">
+            <span>
+              <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">Rediger
+                bestillingen</button>
+            </span>
+            <span>&nbsp;</span>
+            <span>
+              <button type="button" class="btn btn-success" (click)="goPrint(order.id)">Print denne
+                bestilling</button></span>
+          </div>
 
         </div>
       </div>
