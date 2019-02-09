@@ -103,7 +103,6 @@ namespace API.Controllers
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                // TODO This logging is incorrent, pls help Andreas
                 result = await _eventLogRepo.AddEventLogChange("kategori", categoryDto.Name, categoryDto.Id, currentUser, categoryToChange, categoryDto);
             }
 
