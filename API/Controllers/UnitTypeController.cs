@@ -63,18 +63,25 @@ namespace API.Controllers
                 unitTypeDto.Name
             );
 
-            bool result = await _repo.AddUnitType(unitType);
-
-            if(unitType.Name == null){
-                return BadRequest("UnitType name cannot be null.");
+            if(unitType.Name == null || unitType.Name == ""){
+                return BadRequest("Mængdeenhedens navn må ikke være tomt");
+            } 
+            else if(_repo.DuplicateExists(unitType.Name)){
+                return BadRequest("Denne mængdeenhed findes allerede");
             }
+
+            bool result = await _repo.AddUnitType(unitType);
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                 result = await _eventLogRepo.AddEventLog(EventType.Created, "mængdeenhed", unitType.Name, unitType.Id, currentUser);
             }
 
-            return result ? StatusCode(201) : BadRequest();
+            if(result){
+                return StatusCode(201);
+            } else {
+                return BadRequest("Kunne ikke oprette mængdeenhed");
+            }
         }
 
         [Authorize(Policy = "UnitTypes_Add")]
@@ -86,17 +93,24 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
+
+            if(unitTypeDto.Name == null || unitTypeDto.Name == ""){
+                return BadRequest("Mængdeenhedens navn må ikke være tomt");
+            }
             
             var unitTypeToChange = await _repo.GetUnitType(unitTypeDto.Id);
             bool result = await _repo.EditUnitType(unitTypeToChange, unitTypeDto);
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                // TODO This logging is incorrent, pls help Andreas
-                result = await _eventLogRepo.AddEventLogChange("genstand", unitTypeDto.Name, unitTypeDto.Id, currentUser, unitTypeDto, unitTypeDto);
+                result = await _eventLogRepo.AddEventLogChange("mængdeenhed", unitTypeDto.Name, unitTypeDto.Id, currentUser, unitTypeToChange, unitTypeDto);
             }
 
-            return result ? StatusCode(200) : StatusCode(400);
+            if(result){
+                return StatusCode(200);
+            } else {
+                return BadRequest("Kunne ikke ændre mængdeenhed");
+            }
         }
     }
 }

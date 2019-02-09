@@ -10,5 +10,6 @@ namespace API.Data
         Task<ItemPropertyName> GetProperty(int id);
         Task<bool> EditProperty(ItemPropertyName oldProperty, ItemPropertyName newProperty);
         Task<bool> AddProperty(ItemPropertyName property);
+        bool DuplicateExists(string name);
     }
 }

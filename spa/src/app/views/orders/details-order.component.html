@@ -4,7 +4,13 @@
       <div class="card">
 
         <div class="card-header">
-          <h5>Bestilling: {{order.purchaseNumber}}</h5>
+          <h5>Bestilling: {{order.purchaseNumber}}
+            <div class="float-right" *ngIf="authService.roleMatch(['Order_Edit'])">
+                <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">
+                  Rediger bestillingen
+                </button>
+            </div>
+          </h5>
         </div>
         <div class="card-body">
 
@@ -22,10 +28,33 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="created">Status</label>
-            <div class="input-group-text">
-              {{orderStatus}}
+            <div *ngIf="isEditing;else show_status">
+                <label>Status</label>
+                <select
+                  class="form-control dropdown-toggle"
+                  [(ngModel)]="orderStatus"
+                >
+                  <option *ngFor="let key of keys" [ngValue]="key">{{
+                    key
+                  }}</option>
+                </select>
+                <button class="btn btn-success btn-sm" (click) = "saveStatus()">
+                  Gem ændringer
+                </button>
             </div>
+            <ng-template #show_status>
+                <label>Status</label>
+                <div class="input-group">
+                  <div class="form-control">
+                      {{orderStatus}}
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary btn-sm" (click)="editStatus()">
+                      Rediger status
+                    </button>
+                  </div>
+                </div>
+            </ng-template>
           </div>
 
           <div class="form-group">
@@ -48,12 +77,6 @@
               {{order.width}}x{{order.height}}x{{order.length}} {{order.unitType.name}}
             </div>
           </div>
-
-          <dt class="col-sm-12">
-            <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">Rediger
-              bestillingen</button>
-          </dt>
-
         </div>
       </div>
     </div>
@@ -84,25 +107,27 @@
           </table>
         </div>
       </div>
-      <div class="card">
-        <div class="card-header">Filer</div>
-        <div class="card-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th width="80%">Navn</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of order.files">
-                <td>{{item.fileName}}</td>
-                <td>
-                  <button type="button" class="btn btn-success" (click)="downloadFile(item)">Download</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="order.files.length > 0">
+        <div class="card">
+          <div class="card-header">Filer</div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="80%">Navn</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of order.files">
+                  <td>{{item.fileName}}</td>
+                  <td>
+                    <button type="button" class="btn btn-success" (click)="downloadFile(item)">Download</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

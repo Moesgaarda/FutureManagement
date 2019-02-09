@@ -10,5 +10,6 @@ namespace API.Data
         Task<ItemTemplateCategory> GetCategory(int id);
         Task<bool> EditCategory(ItemTemplateCategory oldCategory, ItemTemplateCategory newCategory);
         Task<bool> AddCategory(ItemTemplateCategory category);
+        bool DuplicateExists(string name);
     }
 }
