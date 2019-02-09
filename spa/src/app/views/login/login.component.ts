@@ -27,8 +27,4 @@ export class LoginComponent {
   loggedIn() {
     return this.authService.loggedIn();
   }
-
-  returnToDashboard() {
-    this.router.navigate(['']);
-  }
 }
