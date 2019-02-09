@@ -95,6 +95,7 @@ export class ReviseItemTemplateComponent implements OnInit {
         this.templateToRevise.files = [];
         this.templateToRevise.lowerLimit = itemTemplate.lowerLimit;
         this.category = itemTemplate.category;
+        this.unitType = itemTemplate.unitType;
     });
   }
 
@@ -190,7 +191,7 @@ export class ReviseItemTemplateComponent implements OnInit {
   /**
    *The list of properties on the template is compared to all properties so the checkbox can be checked.
    *
-   * @param {*} id id of the properti that should be checked
+   * @param {*} id id of the property that should be checked
    * @returns a boolean that means if it succeded or not
    * @memberof ReviseItemTemplateComponent
    */
@@ -204,10 +205,22 @@ export class ReviseItemTemplateComponent implements OnInit {
   }
 
   /**
-   *Adds the revised ItemTemplate
-   *This method makes sure that all the properties and ItemTemplates that are a a part of this ItemTemplate are added to it
-   * it also adds all the files to the ItemTemplate
-   * Finnally it sends the revised ItemTemplate to the controller so that it can be added to the DB
+   * Compares the value of unitType on the object to the possibilities.
+   * If equal, it is used as default
+   * @param {*} u1
+   * @param {*} u2
+   * @returns {boolean}
+   * @memberof ReviseItemTemplateComponent
+   */
+  compareDefaultForSelect(u1: any, u2: any): boolean {
+    return u1 && u2 ? u1.id === u2.id : u1 === u2;
+  }
+
+  /**
+   * Adds the revised ItemTemplate
+   * This method makes sure that all the properties and ItemTemplates that are a a part of this ItemTemplate are added to it
+   * It also adds all the files to the ItemTemplate
+   * Finally it sends the revised ItemTemplate to the controller so that it can be added to the DB
    *
    * @memberof ReviseItemTemplateComponent
    */
