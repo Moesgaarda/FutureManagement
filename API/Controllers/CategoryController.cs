@@ -63,8 +63,6 @@ namespace API.Controllers
                 categoryDto.Name
             );
 
-            bool result = await _repo.AddCategory(category);
-
             if(category.Name == null || category.Name == ""){
                 return BadRequest("Kategoriens navn må ikke være tomt");
             }
@@ -72,6 +70,8 @@ namespace API.Controllers
             if(_repo.DuplicateExists(category.Name)){
                 return BadRequest("Denne kategori findes allerede");
             }
+
+            bool result = await _repo.AddCategory(category);
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;

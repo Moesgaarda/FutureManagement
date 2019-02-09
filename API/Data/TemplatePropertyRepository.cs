@@ -42,16 +42,8 @@ namespace API.Data
         public bool DuplicateExists(string name){
             name.ToLower();
             name.Normalize();
-            var properties = GetProperties();
-
-            foreach(var prop in properties.Result){
-                prop.Name.ToLower();
-                prop.Name.Normalize();
-                if(prop.Name == name){
-                    return true;
-                }
-            }
-            return false;
+            Task<bool> exists = _context.ItemPropertyNames.AnyAsync(x => x.Name.ToLower().Normalize() == name);
+            return exists.Result;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace API.Controllers
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                result = await _eventLogRepo.AddEventLog(EventType.Created, "Egenskab", itemPropertyName.Name, itemPropertyName.Id, currentUser);
+                result = await _eventLogRepo.AddEventLog(EventType.Created, "egenskab", itemPropertyName.Name, itemPropertyName.Id, currentUser);
             }
 
             if(result){
@@ -105,7 +105,7 @@ namespace API.Controllers
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                result = await _eventLogRepo.AddEventLogChange("Egenskab", propertyNameDto.Name, propertyNameDto.Id, currentUser, propertyNameToChange, propertyNameDto);
+                result = await _eventLogRepo.AddEventLogChange("egenskab", propertyNameDto.Name, propertyNameDto.Id, currentUser, propertyNameToChange, propertyNameDto);
             }
 
             if(result){

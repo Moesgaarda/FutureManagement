@@ -42,16 +42,8 @@ namespace API.Data
         public bool DuplicateExists(string name){
             name.ToLower();
             name.Normalize();
-            var unitTypes = GetUnitTypes();
-
-            foreach(UnitType ut in unitTypes.Result){
-                name.ToLower();
-                ut.Name.Normalize();
-                if(ut.Name == name){
-                    return true;
-                }
-            }
-            return false;
+            Task<bool> exists = _context.UnitTypes.AnyAsync(x => x.Name.ToLower().Normalize() == name);
+            return exists.Result;
         }
     }
 }
