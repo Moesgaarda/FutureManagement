@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using API.Models;
+using System.Collections.Generic;
 
 namespace API.Dtos
 {
@@ -20,5 +22,6 @@ namespace API.Dtos
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime Birthdate { get; set; }
+        public ICollection <RoleCategory> RoleCategory {get; set;}
     }
 }

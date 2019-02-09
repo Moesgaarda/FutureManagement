@@ -14,32 +14,10 @@ export class NewUserRolesComponent implements OnInit {
 
   roleCategories: RoleCategory[] = [] as RoleCategory[];
   userRoles: UserRole[] = [] as UserRole[];
-  roleCategoryToAdd: RoleCategory;
+  roleNameToAdd: string;
+  userRolesToAdd: UserRole[] = [] as UserRole[];
 
   constructor(private alertify: AlertifyService, private userService: UserService) {}
-
-  // TODO  Skal ændres til at bruge en model når backend for userroles virker
-  // dette objekt er kun til test af UI.
-  /* userRoles: { id: number, name: string, hasRole: boolean, subRoles: { id: number, name: string, hasRole: boolean }[] }[] = [
-    {
-      'id': 0, 'name': 'Kunder', hasRole: false, subRoles: [
-        { id: 0, name: 'Vis alle kunder', hasRole: false }, { id: 1, name: 'Opret kunde', hasRole: false },
-        { id: 2, name: 'Rediger kunde', hasRole: false }
-      ],
-    },
-    {
-      'id': 1, 'name': 'Projekter', hasRole: false, subRoles: [
-        { id: 0, name: 'Vis alle projekter', hasRole: false }, { id: 1, name: 'Opret projekt', hasRole: false },
-        { id: 2, name: 'Rediger projekt', hasRole: false }
-      ],
-    },
-    {
-      'id': 2, 'name': 'Bestillinger', hasRole: false, subRoles: [
-        { id: 0, name: 'Vis alle bestillinger', hasRole: false }, { id: 1, name: 'Opret bestilling', hasRole: false },
-        { id: 2, name: 'Rediger bestilling', hasRole: false }
-      ],
-    }
-  ];*/
 
   ngOnInit() {
     this.userService.getAllRoleCategories().subscribe(roleCategories => {
@@ -50,38 +28,27 @@ export class NewUserRolesComponent implements OnInit {
     });
   }
 
-  /**
-   *
-   * Ændrer på bool værdien af en rolle når der clickes på en switch
-   * @param {number} id
-   * @memberof NewUserRolesComponent
-   */
-  changeHasRole(id: number) {
-    /*if (this.userRoles[id].hasRole === true) {
-      this.userRoles[id].hasRole = false;
+  onSwitchChange(role, event) {
+    if (event.target.checked) {
+      this.userRolesToAdd.push(role);
     } else {
-      this.userRoles[id].hasRole = true;
-    }*/
-  }
-
-  /**
-   *
-   * Ændrer på bool værdien af en subrolle når der clickes på en switch
-   * @param {number} roleId
-   * @param {number} subRoleId
-   * @memberof NewUserRolesComponent
-   */
-  changeHasSubRole(roleId: number, subRoleId: number) {
-    /*if (this.userRoles[roleId].subRoles[subRoleId].hasRole === true) {
-      this.userRoles[roleId].subRoles[subRoleId].hasRole = false;
-    } else {
-      this.userRoles[roleId].subRoles[subRoleId].hasRole = true;
-    }*/
+      for (let i = 0; i < this.userRoles.length; i++) {
+        if (this.userRolesToAdd[i] === role) {
+          this.userRolesToAdd.splice(i, 1);
+        }
+      }
+    }
   }
 
   addRole() {
-    // TODO lav metoden når backend til userroles virker
-    this.alertify.error('Kunne ikke tilføje rolle');
-    console.log(this.userRoles);
+    const roleCategoryToAdd = {} as RoleCategory;
+    roleCategoryToAdd.name = this.roleNameToAdd;
+    roleCategoryToAdd.userRoles = this.userRolesToAdd;
+
+    this.userService.addRoleCategory(roleCategoryToAdd).subscribe(data => {
+      this.alertify.success('Tilføjede rolle');
+    }, error => {
+      this.alertify.error('Kunne ikke tilføje rollen');
+    });
   }
 }
