@@ -44,7 +44,6 @@ export class NewUserRolesComponent implements OnInit {
     const roleCategoryToAdd = {} as RoleCategory;
     roleCategoryToAdd.name = this.roleNameToAdd;
     roleCategoryToAdd.userRoles = this.userRolesToAdd;
-    // TODO lav metoden når backend til userroles virker
 
     this.userService.addRoleCategory(roleCategoryToAdd).subscribe(data => {
       this.alertify.success('Tilføjede rolle');

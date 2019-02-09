@@ -48,7 +48,6 @@ export class NewUserComponent implements OnInit {
     } else {
       this.alertify.error('Brugeren var ikke valid');
     }
-    console.log(this.user);
   }
 
   goToUserTable() {
