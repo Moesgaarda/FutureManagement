@@ -205,10 +205,33 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "User_Add")]
-        [HttpPost("addRoleCategory")]
-        public async Task<IActionResult> AddNewRoleCategory([FromBody]RoleCategory role)
+        [HttpPost("AddRoleCategory")]
+        public async Task<IActionResult> AddNewRoleCategory([FromBody]RoleCategoryForAddDto roleCategory)
         {   
-            return Ok();
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            List<RoleCategoryRoleRelation> rolesToAdd = new List<RoleCategoryRoleRelation>();
+            foreach(RoleForGetDto r in roleCategory.UserRoles){
+                rolesToAdd.Add(new RoleCategoryRoleRelation{
+                    RoleId = r.Id
+                });
+            }
+
+            var roleCategoryToCreate = new RoleCategory(
+                roleCategory.Name,
+                rolesToAdd
+            );
+
+            bool success = await _repo.AddRoleCategory(roleCategoryToCreate);
+
+            if(success){
+                User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                success = await _eventLogRepo.AddEventLog(EventType.Created, "Rolle", roleCategoryToCreate.Name, roleCategoryToCreate.Id, currentUser);
+            }
+
+            return success ? StatusCode(201) : BadRequest();
         }
 
         [Authorize(Policy = "User_View")]      

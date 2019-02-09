@@ -25,23 +25,33 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly IAuthRepository _repo;
 
 
         public AuthController(IConfiguration config, 
                             IMapper mapper, UserManager<User> userManager,
-                            SignInManager<User> signInManager){
+                            SignInManager<User> signInManager, RoleManager<Role> roleManager,
+                            IAuthRepository repo){
             _config = config;
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
+            _repo = repo;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto){
  
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
+            var rolesToAddToUser = _repo.GetRoles(userForRegisterDto.RoleCategory);
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+
+           foreach (var role in rolesToAddToUser) {
+                await _userManager.AddToRoleAsync(userToCreate, role.Name);
+            }
 
             var userToReturn = _mapper.Map<UserForGetDto>(userToCreate);
 
