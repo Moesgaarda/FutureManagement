@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using API.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.TESTS
 {
@@ -21,9 +22,11 @@ namespace API.TESTS
         private readonly DataContext _dbContext;
         private readonly IMapper _mapper; 
         private readonly IItemRepository _repo;
+        private readonly UserManager<User> _userManager;
+        private readonly EventLogRepository _eventLogRepo;
 
         public ItemTest(){
-             var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
 
@@ -50,7 +53,7 @@ namespace API.TESTS
         [Fact]
         public async void GetAllActiveItemsTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             // Act
             IActionResult allActiveItems = await itemController.GetActiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
@@ -62,7 +65,7 @@ namespace API.TESTS
         [Fact]
         public async void GetAllInactiveItemsTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             // Act
             IActionResult allActiveItems = await itemController.GetInactiveItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
@@ -74,7 +77,7 @@ namespace API.TESTS
         [Fact]
         public async void GetAllItemsTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             // Act
             IActionResult allActiveItems = await itemController.GetItems();
             OkObjectResult intermediate = allActiveItems as OkObjectResult;
@@ -86,7 +89,7 @@ namespace API.TESTS
         [Fact]
         public async void EditItemTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);
             // Act
             item.Placement = "Denne placering er ændret";
@@ -99,7 +102,7 @@ namespace API.TESTS
         [Fact]
         public async void EditItemReturnTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
             item.Placement = "En ny placering";
@@ -113,7 +116,7 @@ namespace API.TESTS
         [Fact]
         public async void DeactivateItemTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
             await itemController.DeactivateItem(item.Id);
@@ -126,7 +129,7 @@ namespace API.TESTS
         [Fact]
         public async void DeactivateItemReturnTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
             var status = await itemController.DeactivateItem(item.Id);
@@ -139,7 +142,7 @@ namespace API.TESTS
         [Fact]
         public async void DeleteItemTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper); 
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1); 
 
             // Act
@@ -153,7 +156,7 @@ namespace API.TESTS
         [Fact]
         public async void DeleteItemReturnTest(){
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             var item = _dbContext.Items.FirstOrDefault(x => x.Id == 1);            
             // Act
             var status = await itemController.DeleteItem(item.Id);
@@ -167,7 +170,7 @@ namespace API.TESTS
         public async void CreateItemTest()
         {
             // Arrange
-            var itemController = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             Item itemToCreate = new Item(
                 "D4",
                 23,
@@ -202,7 +205,7 @@ namespace API.TESTS
         [Fact]
         public async void CreateItemReturnTest(){
             // Arrange
-            var controller = new ItemController(_repo, _dbContext, _mapper);
+            var itemController = new ItemController(_repo, _dbContext, _mapper, _userManager, _eventLogRepo);
             Item createdItem = new Item(
                 "D4",
                 23,
@@ -227,7 +230,7 @@ namespace API.TESTS
             
             // Act
             var itemDTO = _mapper.Map<ItemForAddDto>(createdItem);
-            var status = await controller.AddItem(itemDTO);
+            var status = await itemController.AddItem(itemDTO);
             // Assert
             StatusCodeResult result = status as StatusCodeResult;
             var test = new StatusCodeResult(201);
@@ -246,95 +249,96 @@ namespace API.TESTS
             context.ItemPropertyNames.AddRange(itemProperties);
             context.SaveChanges();
 
+            var listTP = new List<TemplatePropertyRelation>();
+            listTP.AddRange(_dbContext.TemplatePropertyRelations.Where(x => x.TemplateId == 1));
+            listTP.AddRange(_dbContext.TemplatePropertyRelations.Where(x => x.TemplateId == 2));
+
             var itemTemplates = new[]{
                 new ItemTemplate(
-                    "Gavl", 
-                    UnitType.m, 
-                    "Dette er en gavl", 
-                    new List<TemplatePropertyRelation>(){
-                        new TemplatePropertyRelation{
-                            PropertyId = 1
-                        },
-                        new TemplatePropertyRelation{
-                            PropertyId = 2
-                        }
-                    }, 
-                    new List<ItemTemplatePart>(),
-                    new List<ItemTemplatePart>(),
-                    new List<TemplateFileName>(){}
-                ),
+                "Dør",
+                new UnitType{
+                    Name = "test"
+                },
+                "Dette er en Dør",
+                listTP,
+                new List<ItemTemplatePart>() { },
+                new List<ItemTemplatePart>() { },
+                new DateTime {},
+                new ItemTemplate{},
+                new List<TemplateFileName>(),
+                0,
+                new ItemTemplateCategory{}
+            ),
                 new ItemTemplate(
-                    "Stang", 
-                    UnitType.m, 
-                    "Dette er en stang", 
-                    new List<TemplatePropertyRelation>(){
-                        new TemplatePropertyRelation{
-                            PropertyId = 1
-                        },
-                        new TemplatePropertyRelation{
-                            PropertyId = 2
-                        }
-                    }, 
-                    new List<ItemTemplatePart>(){},
-                    new List<ItemTemplatePart>(){},
-                    new List<TemplateFileName>(){}
-                ),
+                "Dør1",
+                new UnitType{
+                    Name = "test"
+                },
+                "Dette er en Dør",
+                listTP,
+                new List<ItemTemplatePart>() { },
+                new List<ItemTemplatePart>() { },
+                new DateTime {},
+                new ItemTemplate{},
+                new List<TemplateFileName>(),
+                0,
+                new ItemTemplateCategory{}
+            ),
                 new ItemTemplate(
-                    "Tagplade", 
-                    UnitType.m, 
-                    "Dette er en tagplade", 
-                    new List<TemplatePropertyRelation>(){
-                        new TemplatePropertyRelation{
-                            PropertyId = 1
-                        },
-                        new TemplatePropertyRelation{
-                            PropertyId = 2
-                        }
-                    },
-                    new List<ItemTemplatePart>(){},
-                    new List<ItemTemplatePart>(){},
-                    new List<TemplateFileName>(){}
-                 )
+                "Dør2",
+                new UnitType{
+                    Name = "test"
+                },
+                "Dette er en Dør",
+                listTP,
+                new List<ItemTemplatePart>() { },
+                new List<ItemTemplatePart>() { },
+                new DateTime {},
+                new ItemTemplate{},
+                new List<TemplateFileName>(),
+                0,
+                new ItemTemplateCategory{}
+            )
             };
             context.ItemTemplates.AddRange(itemTemplates);
             context.SaveChanges();
             var users = new[]{
                 new User(
-                    "bjarne52",
-                    new UserRole("Produktion"),
-                    "Bjarne",
-                    "Hansen",
+                    "Jan",
+                    "Krabbe",
                     new DateTime(1980, 1, 18),
-                    true,
-                    "Bjarne@FutureRundbuehaller.dk",
-                    "29292929"
+                    true
                 )
             };
             context.Users.AddRange(users);
             context.SaveChanges();
             var orders = new[]{
-                new Order("CompanyA", 
-                    DateTime.Today, 
-                    DateTime.Now, 
-                    context.Users.FirstOrDefault(x => x.Id == 1), 
-                    "core/pathA.pdf", 
-                    1, 
-                    123, 
-                    456, 
-                    789, 
-                    UnitType.cm,
-                    new List<Item>()),
-                new Order("CompanyB", 
-                    DateTime.Today, 
-                    DateTime.Now, 
-                    context.Users.FirstOrDefault(x => x.Id == 1), 
-                    "core/pathB.pdf", 
-                    2, 
-                    345, 
-                    678, 
-                    910, 
-                    UnitType.mm,
-                    new List<Item>()),
+                new Order("CompanyA",
+                    DateTime.Today,
+                    DateTime.Now,
+                    context.Users.FirstOrDefault(x => x.Id == 1),
+                    1,
+                    123,
+                    456,
+                    789,
+                    new UnitType {},
+                    new List<Item>(),
+                    new List<OrderFileName>(),
+                    OrderStatusEnum.Ankommet
+                ),
+                new Order("CompanyB",
+                    DateTime.Today,
+                    DateTime.Now,
+                    context.Users.FirstOrDefault(x => x.Id == 1),
+                    1,
+                    123,
+                    456,
+                    789,
+                    new UnitType {},
+                    new List<Item>(),
+                    new List<OrderFileName>(),
+                    OrderStatusEnum.Annulleret
+                )
             };
             context.Orders.AddRange(orders);
             context.SaveChanges();
