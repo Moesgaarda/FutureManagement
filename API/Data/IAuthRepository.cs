@@ -9,6 +9,6 @@ namespace API.Data
         Task<User> Register(User user, string password);
         Task<User> Login(string username, string password);
         Task<bool> UserExists(string username);
-        //List<Role> GetRoles(ICollection<RoleCategory> roleCategories);
+        List<Role> GetRoles(ICollection<RoleCategory> roleCategories);
     }
 }
