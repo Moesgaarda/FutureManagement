@@ -84,6 +84,7 @@ namespace API.Data {
                 .Include(x => x.Template)
                 .Include(x => x.Order)
                 .Include(x => x.CreatedBy)
+                .Include(x => x.Template.UnitType)
                 .Where(x => x.IsActive == true)
                 .ToListAsync();
         }
@@ -93,12 +94,18 @@ namespace API.Data {
                 .Include(x => x.Template)
                 .Include(x => x.Order)
                 .Include(x => x.CreatedBy)
+                .Include(x => x.Template.UnitType)
                 .Where(x => x.IsActive == false)
                 .ToListAsync ();
         }
 
         public async Task<List<Item>> GetAllItems () {
-            return await _context.Items.Include (x => x.Template).Include(x => x.Order).ToListAsync ();
+            return await _context.Items
+            .Include(x => x.Template)
+            .Include(x => x.Order)
+            .Include(x => x.CreatedBy)
+            .Include(x => x.Template.UnitType)
+            .ToListAsync ();
         }
 
         public async Task<Item> GetItem (int id) {
@@ -108,12 +115,14 @@ namespace API.Data {
                 .Include(x => x.CreatedBy)
                 .Include(x => x.Order)
                 .Include(x => x.Properties)
+                .Include(x => x.Template.UnitType)
                 .FirstOrDefaultAsync ();
 
             _context.Entry(item).Collection (x => x.Parts)
                 .Query()
                 .Include(x => x.Part)
                 .Include(x => x.Part.Template)
+                .Include(x => x.Part.Template.UnitType)
                 .Load();
 
             item.PartOf = _context.ItemItemRelations.Where(x => x.PartId == item.Id).ToList();
