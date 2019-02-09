@@ -92,16 +92,17 @@
         <br>
         <div class="col-lg-6">
           <ng-container
-            *ngFor="let r of roles  | userRoleFilter: roleFilter | paginate: {itemsPerPage: itemsPerPage, 
+            *ngFor="let role of roles  | userRoleFilter: roleFilter | paginate: {itemsPerPage: itemsPerPage, 
                                                                                                   currentPage: currentPage, 
                                                                                                   totalItems: roles?.length }; let i=index">
-            <div *ngIf="checkBox(r); then checkedBox else uncheckedBox"> </div>
+            <div *ngIf="checkBox(role); then checkedBox else uncheckedBox"> </div>
             <ng-template #checkedBox>
-              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)" checked />
-              {{r.name}}
+              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(role, $event)" checked />
+              {{role.name}}
             </ng-template>
             <ng-template #uncheckedBox>
-              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(r, $event)" /> {{r.name}}
+              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(role, $event)" /> 
+              {{role.name}}
             </ng-template>
             <br>
           </ng-container>
