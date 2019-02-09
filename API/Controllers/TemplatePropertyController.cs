@@ -63,18 +63,26 @@ namespace API.Controllers
                 ItemPropertyNameDto.Name
             );
 
-            bool result = await _repo.AddProperty(itemPropertyName);
-
-            if(itemPropertyName.Name == null){
-                return BadRequest("TemplateProperty name cannot be null.");
+            if(itemPropertyName.Name == null || itemPropertyName.Name == ""){
+                return BadRequest("Egenskabens navn må ikke være tom");
             }
+
+            if(_repo.DuplicateExists(itemPropertyName.Name)){
+                return BadRequest("Denne egenskab findes allerede");
+            }
+
+            bool result = await _repo.AddProperty(itemPropertyName);
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                 result = await _eventLogRepo.AddEventLog(EventType.Created, "Egenskab", itemPropertyName.Name, itemPropertyName.Id, currentUser);
             }
 
-            return result ? StatusCode(201) : BadRequest();
+            if(result){
+                return StatusCode(201);
+            } else{
+                return BadRequest("Kunne ikke tilføje egenskaben");
+            }
         }
 
         [Authorize(Policy = "TemplateProperties_Add")]
@@ -83,20 +91,28 @@ namespace API.Controllers
             if(propertyNameDto.Id == 0){
                 ModelState.AddModelError("Template Property Error","Template Property id cannot be 0.");
             }
+            
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-            
+
+            if(propertyNameDto.Name == null || propertyNameDto.Name == ""){
+                return BadRequest("Egenskabens navn må ikke være tom");
+            }
+
             var propertyNameToChange = await _repo.GetProperty(propertyNameDto.Id);
             bool result = await _repo.EditProperty(propertyNameToChange, propertyNameDto);
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                // TODO This logging is incorrent, pls help Andreas
-                result = await _eventLogRepo.AddEventLogChange("Egenskab", propertyNameDto.Name, propertyNameDto.Id, currentUser, propertyNameDto, propertyNameDto);
+                result = await _eventLogRepo.AddEventLogChange("Egenskab", propertyNameDto.Name, propertyNameDto.Id, currentUser, propertyNameToChange, propertyNameDto);
             }
 
-            return result ? StatusCode(200) : StatusCode(400);
+            if(result){
+                return StatusCode(200);
+            } else{
+                return BadRequest("Kunne ikke ændre egenskaben");
+            }
         }
     }
 }

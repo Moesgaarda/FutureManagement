@@ -38,5 +38,20 @@ namespace API.Data
             }
         return false;
         }
+
+        public bool DuplicateExists(string name){
+            name.ToLower();
+            name.Normalize();
+            var properties = GetProperties();
+
+            foreach(var prop in properties.Result){
+                prop.Name.ToLower();
+                prop.Name.Normalize();
+                if(prop.Name == name){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

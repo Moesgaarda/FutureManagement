@@ -30,7 +30,7 @@ export class EditTemplatePropertyComponent implements OnInit {
             this.alertify.success('Opdaterede egenskab');
           },
           error => {
-            this.alertify.error('Kunne ikke opdatere egenskab');
+            this.alertify.error(error.error);
           }, () => {
             this.router.navigate(['TemplateProperties/view']);
           });

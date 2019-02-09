@@ -65,8 +65,12 @@ namespace API.Controllers
 
             bool result = await _repo.AddCategory(category);
 
-            if(category.Name == null){
-                return BadRequest("Category name cannot be null.");
+            if(category.Name == null || category.Name == ""){
+                return BadRequest("Kategoriens navn må ikke være tomt");
+            }
+
+            if(_repo.DuplicateExists(category.Name)){
+                return BadRequest("Denne kategori findes allerede");
             }
 
             if(result){
@@ -74,7 +78,11 @@ namespace API.Controllers
                 result = await _eventLogRepo.AddEventLog(EventType.Created, "kategori", category.Name, category.Id, currentUser);
             }
 
-            return result ? StatusCode(201) : BadRequest();
+            if(result){
+                return StatusCode(201);
+            } else {
+                return BadRequest("Kunne ikke tilføje kategorien");
+            }
         }
 
         [Authorize(Policy = "Categories_Add")]
@@ -86,17 +94,24 @@ namespace API.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-            
+
+            if(categoryDto.Name == null || categoryDto.Name == ""){
+                return BadRequest("Kategoriens navn må ikke være tomt");
+            }
             var categoryToChange = await _repo.GetCategory(categoryDto.Id);
             bool result = await _repo.EditCategory(categoryToChange, categoryDto);
 
             if(result){
                 User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                 // TODO This logging is incorrent, pls help Andreas
-                result = await _eventLogRepo.AddEventLogChange("kategori", categoryDto.Name, categoryDto.Id, currentUser, categoryDto, categoryDto);
+                result = await _eventLogRepo.AddEventLogChange("kategori", categoryDto.Name, categoryDto.Id, currentUser, categoryToChange, categoryDto);
             }
 
-            return result ? StatusCode(200) : StatusCode(400);
+            if(result){
+                return StatusCode(200);
+            } else {
+                return BadRequest("Kunne ikke ændre kategorien");
+            }
         }
     }
 }
