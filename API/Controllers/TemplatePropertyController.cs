@@ -36,7 +36,7 @@ namespace API.Controllers
         [HttpGet("getAll", Name = "GetTemplateProperties")]
         public async Task<IActionResult> GetTemplateProperties(){
             var propertyNames = await _repo.GetProperties();
-            var propertyNamesToReturn = _mapper.Map<List<TemplatePropertyForGetDto>>(propertyNames);
+            var propertyNamesToReturn = _mapper.Map<List<ItemPropertyNameForGetDto>>(propertyNames);
 
             propertyNamesToReturn.Sort((x, y) => x.Name.CompareTo(y.Name));
 
@@ -47,7 +47,7 @@ namespace API.Controllers
         [HttpGet("get/{id}", Name = "GetTemplateProperty")]
         public async Task<IActionResult> GetTemplateProperty(int id){
             ItemPropertyName propertyName = await _repo.GetProperty(id);
-            TemplatePropertyForGetDto propertyNameToReturn = _mapper.Map<TemplatePropertyForGetDto>(propertyName);
+            ItemPropertyNameForGetDto propertyNameToReturn = _mapper.Map<ItemPropertyNameForGetDto>(propertyName);
 
             return Ok(propertyNameToReturn);
         }

@@ -11,7 +11,7 @@ namespace API.Dtos
         public string Name { get; set; }
         public UnitType UnitType { get; set; }
         public string Description { get; set; }
-        public ICollection<TemplatePropertyForGetDto> TemplateProperties { get; set; }
+        public ICollection<ItemPropertyNameForGetDto> TemplateProperties { get; set; }
         public ICollection<ItemTemplatePartDto> Parts { get; set; }
         public ICollection<ItemTemplatePartOfDto> PartOf { get; set; }
         public ICollection<FileNameForGetDto> Files { get; set; }
