@@ -32,7 +32,7 @@ export class EditTemplatePropertyComponent implements OnInit {
           error => {
             this.alertify.error(error.error);
           }, () => {
-            this.router.navigate(['TemplateProperties/view']);
+            this.router.navigate(['templateProperties/view']);
           });
     }
 }
