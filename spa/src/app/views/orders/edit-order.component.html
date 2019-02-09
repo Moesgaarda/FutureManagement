@@ -5,6 +5,7 @@
         <div class="card-header">
           <h5>Order: {{ order.purchaseNumber }}</h5>
         </div>
+
         <div class="card-body">
           <div class="form-group">
             <label>Firma</label>
@@ -12,80 +13,80 @@
               <input class="form-control" [(ngModel)]="order.company" />
             </div>
           </div>
+
           <div *ngIf="!editDate; else editContent">
             <div class="form-group">
               <label>Leveringsdato</label>
-              <div class="input-group-text">{{ deliveryDateAsString }}</div>
-              <button class="btn btn-primary btn-sm" (click)="toggleEditDate()">
-                Rediger leveringsdato
-              </button>
+              <div class="input-group">
+                <div class="form-control">
+                  {{ deliveryDateAsString }}
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-primary btn-sm" (click)="toggleEditDate()" type="button">Rediger</button>
+                </div>
+              </div>
             </div>
           </div>
+
           <ng-template #editContent>
             <div class="form-group">
               <label>Leveringsdato</label>
               <div class="input-group">
-                <input
-                  type="date"
-                  placeholder="Leveringstidspunkt"
-                  class="form-control"
-                  [(ngModel)]="order.deliveryDate"
-                />
+                <input type="date" placeholder="Leveringstidspunkt" class="form-control"
+                  [(ngModel)]="order.deliveryDate" />
               </div>
+
               <div class="btn-toolbar">
                 <button class="btn btn-success btn-sm" (click)="saveEditDate()">
                   Gem dato
                 </button>
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="cancelEditDate()"
-                >
+                <button class="btn btn-danger btn-sm" (click)="cancelEditDate()">
                   Annuller
                 </button>
               </div>
             </div>
           </ng-template>
+
           <div class="form-group">
             <label>Højde</label>
             <div class="input-group">
               <input class="form-control" [(ngModel)]="order.height" />
             </div>
           </div>
+
           <div class="form-group">
             <label>Længde</label>
             <div class="input-group">
               <input class="form-control" [(ngModel)]="order.length" />
             </div>
           </div>
+
           <div class="form-group">
             <label>Bredde</label>
             <div class="input-group">
               <input class="form-control" [(ngModel)]="order.width" />
             </div>
           </div>
+
           <div class="form-group">
             <label>Mængdeenhed</label>
-            <select
-              class="form-control dropdown-toggle"
-              [(ngModel)]="order.unitType"
-            >
+            <select class="form-control dropdown-toggle" [(ngModel)]="order.unitType">
               <option *ngFor="let unit of unitTypes" [ngValue]="unit">{{
                 unit.name
               }}</option>
             </select>
           </div>
+
           <div class="form-group">
             <label>Købsnummer</label>
             <div class="input-group">
               <input class="form-control" [(ngModel)]="order.purchaseNumber" />
             </div>
           </div>
+
           <div class="form-group">
             <label>Status</label>
-            <select
-              class="form-control dropdown-toggle"
-              [(ngModel)]="orderStatus"
-            >
+            <select class="form-control dropdown-toggle" [(ngModel)]="orderStatus">
               <option *ngFor="let key of keys" [ngValue]="key">{{
                 key
               }}</option>
