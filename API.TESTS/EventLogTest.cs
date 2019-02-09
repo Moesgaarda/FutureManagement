@@ -91,16 +91,13 @@ namespace API.TESTS
 
         private void Seed(DataContext context){
 
-            var user1 = new User(
-                "Tekrus",
-                new UserRole("Old man"),
-                "Daniel",
-                "måsgaardson",
-                DateTime.MinValue,
-                true,
-                "måsIGaard3@mor.fae",
-                "12456790"
-            );
+            var user1 =
+                new User(
+                    "Jan",
+                    "Krabbe",
+                    new DateTime(1980, 1, 18),
+                    true
+                    );
             
             context.Users.Add(user1);
             context.SaveChangesAsync();
