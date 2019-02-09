@@ -49,11 +49,6 @@ namespace API.Models{
 
         }
 
-        private Customer _customer;
-        private DateTime _startTime;
-        private DateTime _endTime;
-        private ICollection<Item> _products;
-
         [Key]
         public int Id { get; private set; }
 
