@@ -4,6 +4,7 @@ import { ViewOrdersComponent } from './view-orders.component';
 import { DetailsOrderComponent } from './details-order.component';
 import { NewOrderComponent } from './new-order.component';
 import { EditOrderComponent} from './edit-order.component';
+import { PrintOrderComponent } from "./print-order.component";
 import { AuthGuard } from '../../_guards/auth.guard';
 
 const routes: Routes = [
@@ -49,6 +50,14 @@ const routes: Routes = [
         data: {
           title: 'Ny bestilling',
           roles: ['Order_Add']
+        }
+      },
+      {
+        path: 'print/:id',
+        component: PrintOrderComponent,
+        data: {
+          title: 'Print bestilling',
+          roles: ['Order_View']
         }
       },
     ]
