@@ -71,7 +71,7 @@ namespace API.TESTS
             OkObjectResult intermediate = userEventLogs as OkObjectResult;
             List<EventLog> result = intermediate.Value as List<EventLog>;
             // Assert
-            Assert.Null(result.Count == 0);
+            Assert.True(result.Count == 0);
         }
 
                 
