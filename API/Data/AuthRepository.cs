@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
@@ -51,6 +52,18 @@ namespace API.Data
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        public List<Role> GetRoles(ICollection<RoleCategory> roleCategories){
+            var result = new List<Role>();
+            foreach (var role in roleCategories){
+                var relation = _context.RoleCategoryRoleRelation.Where(x => x.RoleCategoryId == role.Id);
+                foreach(var r in relation) {
+                    var roleToAdd = _context.Roles.FirstOrDefault(x => x.Id == r.RoleId);
+                    result.Add(roleToAdd);
+                }
+            }
+            return result;
         }
 
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
