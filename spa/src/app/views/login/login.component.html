@@ -8,25 +8,25 @@
               <div class="card-body">
                 <form #loginForm="ngForm" (ngSubmit)="login()">
                   <h1 style="text-align: center">Login</h1>
-                  <br> 
+                  <br>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-user"></i></span>
                     </div>
-												<input class="form-control" #username="ngModel" placeholder="Brugernavn" type="text" autofocus required name="username" [(ngModel)]="model.username">
+                    <input class="form-control" #username="ngModel" placeholder="Brugernavn" type="text" autofocus
+                      required name="username" [(ngModel)]="model.username">
                   </div>
                   <div class="input-group mb-4">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-lock"></i></span>
                     </div>
-                    <input class="form-control" #password="ngModel" placeholder="Password"  type="password" required name="password" [(ngModel)]="model.password">
+                    <input class="form-control" #password="ngModel" placeholder="Password" type="password" required
+                      name="password" [(ngModel)]="model.password">
                   </div>
                   <div class="row">
-                    <div class="col-6">
-                        <input type="submit" [disabled]="!loginForm.valid" class="btn btn-primary" value="Log Ind">           
-                    </div>
-                    <div class="col-6">
-                          <input (click)="returnToDashboard()" class="btn btn-primary" value="Tilbage" style="width: 40%; float: right;">     
+                    <div class="col-12">
+                      <input type="submit" [disabled]="!loginForm.valid" class="btn btn-primary" value="Log ind"
+                        style="float: right;">
                     </div>
                   </div>
                 </form>
