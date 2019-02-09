@@ -274,7 +274,11 @@ export class TechtableComponent implements OnInit {
    */
   public onCellClick(data: any): any {
     if (this.serviceType === 'ItemService') {
-      location.href = this.baseUrl + 'items/details/' + data.row.id;
+      if (this.specialGet === 'getLowInventory') {
+        location.href = this.baseUrl + 'itemTemplates/details/' + data.row.template.id;
+      } else {
+        location.href = this.baseUrl + 'items/details/' + data.row.id;
+      }
     } else if (this.serviceType === 'ItemTemplateService') {
       location.href = this.baseUrl + 'itemTemplates/details/' + data.row.id;
     } else if (this.serviceType === 'OrderService') {
