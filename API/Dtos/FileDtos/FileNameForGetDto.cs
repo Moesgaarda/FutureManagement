@@ -1,6 +1,6 @@
-namespace API.Dtos
+namespace API.Dtos.FileDtos
 {
-    public class TemplateFileNameForGetDto
+    public class FileNameForGetDto
     {
         public int Id { get; set; }
         public string FileName { get; set; }
