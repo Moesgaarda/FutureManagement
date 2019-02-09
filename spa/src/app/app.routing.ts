@@ -26,7 +26,7 @@ export const routes: Routes = [
     component: DefaultLayoutComponent,
     canActivate: [AuthGuard],
     data: {
-      title: 'Home',
+      title: 'Forside',
     },
     children: [
       {
