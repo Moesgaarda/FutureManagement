@@ -46,7 +46,7 @@ export class NewUserComponent implements OnInit {
         this.alertify.error('Kunne ikke tilføje bruger');
       });
     } else {
-      this.alertify.error('Brugeren var ikke valid');
+      this.alertify.error('Kodeordene stemmer ikke overens!');
     }
   }
 
