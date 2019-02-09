@@ -24,7 +24,7 @@ export class NewUnitTypeComponent {
         this.alertify.success('Mængdeenhed blev oprettet');
         this.router.navigate(['unitTypes/view/']);
       }, error => {
-        this.alertify.error('Kunne ikke tilføje mængdeenhed');
+        this.alertify.error(error.error);
       });
   }
 }

@@ -38,5 +38,12 @@ namespace API.Data
             }
         return false;
         }
+
+        public bool DuplicateExists(string name){
+            name.ToLower();
+            name.Normalize();
+            Task<bool> exists = _context.UnitTypes.AnyAsync(x => x.Name.ToLower().Normalize() == name);
+            return exists.Result;
+        }
     }
 }

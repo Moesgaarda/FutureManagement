@@ -31,7 +31,7 @@ export class EditCategoryComponent implements OnInit {
             this.alertify.success('Opdaterede kategori');
           },
           error => {
-            this.alertify.error('Kunne ikke opdatere kategori');
+            this.alertify.error(error.error);
           }, () => {
             this.router.navigate(['categories/view']);
           });
