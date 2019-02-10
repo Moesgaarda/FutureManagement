@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using API.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.TESTS
 {
@@ -20,6 +21,9 @@ namespace API.TESTS
         private readonly DataContext _dbContext;
         private readonly IMapper _mapper; 
         private readonly IUserRepository _repo;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly IEventLogRepository _eventLogRepo;
 
         public UserTest(){
             var serviceProvider = new ServiceCollection()
@@ -49,7 +53,8 @@ namespace API.TESTS
         [Fact]
         public async void GetAllActiveUsersTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             // Act
             IActionResult allActiveUsers = await con.GetAllActiveUsers();
             OkObjectResult intermediate = allActiveUsers as OkObjectResult;
@@ -60,7 +65,8 @@ namespace API.TESTS
         [Fact]
         public async void GetAllInactiveUsersTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             // Act
             IActionResult allActiveUsers = await con.GetAllInactiveUsers();
             OkObjectResult intermediate = allActiveUsers as OkObjectResult;
@@ -71,47 +77,51 @@ namespace API.TESTS
         [Fact]
         public async void GetUserTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
 
             // Act
             OkObjectResult intermediate = await con.GetUser(1) as OkObjectResult;
             UserForGetDto userToGet = intermediate.Value as UserForGetDto;
 
             // Assert
-            Assert.True(userToGet.Username == "Tekrus");
+            Assert.True(userToGet.UserName == "Tekrus");
         }
         [Fact]
         public async void AddRoleTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
 
             // Act
             await con.AddNewRole("Developer");
 
             // Assert
-            var role = _dbContext.UserRoles.FirstOrDefault(x => x.Name == "Developer");
+            var role = _dbContext.UserRoles.FirstOrDefault(x => x.Role.Name == "Developer");
             Assert.NotNull(role);
 
         }
         [Fact]
         public async void EditUserTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
             // Act
-            testUser.Phone = "52442312";
+            testUser.Surname = "Newson";
             await con.EditUser(testUser);
             var editedTestUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
             // Assert
-            Assert.True(editedTestUser.Phone == testUser.Phone);                          
+            Assert.True(editedTestUser.Surname == testUser.Surname);                          
         }                                                     
         [Fact]
         public async void EditUserReturnTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
             // Act
-            testUser.Phone = "52442312";
+            testUser.Surname = "Newtson";
             var status = await con.EditUser(testUser);
             // Assert
             StatusCodeResult result = status as StatusCodeResult;
@@ -121,19 +131,20 @@ namespace API.TESTS
         [Fact]
         public async void DeactivateUserTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
             // Act
             await con.DeactivateUser(testUser.Id);
             User deactivatedUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
             // Assert
             Assert.True(deactivatedUser.IsActive == false);
-                                      
         } 
         [Fact]
         public async void DeactivateUserReturnTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 1);
             // Act
             var status = await con.DeactivateUser(testUser.Id);
@@ -145,19 +156,20 @@ namespace API.TESTS
         [Fact]
         public async void ActivateUserTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
             // Act
             await con.ActivateUser(testUser.Id);
             User activatedUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
             // Assert
             Assert.True(activatedUser.IsActive == true);
-                                      
         } 
         [Fact]
         public async void ActivateUserReturnTest(){
             // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
+            var con = new UserController(_repo, _dbContext, _mapper, _userManager, 
+            _roleManager, _eventLogRepo);
             var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
             // Act
             var status = await con.DeactivateUser(testUser.Id);
@@ -166,56 +178,16 @@ namespace API.TESTS
             var test = new StatusCodeResult(200);           
             Assert.True(result.StatusCode == test.StatusCode);                          
         }
-        [Fact]
-        public async void DeleteUserTest(){
-            // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
-            var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
-            // Act
-            await con.DeleteUser(testUser.Id);
-            User deactivatedUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
-            // Assert
-            Assert.Null(deactivatedUser);
-                                      
-        } 
-        [Fact]
-        public async void DeleteUserReturnTest(){
-            // Arrange
-            var con = new UserController(_repo, _dbContext, _mapper);
-            var testUser = _dbContext.Users.FirstOrDefault(x => x.Id == 2);
-            // Act
-            var status = await con.DeleteUser(testUser.Id);
-            // Assert
-            StatusCodeResult result = status as StatusCodeResult;
-            var test = new StatusCodeResult(200);           
-            Assert.True(result.StatusCode == test.StatusCode);                          
-        }
+
         [Fact]
         public void EditUserRoleTest(){
             
         }
-           
+
         private void Seed(DataContext context){
-            var user1 = new User(
-                "Tekrus",
-                new UserRole("Old man"),
-                "Daniel",
-                "måsgaardson",
-                DateTime.MinValue,
-                true,
-                "måsIGaard3@mor.fae",
-                "12456790"
-            );
-            var user2 = new User(
-                "Fatdet",
-                new UserRole("Lead program developer"),
-                "Frederik",
-                "The Champ",
-                DateTime.MaxValue,
-                false,
-                "freder@gmail.com",
-                "93208854"
-            );
+            var user1 = new User();
+
+            var user2 = new User();
 
             context.Users.Add(user1);
             context.Users.Add(user2);

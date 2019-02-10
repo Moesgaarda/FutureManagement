@@ -45,4 +45,8 @@ export class OrderService {
     editOrder(order: Order): Observable<Order> {
         return this.http.post<Order>(this.baseUrl + 'Order/edit', order, this.httpOptions);
     }
+
+    editOrderStatus(order: Order): Observable<Order> {
+        return this.http.post<Order>(this.baseUrl + 'Order/editOrderStatus', order, this.httpOptions);
+    }
 }

@@ -24,7 +24,7 @@ export class NewTemplatePropertyComponent {
         this.alertify.success('Egenskab blev oprettet');
         this.router.navigate(['templateProperties/view/']);
       }, error => {
-        this.alertify.error('Kunne ikke tilføje egenskab');
+        this.alertify.error(error.error);
       });
   }
 }

@@ -31,7 +31,7 @@ export class EditUnitTypeComponent implements OnInit {
             this.alertify.success('Opdaterede mængdeenhed');
           },
           error => {
-            this.alertify.error('Kunne ikke opdatere mængdeenhed');
+            this.alertify.error(error.error);
           }, () => {
             this.router.navigate(['unitTypes/view']);
           });

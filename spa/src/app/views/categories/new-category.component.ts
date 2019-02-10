@@ -24,7 +24,7 @@ export class NewCategoryComponent {
         this.alertify.success('Kategori blev oprettet');
         this.router.navigate(['categories/view/']);
       }, error => {
-        this.alertify.error('Kunne ikke tilføje kategori');
+        this.alertify.error(error.error);
       });
   }
 }

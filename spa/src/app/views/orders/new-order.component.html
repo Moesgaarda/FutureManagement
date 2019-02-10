@@ -84,7 +84,7 @@
           <label>Status</label>
           <select
             class="form-control dropdown-toggle"
-            [(ngModel)]="orderToAdd.status"
+            [(ngModel)]="orderStatus"
           >
             <option *ngFor="let status of statuses" [ngValue]="status">{{
               status

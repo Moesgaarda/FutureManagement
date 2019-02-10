@@ -13,6 +13,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { TechTableModule } from '../../_modules/techtable/techtable.module';
 import { UserRoleFilterPipe } from '../../_pipes/role-filter.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ViewDeactivatedUsersComponent } from './view-deactivated-users.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NewUserComponent,
     EditUserComponent,
     DetailsUserComponent,
-    UserRoleFilterPipe
+    ViewDeactivatedUsersComponent,
+    UserRoleFilterPipe,
+
   ]
 })
 export class UsersModule {}

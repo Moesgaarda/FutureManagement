@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.FileExtensions;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
+using Moq;
+using AutoMapper;
 
 namespace API.TESTS
 {
@@ -20,8 +23,14 @@ namespace API.TESTS
     {
         private readonly DataContext _dbContext;
         private readonly IConfiguration _config;
-
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly IMapper _mapper;
         public AuthTest(){
+            var store = new Mock<IUserStore<User>>();
+            var _userManager = new Mock<UserManager<User>>(store.Object);
+            var _signInManager = new Mock<SignInManager<User>>(store.Object);
+
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
@@ -42,7 +51,7 @@ namespace API.TESTS
         [Fact]
         public async void LoginSuccesfulTest(){
             var repo = new AuthRepository(_dbContext);
-            var controller = new AuthController(repo, _config);
+            var controller = new AuthController(_config, _mapper, _userManager, _signInManager);
 
             var userLoginDto = new UserForLoginDto("admin", "password");
             var user = new UserForRegisterDto("admin", "password");
@@ -58,7 +67,7 @@ namespace API.TESTS
         [Fact]
         public async void UserSuccesfulRegisterTest(){
             var repo = new AuthRepository(_dbContext);
-            var controller = new AuthController(repo, _config);
+            var controller = new AuthController(_config, _mapper, _userManager, _signInManager);
 
             var userRegisterDto = new UserForRegisterDto("testuser","testPassword");
 
@@ -100,24 +109,10 @@ namespace API.TESTS
         private void Seed(DataContext context){
             var users = new []{
                 new User(
-                    "jankrabbe",
-                    new UserRole(1, "Admin"),
-                    "jan",
+                    "Jan",
                     "Krabbe",
                     new DateTime(1980, 1, 18),
-                    true,
-                    "Jan@FutureRundbuehaller.dk",
-                    "88888888"
-                    ),
-                new User(
-                    "geopoulsen",
-                    new UserRole(2, "Kontor"),
-                    "Geo",
-                    "Poulsen",
-                    new DateTime(1970, 5, 18),
-                    false,
-                    "Geo@FutureRundbuehaller.dk",
-                    "55443322"
+                    true
                     )
             };
 

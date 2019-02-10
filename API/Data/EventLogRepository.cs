@@ -83,7 +83,7 @@ namespace API.Data
 
         public async Task<List<EventLog>> GetAllEventLogs()
         {
-            return await _context.EventLogs.Include(x => x.User).ToListAsync();
+            return await _context.EventLogs.Include(x => x.User).OrderByDescending(x => x.Id).ToListAsync();
 
         }
 

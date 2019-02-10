@@ -8,6 +8,7 @@ using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.Enums;
 
 namespace API.Data
 {
@@ -55,6 +56,15 @@ namespace API.Data
 
         public async Task<bool> EditOrder(Order order, Order orderToChange)
         {
+            if(order.Status == OrderStatusEnum.Ankommet && orderToChange.Status != OrderStatusEnum.Ankommet){
+                foreach(Item item in orderToChange.Products){
+                    item.IsActive = true;
+                }
+            }else if(order.Status != OrderStatusEnum.Ankommet && orderToChange.Status == OrderStatusEnum.Ankommet){
+                foreach(Item item in orderToChange.Products){
+                    item.IsActive = false;
+                }
+            }
             _context.Entry(orderToChange).CurrentValues.SetValues(order);
             var result = await _context.SaveChangesAsync();
 

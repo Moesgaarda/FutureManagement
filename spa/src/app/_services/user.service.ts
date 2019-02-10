@@ -50,8 +50,8 @@ export class UserService {
   editUser(user: User) {
     return this.http.post<User>(this.baseUrl + 'User/edit', user);
   }
-  addRoleCategory(newRoleCategory: RoleCategory) {
-    return this.http.post<RoleCategory>(this.baseUrl + 'User/addRoleCategory' + newRoleCategory, {});
+  addRoleCategory(newRoleCategory: RoleCategory): Observable<RoleCategory> {
+    return this.http.post<RoleCategory>(this.baseUrl + 'User/AddRoleCategory', newRoleCategory, this.httpOptions);
   }
   getAllRoleCategories(): Observable<RoleCategory[]> {
     return this.http.get<RoleCategory[]>(this.baseUrl + 'User/GetAllRoleCategories');

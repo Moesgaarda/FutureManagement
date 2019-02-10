@@ -30,7 +30,7 @@ export class TechtableComponent implements OnInit {
   @Input() columns: Array<any> = [];
   @Input() printButton: false;
   public page = 1;
-  public itemsPerPage = 5;
+  @Input() itemsPerPage = 10;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
@@ -101,7 +101,7 @@ export class TechtableComponent implements OnInit {
         this.onChangeTable(this.config);
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
@@ -115,13 +115,19 @@ export class TechtableComponent implements OnInit {
         this.onChangeTable(this.config);
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }
         }
       });
+    } else if (this.specialGet === 'getDeactivatedUsers') {
+        await this.tableService.getInactiveUsers().subscribe(dUsers => {
+          this.rows = dUsers;
+          this.data = dUsers;
+          this.onChangeTable(this.config);
+        });
     } else {
       await this.tableService.getAll().subscribe(items => {
         this.rows = items;
@@ -130,16 +136,18 @@ export class TechtableComponent implements OnInit {
 
         // If we are getting orders, we must change the orderStatusEnum to a string
         if (this.serviceType === 'OrderService') {
-          for(let i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }
+        } else if (this.serviceType === 'ItemTemplateService') {
+          for (let i = 0; i < items.length; i++) {
+            items[i].created = formatDate(items[i].created, 'dd/MM/yyyy', 'en-US');
+          }
         }
       });
     }
-
-
   }
 
   /**
@@ -274,7 +282,11 @@ export class TechtableComponent implements OnInit {
    */
   public onCellClick(data: any): any {
     if (this.serviceType === 'ItemService') {
-      location.href = this.baseUrl + 'items/details/' + data.row.id;
+      if (this.specialGet === 'getLowInventory') {
+        location.href = this.baseUrl + 'itemTemplates/details/' + data.row.template.id;
+      } else {
+        location.href = this.baseUrl + 'items/details/' + data.row.id;
+      }
     } else if (this.serviceType === 'ItemTemplateService') {
       location.href = this.baseUrl + 'itemTemplates/details/' + data.row.id;
     } else if (this.serviceType === 'OrderService') {
@@ -340,6 +352,7 @@ export class TechtableComponent implements OnInit {
 
   public buildPdfTableBody(data, columns, headers) {
     const body = [];
+    let amountAndUnitType: string;
     body.push(headers);
     data.forEach(function(row) {
       const dataRow = [];
@@ -349,13 +362,26 @@ export class TechtableComponent implements OnInit {
           dataRow.push(row[column].name);
         } else {
           if (row[column] != null) {
-            dataRow.push(row[column].toString());
+            if (column === 'amount') {
+              amountAndUnitType = row[column].toString();
+              if (row['template'].unitType != null) {
+                amountAndUnitType += ' ' + row['template'].unitType.name.toString();
+              }
+              dataRow.push(amountAndUnitType);
+            } else if (column === 'isActive') {
+              if (row[column] === true) {
+                dataRow.push('Ja');
+              } else {
+                dataRow.push('Nej');
+              }
+            } else {
+              dataRow.push(row[column]);
+            }
           } else {
             dataRow.push('');
           }
         }
       });
-
       body.push(dataRow);
     });
 

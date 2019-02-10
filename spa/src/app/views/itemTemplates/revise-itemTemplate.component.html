@@ -22,7 +22,7 @@
 
             <div class="form-group">
               <label>Mængdeenhed</label>
-              <select class="form-control dropdown-toggle" [(ngModel)]="unitType">
+              <select class="form-control dropdown-toggle" [(ngModel)]="unitType" [compareWith]="compareDefaultForSelect">
                 <option *ngFor="let unit of unitTypeList" [ngValue] = "unit">{{unit.name}}</option>
               </select>
             </div>
@@ -36,7 +36,7 @@
 
             <div class="form-group">
               <label>Kategori</label>
-              <select class="form-control dropdown-toggle" [(ngModel)]="category">
+              <select class="form-control dropdown-toggle" [(ngModel)]="category" [compareWith]="compareDefaultForSelect">
                 <option *ngFor="let cat of categoryList" [ngValue]="cat">{{cat.name}}</option>
               </select>
             </div>
