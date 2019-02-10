@@ -13,6 +13,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { TechTableModule } from '../../_modules/techtable/techtable.module';
 import { UserRoleFilterPipe } from '../../_pipes/role-filter.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ViewDeactivatedUsersComponent } from './view-deactivated-users.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ViewDeactivatedUsersComponent } from './view-deactivated-users.componen
     Ng2TableModule,
     TechTableModule,
     NgxPaginationModule,
+    Ng4LoadingSpinnerModule
   ],
   declarations: [
     ViewUsersComponent,
