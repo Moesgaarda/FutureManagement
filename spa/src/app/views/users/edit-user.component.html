@@ -5,12 +5,12 @@
       <div class="card-body">
         <form #f="ngForm" required>
 
-          <label class="col-lg-2 control-label">Fornavn</label>
+          <label class="col-lg-10 control-label">Fornavn</label>
           <div class="col-lg-10">
             <input class="form-control" name="name" type="text" value="{{user.name}}" [(ngModel)]="user.name" > 
           </div>
 
-          <label class="col-lg-3 control-label">Efternavn</label>
+          <label class="col-lg-10 control-label">Efternavn</label>
           <div class="col-lg-10">
             <input class="form-control" name="Surname" type="text" value="{{user.surname}}" [(ngModel)]="user.surname" > 
           </div>
@@ -20,23 +20,23 @@
             <input class="form-control" name="Phone" type="text" value="{{user.phoneNumber}}" [(ngModel)]="user.phoneNumber" > 
           </div>
 
-          <label class="col-lg-2 control-label">E-mail</label>
+          <label class="col-lg-10 control-label">E-mail</label>
           <div class="col-lg-10">
             <input class="form-control" name="Email" type="text" value="{{user.email}}" [(ngModel)]="user.email" > 
           </div>
 
-          <label class="col-lg-5 control-label">Fødselsdag</label>
+          <label class="col-lg-10 control-label">Fødselsdag</label>
           <div class="col-lg-10">
             <input class="form-control" name="Birthdate" type="text" value="{{user.birthdate}}" [(ngModel)]="user.birthdate" > 
           </div>
 
-          <div class="form-check col-lg-2">
+          <div class="form-check col-lg-10">
             <input type="checkbox" class="form-check-input" id="activateCheckBox" checked="{{user.isActive}}">
             <label class="form-check-label ">Aktiveret</label>
           </div>
 
           <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-10">
               <button type="button" class="btn btn-primary" [disabled]="!f.dirty && f.valid" (click)="editUser()">
                 Gem
               </button>
