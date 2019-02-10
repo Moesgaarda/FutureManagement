@@ -5,11 +5,16 @@
 
         <div class="card-header">
           <h5>Bestilling: {{order.purchaseNumber}}
-            <div class="float-right" *ngIf="authService.roleMatch(['Order_Edit'])">
-                <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">
-                  Rediger bestillingen
-                </button>
+            <div class="float-right" *ngIf="authService.roleMatch(['Order_Edit']); else showPrint">
+              <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">Rediger</button>
+              &nbsp;
+              <button type="button" class="btn btn-primary btn-rectangle" (click)="goPrint(order.id)">Print</button>
             </div>
+            <ng-template #showPrint>
+              <div class="float-right">
+                <button type="button" class="btn btn-primary btn-rectangle" (click)="goPrint(order.id)">Print</button>
+              </div>
+            </ng-template>
           </h5>
         </div>
         <div class="card-body">
@@ -56,6 +61,7 @@
                     </button>
                   </div>
                 </div>
+              </div>
             </ng-template>
           </div>
 
