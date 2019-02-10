@@ -2,6 +2,7 @@ using AutoMapper;
 using API.Models;
 using API.Dtos;
 using API.Dtos.FileDtos;
+using API.Dtos.UserDtos;
 using API.Dtos.OrderDtos;
 
 namespace API.Helpers
@@ -44,6 +45,8 @@ namespace API.Helpers
             CreateMap<ItemTemplateCategory, TemplateCategoryForGetDto>();
             CreateMap<UnitType, UnitTypeForAddDto>();
             CreateMap<UnitType, UnitTypeForGetDto>();
+            CreateMap<UserRole, UserRoleDto>();
+            CreateMap<UserRoleDto,UserRole>();
             CreateMap<Order, OrderForGetDto>();
             CreateMap<OrderFileName, FileForTableGetDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))

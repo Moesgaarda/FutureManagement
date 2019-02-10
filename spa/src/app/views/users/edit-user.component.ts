@@ -1,29 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { environment } from '../../../environments/environment.prod';
-import { RoleCategory } from '../../_models/RoleCategory';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   templateUrl: './edit-user.component.html'
 })
 export class EditUserComponent implements OnInit {
-  nameDisabled: boolean;
-  userNameDisabled: boolean;
-  surnameDisabled: boolean;
-  emailDisabled: boolean;
-  roleDisabled: boolean;
+
   user: User;
   baseUrl = environment.spaUrl;
+  readyToLoad = false;
 
-  constructor(private userService: UserService, private route: ActivatedRoute) {
+  constructor(private userService: UserService, private route: ActivatedRoute, private alertify: AlertifyService, private router: Router) {
    }
 
   ngOnInit() {
-    this.nameDisabled = true;
-    this.userNameDisabled = true;
-    this.roleDisabled = true;
     this.loadUserOnInit();
   }
 
@@ -31,33 +25,35 @@ export class EditUserComponent implements OnInit {
     this.userService.getUser(+this.route.snapshot.params['id'])
       .subscribe(user => {
         this.user = user;
+        this.readyToLoad = true;
       });
   }
-
-  enableName() {
-    if (this.nameDisabled) {
-      this.nameDisabled = false;
-    } else {
-      // indsæt i db
-      this.nameDisabled = true;
-    }
+  editUser() {
+    this.userService.editUser(this.user).subscribe(user => {}, 
+      error => {
+        this.alertify.error('Kunne ikke gennemføre ændringerne');
+      },
+      () => {
+        this.alertify.success('Ændringer gemt');
+        this.router.navigate(['users/details/' + this.user.id]);
+      });
   }
-  enableUserName(save: boolean, str: string) {
-    if (this.userNameDisabled) {
-      this.userNameDisabled = false;
-    } else {
-      if (save) {
-        this.user.username = str;
-        this.userService.editUser(this.user).subscribe(r => {});
-      }
-      this.userNameDisabled = true;
-    }
+  deactivateUser() {
+    this.userService.deActivateUser(this.user.id).subscribe(i => {},
+      error => {
+        this.alertify.error('Kunne ikke deaktivere brugeren');
+      },
+      () => {
+        this.alertify.success('Brugeren blev deaktiveret');
+      });
   }
-  goToUserTable() {
-    location.href = this.baseUrl + '/users/view/';
-  }
-  addUserRole(newRoleCategory: RoleCategory) {
-    console.log('asdadsasd');
-    // this.userService.addRole(newRoleName).subscribe(r => {});
+  activateUser() {
+    this.userService.activateUser(this.user.id).subscribe(i => {},
+      error => {
+        this.alertify.error('Kunne ikke aktivere brugeren');
+      },
+      () => {
+        this.alertify.success('Brugeren blev aktiveret');
+      });
   }
 }

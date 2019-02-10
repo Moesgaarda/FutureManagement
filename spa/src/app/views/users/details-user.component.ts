@@ -11,10 +11,6 @@ import { AlertifyService } from '../../_services/alertify.service';
   templateUrl: './details-user.component.html'
 })
 export class DetailsUserComponent implements OnInit {
-  nameDisabled: boolean;
-  userNameDisabled: boolean;
-  surnameDisabled: boolean;
-  emailDisabled: boolean;
   user: User;
   readyToLoad: boolean;
   baseUrl = environment.spaUrl;
@@ -24,7 +20,6 @@ export class DetailsUserComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.nameDisabled = true;
     this.loadUserOnInit();
   }
 
@@ -50,9 +45,5 @@ export class DetailsUserComponent implements OnInit {
       }
       );
     }
-  }
-
-  goToUserTable() {
-    location.href = this.baseUrl + '/users/view/';
   }
 }
