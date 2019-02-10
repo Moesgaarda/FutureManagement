@@ -135,6 +135,10 @@ export class TechtableComponent implements OnInit {
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }
+        } else if (this.serviceType === 'ItemTemplateService') {
+          for (let i = 0; i < items.length; i++) {
+            items[i].created = formatDate(items[i].created, 'dd/MM/yyyy', 'en-US');
+          }
         }
       });
     }
