@@ -30,7 +30,7 @@ export class TechtableComponent implements OnInit {
   @Input() columns: Array<any> = [];
   @Input() printButton: false;
   public page = 1;
-  public itemsPerPage = 5;
+  @Input() itemsPerPage = 10;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
@@ -178,7 +178,6 @@ export class TechtableComponent implements OnInit {
     if (!config.sorting) {
       return data;
     }
-
     const columns = this.config.sorting.columns || [];
     let columnName: string = void 0;
     let sort: string = void 0;
@@ -264,6 +263,7 @@ export class TechtableComponent implements OnInit {
 
     if (config.sorting) {
       Object.assign(this.config.sorting, config.sorting);
+      Object.assign(this.config.sorting.columns, this.columns);
     }
 
     const filteredData = this.changeFilter(this.data, this.config);

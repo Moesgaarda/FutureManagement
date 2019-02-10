@@ -4,7 +4,7 @@ import { CategoryService } from '../../_services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../_models/Category';
 import { AlertifyService } from '../../_services/alertify.service';
-
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   templateUrl: './edit-category.component.html'
@@ -12,7 +12,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 export class EditCategoryComponent implements OnInit {
 
   constructor(private categoryService: CategoryService, private route: ActivatedRoute, private alertify: AlertifyService,
-              private router: Router) {}
+              private router: Router, private spinnerService: Ng4LoadingSpinnerService) {}
 
   category = {} as Category;
 
@@ -24,7 +24,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   Save() {
-    console.log(this.category);
+    this.spinnerService.show();
         this.categoryService.editCategory(this.category).subscribe(
           category => {
             this.category = category;
@@ -35,5 +35,6 @@ export class EditCategoryComponent implements OnInit {
           }, () => {
             this.router.navigate(['categories/view']);
           });
+    this.spinnerService.hide();
     }
 }

@@ -7,7 +7,6 @@
         <div class="col">
           <div
             class="input-group input-group-lg"
-            style="margin-block-end: 3em; margin-block-start: 2em"
           >
             <div class="input-group-prepend">
               <span class="input-group-text">Rollenavn</span>
@@ -17,27 +16,26 @@
               class="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
-              style="border-width: 2px"
               [(ngModel)]="roleNameToAdd"
             />
           </div>
         </div>
       </div>
-
+      <br>
       <div class="row">
         <div class="col">
-          <h1 style="text-align: center; margin-bottom: 1em">Adgangsniveau</h1>
+          <h2>Adgangsniveau</h2>
         </div>
       </div>
 
       <div class="row">
-        <div *ngFor="let role of userRoles" class="col-md-6">
+        <div *ngFor="let role of userRoles" class="col-md-3">
           <div class="card">
-            <div class="card-header">
-              <h3>
+            <div class="card-header" center>
+              <h6>
                 {{ role.displayName }}
                 <label
-                  class="switch switch-lg switch-3d switch-primary"
+                  class="switch switch-3d switch-primary"
                   style="float: right"
                 >
                   <input
@@ -48,16 +46,15 @@
                   />
                   <span class="switch-slider"></span>
                 </label>
-              </h3>
+              </h6>
             </div>
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <button style="font-size: 1.17em; line-height: 3em; padding-left: 2em; padding-right: 2em"
-          class="btn btn-success btn-rectangle input-group-text "
-          (click)="addRole()"
+        <button class="btn btn-success btn-rectangle"
+                (click)="addRole()"
         >
           Tilføj rolle
         </button>
