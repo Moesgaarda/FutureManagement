@@ -57,7 +57,7 @@ import { CustomSidebarComponent } from './views/custom-sidebar/custom-sidebar.co
 import { UnitTypeService } from './_services/unitType.service';
 import { CategoryService } from './_services/category.service';
 import { TemplatePropertyService } from './_services/templateProperty.service';
-
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 @NgModule({
   imports: [
@@ -76,6 +76,7 @@ import { TemplatePropertyService } from './_services/templateProperty.service';
     HttpModule,
     FormsModule,
     NgSelectModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   declarations: [
     AppComponent,

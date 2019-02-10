@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../_services/user.service';
 import { UserRole } from '../../_models/UserRole';
 import { RoleCategory } from '../../_models/RoleCategory';
-
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   templateUrl: './new-user.component.html'
@@ -27,7 +27,7 @@ export class NewUserComponent implements OnInit {
   roleCategoryNames: string[] = [] as string[];
 
   constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router,
-              private userService: UserService) {
+              private userService: UserService, private spinnerService: Ng4LoadingSpinnerService) {
 
   }
   ngOnInit(): void {
@@ -36,18 +36,23 @@ export class NewUserComponent implements OnInit {
       this.roles = roleCategories;
     });
   }
+
   createUser() {
-    this.user.RoleCategory = this.rolesToAdd;
     if (this.user.password === this.passwordConfirm) {
+      this.user.RoleCategory = this.rolesToAdd;
+      this.spinnerService.show();
       this.authService.register(this.user).subscribe(() => {
+        this.spinnerService.hide();
         this.alertify.success('Brugeren blev oprettet');
         this.router.navigate(['users/view/']);
       }, error => {
         this.alertify.error('Kunne ikke tilføje bruger');
+        this.spinnerService.hide();
       });
     } else {
       this.alertify.error('Kodeordene stemmer ikke overens!');
     }
+
   }
 
   goToUserTable() {
