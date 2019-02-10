@@ -4,6 +4,8 @@ import { UserService } from '../../_services/user.service';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { environment } from '../../../environments/environment.prod';
 import { AlertifyService } from '../../_services/alertify.service';
+import { AuthService } from '../../_services/auth.service';
+import { userInfo } from 'os';
 
 @Component({
   templateUrl: './edit-user.component.html'
@@ -14,8 +16,9 @@ export class EditUserComponent implements OnInit {
   baseUrl = environment.spaUrl;
   readyToLoad = false;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private alertify: AlertifyService, private router: Router) {
-   }
+  constructor(private userService: UserService, private route: ActivatedRoute, private alertify: AlertifyService,
+    private router: Router, private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.loadUserOnInit();
@@ -28,16 +31,21 @@ export class EditUserComponent implements OnInit {
         this.readyToLoad = true;
       });
   }
+
   editUser() {
-    this.userService.editUser(this.user).subscribe(user => {}, 
-      error => {
-        this.alertify.error('Kunne ikke gennemføre ændringerne');
-      },
-      () => {
-        this.alertify.success('Ændringer gemt');
-        this.router.navigate(['users/details/' + this.user.id]);
-      });
+    this.userService.editUser(this.user).subscribe(user => {
+    }, error => {
+      this.alertify.error('Kunne ikke gennemføre ændringerne');
+    }, () => {
+      this.alertify.success('Ændringer gemt');
+      this.router.navigate(['users/details/' + this.user.id]);
+      const currentUserId = +this.authService.getCurrentUserId();
+      if (this.user.id === currentUserId) {
+        this.authService.updateToken(currentUserId).subscribe();
+      }
+    });
   }
+
   deactivateUser() {
     this.userService.deActivateUser(this.user.id).subscribe(i => {},
       error => {

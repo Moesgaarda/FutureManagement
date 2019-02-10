@@ -32,9 +32,9 @@ export class AuthService {
         });
     }
 
-    updateToken(username: string) {
+    updateToken(id: number) {
 
-        return this.http.post(this.baseUrl + 'updateToken', username, this.requestOptions())
+        return this.http.post(this.baseUrl + 'updateToken/' + id, {}, this.requestOptions())
         .map((response: Response) => {
             const user = response.json();
             if (user && user.token) {

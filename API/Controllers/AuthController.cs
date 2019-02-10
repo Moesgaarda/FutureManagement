@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
+
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
@@ -41,6 +41,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto){
 
@@ -62,6 +63,7 @@ namespace API.Controllers
             return BadRequest(result.Errors);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]UserForLoginDto userForLoginDto){
             var user = await _userManager.FindByNameAsync(userForLoginDto.UserName);
@@ -87,12 +89,16 @@ namespace API.Controllers
             return Unauthorized();
         }
 
-        [HttpPost("updateToken")]
-        private async Task<IActionResult> UpdateCurrentUserToken(string username)
+        [HttpPost("updateToken/{id}", Name = "UpdateCurrentUserToken")]
+        public async Task<IActionResult> UpdateCurrentUserToken(int id)
         {
             // Should be called after the edited user has been saved to Db
+            User currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            if(currentUser.Id != id){
+                return Unauthorized();
+            }
             var appUser = await _userManager.Users
-                    .FirstOrDefaultAsync(u => u.NormalizedUserName == username.ToUpper());
+                    .FirstOrDefaultAsync(u => u.Id == id);
             var userToReturn = _mapper.Map<UserForGetDto>(appUser);
 
             return Ok(new
@@ -102,6 +108,7 @@ namespace API.Controllers
             });
         }
         
+        [AllowAnonymous]
         private async Task<string> GenerateJwtTokenAsync(User user)
         {
             var claims = new List<Claim>
