@@ -90,12 +90,14 @@ export class TechtableComponent implements OnInit {
   async loadItems() {
     if (this.specialGet === 'getLowInventory') {
       await this.tableService.getLowInventory().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
       });
     } else if (this.specialGet === 'getNotDelivered') {
       await this.tableService.getNotDelivered().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
@@ -110,6 +112,7 @@ export class TechtableComponent implements OnInit {
       });
     } else if (this.specialGet === 'getIncomingOrders') {
       await this.tableService.getIncomingOrders().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
@@ -124,6 +127,7 @@ export class TechtableComponent implements OnInit {
       });
     } else if (this.specialGet === 'getDeactivatedUsers') {
         await this.tableService.getInactiveUsers().subscribe(dUsers => {
+          this.reformatIsActive(dUsers);
           this.rows = dUsers;
           this.data = dUsers;
           this.onChangeTable(this.config);
@@ -136,6 +140,7 @@ export class TechtableComponent implements OnInit {
       });
     } else {
       await this.tableService.getAll().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
@@ -411,5 +416,27 @@ export class TechtableComponent implements OnInit {
         widths: widths
       }
     };
+  }
+
+  reformatIsActive(items: any) {
+    let containsIsActive = false;
+    this.columns.forEach(column => {
+      if (column.name.toLowerCase() === 'isactive') {
+        containsIsActive = true;
+      }
+    });
+    if (containsIsActive) {
+      if (items) {
+        items.forEach(x => {
+          if (x.isActive != null) {
+            if (x.isActive === true) {
+              x.isActive = 'Ja';
+            } else {
+              x.isActive = 'Nej';
+            }
+          }
+        });
+      }
+    }
   }
 }
