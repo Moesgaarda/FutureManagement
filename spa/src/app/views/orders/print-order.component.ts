@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { OrderService } from '../../_services/order.service';
 import { Order } from '../../_models/Order';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { formatDate } from '@angular/common';
 @Component({
     templateUrl: './print-order.component.html'
 })
-export class PrintOrderComponent implements OnInit {
+export class PrintOrderComponent implements AfterViewInit {
     isDataAvailable = false;
     order: Order;
     files: DetailFile[];
@@ -27,13 +27,13 @@ export class PrintOrderComponent implements OnInit {
     ) {
         this.fileService = fileUploadService;
     }
-
-    async ngOnInit() {
-        await this.loadOrderOnInIt();
+    
+    async ngAfterViewInit() {
+        this.loadOrderOnInIt();
     }
 
-    async loadOrderOnInIt() {
-        await this.orderService.getOrder(+this.route.snapshot.params['id'])
+    loadOrderOnInIt() {
+        this.orderService.getOrder(+this.route.snapshot.params['id'])
             .then(order => {
                 this.order = order;
                 this.orderStatus = OrderStatusEnum[order.status];
