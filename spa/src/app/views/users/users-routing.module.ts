@@ -5,6 +5,7 @@ import { NewUserComponent } from './new-user.component';
 import { EditUserComponent } from './edit-user.component';
 import { DetailsUserComponent } from './details-user.component';
 import { AuthGuard } from '../../_guards/auth.guard';
+import { ViewDeactivatedUsersComponent } from './view-deactivated-users.component';
 
 
 
@@ -26,6 +27,14 @@ const routes: Routes = [
         data: {
           title: 'Vis brugere',
           roles: ['User_View']
+        }
+      },
+      {
+        path: 'deactivated-view',
+        component: ViewDeactivatedUsersComponent,
+        data: {
+          title: 'Vis deaktiverede brugere',
+          roles: ['User_ActivateDeactivate']
         }
       },
       {
