@@ -122,6 +122,12 @@ export class TechtableComponent implements OnInit {
           }
         }
       });
+    } else if (this.specialGet === 'getDeactivatedUsers') {
+        await this.tableService.getInactiveUsers().subscribe(dUsers => {
+          this.rows = dUsers;
+          this.data = dUsers;
+          this.onChangeTable(this.config);
+        });
     } else {
       await this.tableService.getAll().subscribe(items => {
         this.rows = items;
@@ -135,11 +141,13 @@ export class TechtableComponent implements OnInit {
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
           }
+        } else if (this.serviceType === 'ItemTemplateService') {
+          for (let i = 0; i < items.length; i++) {
+            items[i].created = formatDate(items[i].created, 'dd/MM/yyyy', 'en-US');
+          }
         }
       });
     }
-
-
   }
 
   /**

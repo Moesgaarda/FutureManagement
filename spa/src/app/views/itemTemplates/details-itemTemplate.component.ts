@@ -10,6 +10,7 @@ import { DetailFile } from '../../_models/DetailFile';
 import { FileUploadService } from '../../_services/fileUpload.service';
 import { UnitType } from '../../_models/UnitType';
 import { AuthService } from '../../_services/auth.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   templateUrl: './details-itemTemplate.component.html'
@@ -21,6 +22,7 @@ export class DetailsItemTemplateComponent implements OnInit, OnDestroy {
   files: DetailFile[];
   fileService: FileUploadService;
   subscription: Subscription;
+  createdDate: string;
 
   constructor(
     private templateService: ItemTemplateService,
@@ -47,7 +49,7 @@ export class DetailsItemTemplateComponent implements OnInit, OnDestroy {
     await this.templateService.getItemTemplateAsync(params['id'])
       .then(itemTemplate => {
         this.itemTemplate = itemTemplate;
-
+        this.createdDate = formatDate(itemTemplate.created, 'dd/MM/yyyy', 'en-US');
         this.isDataAvailable = true;
         if (itemTemplate.revisionedFrom != null) {
           this.isRevisioned = true;
