@@ -30,6 +30,7 @@
           <div class="form-group">
             <div *ngIf="isEditing;else show_status">
                 <label>Status</label>
+                <div class="input-group">
                 <select
                   class="form-control dropdown-toggle"
                   [(ngModel)]="orderStatus"
@@ -38,14 +39,15 @@
                     key
                   }}</option>
                 </select>
-                <button class="btn btn-success btn-sm" (click) = "saveStatus()">
+                <button class="btn btn-success btn-sm input-group-append" (click) = "saveStatus()">
                   Gem ændringer
                 </button>
+              </div>
             </div>
             <ng-template #show_status>
                 <label>Status</label>
                 <div class="input-group">
-                  <div class="form-control">
+                  <div class="form-control statusDropdown">
                       {{orderStatus}}
                   </div>
                   <div class="input-group-append">
