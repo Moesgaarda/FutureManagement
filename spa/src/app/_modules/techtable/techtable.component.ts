@@ -128,6 +128,12 @@ export class TechtableComponent implements OnInit {
           this.data = dUsers;
           this.onChangeTable(this.config);
         });
+    } else if (this.specialGet === 'getUserRoles') {
+      await this.tableService.getAllRoleCategories().subscribe(dRoles => {
+        this.rows = dRoles;
+        this.data = dRoles;
+        this.onChangeTable(this.config);
+      });
     } else {
       await this.tableService.getAll().subscribe(items => {
         this.rows = items;
@@ -293,7 +299,10 @@ export class TechtableComponent implements OnInit {
       location.href = this.baseUrl + 'orders/details/' + data.row.id;
     } else if (this.serviceType === 'EventLogService') {
     } else if (this.serviceType === 'UserService') {
-      location.href = this.baseUrl + 'users/details/' + data.row.id;
+      if(this.specialGet === 'getUserRoles') {
+      } else {
+        location.href = this.baseUrl + 'users/details/' + data.row.id;
+      }
     } else if (this.serviceType === 'UnitTypeService') {
       location.href = this.baseUrl + 'unitTypes/edit/' + data.row.id;
     } else if (this.serviceType === 'CategoryService') {

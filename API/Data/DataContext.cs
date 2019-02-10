@@ -37,6 +37,7 @@ namespace API.Data
         public DbSet<ItemTemplateCategory> ItemTemplateCategories { get; set; }
         public DbSet<RoleCategory> RoleCategories {get; set;}
         public DbSet<RoleCategoryRoleRelation> RoleCategoryRoleRelation { get; set; }
+        public DbSet<UserRoleCategoryRelation> UserRoleCategoryRelations { get; set; }
 
         
         // TODO Could use refactoring to look like userrole.
@@ -74,6 +75,19 @@ namespace API.Data
                 .HasOne( rr => rr.Role)
                 .WithMany( r => r.RoleCategoryRoleRelations)
                 .HasForeignKey( rr => rr.RoleId);
+
+            modelBuilder.Entity<UserRoleCategoryRelation>()
+                .HasKey( ur => new {ur.UserId, ur.RoleCategoryId});
+            
+            modelBuilder.Entity<UserRoleCategoryRelation>()
+                .HasOne(ur => ur.RoleCategory)
+                .WithMany(rc => rc.UserRoleCategoryRelations)
+                .HasForeignKey( ur => ur.RoleCategoryId);
+            
+            modelBuilder.Entity<UserRoleCategoryRelation>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRoleCategoryRelations)
+                .HasForeignKey(ur => ur.UserId);
 
             modelBuilder.Entity<TemplatePropertyRelation>()
                 .HasKey(t => new { t.TemplateId, t.PropertyId });    

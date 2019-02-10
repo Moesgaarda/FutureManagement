@@ -17,6 +17,8 @@ namespace API.Models
         }
 
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserRoleCategoryRelation> UserRoleCategoryRelations { get; set; }
+
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime Birthdate { get; set; }
