@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ItemTemplate } from '../../_models/ItemTemplate';
 import { ItemTemplateService } from '../../_services/itemTemplate.service';
 import { ItemService } from '../../_services/item.service';
@@ -66,11 +66,11 @@ export class TechtableComponent implements OnInit {
       this.tableService = <EventLogService>this.injector.get(EventLogService);
     } else if (this.serviceType === 'UserService') {
       this.tableService = <UserService>this.injector.get(UserService);
-    }  else if (this.serviceType === 'UnitTypeService') {
+    } else if (this.serviceType === 'UnitTypeService') {
       this.tableService = <UnitTypeService>this.injector.get(UnitTypeService);
-    }  else if (this.serviceType === 'CategoryService') {
+    } else if (this.serviceType === 'CategoryService') {
       this.tableService = <CategoryService>this.injector.get(CategoryService);
-    }  else if (this.serviceType === 'TemplatePropertyService') {
+    } else if (this.serviceType === 'TemplatePropertyService') {
       this.tableService = <TemplatePropertyService>this.injector.get(TemplatePropertyService);
     } else {
       console.log('Unexpected service name: ' + this.serviceType);
@@ -126,12 +126,12 @@ export class TechtableComponent implements OnInit {
         }
       });
     } else if (this.specialGet === 'getDeactivatedUsers') {
-        await this.tableService.getInactiveUsers().subscribe(dUsers => {
-          this.reformatIsActive(dUsers);
-          this.rows = dUsers;
-          this.data = dUsers;
-          this.onChangeTable(this.config);
-        });
+      await this.tableService.getInactiveUsers().subscribe(dUsers => {
+        this.reformatIsActive(dUsers);
+        this.rows = dUsers;
+        this.data = dUsers;
+        this.onChangeTable(this.config);
+      });
     } else {
       await this.tableService.getAll().subscribe(items => {
         this.reformatIsActive(items);
@@ -324,7 +324,7 @@ export class TechtableComponent implements OnInit {
    * @memberof TechtableComponent
    */
   public fixPropPath(path, obj) {
-    return path.split('.').reduce(function(prev, curr) {
+    return path.split('.').reduce(function (prev, curr) {
       return prev ? prev[curr] : null;
     }, obj || self);
   }
@@ -359,10 +359,10 @@ export class TechtableComponent implements OnInit {
     const body = [];
     let amountAndUnitType: string;
     body.push(headers);
-    data.forEach(function(row) {
+    data.forEach(function (row) {
       const dataRow = [];
 
-      columns.forEach(function(column) {
+      columns.forEach(function (column) {
         if (column === 'template') {
           dataRow.push(row[column].name);
         } else {
@@ -410,24 +410,20 @@ export class TechtableComponent implements OnInit {
   }
 
   reformatIsActive(items: any) {
-    let containsIsActive = false;
     this.columns.forEach(column => {
       if (column.name.toLowerCase() === 'isactive') {
-        containsIsActive = true;
+        if (items) {
+          items.forEach(x => {
+            if (x.isActive != null) {
+              if (x.isActive === true) {
+                x.isActive = 'Ja';
+              } else {
+                x.isActive = 'Nej';
+              }
+            }
+          });
+        }
       }
     });
-    if (containsIsActive) {
-      if (items) {
-        items.forEach(x => {
-          if (x.isActive != null) {
-            if (x.isActive === true) {
-              x.isActive = 'Ja';
-            } else {
-              x.isActive = 'Nej';
-            }
-          }
-        });
-      }
-    }
   }
 }
