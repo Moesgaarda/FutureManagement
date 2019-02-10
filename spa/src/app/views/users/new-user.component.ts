@@ -40,7 +40,6 @@ export class NewUserComponent implements OnInit {
   createUser() {
     if (this.user.password === this.passwordConfirm) {
       this.user.RoleCategory = this.rolesToAdd;
-      console.log("showing spinner!");
       this.spinnerService.show();
       this.authService.register(this.user).subscribe(() => {
         this.spinnerService.hide();
