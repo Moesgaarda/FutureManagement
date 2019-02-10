@@ -32,13 +32,13 @@
 
           <div class="form-check col-sm-2">
             <input type="checkbox" class="form-check-input" id="activateCheckBox" checked="{{user.isActive}}">
-            <label class="form-check-label" for="exampleCheck1">Aktiveret</label>
+            <label class="form-check-label ">Aktiveret</label>
           </div>
 
           <div class="row">
             <div class="col-lg-3">
               <button type="button" class="btn btn-primary" style="margin-top: 2em" [disabled]="!f.dirty && f.valid" (click)="editUser()">
-                gem
+                Gem
               </button>
             </div>
           </div>

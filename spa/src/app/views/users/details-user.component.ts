@@ -28,7 +28,6 @@ export class DetailsUserComponent implements OnInit {
     if (userId === this.authService.getCurrentUserId()) {
       this.userService.getMyUser(+this.route.snapshot.params['id']).subscribe( user => {
         this.user = user;
-        console.log(user);
       }, error => {
         this.alertify.error('Kunne ikke hente bruger aktuel bruger');
       }, () => {
