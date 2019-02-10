@@ -1,33 +1,39 @@
 <!--Choose ItemTemplate-->
 <div *ngIf="currentStep == 0">
-  <div class="card">
-    <div class="form-group">
-      <div class="card-header">Vælg en Skabelon</div>
-      <div class="card-body">
-        <ng-select
-          [items]="itemTemplates"
-          [multiple]="false"
-          bindLabel="name"
-          placeholder="Vælg skabelon"
-          [(ngModel)]="itemToAdd.template"
-        >
-        </ng-select>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="form-group">
+        <div class="card-header">
+            Vælg en skabelon 
+            <div class="float-right">
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="changeFromSelectItemTemplate()"
+                >
+                  Videre
+                </button>
+              </div>
+        </div>
+        <div class="card-body">
+          <ng-select
+            [items]="itemTemplates"
+            [multiple]="false"
+            bindLabel="name"
+            placeholder="Vælg skabelon"
+            [(ngModel)]="itemToAdd.template"
+          >
+          </ng-select>
 
-        <div *ngIf="itemToAdd.template !== undefined">
-          <div class="form-group">
-            <label>Mængde</label>
-            <div class="input-group">
-              <input class="form-control" [(ngModel)]="itemToAdd.amount" />
+          <div *ngIf="itemToAdd.template !== undefined">
+            <div class="form-group">
+              <label>Mængde</label>
+              <div class="input-group">
+                <input class="form-control" [(ngModel)]="itemToAdd.amount" />
+              </div>
             </div>
           </div>
+          <br />
         </div>
-        <br />
-        <button
-          class="btn btn-success"
-          (click)="changeFromSelectItemTemplate()"
-        >
-          videre
-        </button>
       </div>
     </div>
   </div>
@@ -53,7 +59,7 @@
             <td>{{ part.amount }}</td>
             <td>
               <button
-                class="btn btn-primary"
+                class="btn btn-primary btn-sm"
                 (click)="changeToSelectFromStock(part)"
               >
                 Vælg fra lager
@@ -70,7 +76,7 @@
         Del genstande der er blevet valgt fra lageret
         <div *ngIf="missingItems.length == 0">
           <div class="float-right">
-            <button class="btn btn-primary" (click)="changeToInfo()">
+            <button class="btn btn-primary btn-sm" (click)="changeToInfo()">
               Videre
             </button>
           </div>
@@ -105,7 +111,7 @@
       Vælg {{ currentSelectItem.amount }} {{ currentSelectItem.part.name }} fra
       lageret
       <div class="float-right">
-        <button class="btn btn-primary" (click)="changeFromStockToSelect()">
+        <button class="btn btn-primary btn-sm" (click)="changeFromStockToSelect()">
           Videre
         </button>
       </div>
@@ -143,7 +149,7 @@
     <div class="card-header">
       Tilføj informationer
       <div class="float-right">
-        <button class="btn btn-primary" (click)="addItem()">Færdiggør</button>
+        <button class="btn btn-success btn-sm" (click)="addItem()">Færdiggør</button>
       </div>
     </div>
     <div class="card-body">
@@ -159,7 +165,8 @@
               <tr>
                 <td>
                   <div class="input-group">
-                    <input placeholder="Indtast placering"
+                    <input
+                      placeholder="Indtast placering"
                       class="form-control"
                       [(ngModel)]="itemToAdd.placement"
                     />
