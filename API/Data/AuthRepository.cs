@@ -82,5 +82,18 @@ namespace API.Data
             }
             return false;
         }
+
+        public async Task<List<UserRoleCategoryRelation>> GetRoleCategories(ICollection<RoleCategory> roleCategories){
+            List<UserRoleCategoryRelation> userRoleCategories = new List<UserRoleCategoryRelation>();
+
+            foreach(RoleCategory roleCategory in roleCategories){
+                UserRoleCategoryRelation relation = new UserRoleCategoryRelation(){
+                    RoleCategory = await _context.RoleCategories.FirstOrDefaultAsync(x => x.Id == roleCategory.Id)
+                };
+                userRoleCategories.Add(relation);
+            }
+
+            return userRoleCategories;
+        }
     }
 }

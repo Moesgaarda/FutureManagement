@@ -1,4 +1,5 @@
 import { UserRole } from './UserRole';
+import { RoleCategory } from './RoleCategory';
 
 export interface User {
     id: number;
@@ -10,4 +11,5 @@ export interface User {
     isActive: boolean;
     email: string;
     phoneNumber: string;
+    roleCategories: RoleCategory[];
 }

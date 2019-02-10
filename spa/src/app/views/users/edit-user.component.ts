@@ -4,6 +4,7 @@ import { UserService } from '../../_services/user.service';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { environment } from '../../../environments/environment.prod';
 import { AlertifyService } from '../../_services/alertify.service';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   templateUrl: './edit-user.component.html'
@@ -14,7 +15,8 @@ export class EditUserComponent implements OnInit {
   baseUrl = environment.spaUrl;
   readyToLoad = false;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private alertify: AlertifyService, private router: Router) {
+  constructor(private userService: UserService, private route: ActivatedRoute, private alertify: AlertifyService, 
+    private router: Router, public authService: AuthService) {
    }
 
   ngOnInit() {

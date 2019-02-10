@@ -10,5 +10,6 @@ namespace API.Data
         Task<User> Login(string username, string password);
         Task<bool> UserExists(string username);
         List<Role> GetRoles(ICollection<RoleCategory> roleCategories);
+        Task<List<UserRoleCategoryRelation>> GetRoleCategories(ICollection<RoleCategory> roleCategories);
     }
 }

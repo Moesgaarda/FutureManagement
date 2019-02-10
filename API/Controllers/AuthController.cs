@@ -46,10 +46,11 @@ namespace API.Controllers
 
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
             var rolesToAddToUser = _repo.GetRoles(userForRegisterDto.RoleCategory);
+            userToCreate.UserRoleCategoryRelations = await _repo.GetRoleCategories(userForRegisterDto.RoleCategory);
 
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 
-           foreach (var role in rolesToAddToUser) {
+            foreach (var role in rolesToAddToUser) {
                 await _userManager.AddToRoleAsync(userToCreate, role.Name);
             }
 
