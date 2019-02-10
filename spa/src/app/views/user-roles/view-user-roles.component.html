@@ -1,0 +1,13 @@
+<div class="card">
+    <div class="card-header">Roller</div>
+    <div class="card-body">
+        <app-techtable
+            [serviceType]="'UserService'"
+            [columns]="[
+                {title: 'Navn', name: 'name'}
+            ]"
+            [specialGet]="'getUserRoles'"
+        >
+        </app-techtable>
+    </div>
+</div>
