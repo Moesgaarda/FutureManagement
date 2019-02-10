@@ -54,7 +54,6 @@ export class DetailsOrderComponent implements OnInit {
 
   editStatus() {
     this.isEditing = true;
-
   }
 
   saveStatus() {
