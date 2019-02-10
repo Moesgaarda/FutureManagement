@@ -1,5 +1,11 @@
 <div class="card">
-  <div class="card-header">Brugere</div>
+  <div class="card-header">Brugere
+      <div class="float-right" *ngIf="authService.roleMatch(['User_ActivateDeactivate'])">
+          <button type="button" class="btn btn-primary" (click)="goToDeactivatedUsers()">
+            Vis inaktive brugere
+          </button>
+      </div>
+  </div>
 
   <div class="card-body">
     <div class="card-body">

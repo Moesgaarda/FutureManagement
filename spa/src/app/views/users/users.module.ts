@@ -14,7 +14,7 @@ import { TechTableModule } from '../../_modules/techtable/techtable.module';
 import { UserRoleFilterPipe } from '../../_pipes/role-filter.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
-
+import { ViewDeactivatedUsersComponent } from './view-deactivated-users.component';
 
 @NgModule({
   imports: [
@@ -33,7 +33,9 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     NewUserComponent,
     EditUserComponent,
     DetailsUserComponent,
-    UserRoleFilterPipe
+    ViewDeactivatedUsersComponent,
+    UserRoleFilterPipe,
+
   ]
 })
 export class UsersModule {}
