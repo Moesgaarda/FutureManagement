@@ -30,7 +30,7 @@ export class TechtableComponent implements OnInit {
   @Input() columns: Array<any> = [];
   @Input() printButton: false;
   public page = 1;
-  public itemsPerPage = 5;
+  @Input() itemsPerPage = 10;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
