@@ -25,7 +25,7 @@
           </div>
 
           <div class="form-group">
-            <label for="created">Nedre grænse</label>
+            <label for="lowerLimit">Nedre grænse</label>
             <div class="input-group-text">
               {{itemTemplate.lowerLimit}}
             </div>
@@ -34,7 +34,7 @@
           <div class="form-group">
             <label for="created">Oprettet</label>
             <div class="input-group-text">
-              {{itemTemplate.created}}
+              {{createdDate}}
             </div>
           </div>
 
@@ -51,26 +51,27 @@
         
         </div>
       </div>
-      
-      <div class="card">
-        <div class="card-header">Filer</div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th width="80%">Navn</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of itemTemplate.files">
-                    <td>{{item.fileName}}</td>
-                    <td>
-                      <button type="button" class="btn btn-block btn-success" (click)="downloadFile(item)">Download</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+      <div *ngIf="itemTemplate.files.length > 0">
+        <div class="card">
+          <div class="card-header">Filer</div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="80%">Navn</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemTemplate.files">
+                  <td>{{item.fileName}}</td>
+                  <td>
+                    <button type="button" class="btn btn-block btn-success" (click)="downloadFile(item)">Download</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -80,7 +81,7 @@
         <div class="card">
           <div class="card-header">Egenskaber</div>
           <div class="card-body">
-            <table class="table">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th>Navn</th>
@@ -100,11 +101,12 @@
         <div class="card">
           <div class="card-header">Dele</div>
           <div class="card-body">
-            <table class="table">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th>Navn</th>
                   <th>Mængde</th>
+                  <th>Detaljer</th>
                 </tr>
               </thead>
               <tbody>
@@ -112,7 +114,7 @@
                   <td>{{item.part.name}}</td>
                   <td>{{item.amount}}</td>
                   <td>
-                    <button class="btn btn-primary input-group-text" (click)="goToItemTemplateDetail(item.part.id)">
+                    <button class="btn btn-primary btn-sm" (click)="goToItemTemplateDetail(item.part.id)">
                       Vis detaljer
                     </button>
                   </td>
@@ -125,13 +127,14 @@
 
       <div *ngIf="itemTemplate.partOf.length !=0">
         <div class="card">
-          <div class="card-header">Del af</div>
+          <div class="card-header">Benyttes i</div>
           <div class="card-body">
-            <table class="table">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th>Navn</th>
                   <th>Mængde</th>
+                  <th>Detaljer</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,7 +142,7 @@
                   <td>{{item.template.name}}</td>
                   <td>{{item.amount}}</td>
                   <td>
-                    <button class="btn btn-primary input-group-text" (click)="goToItemTemplateDetail(item.template.id)">
+                    <button class="btn btn-primary btn-sm" (click)="goToItemTemplateDetail(item.template.id)">
                       Vis detaljer
                     </button>
                   </td>

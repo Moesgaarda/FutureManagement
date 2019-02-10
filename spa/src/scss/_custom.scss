@@ -28,8 +28,29 @@
 .another-file-over-class {
   border: dotted 3px green;
 }
+.input-group-text {
+  min-height: 35px;
+}
 
 html,
 body {
   height: 100%;
+}
+
+
+.statusDropdown{
+  background-color: #f0f3f5;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+@page {
+  size: auto;   /* auto is the initial value */
+  margin: 0;  /* this affects the margin in the printer settings */
 }

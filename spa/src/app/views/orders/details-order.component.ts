@@ -83,6 +83,10 @@ export class DetailsOrderComponent implements OnInit {
     this.router.navigateByUrl('orders/edit/' + orderId);
   }
 
+  goPrint(orderId: number) {
+    this.router.navigateByUrl('orders/print/' + orderId);
+  }
+
   downloadFile(fileDetails: DetailFile) {
     this.fileUploadService.download(fileDetails, 'Order');
   }
