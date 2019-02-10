@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="card-header">Deaktiverede brugere
+        <div class="float-right" *ngIf="authService.roleMatch(['User_ActivateDeactivate'])">
+            <button type="button" class="btn btn-primary" (click)="goToActivatedUsers()">
+              Vis aktive brugere
+            </button>
+        </div>
+    </div>
+  
+    <div class="card-body">
+      <div class="card-body">
+        <app-techtable
+          [serviceType]="'UserService'"
+          [columns]="[
+            { title: 'Brugernavn', name: 'userName' },
+            { title: 'Fornavn', name: 'name' },
+            { title: 'Efternavn', name: 'surname' }
+          ]"
+          [specialGet]="'getDeactivatedUsers'"
+        >
+        </app-techtable>
+      </div>
+    </div>
+  </div>
+  
