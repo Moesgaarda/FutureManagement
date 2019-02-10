@@ -24,18 +24,18 @@
       <br>
       <div class="row">
         <div class="col">
-          <h1>Adgangsniveau</h1>
+          <h2>Adgangsniveau</h2>
         </div>
       </div>
 
       <div class="row">
-        <div *ngFor="let role of userRoles" class="col-md-4">
+        <div *ngFor="let role of userRoles" class="col-md-3">
           <div class="card">
-            <div class="card-header">
-              <h5>
+            <div class="card-header" center>
+              <h6>
                 {{ role.displayName }}
                 <label
-                  class="switch switch-lg switch-3d switch-primary"
+                  class="switch switch-3d switch-primary"
                   style="float: right"
                 >
                   <input
@@ -46,7 +46,7 @@
                   />
                   <span class="switch-slider"></span>
                 </label>
-              </h5>
+              </h6>
             </div>
           </div>
         </div>
