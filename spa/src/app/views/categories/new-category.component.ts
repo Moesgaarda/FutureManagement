@@ -22,15 +22,13 @@ export class NewCategoryComponent {
     private spinnerService: Ng4LoadingSpinnerService) {}
 
   addCategory() {
-    console.log("showing spinner");
     this.spinnerService.show();
       this.categoryService.addCategory(this.category).subscribe(() => {
+        this.spinnerService.hide();
         this.alertify.success('Kategori blev oprettet');
         this.router.navigate(['categories/view/']);
       }, error => {
         this.alertify.error(error.error);
       });
-    console.log("hiding loader");
-    this.spinnerService.hide();
   }
 }
