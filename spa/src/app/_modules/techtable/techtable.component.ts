@@ -30,7 +30,7 @@ export class TechtableComponent implements OnInit {
   @Input() columns: Array<any> = [];
   @Input() printButton: false;
   public page = 1;
-  public itemsPerPage = 5;
+  @Input() itemsPerPage = 10;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
@@ -140,6 +140,10 @@ export class TechtableComponent implements OnInit {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
+          }
+        } else if (this.serviceType === 'ItemTemplateService') {
+          for (let i = 0; i < items.length; i++) {
+            items[i].created = formatDate(items[i].created, 'dd/MM/yyyy', 'en-US');
           }
         }
       });

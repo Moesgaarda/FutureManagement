@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using API.Dtos.FileDtos;
 using API.Enums;
@@ -18,5 +19,6 @@ namespace API.Dtos
         public ItemTemplateForGetDto RevisionedFrom { get; set; }
         public int LowerLimit { get; set; }
         public ItemTemplateCategory Category { get; set; }
+        public DateTime Created { get; set; }
     }
 }
