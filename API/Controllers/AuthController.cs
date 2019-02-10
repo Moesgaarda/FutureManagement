@@ -81,6 +81,22 @@ namespace API.Controllers
 
             return Unauthorized();
         }
+
+        [HttpPost("updateToken")]
+        private async Task<IActionResult> UpdateCurrentUserToken(string username)
+        {
+            // Should be called after the edited user has been saved to Db
+            var appUser = await _userManager.Users
+                    .FirstOrDefaultAsync(u => u.NormalizedUserName == username.ToUpper());
+            var userToReturn = _mapper.Map<UserForGetDto>(appUser);
+
+            return Ok(new
+            {
+                token = GenerateJwtTokenAsync(appUser).Result,
+                user = userToReturn
+            });
+        }
+        
         private async Task<string> GenerateJwtTokenAsync(User user)
         {
             var claims = new List<Claim>

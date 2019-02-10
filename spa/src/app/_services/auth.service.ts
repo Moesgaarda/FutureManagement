@@ -32,6 +32,20 @@ export class AuthService {
         });
     }
 
+    updateToken(username: string) {
+
+        return this.http.post(this.baseUrl + 'updateToken', username, this.requestOptions())
+        .map((response: Response) => {
+            const user = response.json();
+            if (user && user.token) {
+                localStorage.setItem('token', user.token);
+                localStorage.setItem('user', JSON.stringify(user.user));
+                this.decodedToken = this.jwtHelper.decodeToken(user.token);
+                this.userToken = user.token;
+            }
+        });
+    }
+
     register(model: any) {
         return this.http.post(this.baseUrl + 'register', model, this.requestOptions());
     }
