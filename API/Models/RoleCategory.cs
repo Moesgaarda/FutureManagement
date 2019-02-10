@@ -20,5 +20,6 @@ namespace API.Models
         public int Id {get; set;}
         public string Name {get; set;}
         public ICollection<RoleCategoryRoleRelation> RoleCategoryRoleRelations { get; set; }
+        public ICollection<UserRoleCategoryRelation> UserRoleCategoryRelations { get; set; }
     }
 }

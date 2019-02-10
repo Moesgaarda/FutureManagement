@@ -3,6 +3,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { RoleCategory } from '../../_models/RoleCategory';
 import { UserService } from '../../_services/user.service';
 import { UserRole } from '../../_models/UserRole';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -17,7 +18,7 @@ export class NewUserRolesComponent implements OnInit {
   roleNameToAdd: string;
   userRolesToAdd: UserRole[] = [] as UserRole[];
 
-  constructor(private alertify: AlertifyService, private userService: UserService) {}
+  constructor(private alertify: AlertifyService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.userService.getAllRoleCategories().subscribe(roleCategories => {
@@ -47,6 +48,7 @@ export class NewUserRolesComponent implements OnInit {
 
     this.userService.addRoleCategory(roleCategoryToAdd).subscribe(data => {
       this.alertify.success('Tilføjede rolle');
+      this.router.navigateByUrl('userRoles/view');
     }, error => {
       this.alertify.error('Kunne ikke tilføje rollen');
     });
