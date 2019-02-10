@@ -1,0 +1,279 @@
+<div *ngIf="onOrderPage" class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">Ny bestilling</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="company">Firma</label>
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Firma"
+              class="form-control"
+              [(ngModel)]="orderToAdd.company"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="deliveryDate">Leveringstidspunkt</label>
+          <div class="input-group">
+            <input
+              type="date"
+              placeholder="Leveringstidspunkt"
+              class="form-control"
+              [(ngModel)]="orderToAdd.deliveryDate"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="height">Højde</label>
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Højde"
+              class="form-control"
+              [(ngModel)]="orderToAdd.height"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="length">Længde</label>
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Længde"
+              class="form-control"
+              [(ngModel)]="orderToAdd.length"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="width">Bredde</label>
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Bredde"
+              class="form-control"
+              [(ngModel)]="orderToAdd.width"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mængdeenhed</label>
+          <select
+            class="form-control dropdown-toggle"
+            [(ngModel)]="orderToAdd.unitType"
+          >
+            <option *ngFor="let unit of unitTypeList" selected>{{
+              unit.name
+            }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="purchaseNumber">Købsnummer</label>
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Købsnummer"
+              class="form-control"
+              [(ngModel)]="orderToAdd.purchaseNumber"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select
+            class="form-control dropdown-toggle"
+            [(ngModel)]="orderStatus"
+          >
+            <option *ngFor="let status of statuses" [ngValue]="status">{{
+              status
+            }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-success" (click)="addOrder()">
+            Tilføj bestilling
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Tilføj filer</div>
+      <div class="card-body">
+        <div class="col-lg-12">
+          <form enctype="multipart/form-data">
+            <input
+              #file
+              type="file"
+              enctype="multipart/form-data"
+              multiple
+              (change)="uploader.queue(file.files)"
+            />
+            <br />
+            <br />
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="50%">Navn</th>
+                  <th>Størrelse</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of uploader.queuedFiles">
+                  <td>
+                    <strong>{{ item.name }}</strong>
+                  </td>
+                  <td>{{ item.size / 1024 / 1024 | number: ".2" }} MB</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-s"
+                      (click)="uploader.removeFromQueue(file)"
+                    >
+                      <span class="glyphicon glyphicon-trash"></span> Fjern
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+
+          <div>
+            <button
+              type="button"
+              class="btn btn-danger btn-s"
+              (click)="uploader.clearQueue()"
+              [disabled]="!uploader.queuedFiles.length"
+            >
+              <span class="glyphicon glyphicon-trash"></span> Fjern alle
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">Tilføj genstande til bestillingen</div>
+      <div class="card-body">
+        <div class="form-group">
+          <ul class="list-group">
+            <div *ngFor="let item of orderToAdd.products; let i = index">
+              <li class="list-group-item">
+                {{ item.template.name }} ({{ item.amount }})
+                <button
+                  type="button"
+                  (click)="removeItemFromOrder(i)"
+                  class="close"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="false">&times;</span>
+                </button>
+              </li>
+            </div>
+          </ul>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" (click)="changePage()">
+            Tilføj genstand
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!onOrderPage" class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">Ny genstand til bestillingen</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Vælg skabelon</label>
+          <select
+            class="form-control dropdown-toggle"
+            [(ngModel)]="templateToGet"
+            (change)="getTemplateDetails()"
+          >
+            <option *ngFor="let temp of templates" [ngValue]="temp">{{
+              temp.name
+            }}</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="detailsReady">
+          <label for="placement">Genstandens placering</label>
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Placering"
+              class="form-control"
+              [(ngModel)]="currentItem.placement"
+            />
+          </div>
+        </div>
+        <div class="form-group" *ngIf="detailsReady">
+          <label for="amount">Mængde</label>
+          <div class="input-group">
+            <input
+              type="number"
+              placeholder="Mængde  i {{ currentItem.template.unitType.name }}"
+              class="form-control"
+              [(ngModel)]="currentItem.amount"
+            />
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-warning" (click)="changePage()">
+            Tilbage
+          </button>
+            <button
+              class="btn btn-success"
+              (click)="addItemToOrder()"
+              [disabled]="!detailsReady"
+            >
+              Tilføj genstand
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        Egenskaber der ligger på den valgte skabelon
+      </div>
+      <div class="card-body">
+        <div *ngIf="detailsReady">
+          <div class="table-responsive-sm">
+            <table class="table">
+              <tbody>
+                <tr
+                  *ngFor="
+                    let prop of templateDetails.templateProperties;
+                    let i = index
+                  "
+                >
+                  <td>
+                    <b>{{ prop.name }}</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="{{ prop.name }}"
+                      class="form-control"
+                      [(ngModel)]="descriptionTextsToAdd[i]"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

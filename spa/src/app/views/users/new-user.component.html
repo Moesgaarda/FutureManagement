@@ -1,0 +1,117 @@
+<div class="row">
+  <ng4-loading-spinner></ng4-loading-spinner>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">Opret ny bruger</div>
+      <div class="card-body">
+
+        <p>
+          <font color="red"> Felter markeret med * skal udfyldes</font>
+        </p>
+        <div class="form-group">
+          <label for="username">
+            Brugernavn*
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Brugernavn" id="username" class="form-control"
+              [(ngModel)]="user.username" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">
+            Kodeord*
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Kodeord" id="name" type="password" class="form-control"
+              [(ngModel)]="user.password" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="passwordConfirm">
+            Bekræft kodeord*
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Bekræft kodeord" id="name" type="password" class="form-control"
+              [(ngModel)]="passwordConfirm" />
+          </div>
+          <div *ngIf="user.password !== passwordConfirm">
+            <font color="red">Kodeord er ikke ens</font>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">
+            Fornavn*
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Fornavn" id="name" class="form-control" [(ngModel)]="user.name" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="surname">
+            Efternavn*
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Efternavn" id="surName" class="form-control" [(ngModel)]="user.surname" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="eMail">
+            E-mail
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="E-mail" id="eMail" class="form-control" [(ngModel)]="user.email" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">
+            Telefonnummer
+          </label>
+          <div class="input-group">
+            <input type="text" placeholder="Telefonnummer" id="phone" class="form-control" [(ngModel)]="user.phoneNumber" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="birthdate">Fødselsdag</label>
+          <div class="input-group">
+            <input type="date" placeholder="Fødselsdag" class="form-control" [(ngModel)]="user.birthdate" />
+          </div>
+        </div>
+        <button type="button" class="btn btn-success btn-rectangle" (click)="createUser()">
+          Tilføj bruger
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">Vælg roller til brugeren</div>
+      <div class="card-body">
+        <div class="input-group">
+          <input type="text" placeholder="Filtrer roller" class="form-control" [(ngModel)]="roleFilter" />
+        </div>
+        <br>
+        <div class="col-lg-6">
+          <ng-container
+            *ngFor="let role of roles  | userRoleFilter: roleFilter | paginate: {itemsPerPage: itemsPerPage, 
+                                                                                                  currentPage: currentPage, 
+                                                                                                  totalItems: roles?.length }; let i=index">
+            <div *ngIf="checkBox(role); then checkedBox else uncheckedBox"> </div>
+            <ng-template #checkedBox>
+              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(role, $event)" checked />
+              {{role.name}}
+            </ng-template>
+            <ng-template #uncheckedBox>
+              <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(role, $event)" /> 
+              {{role.name}}
+            </ng-template>
+            <br>
+          </ng-container>
+        </div>
+        <br>
+        <pagination-controls (pageChange)="currentPage = $event" maxSize="7" previousLabel="Forrige" nextLabel="Næste">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-header">
+    Skabeloner
+  </div>
+
+  <div class="card-body">
+    <app-techtable [serviceType]="'ItemTemplateService'" [columns]="[{title: 'Navn', name: 'name'}, 
+                                                                    {title: 'Oprettet', name: 'created'},
+                                                                    {title: 'Kategori', name: 'category.name'}]">
+    </app-techtable>
+  </div>
+</div>

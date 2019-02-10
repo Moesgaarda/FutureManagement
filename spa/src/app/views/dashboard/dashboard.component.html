@@ -1,0 +1,52 @@
+<div class="card" *ngIf="this.authService.roleMatch(['Items_View'])">
+  <div class="card-header">Lav lagerbeholdning</div>
+
+  <div class="card-body">
+    <app-techtable
+      [serviceType]="'ItemService'"
+      [columns]="[
+        { title: 'Navn', name: 'template.name' },
+        { title: 'Nedre grænse', name: 'template.lowerLimit' },
+        { title: 'Mængde', name: 'amount' }
+      ]"
+      [specialGet]="'getLowInventory'"
+    >
+    </app-techtable>
+  </div>
+</div>
+
+<div class="card" *ngIf="this.authService.roleMatch(['Order_View'])">
+  <div class="card-header">Ikke leverede bestillinger</div>
+  <div class="card-body">
+    <app-techtable
+      [serviceType]="'OrderService'"
+      [columns]="[
+        { title: 'Firma', name: 'company' },
+        { title: 'Ordrenummer', name: 'purchaseNumber' },
+        { title: 'Bestillingsdato', name: 'orderDate' },
+        { title: 'Leveringsdato', name: 'deliveryDate' },
+        { title: 'Status', name: 'status' }
+      ]"
+      [specialGet]="'getNotDelivered'"
+    >
+    </app-techtable>
+  </div>
+</div>
+
+<div class="card" *ngIf="this.authService.roleMatch(['Order_View'])">
+  <div class="card-header">Indkomne bestillinger</div>
+  <div class="card-body">
+    <app-techtable
+      [serviceType]="'OrderService'"
+      [columns]="[
+        { title: 'Firma', name: 'company' },
+        { title: 'Ordrenummer', name: 'purchaseNumber' },
+        { title: 'Bestillingsdato', name: 'orderDate' },
+        { title: 'Leveringsdato', name: 'deliveryDate' },
+        { title: 'Status', name: 'status' }
+      ]"
+      [specialGet]="'getIncomingOrders'"
+    >
+    </app-techtable>
+  </div>
+</div>

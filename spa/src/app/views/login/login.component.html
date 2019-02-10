@@ -1,0 +1,40 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card-group">
+            <div class="card p-8">
+              <div class="card-body">
+                <form #loginForm="ngForm" (ngSubmit)="login()">
+                  <h1 style="text-align: center">Login</h1>
+                  <br>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input class="form-control" #username="ngModel" placeholder="Brugernavn" type="text" autofocus
+                      required name="username" [(ngModel)]="model.username">
+                  </div>
+                  <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input class="form-control" #password="ngModel" placeholder="Password" type="password" required
+                      name="password" [(ngModel)]="model.password">
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="submit" [disabled]="!loginForm.valid" class="btn btn-primary" value="Log ind"
+                        style="float: right;">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

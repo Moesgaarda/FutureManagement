@@ -1,10 +1,11 @@
 {
-  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "future-management": {
+    "ng": {
       "root": "",
+      "sourceRoot": "src",
       "projectType": "application",
       "architect": {
         "build": {
@@ -16,22 +17,23 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "favicon.ico",
-                "input": "src",
-                "output": "/"
-              }
+              "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
+              "node_modules/@coreui/icons/css/coreui-icons.css",
+              "node_modules/flag-icon-css/css/flag-icon.css",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/simple-line-icons/css/simple-line-icons.css",
+              "src/scss/style.scss",
+              "src/styles.css"
             ],
-            "scripts": []
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            },
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/alertifyjs/build/alertify.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -56,18 +58,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "future-management:build"
+            "browserTarget": "ng:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "future-management:build:production"
+              "browserTarget": "ng:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "future-management:build"
+            "browserTarget": "ng:build"
           }
         },
         "test": {
@@ -77,22 +79,21 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js"
             ],
+            "styles": [
+              "node_modules/flag-icon-css/css/flag-icon.css",
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/simple-line-icons/css/simple-line-icons.css",
+              "src/scss/style.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            },
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "favicon.ico",
-                "input": "src",
-                "output": "/"
-              }
+              "src/assets",
+              "src/favicon.ico"
             ]
           }
         },
@@ -110,17 +111,16 @@
         }
       }
     },
-    "future-management-e2e": {
+    "ng-e2e": {
       "root": "",
+      "sourceRoot": "",
       "projectType": "application",
-      "cli": {},
-      "schematics": {},
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "future-management:serve"
+            "devServerTarget": "ng:serve"
           }
         },
         "lint": {
@@ -137,7 +137,7 @@
       }
     }
   },
-  "cli": {},
+  "defaultProject": "ng",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

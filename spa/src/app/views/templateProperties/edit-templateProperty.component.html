@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        Rediger egenskab
+      </div>
+      <div class="card-body">
+        <label for="useredit"> Navn </label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="TemplateProperty" value="{{ TemplateProperty?.name }}"
+                 [(ngModel)]="TemplateProperty.name" />
+          <div class="input-group-append">
+            <button type="button" class="btn btn-success" (click)="Save()">
+              Opdater
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

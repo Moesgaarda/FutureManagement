@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">Ny rolle</div>
+
+  <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div
+            class="input-group input-group-lg"
+          >
+            <div class="input-group-prepend">
+              <span class="input-group-text">Rollenavn</span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Default"
+              aria-describedby="inputGroup-sizing-default"
+              [(ngModel)]="roleNameToAdd"
+            />
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+          <h2>Adgangsniveau</h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div *ngFor="let role of userRoles" class="col-md-3">
+          <div class="card">
+            <div class="card-header" center>
+              <h6>
+                {{ role.displayName }}
+                <label
+                  class="switch switch-3d switch-primary"
+                  style="float: right"
+                >
+                  <input
+                    type="checkbox"
+                    class="switch-input"
+                    (change)="onSwitchChange(role, $event)"
+                    aria-controls="toggleElement"
+                  />
+                  <span class="switch-slider"></span>
+                </label>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-success btn-rectangle"
+                (click)="addRole()"
+        >
+          Tilføj rolle
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

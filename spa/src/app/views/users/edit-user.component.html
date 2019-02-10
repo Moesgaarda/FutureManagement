@@ -1,0 +1,58 @@
+<div *ngIf="readyToLoad" class="row">
+  <div class="col-lg-12 col-xl-12 col-md-12">
+    <div class="card">
+      <div class="card-header">Rediger i oplysningerne omkring {{user.name}}</div>
+      <div class="card-body">
+        <form #f="ngForm" required>
+
+          <label class="col-lg-10 control-label">Fornavn</label>
+          <div class="col-lg-10">
+            <input class="form-control" name="name" type="text" value="{{user.name}}" [(ngModel)]="user.name" > 
+          </div>
+
+          <label class="col-lg-10 control-label">Efternavn</label>
+          <div class="col-lg-10">
+            <input class="form-control" name="Surname" type="text" value="{{user.surname}}" [(ngModel)]="user.surname" > 
+          </div>
+
+          <label class="col-lg-10 control-label">Telefonnummer</label>
+          <div class="col-sm-10">
+            <input class="form-control" name="Phone" type="text" value="{{user.phoneNumber}}" [(ngModel)]="user.phoneNumber" > 
+          </div>
+
+          <label class="col-lg-10 control-label">E-mail</label>
+          <div class="col-lg-10">
+            <input class="form-control" name="Email" type="text" value="{{user.email}}" [(ngModel)]="user.email" > 
+          </div>
+
+          <label class="col-lg-10 control-label">Fødselsdag</label>
+          <div class="col-lg-10">
+            <input class="form-control" name="Birthdate" type="text" value="{{user.birthdate}}" [(ngModel)]="user.birthdate" > 
+          </div>
+          <br />
+          <div class="row col-lg-10">
+            <div class="col-lg-1">
+              <button type="button" class="btn btn-success" [disabled]="!f.dirty && f.valid" (click)="editUser()">
+                Gem
+              </button>
+            </div>  
+
+            <div *ngIf="authService.roleMatch(['User_ActivateDeactivate'])">
+              <div class="col-lg-1 offset-lg-1" *ngIf="user.isActive === true">
+                <button type="button" class="btn btn-danger" (click)="deactivateUser()">
+                    Deaktiver
+                </button>
+              </div>
+              <div class="col-lg-1 offset-lg-1" *ngIf="user.isActive === false">
+                <button type="button" class="btn btn-primary" (click)="activateUser()">
+                    Aktiver
+                </button>
+              </div>
+              <br />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

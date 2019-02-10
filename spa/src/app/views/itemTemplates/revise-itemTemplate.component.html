@@ -1,0 +1,178 @@
+<div *ngIf="isDataAvailable">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card">
+        
+          <div class="card-header">
+            <h5>{{templateToRevise.name}}</h5>
+          </div>
+          <div class="card-body">
+              <div class="form-group">
+                  <label for="name">Navn</label>
+                  <div class="input-group">
+                    <input class="form-control" [(ngModel)]="templateToRevise && templateToRevise.name">
+                  </div>
+                </div>
+            <div class="form-group">
+                <label for="name">Beskrivelse</label>
+                <div class="input-group">
+                  <textarea rows="5" class="form-control" [(ngModel)]="templateToRevise && templateToRevise.description"></textarea>
+                </div>
+              </div>
+
+            <div class="form-group">
+              <label>Mængdeenhed</label>
+              <select class="form-control dropdown-toggle" [(ngModel)]="unitType" [compareWith]="compareDefaultForSelect">
+                <option *ngFor="let unit of unitTypeList" [ngValue] = "unit">{{unit.name}}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Nedre grænse</label>
+              <div class="input-group">
+                <input class="form-control" [(ngModel)]="templateToRevise && templateToRevise.lowerLimit">
+              </div>
+            </div> 
+
+            <div class="form-group">
+              <label>Kategori</label>
+              <select class="form-control dropdown-toggle" [(ngModel)]="category" [compareWith]="compareDefaultForSelect">
+                <option *ngFor="let cat of categoryList" [ngValue]="cat">{{cat.name}}</option>
+              </select>
+            </div>
+                
+          </div>
+        </div>
+
+        <div class="card">
+                <div class="form-group">
+                <div class="card-header">Skabelonliste</div>
+                  <div class="card-body">
+                    <ng-select
+                    [items]="templates | async"
+                    [multiple]="true"
+                    [closeOnSelect]="false"
+                    [hideSelected]="true"
+                    bindLabel="name"
+                    placeholder="Vælg skabeloner"
+                    [(ngModel)]="selectedTemplates">
+                    </ng-select>
+                    <small class="form-text">En liste af skabeloner der bruges til at fremstille denne skabelon.
+                    </small>
+                    <br>
+                <label for="amount"><h6>Hvor mange af de forskellige genstande er brugt?</h6></label>
+                  <div class="row">
+                    <div *ngFor="let temp of selectedTemplates; let i=index" class="col-lg-6"> 
+                      <div class="card">
+                        <div class="card-header">{{temp.name}}</div>
+                        <div class="card-body">
+                          <input type="number" class="form-control" [(ngModel)]="partAmounts[i]"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <button class="btn btn-success btn-rectangle input-group-text" (click)="addRevision()">Tilføj skabelonenrevideringen</button>
+                    </div>
+                  </div>
+                  </div>
+              
+              </div>
+          
+              <div class="card">
+                <div class="card-header">Tilføj filer</div>
+                <div class="card-body">
+                  <div class="col-lg-12" style="margin-bottom: 40px">
+                  <form enctype="multipart/form-data">
+                    <input #file type="file" enctype="multipart/form-data" multiple (change)="uploader.queue(file.files)">
+                      <br />
+                      <br />
+          
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="50%">Navn</th>
+                          <th>Størrelse</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of uploader.queuedFiles">
+                          <td>
+                            <strong>{{ item.name}}</strong>
+                          </td>
+                          <td>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+                          <td>
+                              <button type="button" class="btn btn-danger btn-s" (click)="uploader.removeFromQueue(file)">
+                                <span class="glyphicon glyphicon-trash"></span> Fjern
+                              </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </form>
+          
+          
+                    <div>
+                      <button type="button" class="btn btn-danger btn-s"(click)="uploader.clearQueue()" [disabled]="!uploader.queuedFiles.length">
+                        <span class="glyphicon glyphicon-trash"></span> Fjern alle
+                      </button>
+                    </div>
+          
+                  </div>
+                        <label for="amount"><h6>Nuværende filer</h6></label>
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th width="80%">Navn</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of filesFromRevision">
+                                    <td>{{item.fileName}}</td>
+                                    <td>
+                                      <button type="button" class="btn btn-danger btn-s" (click)="removeFileToRevice(item)">
+                                        <span class="glyphicon glyphicon-trash"></span> Fjern
+                                      </button>
+                                    </td>
+                                    <td>
+                                      <button type="button" class="btn btn-block btn-success" (click)="downloadFile(item)">Download</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                      </div>
+                      </div>
+
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header">Egenskaber</div>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" placeholder="Filtrer egenskaber" class="form-control"  [(ngModel)]="propFilter"/>
+              </div>
+              <br>
+              <div class="col-lg-6">
+              <ng-container *ngFor="let prop of properties | propertyFilter: propFilter | paginate: {itemsPerPage: itemsPerPage, 
+                                                                                                   currentPage: currentPage, 
+                                                                                                   totalItems: properties?.length }; let i=index">
+              <div *ngIf="checkBox(prop.id); then checkedBox else uncheckedBox"> </div>
+              <ng-template #checkedBox>
+                  <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)" checked/> {{prop.name}}
+              </ng-template>
+              <ng-template #uncheckedBox>
+                  <input type="checkbox" class="form-check-input" (change)="onCheckboxChange(prop,$event)"/> {{prop.name}}
+              </ng-template>
+              <br>
+              </ng-container>
+            </div>
+            <br>
+              <pagination-controls (pageChange)="currentPage = $event"
+                                    maxSize="7"
+                                    previousLabel="Forrige"
+                                    nextLabel="Næste">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>

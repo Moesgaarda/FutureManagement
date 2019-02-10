@@ -1,0 +1,31 @@
+<app-header
+  [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'Techkrus Management Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/logo.svg', width: 30, height: 30, alt: 'Techkrus Management Logo'}"
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]=false>
+  <ul class="nav navbar-nav ml-auto">
+  </ul>
+</app-header>
+<div class="app-body">
+  <ng4-loading-spinner></ng4-loading-spinner>
+
+  <app-custom-sidebar [navItems]="navItems"></app-custom-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb no-print">
+      <app-breadcrumb></app-breadcrumb>
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu d-md-down-none"></li>
+    </ol>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div><!-- /.container-fluid -->
+  </main>
+</div>
+<div class="no-print">
+  <app-footer>
+    <span><a href="https://techkrus.dk">Techkrus Management</a> &copy; 2019 Techkrus Digital Solutions</span>
+  </app-footer>
+</div>

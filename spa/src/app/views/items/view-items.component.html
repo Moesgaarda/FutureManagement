@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-header">Genstande</div>
+  <div class="card-body">
+    <div class="row"></div>
+    <br />
+    <app-techtable
+      [serviceType]="'ItemService'"
+      [columns]="[
+        { title: 'Navn', name: 'template.name' },
+        { title: 'Mængde', name: 'amount' },
+        { title: 'Placering', name: 'placement' },
+        { title: 'Er aktiv', name: 'isActive' }
+      ]"
+      [printButton]="true"
+      >
+    </app-techtable>
+  </div>
+</div>

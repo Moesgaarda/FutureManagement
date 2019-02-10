@@ -1,0 +1,139 @@
+<div *ngIf="isDataAvailable">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+
+        <div class="card-header">
+          <h5>Bestilling: {{order.purchaseNumber}}
+            <div class="float-right" *ngIf="authService.roleMatch(['Order_Edit']); else showPrint">
+              <button type="button" class="btn btn-primary" (click)="goToEditPage(order.id)">Rediger</button>
+              &nbsp;
+              <button type="button" class="btn btn-primary btn-rectangle" (click)="goPrint(order.id)">Print</button>
+            </div>
+            <ng-template #showPrint>
+              <div class="float-right">
+                <button type="button" class="btn btn-primary btn-rectangle" (click)="goPrint(order.id)">Print</button>
+              </div>
+            </ng-template>
+          </h5>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group">
+            <label for="description">Firma</label>
+            <div class="input-group-text">
+              {{order.company}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Bestilt af</label>
+            <div class="input-group-text">
+              {{order.orderedBy.name}}
+            </div>
+          </div>
+          <div class="form-group">
+            <div *ngIf="isEditing;else show_status">
+              <label>Status</label>
+              <div class="input-group">
+                <select class="form-control dropdown-toggle" [(ngModel)]="orderStatus">
+                  <option *ngFor="let key of keys" [ngValue]="key">{{
+                    key
+                  }}</option>
+                </select>
+                <button class="btn btn-success btn-sm input-group-append" (click)="saveStatus()">
+                  Gem ændringer
+                </button>
+              </div>
+            </div>
+            <ng-template #show_status>
+              <label>Status</label>
+              <div class="input-group">
+                <div class="form-control statusDropdown">
+                  {{orderStatus}}
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-primary btn-sm" (click)="editStatus()">
+                    Rediger status
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Dato for bestilling</label>
+            <div class="input-group-text">
+              {{orderDateString}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Dato for levering</label>
+            <div class="input-group-text">
+              {{deliveryDateString}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="created">Størelse</label>
+            <div class="input-group-text">
+              {{order.width}}x{{order.height}}x{{order.length}} {{order.unitType.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">Produkter</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Navn</th>
+                <th>Mængde</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of order.products">
+                <td>{{item.template.name}}</td>
+                <td>{{item.amount}}</td>
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="goToItemTemplateDetail(item.template.id)">
+                    Vis detaljer
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="order.files.length > 0">
+        <div class="card">
+          <div class="card-header">Filer</div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="80%">Navn</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of order.files">
+                  <td>{{item.fileName}}</td>
+                  <td>
+                    <button type="button" class="btn btn-success" (click)="downloadFile(item)">Download</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

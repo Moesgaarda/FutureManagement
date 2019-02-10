@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header">Bestillinger</div>
+
+  <div class="card-body">
+    <app-techtable
+      [serviceType]="'OrderService'"
+      [columns]="[
+        { title: 'Firma', name: 'company' },
+        { title: 'Ordrenummer', name: 'purchaseNumber' },
+        { title: 'Bestillingsdato', name: 'orderDate' },
+        { title: 'Leveringsdato', name: 'deliveryDate' },
+        { title: 'Status', name: 'status' }
+      ]"
+    >
+    </app-techtable>
+  </div>
+</div>
