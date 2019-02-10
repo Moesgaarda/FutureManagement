@@ -122,6 +122,12 @@ export class TechtableComponent implements OnInit {
           }
         }
       });
+    } else if (this.specialGet === 'getDeactivatedUsers') {
+        await this.tableService.getInactiveUsers().subscribe(dUsers => {
+          this.rows = dUsers;
+          this.data = dUsers;
+          this.onChangeTable(this.config);
+        });
     } else {
       await this.tableService.getAll().subscribe(items => {
         this.rows = items;
@@ -138,8 +144,6 @@ export class TechtableComponent implements OnInit {
         }
       });
     }
-
-
   }
 
   /**
