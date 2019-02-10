@@ -152,6 +152,12 @@ export const navItems = [
           role: 'User_Add',
         },
         {
+          name: 'Vis roller',
+          url: '/userRoles/view',
+          icon: 'fa fa-user-o',
+          role: 'User_View',
+        },
+        {
           name: 'System log',
           icon: 'fa fa-sticky-note-o',
           url: '/logs/view',
