@@ -108,6 +108,8 @@ namespace API.Data
             User user = await _dbContext.Users
                     .Where(x => x.Id == id)
                     .Include(x => x.UserRoles)
+                    .Include(x => x.UserRoleCategoryRelations)
+                    .ThenInclude(x => x.RoleCategory)
                     .FirstOrDefaultAsync();
             return user;
         }

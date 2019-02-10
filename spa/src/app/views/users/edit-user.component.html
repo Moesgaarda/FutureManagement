@@ -1,7 +1,7 @@
 <div *ngIf="readyToLoad" class="row">
-  <div class="col-lg-4">
+  <div class="col-lg-12 col-xl-12 col-md-12">
     <div class="card">
-      <div class="card-header">Rediger i {{user.name}} oplysninger</div>
+      <div class="card-header">Rediger i oplysningerne omkring {{user.name}}</div>
       <div class="card-body">
         <form #f="ngForm" required>
 
@@ -29,17 +29,26 @@
           <div class="col-lg-10">
             <input class="form-control" name="Birthdate" type="text" value="{{user.birthdate}}" [(ngModel)]="user.birthdate" > 
           </div>
-
-          <div class="form-check col-lg-10">
-            <input type="checkbox" class="form-check-input" id="activateCheckBox" checked="{{user.isActive}}">
-            <label class="form-check-label ">Aktiveret</label>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-10">
-              <button type="button" class="btn btn-primary" [disabled]="!f.dirty && f.valid" (click)="editUser()">
+          <br />
+          <div class="row col-lg-10">
+            <div class="col-lg-1">
+              <button type="button" class="btn btn-success" [disabled]="!f.dirty && f.valid" (click)="editUser()">
                 Gem
               </button>
+            </div>  
+
+            <div *ngIf="authService.roleMatch(['User_ActivateDeactivate'])">
+              <div class="col-lg-1 offset-lg-1" *ngIf="user.isActive === true">
+                <button type="button" class="btn btn-danger" (click)="deactivateUser()">
+                    Deaktiver
+                </button>
+              </div>
+              <div class="col-lg-1 offset-lg-1" *ngIf="user.isActive === false">
+                <button type="button" class="btn btn-primary" (click)="activateUser()">
+                    Aktiver
+                </button>
+              </div>
+              <br />
             </div>
           </div>
         </form>

@@ -151,7 +151,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "User_ActivateDeactivate")]
-        [HttpPost("activate")]
+        [HttpPost("activate/{id}", Name = "ActivateUser")]
         public async Task<IActionResult> ActivateUser(int id)
         {
             var userActivate = await _repo.GetUser(id);

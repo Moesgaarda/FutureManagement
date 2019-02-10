@@ -12,6 +12,7 @@ namespace API.Dtos
         public string Name { get; set;}
         public string Surname{ get; set; }
         public ICollection<UserRoleDto> UserRoles { get; set; }
+        public ICollection<RoleCategory> RoleCategories { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsActive { get; set; }

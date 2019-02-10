@@ -33,7 +33,11 @@ namespace API.Helpers
             CreateMap<ItemItemRelation, ItemItemRelationPartOfForGet>();
             CreateMap<ItemItemRelation, ItemItemRelationForGet>()
                 .ForMember(x => x.Template, opt => opt.MapFrom(src => src.Part.Template));
-            CreateMap<User, UserForGetDto>();
+            CreateMap<User, UserForGetDto>()
+                .ForMember(x => x.RoleCategories, opt => opt.MapFrom(src => src.UserRoleCategoryRelations));
+            CreateMap<UserRoleCategoryRelation, RoleCategory>()
+                .ForMember(x => x.Name, opt => opt.MapFrom(src => src.RoleCategory.Name))
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.RoleCategory.Id));
             CreateMap<User, UserForRegisterDto>();
             CreateMap<UserForRegisterDto, User>();
             CreateMap<TemplateFileName, FileForTableGetDto>()
