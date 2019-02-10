@@ -8,11 +8,13 @@
   </ul>
 </app-header>
 <div class="app-body">
+  <ng4-loading-spinner></ng4-loading-spinner>
+
   <app-custom-sidebar [navItems]="navItems"></app-custom-sidebar>
   <!-- Main content -->
   <main class="main">
     <!-- Breadcrumb -->
-    <ol class="breadcrumb">
+    <ol class="breadcrumb no-print">
       <app-breadcrumb></app-breadcrumb>
       <!-- Breadcrumb Menu-->
       <li class="breadcrumb-menu d-md-down-none"></li>
@@ -22,6 +24,8 @@
     </div><!-- /.container-fluid -->
   </main>
 </div>
-<app-footer>
-  <span><a href="https://techkrus.dk">Techkrus Management</a> &copy; 2019 Techkrus Digital Solutions</span>
-</app-footer>
+<div class="no-print">
+  <app-footer>
+    <span><a href="https://techkrus.dk">Techkrus Management</a> &copy; 2019 Techkrus Digital Solutions</span>
+  </app-footer>
+</div>

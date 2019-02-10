@@ -25,7 +25,7 @@
           </div>
 
           <div class="form-group">
-            <label for="created">Nedre grænse</label>
+            <label for="lowerLimit">Nedre grænse</label>
             <div class="input-group-text">
               {{itemTemplate.lowerLimit}}
             </div>
@@ -34,7 +34,7 @@
           <div class="form-group">
             <label for="created">Oprettet</label>
             <div class="input-group-text">
-              {{itemTemplate.created}}
+              {{createdDate}}
             </div>
           </div>
 
@@ -127,7 +127,7 @@
 
       <div *ngIf="itemTemplate.partOf.length !=0">
         <div class="card">
-          <div class="card-header">Del af</div>
+          <div class="card-header">Benyttes i</div>
           <div class="card-body">
             <table class="table table-striped">
               <thead>

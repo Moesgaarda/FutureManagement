@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { navItems } from '../../_nav';
+import { Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService  } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +11,8 @@ export class DefaultLayoutComponent {
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
-  constructor() {
-
+  constructor(private spinnerService: Ng4LoadingSpinnerService) {
+    this.spinnerService.show();
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
@@ -19,5 +20,6 @@ export class DefaultLayoutComponent {
     this.changes.observe(<Element>this.element, {
       attributes: true
     });
+    this.spinnerService.hide();
   }
 }

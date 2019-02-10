@@ -65,6 +65,11 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]UserForLoginDto userForLoginDto){
             var user = await _userManager.FindByNameAsync(userForLoginDto.UserName);
+
+            if(user.IsActive == false){
+                return Unauthorized();
+            }
+
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
 

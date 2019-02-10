@@ -52,8 +52,11 @@ export class NewItemComponent implements OnInit {
         part.amount = part.amount * this.itemToAdd.amount;
       }
 
-
-      this.currentStep = NewItemSteps.Items;
+      if (this.missingItems.length === 0){
+        this.currentStep = NewItemSteps.Info;
+      } else {
+        this.currentStep = NewItemSteps.Items;
+      }
     }
   }
 

@@ -30,7 +30,7 @@ export class TechtableComponent implements OnInit {
   @Input() columns: Array<any> = [];
   @Input() printButton: false;
   public page = 1;
-  public itemsPerPage = 5;
+  @Input() itemsPerPage = 10;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
@@ -90,12 +90,14 @@ export class TechtableComponent implements OnInit {
   async loadItems() {
     if (this.specialGet === 'getLowInventory') {
       await this.tableService.getLowInventory().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
       });
     } else if (this.specialGet === 'getNotDelivered') {
       await this.tableService.getNotDelivered().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
@@ -110,6 +112,7 @@ export class TechtableComponent implements OnInit {
       });
     } else if (this.specialGet === 'getIncomingOrders') {
       await this.tableService.getIncomingOrders().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
@@ -122,8 +125,22 @@ export class TechtableComponent implements OnInit {
           }
         }
       });
+    } else if (this.specialGet === 'getDeactivatedUsers') {
+        await this.tableService.getInactiveUsers().subscribe(dUsers => {
+          this.reformatIsActive(dUsers);
+          this.rows = dUsers;
+          this.data = dUsers;
+          this.onChangeTable(this.config);
+        });
+    } else if (this.specialGet === 'getUserRoles') {
+      await this.tableService.getAllRoleCategories().subscribe(dRoles => {
+        this.rows = dRoles;
+        this.data = dRoles;
+        this.onChangeTable(this.config);
+      });
     } else {
       await this.tableService.getAll().subscribe(items => {
+        this.reformatIsActive(items);
         this.rows = items;
         this.data = items;
         this.onChangeTable(this.config);
@@ -134,12 +151,14 @@ export class TechtableComponent implements OnInit {
             items[i].status = (OrderStatusEnum[items[i].status]);
             items[i].orderDate = formatDate(items[i].orderDate, 'dd/MM/yyyy', 'en-US');
             items[i].deliveryDate = formatDate(items[i].deliveryDate, 'dd/MM/yyyy', 'en-US');
+          }
+        } else if (this.serviceType === 'ItemTemplateService') {
+          for (let i = 0; i < items.length; i++) {
+            items[i].created = formatDate(items[i].created, 'dd/MM/yyyy', 'en-US');
           }
         }
       });
     }
-
-
   }
 
   /**
@@ -170,7 +189,6 @@ export class TechtableComponent implements OnInit {
     if (!config.sorting) {
       return data;
     }
-
     const columns = this.config.sorting.columns || [];
     let columnName: string = void 0;
     let sort: string = void 0;
@@ -256,6 +274,7 @@ export class TechtableComponent implements OnInit {
 
     if (config.sorting) {
       Object.assign(this.config.sorting, config.sorting);
+      Object.assign(this.config.sorting.columns, this.columns);
     }
 
     const filteredData = this.changeFilter(this.data, this.config);
@@ -274,14 +293,21 @@ export class TechtableComponent implements OnInit {
    */
   public onCellClick(data: any): any {
     if (this.serviceType === 'ItemService') {
-      location.href = this.baseUrl + 'items/details/' + data.row.id;
+      if (this.specialGet === 'getLowInventory') {
+        location.href = this.baseUrl + 'itemTemplates/details/' + data.row.template.id;
+      } else {
+        location.href = this.baseUrl + 'items/details/' + data.row.id;
+      }
     } else if (this.serviceType === 'ItemTemplateService') {
       location.href = this.baseUrl + 'itemTemplates/details/' + data.row.id;
     } else if (this.serviceType === 'OrderService') {
       location.href = this.baseUrl + 'orders/details/' + data.row.id;
     } else if (this.serviceType === 'EventLogService') {
     } else if (this.serviceType === 'UserService') {
-      location.href = this.baseUrl + 'users/details/' + data.row.id;
+      if(this.specialGet === 'getUserRoles') {
+      } else {
+        location.href = this.baseUrl + 'users/details/' + data.row.id;
+      }
     } else if (this.serviceType === 'UnitTypeService') {
       location.href = this.baseUrl + 'unitTypes/edit/' + data.row.id;
     } else if (this.serviceType === 'CategoryService') {
@@ -390,5 +416,27 @@ export class TechtableComponent implements OnInit {
         widths: widths
       }
     };
+  }
+
+  reformatIsActive(items: any) {
+    let containsIsActive = false;
+    this.columns.forEach(column => {
+      if (column.name.toLowerCase() === 'isactive') {
+        containsIsActive = true;
+      }
+    });
+    if (containsIsActive) {
+      if (items) {
+        items.forEach(x => {
+          if (x.isActive != null) {
+            if (x.isActive === true) {
+              x.isActive = 'Ja';
+            } else {
+              x.isActive = 'Nej';
+            }
+          }
+        });
+      }
+    }
   }
 }
