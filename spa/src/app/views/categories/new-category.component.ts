@@ -7,6 +7,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../_services/auth.service';
 import { CategoryService } from '../../_services/category.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   templateUrl: './new-category.component.html',
@@ -17,14 +18,19 @@ export class NewCategoryComponent {
   baseUrl = environment.spaUrl;
   category = {} as Category;
 
-  constructor(private categoryService: CategoryService, private alertify: AlertifyService, private router: Router) {}
+  constructor(private categoryService: CategoryService, private alertify: AlertifyService, private router: Router,
+    private spinnerService: Ng4LoadingSpinnerService) {}
 
   addCategory() {
+    console.log("showing spinner");
+    this.spinnerService.show();
       this.categoryService.addCategory(this.category).subscribe(() => {
         this.alertify.success('Kategori blev oprettet');
         this.router.navigate(['categories/view/']);
       }, error => {
         this.alertify.error(error.error);
       });
+    console.log("hiding loader");
+    this.spinnerService.hide();
   }
 }
