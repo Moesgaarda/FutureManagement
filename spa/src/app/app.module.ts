@@ -84,7 +84,10 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     LoginComponent,
     CustomSidebarComponent
   ],
-  providers: [
+  providers: [{
+    provide: LocationStrategy,
+    useClass: HashLocationStrategy
+  },
   {
     provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,
